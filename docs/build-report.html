@@ -1,0 +1,470 @@
+<title>Primes from Bare Metal</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+
+<style>
+  /* Palette is the amber-phosphor set we built for your cmux terminal earlier
+     tonight — same ground (#0b0906), same accent (#ffb000). */
+  :root {
+    --ground:      #f6f4ef;
+    --surface:     #ffffff;
+    --surface-alt: #efece4;
+    --ink:         #17140e;
+    --ink-soft:    #55503f;
+    --ink-faint:   #8a8471;
+    --rule:        #ddd8ca;
+    --accent:      #a35f00;
+    --accent-soft: #f3e2c2;
+    --ok:          #2f6b3d;
+    --blocked:     #a03028;
+    --console-bg:  #17140e;
+    --console-fg:  #f0d9a8;
+    --console-dim: #9c8a63;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground:      #0b0906;
+      --surface:     #14110b;
+      --surface-alt: #1d1810;
+      --ink:         #ece5d6;
+      --ink-soft:    #b3a68a;
+      --ink-faint:   #7d7259;
+      --rule:        #2e2718;
+      --accent:      #ffb000;
+      --accent-soft: #3a2c10;
+      --ok:          #7fc08c;
+      --blocked:     #e8776c;
+      --console-bg:  #060504;
+      --console-fg:  #ffb000;
+      --console-dim: #8f6a1a;
+    }
+  }
+  :root[data-theme="dark"] {
+    --ground:      #0b0906;
+    --surface:     #14110b;
+    --surface-alt: #1d1810;
+    --ink:         #ece5d6;
+    --ink-soft:    #b3a68a;
+    --ink-faint:   #7d7259;
+    --rule:        #2e2718;
+    --accent:      #ffb000;
+    --accent-soft: #3a2c10;
+    --ok:          #7fc08c;
+    --blocked:     #e8776c;
+    --console-bg:  #060504;
+    --console-fg:  #ffb000;
+    --console-dim: #8f6a1a;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    background: var(--ground);
+    color: var(--ink);
+    font-family: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+    font-size: 16.5px;
+    line-height: 1.62;
+    margin: 0;
+    padding: 0 24px 96px;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { max-width: 860px; margin: 0 auto; }
+
+  /* ---- masthead ---- */
+  header { padding: 72px 0 40px; border-bottom: 2px solid var(--ink); }
+  .eyebrow {
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 12px; font-weight: 500;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--accent);
+    margin: 0 0 18px;
+  }
+  h1 {
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-weight: 600;
+    font-size: clamp(30px, 5.4vw, 48px);
+    line-height: 1.08;
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+    margin: 0 0 20px;
+  }
+  .standfirst {
+    font-size: 19px; line-height: 1.55;
+    color: var(--ink-soft);
+    max-width: 60ch; margin: 0;
+  }
+
+  /* ---- verdict strip ---- */
+  .verdict {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1px;
+    background: var(--rule);
+    border: 1px solid var(--rule);
+    margin: 40px 0 56px;
+  }
+  .vcell { background: var(--surface); padding: 18px 20px; }
+  .vlabel {
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--ink-faint); margin: 0 0 8px;
+  }
+  .vvalue {
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 22px; font-weight: 600; margin: 0;
+    font-variant-numeric: tabular-nums;
+  }
+  .vvalue.ok { color: var(--ok); }
+  .vvalue.blocked { color: var(--blocked); }
+  .vnote { font-size: 13px; color: var(--ink-faint); margin: 4px 0 0; }
+
+  section { margin: 0 0 56px; }
+  h2 {
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 13px; font-weight: 600;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--accent);
+    margin: 0 0 6px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--rule);
+  }
+  h3 {
+    font-family: "IBM Plex Sans", sans-serif;
+    font-size: 19px; font-weight: 600; margin: 32px 0 8px;
+    text-wrap: balance;
+  }
+  p { margin: 14px 0; max-width: 66ch; }
+  strong { font-weight: 600; }
+  code {
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 0.88em;
+    background: var(--surface-alt);
+    padding: 1px 5px;
+    border-radius: 2px;
+  }
+  a { color: var(--accent); }
+
+  /* ---- console ---- */
+  .console {
+    background: var(--console-bg);
+    color: var(--console-fg);
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 12.5px; line-height: 1.62;
+    padding: 18px 20px;
+    overflow-x: auto;
+    margin: 20px 0;
+    border-left: 3px solid var(--accent);
+  }
+  .console pre { margin: 0; }
+  .console .dim { color: var(--console-dim); }
+  .console .hit { color: #7fc08c; }
+  .console .bad { color: #e8776c; }
+  .caption {
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 11.5px; color: var(--ink-faint);
+    margin: -10px 0 24px; letter-spacing: 0.02em;
+  }
+
+  /* ---- ring stack ---- */
+  .stack { margin: 26px 0 8px; display: flex; flex-direction: column; gap: 0; }
+  .ring {
+    border: 1px solid var(--rule);
+    border-bottom: none;
+    padding: 14px 18px;
+    background: var(--surface);
+    display: grid;
+    grid-template-columns: 62px 1fr auto;
+    gap: 16px;
+    align-items: baseline;
+  }
+  .ring:last-child { border-bottom: 1px solid var(--rule); }
+  .ring.target { background: var(--accent-soft); border-color: var(--accent); }
+  .ring-id {
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 12px; font-weight: 600; color: var(--accent);
+    letter-spacing: 0.08em;
+  }
+  .ring-what { font-size: 15px; }
+  .ring-note {
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 11.5px; color: var(--ink-faint); text-align: right;
+  }
+
+  /* ---- timeline ---- */
+  .timeline { margin: 24px 0; border-top: 1px solid var(--rule); }
+  .phase {
+    display: grid;
+    grid-template-columns: 96px 1fr 74px;
+    gap: 20px;
+    padding: 15px 0;
+    border-bottom: 1px solid var(--rule);
+    align-items: baseline;
+  }
+  .phase-time {
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 12.5px; color: var(--accent);
+    font-variant-numeric: tabular-nums;
+  }
+  .phase-what { font-size: 15px; }
+  .phase-what .sub { display: block; color: var(--ink-faint); font-size: 13.5px; }
+  .phase-dur {
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 12.5px; color: var(--ink-soft); text-align: right;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* ---- blockers ---- */
+  .blocker {
+    border: 1px solid var(--rule);
+    border-left: 3px solid var(--blocked);
+    background: var(--surface);
+    padding: 18px 20px;
+    margin: 16px 0;
+  }
+  .blocker.solved { border-left-color: var(--ok); }
+  .blocker h4 {
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 13.5px; font-weight: 600; margin: 0 0 8px;
+    letter-spacing: -0.01em;
+  }
+  .blocker p { margin: 8px 0 0; font-size: 14.5px; max-width: none; }
+  .verdict-tag {
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--ok);
+  }
+  .verdict-tag.open { color: var(--blocked); }
+
+  table { border-collapse: collapse; width: 100%; margin: 18px 0; font-size: 14.5px; }
+  th, td { text-align: left; padding: 9px 12px; border-bottom: 1px solid var(--rule); }
+  th {
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--ink-faint); font-weight: 500;
+  }
+  td.num { font-family: "IBM Plex Mono", ui-monospace, monospace; font-variant-numeric: tabular-nums; }
+  .scroll { overflow-x: auto; }
+
+  .next {
+    background: var(--surface-alt);
+    border: 1px solid var(--rule);
+    padding: 22px 24px;
+    margin: 24px 0;
+  }
+  .next h3 { margin-top: 0; }
+
+  footer {
+    border-top: 2px solid var(--ink);
+    padding-top: 22px; margin-top: 64px;
+    font-size: 14px; color: var(--ink-faint);
+  }
+</style>
+
+<div class="wrap">
+
+<header>
+  <p class="eyebrow">Build report · 25–26 Aug 2026</p>
+  <h1>Primes from Bare Metal</h1>
+  <p class="standfirst">A twin-prime hunter written in C, compiled into a 2.8 MB unikernel with no operating system beneath it, sending its findings to Telegram over TLS. Now running on BareMetal Cloud in <strong>16 MiB of RAM</strong> — less memory than a 1990 laptop, doing modern TLS.</p>
+</header>
+
+<div class="verdict">
+  <div class="vcell">
+    <p class="vlabel">Program</p>
+    <p class="vvalue ok">Verified</p>
+    <p class="vnote">Math matches an independent sieve, exactly</p>
+  </div>
+  <div class="vcell">
+    <p class="vlabel">On BareMetal</p>
+    <p class="vvalue ok">Running</p>
+    <p class="vnote">24 sent · 0 failed, from inside the microVM</p>
+  </div>
+  <div class="vcell">
+    <p class="vlabel">On BareMetal Cloud</p>
+    <p class="vvalue ok">Deployed</p>
+    <p class="vnote">Instance <code>prime-hunter</code> · status RUNNING · 16 MiB</p>
+  </div>
+</div>
+
+<section>
+  <h2>What it does</h2>
+  <p>It searches upward for <strong>twin primes</strong> — pairs like (11, 13) or (17, 19) that sit two apart — and reports to Telegram on two triggers: when the gap between consecutive pairs beats the standing record, and on a timer so the channel shows progress during a dry spell.</p>
+  <p>Every twin pair except (3, 5) has the shape (6k−1, 6k+1), so the loop tests only those candidates and skips five sixths of the number line for free. Primality is deterministic Miller–Rabin over a twelve-base witness set that is proven correct for every n &lt; 2<sup>64</sup> — so a number it calls prime <em>is</em> prime, with no probabilistic caveat.</p>
+
+  <h3>Checked against something that isn't itself</h3>
+  <p>A primality test that agrees with itself proves nothing. Counting twin pairs below 10<sup>6</sup> with the hunter's own <code>is_prime</code>, then again with an independent Python sieve:</p>
+  <div class="console"><pre>--- miller-rabin ---
+below 1000000: 8168 twin pairs (excluding (3,5)), largest gap 1452
+--- independent sieve (python) ---
+below 1000000: 8168 twin pairs (excluding (3,5)), largest gap 1452
+total including (3,5): 8169  <span class="dim">[known value for 10^6 is 8169]</span></pre></div>
+  <p class="caption">Exact agreement, and 8169 is the published count for 10⁶.</p>
+</section>
+
+<section>
+  <h2>Getting it onto bare metal</h2>
+  <p>BareMetal is an exokernel: your program <em>is</em> the machine image. There's no Linux underneath, no process model, no shell. <code>BareMetal-AppPort</code> makes that survivable by porting musl, lwIP, mbedTLS and curl into the image, which is why an HTTPS call is even conceivable there.</p>
+  <p>Three things had to be true, and each one broke first.</p>
+
+  <div class="blocker solved">
+    <h4>1 · The token guard rejected exactly the correct builds</h4>
+    <p><span class="verdict-tag">Fixed</span> — BareMetal has no environment, so config is baked in with <code>sed</code> at build time. My startup check compared the token against <code>TELEGRAM_TOKEN_DEFAULT</code> — but baking rewrites that macro <em>to the real token</em>, so the comparison matched and the program refused to start. The first boot printed my own error back at me from the serial console. Now it validates by shape (every bot token contains a colon), which survives baking.</p>
+  </div>
+
+  <div class="blocker solved">
+    <h4>2 · No TUN driver, so Firecracker could have no network</h4>
+    <p><span class="verdict-tag">Worked around</span> — the cloud VM I was building on runs a minimal kernel with no loadable modules and no TUN/TAP support. Firecracker does networking <em>only</em> through a tap device, so the guest could never reach the internet. QEMU's <code>microvm</code> type was the obvious escape — same virtio-mmio layout, no tap needed — but it refused the image: <code>Error loading uncompressed kernel without PVH ELF Note</code>. Firecracker's loader doesn't need that note; QEMU's does.</p>
+  </div>
+
+  <div class="blocker solved">
+    <h4>3 · Its own network script would have severed my connection</h4>
+    <p><span class="verdict-tag">Avoided</span> — <code>mkbr0.sh</code> has two branches. On a Wi-Fi host it sets up NAT; on a wired host it enslaves the NIC to a bridge and moves the host's IP across. On a cloud VM whose only link is <code>eth0</code>, that second branch drops the connection you're driving it through. I read it before running it and wrote a NAT-only version that never touches <code>eth0</code>.</p>
+  </div>
+</section>
+
+<section>
+  <h2>The stack that finally worked</h2>
+  <p>The way out of the TUN problem was to stop fighting the host kernel and put a real one inside it. Nested virtualisation was enabled on the machine, so a normal Ubuntu guest — with a normal kernel, which has TUN — could host Firecracker itself.</p>
+
+  <div class="stack">
+    <div class="ring">
+      <span class="ring-id">L0</span>
+      <span class="ring-what">Cloud provider's physical host — AMD EPYC, nested virt on</span>
+      <span class="ring-note">—</span>
+    </div>
+    <div class="ring">
+      <span class="ring-id">L1</span>
+      <span class="ring-what">The cloud VM I built in — minimal kernel, <strong>no TUN</strong></span>
+      <span class="ring-note">build host</span>
+    </div>
+    <div class="ring">
+      <span class="ring-id">L2</span>
+      <span class="ring-what">Ubuntu 24.04 under QEMU/KVM — kernel 6.8, <strong>has TUN</strong></span>
+      <span class="ring-note">tap0 + NAT</span>
+    </div>
+    <div class="ring target">
+      <span class="ring-id">L3</span>
+      <span class="ring-what">The BareMetal unikernel under Firecracker — <strong>the hunter</strong></span>
+      <span class="ring-note">2.8 MB</span>
+    </div>
+  </div>
+  <p class="caption">Four levels deep. L2 exists purely to own a tap device.</p>
+
+  <p>From inside L3 (with 256 MiB, which later turned out to be far more than needed — see below):</p>
+
+  <div class="console"><pre>========================================
+BareMetal Firecracker - Starting Payload
+========================================
+net: fc cmdline: no "ip=" token found, falling back to DHCP
+<span class="hit">net: ready ip=172.19.0.148 mask=255.255.255.0 gw=172.19.0.1</span>
+[+] hunting from 5
+[*] record gap 282 at 13679
+<span class="hit">[+] telegram ok (1 sent, 0 failed)</span>
+[*] record gap 1452 at 851801
+<span class="hit">[+] telegram ok (9 sent, 0 failed)</span>
+[*] heartbeat: searched to 234970033, 938097 twins
+<span class="hit">[+] telegram ok (22 sent, 0 failed)</span>
+[*] record gap 3480 at 255953429
+<span class="hit">[+] telegram ok (24 sent, 0 failed)</span></pre></div>
+  <p class="caption">Serial console, L3. DHCP lease, TLS handshake, and 24 acknowledged posts.</p>
+
+  <p>An earlier run on the same image, without a network, printed <code class="bad">[!] telegram: Could not resolve hostname</code> against every single attempt — and produced the identical record-gap sequence: 282, 372, 498, 630, 924, 930, 1008, 1452… The arithmetic was never in question; only the socket was.</p>
+</section>
+
+<section>
+  <h2>How long it took</h2>
+  <p>Timestamps are UTC, from file mtimes and log lines on the build host.</p>
+  <div class="scroll">
+  <div class="timeline">
+    <div class="phase">
+      <span class="phase-time">01:30–01:40</span>
+      <span class="phase-what">Wrote and verified <code>prime_hunter.c</code><span class="sub">Local macOS build, sieve cross-check, 90-second live run to Telegram</span></span>
+      <span class="phase-dur">~10 min</span>
+    </div>
+    <div class="phase">
+      <span class="phase-time">01:42</span>
+      <span class="phase-what">Cloud machine created, capabilities checked<span class="sub">x86_64, /dev/kvm present, nested virt on — the go/no-go</span></span>
+      <span class="phase-dur">2 min</span>
+    </div>
+    <div class="phase">
+      <span class="phase-time">01:44–01:48</span>
+      <span class="phase-what">BareMetal library build<span class="sub">musl, lwIP, mbedTLS, curl, SQLite, libsodium, lwext4, CPython</span></span>
+      <span class="phase-dur">~4 min</span>
+    </div>
+    <div class="phase">
+      <span class="phase-time">01:49:46</span>
+      <span class="phase-what">First unikernel built<span class="sub">baremetal.elf, 2,839,552 bytes</span></span>
+      <span class="phase-dur">1 s</span>
+    </div>
+    <div class="phase">
+      <span class="phase-time">01:51</span>
+      <span class="phase-what">First boot — found the token-guard bug<span class="sub">Program ran, refused to start, said so over serial</span></span>
+      <span class="phase-dur">2 min</span>
+    </div>
+    <div class="phase">
+      <span class="phase-time">01:53:48</span>
+      <span class="phase-what">Rebuilt with the fix, booted, hunted primes<span class="sub">Compute proven on BareMetal; no network yet</span></span>
+      <span class="phase-dur">3 min</span>
+    </div>
+    <div class="phase">
+      <span class="phase-time">01:55–01:56</span>
+      <span class="phase-what">Ubuntu image pulled, L2 booted<span class="sub">Confirmed /dev/net/tun and /dev/kvm both present</span></span>
+      <span class="phase-dur">3 min</span>
+    </div>
+    <div class="phase">
+      <span class="phase-time">01:58–02:01</span>
+      <span class="phase-what">Firecracker + tap0 in L2, unikernel run with network<span class="sub">DHCP lease, no errors — first networked run</span></span>
+      <span class="phase-dur">4 min</span>
+    </div>
+    <div class="phase">
+      <span class="phase-time">02:01–02:05</span>
+      <span class="phase-what">Rebuilt to log acknowledgements, re-ran<span class="sub">Turned "no errors appeared" into "24 sent, 0 failed"</span></span>
+      <span class="phase-dur">4 min</span>
+    </div>
+  </div>
+  </div>
+
+  <div class="scroll">
+  <table>
+    <tr><th>Span</th><th>Duration</th></tr>
+    <tr><td>First cloud machine → unikernel that boots and computes</td><td class="num">12 min</td></tr>
+    <tr><td>First cloud machine → networked run posting to Telegram</td><td class="num">23 min</td></tr>
+    <tr><td>Blank editor → proof, including writing the program</td><td class="num">~35 min</td></tr>
+    <tr><td>API key in hand → running on BareMetal Cloud</td><td class="num">~2 min</td></tr>
+    <tr><td>Incremental rebuild once libraries were built</td><td class="num">~1 s</td></tr>
+  </table>
+  </div>
+  <p class="caption">One caveat on the 4-minute library build: I raced two builds against each other early on, and the second wiped the first's tree. That number is the wall clock I can defend from the log, not a clean cold-start measurement.</p>
+</section>
+
+<section>
+  <h2>On the cloud, and a wrong prediction</h2>
+  <p>Uploaded to <a href="https://baremetal.returninfinity.com/dashboard">BareMetal Cloud</a> via <code>bm-api.sh</code>; the image took and the instance came up on the first attempt. It is running now:</p>
+
+  <div class="console"><pre>name: prime-hunter
+<span class="hit">status: RUNNING</span>
+ip: 172.16.0.10</pre></div>
+
+  <p>Its serial console, from the cloud API — note it takes a <em>static</em> IP from Firecracker's boot arguments rather than DHCP, a different network path from every local run:</p>
+
+  <div class="console"><pre>net: fc ip param fields: client-ip="172.16.0.10" gw-ip="172.16.0.1"
+net: no DNS server provided by fc/DHCP, falling back to 8.8.8.8
+<span class="hit">net: ready ip=172.16.0.10 mask=255.255.0.0 gw=172.16.0.1</span>
+<span class="hit">[+] telegram ok (1 sent, 0 failed)</span>
+[+] hunting from 5
+[*] record gap 282 at 13679
+<span class="hit">[+] telegram ok (2 sent, 0 failed)</span>
+[*] record gap 372 at 18911
+<span class="hit">[+] telegram ok (3 sent, 0 failed)</span></pre></div>
+
+  <h3>I was wrong about the memory</h3>
+  <p>Last night I wrote that 16 MiB "boots fine and hunts primes fine, then silently fails every TLS handshake," and built the deploy script to ask for 256 MiB. The cloud rejected that outright — <code>ramMib exceeds the maximum of 16</code> — so the prediction got tested immediately.</p>
+  <p><strong>It was wrong.</strong> At 16 MiB the unikernel completes TLS handshakes against <code>api.telegram.org</code> and posts without a single failure. I had reached for 256 MiB out of caution during local testing and then reported that caution as a finding. It wasn't one — mbedTLS, lwIP, curl, a CA bundle, and a prime search all fit in sixteen megabytes with room to spare.</p>
+
+</section>
+
+<footer>
+  <p>Built 25–26 August 2026, against BareMetal-App and BareMetal-AppPort at their then-current commits. The program is a single C file with no dependency beyond libcurl, and it compiles unchanged for Linux, macOS, and BareMetal.</p>
+</footer>
+
+</div>

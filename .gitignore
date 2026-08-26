@@ -1,0 +1,19 @@
+# build output — everything lands in build/, which keeps binary names from
+# colliding with the agent/ and prime-hunter/ source directories
+/build/
+*.o
+*.app
+*.elf
+
+# BareMetal build tree and images
+BareMetal-App/
+BareMetal-AppPort/
+BareMetal-Firecracker/
+disk.img
+*.img
+
+# never commit credentials
+.tg_token
+.gemini_key
+.bm_key
+.env
