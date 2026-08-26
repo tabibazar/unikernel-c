@@ -1,0 +1,16 @@
+========================================
+BareMetal Firecracker - Starting Payload
+========================================
+[+] worker 0/3 hunting Cunningham chains, floor 9
+net: fc cmdline @ 0x5a00: "console=ttyS0 reboot=k panic=1 pci=off ip=172.16.0.10::172.16.0.1:255.255.0.0::eth0:off pci=off root=/dev/vda rw virtio_mmio.device=4K@0xc0001000:5 virtio_mmio.device=4K@0xc0002000:6"
+net: fc ip param fields: client-ip="172.16.0.10" server-ip="" gw-ip="172.16.0.1" netmask="255.255.0.0"
+net: using fc static address ip=172.16.0.10 gw=172.16.0.1 mask=255.255.0.0
+net: no DNS server provided by fc/DHCP, falling back to 8.8.8.8
+net: no DNS server provided by fc/DHCP, falling back to 1.1.1.1
+net: ready ip=172.16.0.10 mask=255.255.0.0 gw=172.16.0.1
+[+] telegram ok (1 sent, 0 failed)
+[*] worker 0 heartbeat: searched to 12099999977, best 8
+[+] telegram ok (2 sent, 0 failed)
+[*] worker 0 heartbeat: searched to 12999999977, best 8
+[+] telegram ok (3 sent, 0 failed)
+
