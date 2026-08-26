@@ -162,7 +162,7 @@
 
 <section>
   <h2>Abstract</h2>
-  <p>We ported two C workloads to BareMetal via BareMetal-AppPort and deployed them to BareMetal Cloud: a twin-prime search reporting to a public HTTPS API, and a three-worker swarm hunting Cunningham chains, supervised by an LLM agent that diagnoses and repairs worker faults. We report four measurements. <strong>(1)</strong> A full TLS stack — mbedTLS, lwIP, curl and a Mozilla CA bundle — runs inside a 16 MiB instance alongside an active search, delivering 24 of 24 HTTPS requests with no failures. <strong>(2)</strong> Unikernel images are 1.3–2.8 MB. <strong>(3)</strong> On a single host, with optimisation level matched, the unikernel executed a fixed integer workload at 0.80 M candidates/s against 2.67 M/s for the same source as a Linux process, a 3.3× difference; the default BareMetal build additionally compiles at <code>-O0</code>. <strong>(4)</strong> The unikernel does not compute deterministically: three passes over an identical fixed range inside a single boot returned three different prime counts, all undercounts, on both a nested-virtualisation host (1.6×10<sup>−6</sup> error rate) and BareMetal Cloud hardware (≈2×10<sup>−4</sup>). Linux, at both <code>-O0</code> and <code>-O2</code>, is exactly deterministic. We isolate the effect to 64-bit modular arithmetic with a reproducer containing no primality logic, no allocation, and no libc call inside the loop.</p>
+  <p>We ported two C workloads to BareMetal via BareMetal-AppPort and deployed them to BareMetal Cloud: a twin-prime search reporting to a public HTTPS API, and a three-worker swarm hunting Cunningham chains, supervised by an LLM agent that diagnoses and repairs worker faults. We report four measurements. <strong>(1)</strong> A full TLS stack — mbedTLS, lwIP, curl and a Mozilla CA bundle — runs inside a 16 MiB instance alongside an active search, delivering 24 of 24 HTTPS requests with no failures. <strong>(2)</strong> Unikernel images are 1.3–2.8 MB. <strong>(3)</strong> On a single host, with optimisation level matched, the unikernel executed a fixed integer workload at 0.80 M candidates/s against 2.67 M/s for the same source as a Linux process, a 3.3× difference; the default BareMetal build additionally compiles at <code>-O0</code>. <strong>(4)</strong> The unikernel does not compute deterministically: three passes over an identical fixed range inside a single boot returned three different prime counts, all undercounts, on both a nested-virtualisation host (1.6×10<sup>−6</sup> error rate) and BareMetal Cloud hardware (≈2×10<sup>−4</sup>). Linux, at both <code>-O0</code> and <code>-O2</code>, is exactly deterministic. We isolate the effect to 64-bit modular arithmetic with a reproducer containing no primality logic, no allocation, and no libc call inside the loop. <strong>(5)</strong> Across two swarm deployments the workers searched to 1.29×10<sup>10</sup> and found 56 Cunningham chains of the first kind, six of them of length nine, each re-verified independently after capture; sustained search throughput on cloud instances was ≈80,000 candidates/s per worker.</p>
 </section>
 
 <section class="quotes">
@@ -187,6 +187,11 @@
   <blockquote>
     Sixteen megabytes turned out to be enough. We had budgeted 256 MiB for the TLS handshake, the platform capped us at 16, and it worked anyway.
     <cite>Measured, §2</cite>
+  </blockquote>
+
+  <blockquote>
+    Three 16 MiB unikernels, coordinating through arithmetic rather than a coordinator, found 56 Cunningham chains — including six of length nine, every one independently re-verified afterwards.
+    <cite>Measured, §7</cite>
   </blockquote>
 </section>
 
@@ -340,8 +345,40 @@ independent sieve below 1000000: 8168 twin pairs, largest gap 1452
 
 <section>
   <h2>7 · Swarm and autonomous supervision</h2>
-  <p>Three workers run as separate 16 MiB instances, hunting Cunningham chains. Coordination uses no coordinator, no queue and no shared storage: worker <em>i</em> of <em>N</em> takes the candidates whose index is congruent to <em>i</em> modulo <em>N</em>. Coverage is complete and disjoint by construction, and a worker's death costs exactly its own residue class. Worker identity is compiled in, since BareMetal has no environment.</p>
+  <p>Three workers run as separate 16 MiB instances, hunting Cunningham chains of the first kind — p, 2p+1, 4p+3, … with every term prime. Coordination uses no coordinator, no queue and no shared storage: candidates are p = 6k − 1, and worker <em>i</em> of <em>N</em> takes those where k ≡ i (mod N). Coverage is complete and disjoint by construction, and a worker's death costs exactly its own share. Worker identity is compiled in, since BareMetal has no environment.</p>
+  <p>Chain length is steeply graded — below 8.7×10<sup>7</sup> a single worker finds 3659 chains of length 4, 140 of length 6, 18 of length 7 and exactly one of length 9 — which is what makes the workload worth distributing: more workers buy rarer results rather than more of the same.</p>
 
+  <h3>7.1 · Results</h3>
+  <p>Two deployments, three instances each, searching to 1.29×10<sup>10</sup>:</p>
+  <div class="scroll">
+  <table>
+    <tr><th>Run</th><th>Range</th><th class="num">Chains found</th><th>Notes</th></tr>
+    <tr><td>01</td><td>1.00×10<sup>8</sup> → 1.12×10<sup>10</sup></td><td class="num">56</td><td>50 of length 8, <strong>6 of length 9</strong></td></tr>
+    <tr><td>02</td><td>1.12×10<sup>10</sup> → 1.29×10<sup>10</sup></td><td class="num">0</td><td>announce floor raised to 9; expectation for this range ≈0.9</td></tr>
+  </table>
+  </div>
+  <p>Every length-9 find was re-verified independently after capture, with a separate implementation on a platform not under test — a necessary precaution given §4. The smallest of the six:</p>
+  <div class="console"><pre>198,479,579 → 396,959,159 → 793,918,319 → 1,587,836,639 → 3,175,673,279
+→ 6,351,346,559 → 12,702,693,119 → 25,405,386,239 → 50,810,772,479</pre></div>
+  <p class="caption">Nine primes, each double the previous plus one.</p>
+
+  <p><strong>Throughput.</strong> Two watcher samples 622 s apart give 1,446,945 numbers/s across the swarm — ≈241,000 candidates/s in total, or ≈80,000 per worker at p ≈ 1.3×10<sup>10</sup>. This is below §3's cloud figure of 148,698 candidates/s, as expected: that benchmark tests smaller numbers and does no chain extension.</p>
+
+  <h3>7.2 · Two defects of our own</h3>
+  <p>Both are ours rather than the platform's, and both are recorded because each was invisible from the outside.</p>
+
+  <div class="finding">
+    <h4><span class="tag warn">Silent</span> · Two thirds of the swarm did no useful work for hours</h4>
+    <p>Run 01 partitioned the odd numbers by index modulo the swarm size. For any starting value this pins each worker to a fixed residue modulo 6, and two of the three classes cannot yield a chain: a worker holding p ≡ 1 (mod 6) always has 2p+1 divisible by 3, so it can never reach length 2, and a worker holding p ≡ 3 (mod 6) never sees a prime at all. All 56 results came from the single worker that drew p ≡ 5 (mod 6). Effective parallelism was 1, not 3.</p>
+    <p>The failure was invisible to every health signal: all three instances were RUNNING, networked, error-free, and posting heartbeats throughout. The only visible symptom was that the useless worker ran 22× "faster" — because each of its candidates died at the first trial division. Run 02 enumerates p = 6k − 1 and partitions on k, putting every worker in the productive class; the three then tracked within <strong>0.96%</strong> of one another and all reported the same best chain length, against a 2100% spread before.</p>
+  </div>
+
+  <div class="finding">
+    <h4><span class="tag warn">Measurement</span> · A quantised counter cannot measure a rate</h4>
+    <p>We first estimated ≈400,000 candidates/s per worker by sampling the reported search position twice, about two minutes apart. That field only advances once per heartbeat — every 50 million candidates — so the sample spanned a single boundary and overstated the rate by roughly 5×. A projection built on it ("10<sup>11</sup> in about 3.4 hours") was wrong by the same factor; the correct figure is ≈17 hours. Rates must be measured over windows long compared with the counter's update interval, and the published figure above is.</p>
+  </div>
+
+  <h3>7.3 · Autonomous supervision</h3>
   <p>A supervisory agent (an LLM tool-calling loop, run off-platform) inspects instance status and serial logs, and may restart a worker. It was validated by fault injection in both directions — the only honest test of a self-healing system is that it also declines to act when nothing is wrong:</p>
   <div class="scroll">
   <table>
@@ -388,6 +425,7 @@ independent sieve below 1000000: 8168 twin pairs, largest gap 1452
   <p><strong>Two hosts, unequal instrumentation.</strong> H<sub>2</sub> is a shared platform whose CPU model, contention and scheduling we could not observe. Cross-host figures are reported separately and never averaged.</p>
   <p><strong>Coarse clock.</strong> Elapsed time comes from <code>time(NULL)</code> at 1 s resolution; runs were sized to ~50 s to hold that below ≈2%, and cross-checked against external wall time.</p>
   <p><strong>Small n.</strong> Three trials per configuration. The throughput figures were identical across trials, so we report the value rather than a confidence interval; this is repeatability, not a population estimate.</p>
+  <p><strong>Search results are a lower bound.</strong> The 56 chains in §7 are confirmed finds, not a census: given §4, the swarm misses an unknown fraction of the chains in any range it covers. Every reported find was verified; no claim is made that the range was exhaustively searched.</p>
   <p><strong>Cause not isolated</strong> for either §3's 3.3× or §4's nondeterminism. Both are reported as observations with excluded alternatives, not as diagnoses.</p>
 </section>
 
