@@ -1,0 +1,415 @@
+<title>Primes from Bare Metal</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+
+<style>
+  :root {
+    --ground:      #f6f4ef;
+    --surface:     #ffffff;
+    --surface-alt: #efece4;
+    --ink:         #17140e;
+    --ink-soft:    #55503f;
+    --ink-faint:   #8a8471;
+    --rule:        #ddd8ca;
+    --accent:      #a35f00;
+    --accent-soft: #f6e8cd;
+    --ok:          #2f6b3d;
+    --warn:        #8a5a00;
+    --bad:         #a03028;
+    --console-bg:  #17140e;
+    --console-fg:  #f0d9a8;
+    --console-dim: #9c8a63;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground:      #0b0906;
+      --surface:     #14110b;
+      --surface-alt: #1d1810;
+      --ink:         #ece5d6;
+      --ink-soft:    #b3a68a;
+      --ink-faint:   #7d7259;
+      --rule:        #2e2718;
+      --accent:      #ffb000;
+      --accent-soft: #3a2c10;
+      --ok:          #7fc08c;
+      --warn:        #e0a94a;
+      --bad:         #e8776c;
+      --console-bg:  #060504;
+      --console-fg:  #ffb000;
+      --console-dim: #8f6a1a;
+    }
+  }
+  :root[data-theme="dark"] {
+    --ground:      #0b0906;
+    --surface:     #14110b;
+    --surface-alt: #1d1810;
+    --ink:         #ece5d6;
+    --ink-soft:    #b3a68a;
+    --ink-faint:   #7d7259;
+    --rule:        #2e2718;
+    --accent:      #ffb000;
+    --accent-soft: #3a2c10;
+    --ok:          #7fc08c;
+    --warn:        #e0a94a;
+    --bad:         #e8776c;
+    --console-bg:  #060504;
+    --console-fg:  #ffb000;
+    --console-dim: #8f6a1a;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    background: var(--ground); color: var(--ink);
+    font-family: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+    font-size: 16.5px; line-height: 1.62; margin: 0; padding: 0 24px 96px;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 880px; margin: 0 auto; }
+
+  header { padding: 72px 0 36px; border-bottom: 2px solid var(--ink); }
+  .eyebrow {
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 12px; font-weight: 500; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--accent); margin: 0 0 18px;
+  }
+  h1 {
+    font-family: "IBM Plex Mono", ui-monospace, monospace; font-weight: 600;
+    font-size: clamp(30px, 5.4vw, 46px); line-height: 1.08;
+    letter-spacing: -0.02em; text-wrap: balance; margin: 0 0 20px;
+  }
+  .standfirst { font-size: 18.5px; line-height: 1.55; color: var(--ink-soft); max-width: 62ch; margin: 0; }
+
+  section { margin: 0 0 52px; }
+  h2 {
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 13px; font-weight: 600; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--accent);
+    margin: 0 0 6px; padding-bottom: 10px; border-bottom: 1px solid var(--rule);
+  }
+  h3 { font-size: 19px; font-weight: 600; margin: 30px 0 6px; text-wrap: balance; }
+  h4 {
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 13.5px; font-weight: 600; margin: 24px 0 6px; letter-spacing: -0.01em;
+  }
+  p { margin: 13px 0; max-width: 68ch; }
+  code {
+    font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 0.88em;
+    background: var(--surface-alt); padding: 1px 5px; border-radius: 2px;
+  }
+  a { color: var(--accent); }
+  sup { font-size: 0.72em; }
+
+  .console {
+    background: var(--console-bg); color: var(--console-fg);
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 12.5px; line-height: 1.6; padding: 16px 18px;
+    overflow-x: auto; margin: 18px 0; border-left: 3px solid var(--accent);
+  }
+  .console pre { margin: 0; }
+  .console .dim { color: var(--console-dim); }
+  .console .hit { color: #7fc08c; }
+  .console .bad { color: #e8776c; }
+  .caption {
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 11.5px; color: var(--ink-faint); margin: -8px 0 22px;
+  }
+
+  .scroll { overflow-x: auto; }
+  table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 14.5px; }
+  th, td { text-align: left; padding: 8px 12px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+  th {
+    font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 11px;
+    letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-faint); font-weight: 500;
+  }
+  td.num, th.num {
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-variant-numeric: tabular-nums; text-align: right; white-space: nowrap;
+  }
+  .ok { color: var(--ok); }
+  .bad { color: var(--bad); }
+  .warn { color: var(--warn); }
+
+  /* quotable block, for lifting onto a website */
+  .quotes { border: 1px solid var(--accent); background: var(--accent-soft); padding: 4px 22px 18px; margin: 20px 0; }
+  .quotes h3 { margin-top: 18px; }
+  blockquote {
+    margin: 16px 0; padding: 0 0 0 16px; border-left: 3px solid var(--accent);
+    font-size: 17px; line-height: 1.5;
+  }
+  blockquote cite {
+    display: block; margin-top: 6px; font-style: normal;
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 11.5px; color: var(--ink-faint); letter-spacing: 0.02em;
+  }
+
+  .finding { border: 1px solid var(--rule); border-left: 3px solid var(--accent); background: var(--surface); padding: 16px 18px; margin: 16px 0; }
+  .finding.severe { border-left-color: var(--bad); }
+  .finding p { margin: 8px 0 0; font-size: 14.5px; max-width: none; }
+  .tag {
+    font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 11px;
+    letter-spacing: 0.1em; text-transform: uppercase;
+  }
+
+  footer { border-top: 2px solid var(--ink); padding-top: 20px; margin-top: 60px; font-size: 14px; color: var(--ink-faint); }
+</style>
+
+<div class="wrap">
+
+<header>
+  <p class="eyebrow">Technical report · 25–26 August 2026</p>
+  <h1>Primes from Bare Metal</h1>
+  <p class="standfirst">Two workloads — a prime search and an LLM agent loop — built as BareMetal unikernels and measured against the same code running as ordinary Linux processes. A complete TLS client fits in 16 MiB. A controlled experiment also found nondeterministic integer arithmetic in the unikernel, reproduced on two independent hosts, with a 40-line reproducer.</p>
+</header>
+
+<section>
+  <h2>Abstract</h2>
+  <p>We ported two C workloads to BareMetal via BareMetal-AppPort and deployed them to BareMetal Cloud: a twin-prime search reporting to a public HTTPS API, and a three-worker swarm hunting Cunningham chains, supervised by an LLM agent that diagnoses and repairs worker faults. We report four measurements. <strong>(1)</strong> A full TLS stack — mbedTLS, lwIP, curl and a Mozilla CA bundle — runs inside a 16 MiB instance alongside an active search, delivering 24 of 24 HTTPS requests with no failures. <strong>(2)</strong> Unikernel images are 1.3–2.8 MB. <strong>(3)</strong> On a single host, with optimisation level matched, the unikernel executed a fixed integer workload at 0.80 M candidates/s against 2.67 M/s for the same source as a Linux process, a 3.3× difference; the default BareMetal build additionally compiles at <code>-O0</code>. <strong>(4)</strong> The unikernel does not compute deterministically: three passes over an identical fixed range inside a single boot returned three different prime counts, all undercounts, on both a nested-virtualisation host (1.6×10<sup>−6</sup> error rate) and BareMetal Cloud hardware (≈2×10<sup>−4</sup>). Linux, at both <code>-O0</code> and <code>-O2</code>, is exactly deterministic. We isolate the effect to 64-bit modular arithmetic with a reproducer containing no primality logic, no allocation, and no libc call inside the loop.</p>
+</section>
+
+<section class="quotes">
+  <h3>Quotable</h3>
+  <p style="font-size:14px;color:var(--ink-soft);max-width:none">Short, self-contained, and factually checkable against the results below. Free to reproduce with attribution.</p>
+
+  <blockquote>
+    A complete TLS client — mbedTLS, lwIP, curl and a full Mozilla CA bundle — fits inside a 16 MiB BareMetal instance alongside a running prime search, and delivered 24 of 24 HTTPS POSTs to a public API without a single failure.
+    <cite>Measured, §2</cite>
+  </blockquote>
+
+  <blockquote>
+    The whole machine image is 2.71 MiB. There is no operating system underneath it — the program <em>is</em> the machine.
+    <cite>Measured, §1</cite>
+  </blockquote>
+
+  <blockquote>
+    From an empty cloud VM to a booting unikernel took 12 minutes, including building musl, lwIP, mbedTLS and curl from source. After that, a code change to a redeployed image took about one second to rebuild.
+    <cite>Measured, §6</cite>
+  </blockquote>
+
+  <blockquote>
+    Sixteen megabytes turned out to be enough. We had budgeted 256 MiB for the TLS handshake, the platform capped us at 16, and it worked anyway.
+    <cite>Measured, §2</cite>
+  </blockquote>
+</section>
+
+<section>
+  <h2>1 · System under test</h2>
+  <div class="scroll">
+  <table>
+    <tr><th>Component</th><th>Version / value</th></tr>
+    <tr><td>BareMetal-App</td><td class="num">c0bd814 (2026-08-18)</td></tr>
+    <tr><td>BareMetal-AppPort</td><td class="num">4749686 (2026-08-17)</td></tr>
+    <tr><td>BareMetal-Firecracker</td><td class="num">4b58036 (2026-08-17)</td></tr>
+    <tr><td>Firecracker</td><td class="num">v1.16.1</td></tr>
+    <tr><td>Ported libraries</td><td class="num">musl 1.2.6 · lwIP 2.2.0 · mbedTLS 3.6.6 · curl 8.21.0</td></tr>
+    <tr><td>Host compiler</td><td class="num">gcc 13.3.0 (Ubuntu 24.04), nasm 2.16.01</td></tr>
+    <tr><td>Host H<sub>1</sub> (build + local runs)</td><td class="num">AMD EPYC, 2 vCPU, 8 GB, nested virtualisation</td></tr>
+    <tr><td>Host H<sub>2</sub></td><td class="num">BareMetal Cloud, 1 vCPU, 16 MiB per instance</td></tr>
+    <tr><td>Cloud limits</td><td class="num">1 vCPU · 16 MiB RAM · 4 instances per user</td></tr>
+  </table>
+  </div>
+
+  <h3>Image size</h3>
+  <div class="scroll">
+  <table>
+    <tr><th>Image</th><th class="num">Bytes</th><th>Contents</th></tr>
+    <tr><td><code>prime_hunter</code></td><td class="num">2,839,552</td><td>search + curl + mbedTLS + lwIP + CA bundle</td></tr>
+    <tr><td><code>bench</code></td><td class="num">1,324,144</td><td>compute only, no network stack</td></tr>
+  </table>
+  </div>
+  <p>The 1.5 MB difference is the price of HTTPS. Both are complete bootable machine images requiring no kernel, init, or userland beneath them.</p>
+</section>
+
+<section>
+  <h2>2 · A TLS client in 16 MiB</h2>
+  <p><strong>Method.</strong> The prime search was built as a unikernel with a Telegram bot token compiled in (BareMetal exposes no environment, so <code>getenv</code> returns nothing and compile-time defaults are used). It performs an HTTPS POST to <code>api.telegram.org</code> on each search milestone, with <code>CURLOPT_SSL_VERIFYPEER</code> and <code>VERIFYHOST</code> enabled and the CA bundle supplied explicitly — from <code>/etc/ssl/cacert.pem</code> when present on the disk image, otherwise from the bundle linked into the binary as <code>cacert_pem</code>. Success was counted in-program from the HTTP status, not inferred from absence of errors.</p>
+
+  <p><strong>Result.</strong> 24 POSTs issued, 24 acknowledged, 0 failures, at <code>MEMSIZE=16</code>:</p>
+  <div class="console"><pre><span class="hit">net: ready ip=172.19.0.148 mask=255.255.255.0 gw=172.19.0.1</span>
+[*] record gap 3480 at 255953429
+<span class="hit">[+] telegram ok (24 sent, 0 failed)</span></pre></div>
+
+  <p>On BareMetal Cloud the same image obtains its address from Firecracker's boot arguments rather than DHCP — a different code path, exercised for the first time on deployment, which worked without change:</p>
+  <div class="console"><pre>net: fc ip param fields: client-ip="172.16.0.10" gw-ip="172.16.0.1"
+net: no DNS server provided by fc/DHCP, falling back to 8.8.8.8
+<span class="hit">net: ready ip=172.16.0.10 mask=255.255.0.0 gw=172.16.0.1</span>
+<span class="hit">[+] telegram ok (1 sent, 0 failed)</span></pre></div>
+
+  <p><strong>Note on the 16 MiB figure.</strong> We initially assumed mbedTLS would need substantially more and configured local runs at 256 MiB. The platform rejected that at deployment (<code>ramMib exceeds the maximum of 16</code>), and the workload then ran correctly at 16 MiB. The prediction that 16 MiB would fail TLS was wrong, and is recorded here because it was published before being tested.</p>
+</section>
+
+<section>
+  <h2>3 · Throughput, controlled</h2>
+  <p><strong>Method.</strong> A fixed-work benchmark — Miller–Rabin primality over a fixed candidate range, no I/O in the loop — was compiled from identical source and executed <em>on the same physical host</em> (H<sub>1</sub>) as (a) a Linux process and (b) a BareMetal unikernel under Firecracker. Comparing across different machines would measure the machines. Each configuration ran 3 trials; the guest's self-reported elapsed time was cross-checked against externally measured wall time and agreed to within 2 s.</p>
+
+  <p>The BareMetal build's <code>CFLAGS</code> in <code>build-app.sh</code> contain no <code>-O</code> flag, so application code compiles at <code>-O0</code>. Comparing it to an <code>-O2</code> Linux build measures the compiler, not the runtime, so the matched-<code>-O0</code> row is the meaningful comparison.</p>
+
+  <div class="scroll">
+  <table>
+    <tr><th>Configuration</th><th class="num">Candidates/s</th><th class="num">Trials</th><th>Spread</th></tr>
+    <tr><td>Linux process, <code>-O2</code></td><td class="num">3,265,306</td><td class="num">3</td><td>identical</td></tr>
+    <tr><td>Linux process, <code>-O0</code></td><td class="num">2,666,666</td><td class="num">3</td><td>identical</td></tr>
+    <tr><td>BareMetal unikernel (default build = <code>-O0</code>), H<sub>1</sub></td><td class="num">≈800,000</td><td class="num">6</td><td>800,000–816,326</td></tr>
+    <tr><td>BareMetal unikernel, H<sub>2</sub> (cloud)</td><td class="num">148,698</td><td class="num">2</td><td>identical</td></tr>
+  </table>
+  </div>
+
+  <p><strong>Result.</strong> At matched optimisation on one host, the unikernel ran the workload <strong>3.3× slower</strong> than the Linux process (0.80 M/s vs 2.67 M/s). Against the more commonly quoted <code>-O2</code> Linux build the ratio is 4.1×, but roughly a fifth of that gap is the missing <code>-O</code> flag rather than the runtime.</p>
+  <p><strong>We did not isolate the cause</strong> of the remaining 3.3×. Plausible contributors, in the order we would test them: <code>-mcmodel=large</code> in the port's CFLAGS (forcing 64-bit absolute addressing throughout), the provenance of the 128-bit division helper under <code>-nodefaultlibs</code>, and timer-interrupt overhead. The H<sub>2</sub> figure is 5.4× below H<sub>1</sub> and should not be read as a property of BareMetal: the two hosts differ in CPU and possibly in contention, and we could not instrument H<sub>2</sub>'s hardware.</p>
+</section>
+
+<section>
+  <h2>4 · Nondeterministic arithmetic</h2>
+  <p>This is the most consequential result and we present it in the order we established it, because each step removed a competing explanation.</p>
+
+  <h4>4.1 · The observation</h4>
+  <p>The fixed-range benchmark returns a prime count that is a pure function of its inputs. Linux returns the same count every time. The unikernel did not.</p>
+
+  <h4>4.2 · Ruling out the harness</h4>
+  <p><strong>Method.</strong> Run the identical range three times <em>inside a single boot</em>, in one process. This removes the VM lifecycle, the serial capture, the cloud API and our shell harness from the question: the three answers come from the same program in the same boot.</p>
+  <div class="console"><pre><span class="dim">WORK = 40,000,000 candidates; ground truth primes = 4,268,930</span>
+
+Linux -O2      4,268,930   4,268,930   4,268,930   <span class="hit">identical</span>
+Linux -O0      4,268,930   4,268,930   4,268,930   <span class="hit">identical</span>
+BareMetal 16M  4,268,909   4,268,906   4,268,905   <span class="bad">three different answers</span>
+BareMetal 256M 4,268,905   4,268,909   4,268,908   <span class="bad">three different answers</span></pre></div>
+  <p class="caption">Three passes per boot. The 256 MiB row rules out memory pressure; the Linux <code>-O0</code> row rules out the optimisation level.</p>
+
+  <h4>4.3 · Ruling out our test rig</h4>
+  <p>H<sub>1</sub> runs Firecracker inside a nested VM, which is an obvious suspect. We therefore deployed the same image to BareMetal Cloud (H<sub>2</sub>), on real hardware with no nesting:</p>
+  <div class="console"><pre>BENCH_DONE pass=1 candidates=40000000 <span class="bad">primes=4267943</span>  <span class="dim">(987 missing)</span>
+BENCH_DONE pass=2 candidates=40000000 <span class="bad">primes=4268013</span>  <span class="dim">(917 missing)</span></pre></div>
+  <p>The effect reproduces on real hardware, and is roughly two orders of magnitude <em>larger</em> there (≈2×10<sup>−4</sup> vs 1.6×10<sup>−6</sup>).</p>
+
+  <h4>4.4 · Minimal reproducer</h4>
+  <p><strong>Method.</strong> Evaluate one fixed modular exponentiation 20,000,000 times and count answers differing from the first. No primality logic, no allocation, no libc call inside the loop — only 64-bit multiply, modulo and shift through <code>__uint128_t</code>. A correct runtime must report zero.</p>
+  <div class="console"><pre>static uint64_t mulmod(uint64_t a, uint64_t b, uint64_t m) {
+    return (uint64_t)((__uint128_t)a * b % m);
+}
+<span class="dim">/* powmod(A_BASE, A_EXP, A_MOD) evaluated 20,000,000 times */</span>
+
+Linux -O2             mismatches = 0
+Linux -O0             mismatches = 0
+BareMetal unikernel   <span class="bad">mismatches = 32</span>   rate 1.600e-06
+                      first_bad = 15886615370656712028 at iteration 788310</pre></div>
+
+  <h4>4.5 · Characterisation</h4>
+  <p>Errors are <strong>always undercounts</strong> in the prime benchmark — never once an overcount across all runs. This is consistent with sporadic corruption of an intermediate value inside Miller–Rabin: a damaged witness result makes a prime look composite. The reverse would require a composite to pass all twelve witnesses, which is effectively impossible. The corrupted value observed in the reproducer is not a near-miss of the correct answer but an unrelated 64-bit quantity.</p>
+
+  <p><strong>Cause not established.</strong> Our evidence localises the fault to 64-bit integer arithmetic executed under BareMetal, and excludes: our primality logic, the optimisation level, memory pressure, our harness, and nested virtualisation. It does <em>not</em> distinguish among the remaining candidates — register or FPU/SSE state not preserved across an interrupt in the guest, a fault in the toolchain's 128-bit division helper under <code>-nodefaultlibs</code>, or something in the freestanding CFLAGS. The interrupt hypothesis is the one we would test first, because it predicts what we see: a low, rate-dependent error frequency, differing between hosts with different interrupt loads, in a long-running compute loop.</p>
+
+  <div class="finding severe">
+    <h4><span class="tag bad">Impact</span> · on workloads that count</h4>
+    <p>A search workload on BareMetal will silently <em>miss</em> results at this error rate. It will not fabricate them — anything it reports is almost certainly genuine — but its coverage of a range cannot be claimed as exhaustive. Any BareMetal workload whose correctness depends on integer arithmetic over long runs (cryptography, checksums, financial arithmetic, consensus) should be considered affected until the cause is identified.</p>
+  </div>
+</section>
+
+<section>
+  <h2>5 · Workload correctness</h2>
+  <p>Because §4 questions the runtime, the workload itself was verified independently on a trusted platform. Both searches were cross-checked against results computed by other means.</p>
+
+  <p><strong>Twin primes.</strong> Counting twin pairs below 10<sup>6</sup> with the search's own Miller–Rabin, and again with an independent Python sieve:</p>
+  <div class="console"><pre>miller-rabin      below 1000000: 8168 twin pairs, largest gap 1452
+independent sieve below 1000000: 8168 twin pairs, largest gap 1452
+                  total including (3,5): 8169   <span class="dim">[published value for 10^6]</span></pre></div>
+
+  <p><strong>Cunningham chains.</strong> The swarm worker independently rediscovered the smallest chain of length 9 at its published location, and produced the expected rarity gradient below 87 × 10<sup>6</sup>:</p>
+  <div class="scroll">
+  <table>
+    <tr><th class="num">Chain length</th><th class="num">4</th><th class="num">5</th><th class="num">6</th><th class="num">7</th><th class="num">8</th><th class="num">9</th></tr>
+    <tr><td>Count below 87×10<sup>6</sup></td><td class="num">3659</td><td class="num">688</td><td class="num">140</td><td class="num">18</td><td class="num">2</td><td class="num">1</td></tr>
+  </table>
+  </div>
+  <p>The single length-9 chain begins at 85,864,769. That steep gradient is why the workload suits a swarm: additional workers buy rarer results, not merely more of the same.</p>
+</section>
+
+<section>
+  <h2>6 · Deployment and iteration cost</h2>
+  <div class="scroll">
+  <table>
+    <tr><th>Phase</th><th class="num">Elapsed</th></tr>
+    <tr><td>Fresh cloud VM → dependencies installed</td><td class="num">2 min</td></tr>
+    <tr><td>Library build (musl, lwIP, mbedTLS, curl, SQLite, libsodium, lwext4, CPython)</td><td class="num">≈4 min</td></tr>
+    <tr><td>First unikernel built</td><td class="num">1 s</td></tr>
+    <tr><td>Empty VM → unikernel booting and computing</td><td class="num">12 min</td></tr>
+    <tr><td>Empty VM → networked run posting over HTTPS</td><td class="num">23 min</td></tr>
+    <tr><td>Incremental rebuild after a source change</td><td class="num">≈1 s</td></tr>
+    <tr><td>API key in hand → running on BareMetal Cloud</td><td class="num">≈2 min</td></tr>
+  </table>
+  </div>
+  <p>The library build figure is wall-clock from the log across two attempts, the first of which we clobbered by racing two builds; it is not a clean cold-start measurement. The one-second incremental rebuild is the number that matters in practice, and it is the strongest ergonomic result here: the edit–build–boot loop is faster than most container workflows.</p>
+</section>
+
+<section>
+  <h2>7 · Swarm and autonomous supervision</h2>
+  <p>Three workers run as separate 16 MiB instances, hunting Cunningham chains. Coordination uses no coordinator, no queue and no shared storage: worker <em>i</em> of <em>N</em> takes the candidates whose index is congruent to <em>i</em> modulo <em>N</em>. Coverage is complete and disjoint by construction, and a worker's death costs exactly its own residue class. Worker identity is compiled in, since BareMetal has no environment.</p>
+
+  <p>A supervisory agent (an LLM tool-calling loop, run off-platform) inspects instance status and serial logs, and may restart a worker. It was validated by fault injection in both directions — the only honest test of a self-healing system is that it also declines to act when nothing is wrong:</p>
+  <div class="scroll">
+  <table>
+    <tr><th>Scenario</th><th>Required behaviour</th><th>Observed</th></tr>
+    <tr><td>All workers healthy</td><td>report all-clear, <strong>0</strong> corrective actions</td><td class="ok">3/3 inspected, 0 actions</td></tr>
+    <tr><td>One worker stopped externally</td><td>detect, restart, re-verify, report</td><td class="ok">detected, restarted, confirmed RUNNING, reported, 1 action</td></tr>
+  </table>
+  </div>
+  <p>An earlier revision, whose safety rules lived in the model's prompt rather than in code, restarted a healthy worker because it had not recently announced a find — and the reboot left the instance stopped, degrading the system it was meant to protect. Moving the health criterion into C (status + network + absence of error lines, with find counts excluded by construction) and making the restart tool <em>refuse</em> a healthy target eliminated the behaviour. A relevant platform detail: <code>instances reboot</code> leaves an instance in <code>STOPPED</code>, so a caller wanting "restart" must re-check and issue <code>start</code>.</p>
+</section>
+
+<section>
+  <h2>8 · Findings for the platform</h2>
+
+  <div class="finding severe">
+    <h4><span class="tag bad">Severity: high</span> · Nondeterministic 64-bit arithmetic</h4>
+    <p>Reproduced on two independent hosts with a 40-line program containing no libc call in its loop (§4). Zero mismatches on Linux at both optimisation levels. We would begin by auditing interrupt entry/exit register preservation in the guest, and by checking which implementation provides <code>__udivti3</code>/<code>__umodti3</code> under <code>-nodefaultlibs</code>. The reproducer is in the repository below.</p>
+  </div>
+
+  <div class="finding">
+    <h4><span class="tag warn">Severity: medium</span> · <code>build-app.sh</code> compiles application code at <code>-O0</code></h4>
+    <p>The <code>CFLAGS</code> in <code>build-app.sh</code> carry no <code>-O</code> flag. On our workload this costs ≈20% against <code>-O2</code> (measured on Linux with the same source). Adding a documented, overridable default would make published performance numbers fairer to the platform.</p>
+  </div>
+
+  <div class="finding">
+    <h4><span class="tag warn">Severity: medium</span> · <code>mkbr0.sh</code> can disconnect a single-NIC host</h4>
+    <p>On a wired host the script enslaves the NIC to a bridge and moves the host IP onto it. On a cloud machine whose only interface is <code>eth0</code>, that severs the session running the script. A one-interface check, or defaulting to the NAT path when the host has a single NIC, would prevent it.</p>
+  </div>
+
+  <div class="finding">
+    <h4><span class="tag warn">Severity: low</span> · No PVH ELF note in <code>baremetal.elf</code></h4>
+    <p>QEMU's <code>microvm</code> machine refuses the image (<code>Error loading uncompressed kernel without PVH ELF Note</code>) although the virtio-mmio layout otherwise matches Firecracker's. Firecracker's loader does not require the note. Emitting it would let images be tested under QEMU where Firecracker is unavailable — as it was for us, on a host kernel with no TUN driver.</p>
+  </div>
+
+  <div class="finding">
+    <h4><span class="tag ok">Worth documenting</span> · 16 MiB is enough for TLS</h4>
+    <p>We could find no statement of what fits in the 16 MiB instance cap, and budgeted 256 MiB defensively. mbedTLS, lwIP, curl, a full CA bundle and an active workload fit in 16 MiB with margin (§2). This is a selling point and is currently undocumented.</p>
+  </div>
+</section>
+
+<section>
+  <h2>9 · Limitations</h2>
+  <p><strong>Single workload.</strong> All measurements use integer-heavy code with negligible memory traffic. Nothing here predicts I/O-bound or allocation-heavy behaviour.</p>
+  <p><strong>Two hosts, unequal instrumentation.</strong> H<sub>2</sub> is a shared platform whose CPU model, contention and scheduling we could not observe. Cross-host figures are reported separately and never averaged.</p>
+  <p><strong>Coarse clock.</strong> Elapsed time comes from <code>time(NULL)</code> at 1 s resolution; runs were sized to ~50 s to hold that below ≈2%, and cross-checked against external wall time.</p>
+  <p><strong>Small n.</strong> Three trials per configuration. The throughput figures were identical across trials, so we report the value rather than a confidence interval; this is repeatability, not a population estimate.</p>
+  <p><strong>Cause not isolated</strong> for either §3's 3.3× or §4's nondeterminism. Both are reported as observations with excluded alternatives, not as diagnoses.</p>
+</section>
+
+<section>
+  <h2>10 · Reproducing this</h2>
+  <p>All source, harnesses and the reproducer: <a href="https://github.com/tabibazar/unikernel-c">github.com/tabibazar/unikernel-c</a> (MIT).</p>
+  <div class="console"><pre><span class="dim"># determinism experiment — the core result of §4</span>
+git clone https://github.com/ReturnInfinity/BareMetal-App
+cd BareMetal-App && ./setup.sh
+cp ../unikernel-c/bench/selfcheck.c .
+./1-build.sh selfcheck.c && ./2-run.sh
+
+<span class="dim"># same source as a Linux control; must report mismatches = 0</span>
+gcc -O2 -o selfcheck bench/selfcheck.c && ./selfcheck
+
+<span class="dim"># throughput comparison, both configurations on one host</span>
+bash bench/bench_compare.sh</pre></div>
+  <p>The workloads themselves — <code>prime-hunter/</code>, <code>cunningham/</code> and the supervising agent in <code>supervisor/</code> — build unchanged for Linux, macOS and BareMetal from the same source files.</p>
+</section>
+
+<footer>
+  <p>Measurements taken 25–26 August 2026 against BareMetal-App c0bd814 and BareMetal-AppPort 4749686. Every figure in this report is reproducible from the repository above; where a result is inferred rather than measured, it is labelled as such.</p>
+</footer>
+
+</div>
