@@ -17,7 +17,7 @@ Both compile unchanged for Linux, macOS, and BareMetal.
 
 Most agent frameworks and most bots assume a language runtime, a garbage collector, and hundreds of megabytes of headroom. Neither of these does. The prime hunter completes TLS handshakes against `api.telegram.org` from inside a 2.8 MB unikernel image with sixteen megabytes of RAM — mbedTLS, lwIP, curl, a full CA bundle and the search itself, all inside that budget.
 
-`docs/build-report.html` is a write-up of getting there: what broke, what the fixes were, and how long each phase took.
+`docs/technical-report.html` is the write-up: what was measured and how, including a controlled throughput comparison, the search results, and a reproduced finding of nondeterministic 64-bit arithmetic in the BareMetal runtime. `docs/swarm-run-01.md` and `docs/swarm-run-02.md` carry the raw results of the two swarm deployments.
 
 ## The agent loop
 
