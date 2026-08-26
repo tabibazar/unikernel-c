@@ -1,0 +1,198 @@
+========================================
+BareMetal Firecracker - Starting Payload
+========================================
+[+] worker 0/3 hunting Cunningham chains, floor 8
+net: fc cmdline @ 0x5a00: "console=ttyS0 reboot=k panic=1 pci=off ip=172.16.0.10::172.16.0.1:255.255.0.0::eth0:off pci=off root=/dev/vda rw virtio_mmio.device=4K@0xc0001000:5 virtio_mmio.device=4K@0xc0002000:6"
+net: fc ip param fields: client-ip="172.16.0.10" server-ip="" gw-ip="172.16.0.1" netmask="255.255.0.0"
+net: using fc static address ip=172.16.0.10 gw=172.16.0.1 mask=255.255.0.0
+net: no DNS server provided by fc/DHCP, falling back to 8.8.8.8
+net: no DNS server provided by fc/DHCP, falling back to 1.1.1.1
+net: ready ip=172.16.0.10 mask=255.255.0.0 gw=172.16.0.1
+[+] telegram ok (1 sent, 0 failed)
+[*] worker 0: chain of 8 at 171729539
+[+] telegram ok (2 sent, 0 failed)
+[*] worker 0: chain of 9 at 198479579
+[+] telegram ok (3 sent, 0 failed)
+[*] worker 0: chain of 8 at 226366139
+[+] telegram ok (4 sent, 0 failed)
+[*] worker 0: chain of 9 at 305192579
+[+] telegram ok (5 sent, 0 failed)
+[*] worker 0: chain of 8 at 344319029
+[+] telegram ok (6 sent, 0 failed)
+[*] worker 0: chain of 8 at 396959159
+[+] telegram ok (7 sent, 0 failed)
+[*] worker 0 heartbeat: searched to 399999995, best 9
+[+] telegram ok (8 sent, 0 failed)
+[*] worker 0: chain of 8 at 474118349
+[+] telegram ok (9 sent, 0 failed)
+[*] worker 0: chain of 8 at 574964129
+[+] telegram ok (10 sent, 0 failed)
+[*] worker 0: chain of 8 at 610385159
+[+] telegram ok (11 sent, 0 failed)
+[*] worker 0: chain of 8 at 685066979
+[+] telegram ok (12 sent, 0 failed)
+[*] worker 0 heartbeat: searched to 699999995, best 9
+[+] telegram ok (13 sent, 0 failed)
+[*] worker 0: chain of 8 at 764406059
+[+] telegram ok (14 sent, 0 failed)
+[*] worker 0 heartbeat: searched to 999999995, best 9
+[+] telegram ok (15 sent, 0 failed)
+[*] worker 0: chain of 8 at 1085182229
+[+] telegram ok (16 sent, 0 failed)
+[*] worker 0: chain of 8 at 1126004219
+[+] telegram ok (17 sent, 0 failed)
+[*] worker 0: chain of 8 at 1195651139
+[+] telegram ok (18 sent, 0 failed)
+[*] worker 0 heartbeat: searched to 1299999995, best 9
+[+] telegram ok (19 sent, 0 failed)
+[*] worker 0: chain of 8 at 1372213439
+[+] telegram ok (20 sent, 0 failed)
+[*] worker 0: chain of 8 at 1484454269
+[+] telegram ok (21 sent, 0 failed)
+[*] worker 0: chain of 8 at 1573750049
+[+] telegram ok (22 sent, 0 failed)
+[*] worker 0 heartbeat: searched to 1599999995, best 9
+[+] telegram ok (23 sent, 0 failed)
+[*] worker 0 heartbeat: searched to 1899999995, best 9
+[+] telegram ok (24 sent, 0 failed)
+[*] worker 0 heartbeat: searched to 2199999995, best 9
+[+] telegram ok (25 sent, 0 failed)
+[*] worker 0: chain of 8 at 2270291519
+[+] telegram ok (26 sent, 0 failed)
+[*] worker 0: chain of 8 at 2365144079
+[+] telegram ok (27 sent, 0 failed)
+[*] worker 0: chain of 9 at 2400025739
+[+] telegram ok (28 sent, 0 failed)
+[*] worker 0: chain of 8 at 2462316539
+[+] telegram ok (29 sent, 0 failed)
+[*] worker 0 heartbeat: searched to 2499999995, best 9
+[+] telegram ok (30 sent, 0 failed)
+[*] worker 0: chain of 8 at 2661819029
+[+] telegram ok (31 sent, 0 failed)
+[*] worker 0 heartbeat: searched to 2799999995, best 9
+[+] telegram ok (32 sent, 0 failed)
+[*] worker 0: chain of 8 at 2902031729
+[+] telegram ok (33 sent, 0 failed)
+[*] worker 0 heartbeat: searched to 3099999995, best 9
+[+] telegram ok (34 sent, 0 failed)
+[*] worker 0: chain of 8 at 3176388269
+[+] telegram ok (35 sent, 0 failed)
+[*] worker 0 heartbeat: searched to 3399999995, best 9
+[+] telegram ok (36 sent, 0 failed)
+[*] worker 0: chain of 8 at 3505717049
+[+] telegram ok (37 sent, 0 failed)
+[*] worker 0 heartbeat: searched to 3699999995, best 9
+[+] telegram ok (38 sent, 0 failed)
+[*] worker 0: chain of 8 at 3935196059
+[+] telegram ok (39 sent, 0 failed)
+[*] worker 0 heartbeat: searched to 3999999995, best 9
+[+] telegram ok (40 sent, 0 failed)
+[*] worker 0 heartbeat: searched to 4299999995, best 9
+[+] telegram ok (41 sent, 0 failed)
+[*] worker 0: chain of 8 at 4358316029
+[+] telegram ok (42 sent, 0 failed)
+[*] worker 0: chain of 8 at 4380412259
+[+] telegram ok (43 sent, 0 failed)
+[*] worker 0 heartbeat: searched to 4599999995, best 9
+[+] telegram ok (44 sent, 0 failed)
+[*] worker 0: chain of 8 at 4665689009
+[+] telegram ok (45 sent, 0 failed)
+[*] worker 0: chain of 8 at 4800051479
+[+] telegram ok (46 sent, 0 failed)
+[*] worker 0 heartbeat: searched to 4899999995, best 9
+[+] telegram ok (47 sent, 0 failed)
+[*] worker 0: chain of 8 at 4929128909
+[+] telegram ok (48 sent, 0 failed)
+[*] worker 0: chain of 8 at 5097165569
+[+] telegram ok (49 sent, 0 failed)
+[*] worker 0 heartbeat: searched to 5199999995, best 9
+[+] telegram ok (50 sent, 0 failed)
+[*] worker 0: chain of 8 at 5436219359
+[+] telegram ok (51 sent, 0 failed)
+[*] worker 0 heartbeat: searched to 5499999995, best 9
+[+] telegram ok (52 sent, 0 failed)
+[*] worker 0: chain of 8 at 5683154489
+[+] telegram ok (53 sent, 0 failed)
+[*] worker 0 heartbeat: searched to 5799999995, best 9
+[+] telegram ok (54 sent, 0 failed)
+[*] worker 0: chain of 8 at 5935760249
+[+] telegram ok (55 sent, 0 failed)
+[*] worker 0 heartbeat: searched to 6099999995, best 9
+[+] telegram ok (56 sent, 0 failed)
+[*] worker 0: chain of 8 at 6268751789
+[+] telegram ok (57 sent, 0 failed)
+[*] worker 0: chain of 8 at 6366454799
+[+] telegram ok (58 sent, 0 failed)
+[*] worker 0 heartbeat: searched to 6399999995, best 9
+[+] telegram ok (59 sent, 0 failed)
+[*] worker 0: chain of 8 at 6615645719
+[+] telegram ok (60 sent, 0 failed)
+[*] worker 0 heartbeat: searched to 6699999995, best 9
+[+] telegram ok (61 sent, 0 failed)
+[*] worker 0 heartbeat: searched to 6999999995, best 9
+[+] telegram ok (62 sent, 0 failed)
+[*] worker 0: chain of 8 at 7241288339
+[+] telegram ok (63 sent, 0 failed)
+[*] worker 0 heartbeat: searched to 7299999995, best 9
+[+] telegram ok (64 sent, 0 failed)
+[*] worker 0 heartbeat: searched to 7599999995, best 9
+[+] telegram ok (65 sent, 0 failed)
+[*] worker 0: chain of 9 at 7606886429
+[+] telegram ok (66 sent, 0 failed)
+[*] worker 0: chain of 9 at 7755909149
+[+] telegram ok (67 sent, 0 failed)
+[*] worker 0: chain of 8 at 7893102359
+[+] telegram ok (68 sent, 0 failed)
+[*] worker 0 heartbeat: searched to 7899999995, best 9
+[+] telegram ok (69 sent, 0 failed)
+[*] worker 0: chain of 8 at 7909239209
+[+] telegram ok (70 sent, 0 failed)
+[*] worker 0: chain of 8 at 8024457299
+[+] telegram ok (71 sent, 0 failed)
+[*] worker 0 heartbeat: searched to 8199999995, best 9
+[+] telegram ok (72 sent, 0 failed)
+[*] worker 0 heartbeat: searched to 8499999995, best 9
+[+] telegram ok (73 sent, 0 failed)
+[*] worker 0: chain of 8 at 8558554709
+[+] telegram ok (74 sent, 0 failed)
+[*] worker 0: chain of 8 at 8797712069
+[+] telegram ok (75 sent, 0 failed)
+[*] worker 0 heartbeat: searched to 8799999995, best 9
+[+] telegram ok (76 sent, 0 failed)
+[*] worker 0 heartbeat: searched to 9099999995, best 9
+[+] telegram ok (77 sent, 0 failed)
+[*] worker 0: chain of 8 at 9228148229
+[+] telegram ok (78 sent, 0 failed)
+[*] worker 0: chain of 8 at 9254532719
+[+] telegram ok (79 sent, 0 failed)
+[*] worker 0 heartbeat: searched to 9399999995, best 9
+[+] telegram ok (80 sent, 0 failed)
+[*] worker 0: chain of 8 at 9521025359
+[+] telegram ok (81 sent, 0 failed)
+[*] worker 0 heartbeat: searched to 9699999995, best 9
+[+] telegram ok (82 sent, 0 failed)
+[*] worker 0: chain of 8 at 9799184519
+[+] telegram ok (83 sent, 0 failed)
+[*] worker 0 heartbeat: searched to 9999999995, best 9
+[+] telegram ok (84 sent, 0 failed)
+[*] worker 0 heartbeat: searched to 10299999995, best 9
+[+] telegram ok (85 sent, 0 failed)
+[*] worker 0: chain of 9 at 10378311899
+[+] telegram ok (86 sent, 0 failed)
+[*] worker 0: chain of 8 at 10381729139
+[+] telegram ok (87 sent, 0 failed)
+[*] worker 0: chain of 8 at 10527718499
+[+] telegram ok (88 sent, 0 failed)
+[*] worker 0 heartbeat: searched to 10599999995, best 9
+[+] telegram ok (89 sent, 0 failed)
+[*] worker 0: chain of 8 at 10769116469
+[+] telegram ok (90 sent, 0 failed)
+[*] worker 0: chain of 8 at 10852826009
+[+] telegram ok (91 sent, 0 failed)
+[*] worker 0 heartbeat: searched to 10899999995, best 9
+[+] telegram ok (92 sent, 0 failed)
+[*] worker 0: chain of 8 at 11008549619
+[+] telegram ok (93 sent, 0 failed)
+[*] worker 0 heartbeat: searched to 11199999995, best 9
+[+] telegram ok (94 sent, 0 failed)
+

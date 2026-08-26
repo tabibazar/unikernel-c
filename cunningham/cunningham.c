@@ -19,6 +19,19 @@
 // construction, workers never talk to each other, and a worker dying loses only
 // its own residue class rather than corrupting anyone else's work.
 //
+// WHAT IS PARTITIONED MATTERS
+//
+// Candidates are p = 6k - 1, and it is k that is split across workers. The
+// first version split the odd numbers instead, which quietly pinned each worker
+// to a fixed residue mod 6 and destroyed two thirds of the swarm: the worker
+// that drew p = 1 (mod 6) can never extend a chain, because 2p+1 is then always
+// divisible by 3, and the worker that drew p = 3 (mod 6) never even sees a
+// prime. Both ran for hours and found nothing while looking perfectly healthy.
+//
+// Every Cunningham chain of the first kind except the one starting at 2 begins
+// at p = 5 (mod 6), so enumerating 6k-1 puts every worker in the only class
+// that can produce a result, and spends no test on the two that cannot.
+//
 // Heartbeats are staggered by worker id so N workers don't all report at once.
 //
 //   build:  gcc -O2 -o cunningham cunningham.c -lcurl
@@ -44,11 +57,11 @@
 #ifndef WORKER_COUNT
 #define WORKER_COUNT       1
 #endif
-#ifndef START_AT
-#define START_AT           3ULL       // first odd candidate to consider
+#ifndef START_K
+#define START_K            1ULL       // first k; the candidate is p = 6k - 1
 #endif
 #ifndef REPORT_FLOOR
-#define REPORT_FLOOR       7          // announce chains at least this long
+#define REPORT_FLOOR       9          // announce chains at least this long
 #endif
 #ifndef HEARTBEAT_SECONDS
 #define HEARTBEAT_SECONDS  1800
@@ -278,10 +291,10 @@ int main(int argc, char **argv) {
         telegram_send(msg);
     }
 
-    // Candidate j is the odd number START_AT + 2j. This worker takes the
-    // candidates where j ≡ WORKER_ID (mod WORKER_COUNT) — its residue class.
-    for (uint64_t j = (uint64_t)WORKER_ID; ; j += (uint64_t)WORKER_COUNT) {
-        uint64_t p = START_AT + 2 * j;
+    // Candidate k gives p = 6k - 1. This worker takes k ≡ WORKER_ID
+    // (mod WORKER_COUNT) — its share of the only productive residue class.
+    for (uint64_t k = START_K + (uint64_t)WORKER_ID; ; k += (uint64_t)WORKER_COUNT) {
+        uint64_t p = 6 * k - 1;
         checked++;
 
         int len = chain_length(p, chain);
