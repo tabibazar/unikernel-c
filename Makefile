@@ -9,7 +9,8 @@ CFLAGS  += -I$(PREFIX)/include
 LDFLAGS += -L$(PREFIX)/lib
 endif
 
-all: $(BUILD)/prime_hunter $(BUILD)/agent $(BUILD)/agent_static
+all: $(BUILD)/prime_hunter $(BUILD)/agent $(BUILD)/agent_static \
+     $(BUILD)/cunningham $(BUILD)/supervisor
 
 $(BUILD):
 	@mkdir -p $(BUILD)
@@ -21,6 +22,14 @@ $(BUILD)/agent: agent/agent.c | $(BUILD)
 	$(CC) $(CFLAGS) -o $@ $< $(LDFLAGS) -lcurl -lcjson
 
 $(BUILD)/agent_static: agent/agent_static.c | $(BUILD)
+	$(CC) $(CFLAGS) -o $@ $< $(LDFLAGS) -lcurl -lcjson
+
+# One swarm worker. WORKER_ID/WORKER_COUNT are compile-time because BareMetal
+# has no environment; scripts/swarm_deploy.sh rewrites them per worker.
+$(BUILD)/cunningham: cunningham/cunningham.c | $(BUILD)
+	$(CC) $(CFLAGS) -o $@ $< $(LDFLAGS) -lcurl
+
+$(BUILD)/supervisor: supervisor/supervisor.c | $(BUILD)
 	$(CC) $(CFLAGS) -o $@ $< $(LDFLAGS) -lcurl -lcjson
 
 # Cross-checks the Miller-Rabin implementation by counting twin pairs below a

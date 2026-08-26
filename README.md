@@ -7,7 +7,9 @@ Two of them:
 | | What it is |
 |---|---|
 | **`agent/`** | An LLM agent loop: the model is given tools, decides which to call, sees the results, and keeps going until it's done. Two builds — one ordinary, one with zero heap allocation. |
-| **`prime-hunter/`** | A twin-prime search that reports records and progress to Telegram. Deployed and running on BareMetal Cloud in **16 MiB of RAM**. |
+| **`prime-hunter/`** | A twin-prime search that reports records and progress to Telegram. Runs on BareMetal Cloud in **16 MiB of RAM**. |
+| **`cunningham/`** | A swarm worker hunting Cunningham chains, coordinating with its peers through arithmetic rather than a coordinator. |
+| **`supervisor/`** | The agent that watches the swarm: diagnoses faults from evidence and heals them, with the guardrails in code rather than in the prompt. |
 
 Both compile unchanged for Linux, macOS, and BareMetal.
 
@@ -97,6 +99,47 @@ cd BareMetal-App && ./setup.sh          # builds musl, lwIP, mbedTLS, curl
 ```
 
 BareMetal has no environment, so `getenv` returns nothing there and the `#define` defaults are used instead — bake your token and chat id in before building. `scripts/cloudup.sh` deploys the built image to BareMetal Cloud.
+
+## The swarm, and the agent that watches it
+
+Three workers hunt Cunningham chains — p, 2p+1, 4p+3, … every term prime. Chain length is steeply graded, which is what makes it worth distributing: below 87 million a single worker finds 3659 chains of length 4, 140 of length 6, 18 of length 7 and exactly one of length 9 (at 85,864,769, the smallest of that length — which is how the implementation was checked).
+
+Coordination has no coordinator. Worker *i* takes the candidates whose index is congruent to *i* modulo the swarm size. Coverage is complete and disjoint by arithmetic; nobody talks to anybody; a worker dying loses its residue class and nothing else.
+
+**The workers are deliberately dumb, and that's correct** — nothing about testing primes needs a model. What needs one is the question *"is worker 1 broken, and if so, what broke?"*, because the answer isn't enumerable in advance. It crashed. The instance was reclaimed. DNS failed. It hit the instance cap. Or it's perfectly healthy and its slice of the number line simply had nothing to announce — in which case silence is correct and intervening is the bug.
+
+### Guardrails belong in the code
+
+The first version put the rules in the system prompt: *health is not measured by how recently a worker found something.* On its first run against a completely healthy swarm, the supervisor restarted a worker anyway, reasoning that it "only reported 'best 1'... indicating no chains were found." The reboot left that instance STOPPED, so the intervention actively degraded the swarm it was meant to protect.
+
+The fix wasn't a better prompt. It was moving the decision out of the model's reach:
+
+- **Health is computed in C** — instance RUNNING, network up, no error lines in the log. Find counts are excluded by construction, and every tool result carries the computed verdict.
+- **`restart_worker` refuses** a worker that looks healthy, and refusal costs no budget. The model cannot argue past it.
+- **One corrective action per run**, counted in a C variable.
+- **The tool owns the end state**: `reboot` on this API leaves an instance STOPPED, so restart re-checks and issues a `start` if needed, then reports the status it actually observed.
+- **The operator always hears.** If the model finishes without calling `send_report`, the loop sends its conclusion anyway. A supervisor whose reporting depends on the model's diligence isn't one.
+
+Blast radius is structural too: tools accept a worker *name*, only names matching `cunningham-w<digit>` are allowed, and the instance id is resolved internally from the API's own output. The model never supplies a shell string, a path, or an id — so the program cannot touch a non-swarm instance whatever it is asked to do.
+
+### Verified both ways
+
+Fault injection is the only honest test of a healing agent — one direction proves it acts, the other proves it doesn't act when it shouldn't.
+
+| Scenario | Expected | Result |
+|---|---|---|
+| Healthy swarm | Report all-clear, **0** actions | Checked all three, reported healthy, 0 actions |
+| `instances stop cunningham-w2` | Detect, restart, verify, report | Detected STOPPED, restarted, re-listed to confirm RUNNING, reported to Telegram, 1 action |
+
+One operational note: `gemini-flash-latest` queues indefinitely under load rather than returning an error, while the pinned `gemini-2.5-flash` either answers or 503s honestly. The supervisor retries with exponential backoff on 429/5xx and timeouts, because hosted models fail transiently and a supervisor less reliable than the thing it supervises is worse than none.
+
+```sh
+make
+BM_API_DIR=~/BareMetal-App LLM_MODEL=gemini-2.5-flash \
+GEMINI_API_KEY=... TELEGRAM_BOT_TOKEN=... TELEGRAM_CHAT_ID=... ./build/supervisor
+```
+
+One diagnosis cycle per invocation, then exit — cheap to schedule, easy to reason about.
 
 ## Configuration
 
