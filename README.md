@@ -10,6 +10,7 @@ Two of them:
 | **`prime-hunter/`** | A twin-prime search that reports records and progress to Telegram. Runs on BareMetal Cloud in **16 MiB of RAM**. |
 | **`cunningham/`** | A swarm worker hunting Cunningham chains, coordinating with its peers through arithmetic rather than a coordinator. |
 | **`supervisor/`** | The agent that watches the swarm: diagnoses faults from evidence and heals them, with the guardrails in code rather than in the prompt. |
+| **`research/`** | A stateless research agent: ask a question, it searches and reads until it can answer, then exits carrying nothing forward. |
 
 Both compile unchanged for Linux, macOS, and BareMetal.
 
@@ -140,6 +141,43 @@ GEMINI_API_KEY=... TELEGRAM_BOT_TOKEN=... TELEGRAM_CHAT_ID=... ./build/superviso
 ```
 
 One diagnosis cycle per invocation, then exit — cheap to schedule, easy to reason about.
+
+## The research agent
+
+Ask a question; it searches, decides what is still missing, reads the pages worth reading, answers, and exits. Nothing persists between questions — no history, no cache — so every run starts from nothing.
+
+```sh
+export GEMINI_API_KEY=... FIRECRAWL_API_KEY=...
+./build/research "which version of mbedTLS does BareMetal-AppPort port, and does it include cJSON?"
+```
+
+```
+-> web_search  {"query":"ReturnInfinity BareMetal-AppPort mbedTLS cJSON"}
+-> read_page   {"url":"https://github.com/ReturnInfinity/BareMetal-AppPort"}
+-> read_page   {"url":".../blob/main/README.md"}
+-> submit_answer
+
+Ports Mbed TLS 3.6.6. Does not include cJSON; the README lists musl libc,
+lwext4, lwIP, curl, SQLite and CPython, but not cJSON.
+
+confidence: high
+steps: 6 of 10, urls retrieved: 11
+```
+
+Search and page reading are [Firecrawl](https://firecrawl.dev), which returns pages as markdown — so the program never parses HTML.
+
+### What is enforced in code
+
+- **The answer must come through `submit_answer`.** Prose does not end the loop; the agent is told so and asked again.
+- **Citations are checked against what was actually retrieved.** A URL that this run never fetched is stripped from the sources and the answer is marked as having lost it. Confidently citing a plausible URL it never read is the characteristic failure of research agents.
+- **Reading is confined to hosts that search surfaced**, so it cannot wander onto a domain it invented — but it may navigate freely within a site it legitimately found.
+- **Running out of budget produces an answer, not silence.** On the last step it is asked for what it has, with the gaps named in `unresolved`.
+
+### Two things learned by watching it fail
+
+The first version required a read URL to have appeared *exactly* in a search result. That sounded safe and was useless: the fact lived in `setup.sh`, a repository landing page does not contain it, and a file inside a repo never appears as its own search result. The agent could see where the answer was and was forbidden to go there. Same-host is the rule that keeps the property worth having.
+
+It then still failed, because it kept searching for a page that would summarise the file instead of opening the file. That one was not a guardrail problem but a reasoning gap, so it was fixed in the prompt — the distinction is worth keeping straight: guardrails in code, judgement in the prompt.
 
 ## Configuration
 

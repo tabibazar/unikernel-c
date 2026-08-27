@@ -10,7 +10,7 @@ LDFLAGS += -L$(PREFIX)/lib
 endif
 
 all: $(BUILD)/prime_hunter $(BUILD)/agent $(BUILD)/agent_static \
-     $(BUILD)/cunningham $(BUILD)/supervisor
+     $(BUILD)/cunningham $(BUILD)/supervisor $(BUILD)/research
 
 $(BUILD):
 	@mkdir -p $(BUILD)
@@ -30,6 +30,9 @@ $(BUILD)/cunningham: cunningham/cunningham.c | $(BUILD)
 	$(CC) $(CFLAGS) -o $@ $< $(LDFLAGS) -lcurl
 
 $(BUILD)/supervisor: supervisor/supervisor.c | $(BUILD)
+	$(CC) $(CFLAGS) -o $@ $< $(LDFLAGS) -lcurl -lcjson
+
+$(BUILD)/research: research/research.c | $(BUILD)
 	$(CC) $(CFLAGS) -o $@ $< $(LDFLAGS) -lcurl -lcjson
 
 # Cross-checks the Miller-Rabin implementation by counting twin pairs below a
