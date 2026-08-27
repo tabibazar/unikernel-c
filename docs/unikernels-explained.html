@@ -1,0 +1,392 @@
+<title>The Program Is the Machine</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+
+<style>
+  :root {
+    --ground:      #f6f4ef;
+    --surface:     #ffffff;
+    --surface-alt: #efece4;
+    --ink:         #17140e;
+    --ink-soft:    #55503f;
+    --ink-faint:   #8a8471;
+    --rule:        #ddd8ca;
+    --accent:      #a35f00;
+    --accent-soft: #f6e8cd;
+    --ok:          #2f6b3d;
+    --bad:         #a03028;
+    --console-bg:  #17140e;
+    --console-fg:  #f0d9a8;
+    --console-dim: #9c8a63;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground:      #0b0906;
+      --surface:     #14110b;
+      --surface-alt: #1d1810;
+      --ink:         #ece5d6;
+      --ink-soft:    #b3a68a;
+      --ink-faint:   #7d7259;
+      --rule:        #2e2718;
+      --accent:      #ffb000;
+      --accent-soft: #3a2c10;
+      --ok:          #7fc08c;
+      --bad:         #e8776c;
+      --console-bg:  #060504;
+      --console-fg:  #ffb000;
+      --console-dim: #8f6a1a;
+    }
+  }
+  :root[data-theme="dark"] {
+    --ground:      #0b0906;
+    --surface:     #14110b;
+    --surface-alt: #1d1810;
+    --ink:         #ece5d6;
+    --ink-soft:    #b3a68a;
+    --ink-faint:   #7d7259;
+    --rule:        #2e2718;
+    --accent:      #ffb000;
+    --accent-soft: #3a2c10;
+    --ok:          #7fc08c;
+    --bad:         #e8776c;
+    --console-bg:  #060504;
+    --console-fg:  #ffb000;
+    --console-dim: #8f6a1a;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    background: var(--ground); color: var(--ink);
+    font-family: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+    font-size: 16.5px; line-height: 1.65; margin: 0; padding: 0 24px 96px;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 860px; margin: 0 auto; }
+
+  header { padding: 76px 0 36px; border-bottom: 2px solid var(--ink); }
+  .eyebrow {
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 12px; font-weight: 500; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--accent); margin: 0 0 18px;
+  }
+  h1 {
+    font-family: "IBM Plex Mono", ui-monospace, monospace; font-weight: 600;
+    font-size: clamp(30px, 5.6vw, 50px); line-height: 1.06;
+    letter-spacing: -0.025em; text-wrap: balance; margin: 0 0 20px;
+  }
+  .standfirst { font-size: 19px; line-height: 1.55; color: var(--ink-soft); max-width: 60ch; margin: 0; }
+
+  section { margin: 0 0 54px; }
+  h2 {
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 13px; font-weight: 600; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--accent);
+    margin: 0 0 8px; padding-bottom: 10px; border-bottom: 1px solid var(--rule);
+  }
+  h3 { font-size: 20px; font-weight: 600; margin: 32px 0 6px; text-wrap: balance; }
+  p { margin: 14px 0; max-width: 68ch; }
+  code {
+    font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 0.88em;
+    background: var(--surface-alt); padding: 1px 5px; border-radius: 2px;
+  }
+  a { color: var(--accent); }
+  strong { font-weight: 600; }
+
+  figure { margin: 28px 0; }
+  figure svg { max-width: 100%; height: auto; display: block; margin: 0 auto; }
+  figcaption {
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 11.5px; color: var(--ink-faint); margin-top: 12px;
+    text-align: center; line-height: 1.5;
+  }
+
+  .console {
+    background: var(--console-bg); color: var(--console-fg);
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 12.5px; line-height: 1.6; padding: 16px 18px;
+    overflow-x: auto; margin: 18px 0; border-left: 3px solid var(--accent);
+  }
+  .console pre { margin: 0; }
+  .console .dim { color: var(--console-dim); }
+  .console .hit { color: #7fc08c; }
+  .console .bad { color: #e8776c; }
+
+  .scroll { overflow-x: auto; }
+  table { border-collapse: collapse; width: 100%; margin: 18px 0; font-size: 14.5px; }
+  th, td { text-align: left; padding: 9px 12px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+  th {
+    font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 11px;
+    letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-faint); font-weight: 500;
+  }
+  td.num { font-family: "IBM Plex Mono", ui-monospace, monospace; font-variant-numeric: tabular-nums; text-align: right; white-space: nowrap; }
+
+  .callout {
+    border: 1px solid var(--rule); border-left: 3px solid var(--accent);
+    background: var(--surface); padding: 18px 20px; margin: 22px 0;
+  }
+  .callout.warn { border-left-color: var(--bad); }
+  .callout p { margin: 8px 0 0; max-width: none; }
+  .callout p:first-child { margin-top: 0; }
+  .callout h4 {
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 13px; font-weight: 600; margin: 0 0 8px; letter-spacing: -0.01em;
+  }
+
+  footer { border-top: 2px solid var(--ink); padding-top: 22px; margin-top: 64px; font-size: 14px; color: var(--ink-faint); }
+</style>
+
+<div class="wrap">
+
+<header>
+  <p class="eyebrow">Unikernels, exokernels, and a weekend of measuring one</p>
+  <h1>The Program Is the Machine</h1>
+  <p class="standfirst">We built an LLM agent that runs with no operating system beneath it — no kernel, no init, no shell — in 16 MiB of RAM. This is what that means, how it works, and what it measured when we pushed on it.</p>
+</header>
+
+<section>
+  <h2>Start with what a kernel is for</h2>
+  <p>An operating system kernel does two jobs that are worth separating in your head, because the whole story turns on the distinction.</p>
+  <p>The first is <strong>protection</strong>: many programs share one machine, so something has to stop them reading each other's memory or writing each other's files. The second is <strong>abstraction</strong>: rather than handing you a network card, the kernel gives you a socket; rather than sectors, a file; rather than a CPU, a scheduled thread.</p>
+  <p>Abstraction is genuinely useful and almost never free. The kernel's idea of a file, a socket, or a scheduling policy is a compromise chosen for everyone, and a program with unusual needs pays for the compromise while being unable to change it. Database authors have complained about this for decades: the kernel's page cache and its notion of when a write is durable are frequently wrong for a database, and there is no way to opt out of them, only to fight them.</p>
+  <p>There is also a cost you can measure. Every request from your program to the kernel crosses a protection boundary, with the register saving and cache disruption that implies. Containers do not remove that boundary; they add namespacing and cgroups above the same kernel, so a containerised process makes exactly the same system calls with more bookkeeping around them.</p>
+</section>
+
+<section>
+  <h2>The exokernel idea</h2>
+  <p>In 1995 a group at MIT — Dawson Engler, Frans Kaashoek and James O'Toole — published a design that took the two jobs apart. Their argument was that a kernel should do the first job and get out of the way of the second: <em>securely multiplex the hardware, and let applications implement their own abstractions.</em></p>
+  <p>An exokernel exposes hardware resources — disk blocks, memory pages, network packets, slices of CPU time — with protection and nothing else. The abstractions move into a <strong>library operating system</strong> that is linked into the application. If your program wants a filesystem, it links one; if it needs something unusual, it links a different one, or none at all. The kernel stops being an authority on what a file is.</p>
+  <p>The idea was influential and, for a long time, mostly academic. What revived it was virtualisation: once a hypervisor is the thing multiplexing the hardware among tenants, the protection job is already being done underneath, and the case for a general-purpose kernel inside each guest gets much weaker.</p>
+
+  <h3>Which gives you unikernels</h3>
+  <p>A <strong>unikernel</strong> is the logical end of that line. Take the application, take only the parts of a library OS it actually calls, compile them together into a single address space, and the result is a bootable machine image. No processes, because there is only one program. No system calls in the usual sense, because there is no boundary to cross — a "syscall" is a function call. No shell, no package manager, no init system, because nothing else is ever going to run there.</p>
+  <p>The term was popularised by the MirageOS work around 2013, and there are now several serious implementations — MirageOS, IncludeOS, Unikraft, OSv, Nanos among them. They differ in language and philosophy but share the shape: <em>one program, compiled with its operating system, booting as the machine.</em></p>
+</section>
+
+<section>
+  <h2>What actually gets removed</h2>
+
+  <figure>
+    <svg viewBox="0 0 760 340" role="img" aria-label="Three stacks compared: a Linux process and a container both sit above a full kernel with a protection boundary, while a unikernel on an exokernel compiles the application together with its libraries into one image with no boundary to cross.">
+      <defs>
+        <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+          <path d="M 0 0 L 10 5 L 0 10 z" fill="currentColor"/>
+        </marker>
+      </defs>
+
+      <!-- column headings -->
+      <text x="120" y="20" text-anchor="middle" font-size="12.5" font-weight="600" fill="currentColor">Linux process</text>
+      <text x="380" y="20" text-anchor="middle" font-size="12.5" font-weight="600" fill="currentColor">Container</text>
+      <text x="640" y="20" text-anchor="middle" font-size="12.5" font-weight="600" fill="currentColor" stroke="none">Unikernel</text>
+
+      <!-- column 1: linux process -->
+      <rect x="20" y="34" width="200" height="38" fill="none" stroke="currentColor" stroke-width="1.5"/>
+      <text x="120" y="58" text-anchor="middle" font-size="12" fill="currentColor">your program</text>
+      <rect x="20" y="76" width="200" height="30" fill="none" stroke="currentColor" stroke-width="1.5"/>
+      <text x="120" y="96" text-anchor="middle" font-size="11.5" fill="currentColor">libc</text>
+      <line x1="20" y1="116" x2="220" y2="116" stroke="currentColor" stroke-width="1" stroke-dasharray="5 4"/>
+      <text x="120" y="130" text-anchor="middle" font-size="10" fill="currentColor" opacity="0.75">syscall boundary</text>
+      <rect x="20" y="138" width="200" height="76" fill="none" stroke="currentColor" stroke-width="1.5"/>
+      <text x="120" y="162" text-anchor="middle" font-size="11.5" fill="currentColor">Linux kernel</text>
+      <text x="120" y="180" text-anchor="middle" font-size="10" fill="currentColor" opacity="0.75">scheduler · VFS</text>
+      <text x="120" y="196" text-anchor="middle" font-size="10" fill="currentColor" opacity="0.75">TCP/IP · drivers</text>
+
+      <!-- column 2: container -->
+      <rect x="280" y="34" width="200" height="38" fill="none" stroke="currentColor" stroke-width="1.5"/>
+      <text x="380" y="58" text-anchor="middle" font-size="12" fill="currentColor">your program</text>
+      <rect x="280" y="76" width="200" height="30" fill="none" stroke="currentColor" stroke-width="1.5"/>
+      <text x="380" y="96" text-anchor="middle" font-size="11.5" fill="currentColor">libc + image userland</text>
+      <rect x="280" y="110" width="200" height="26" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="4 3"/>
+      <text x="380" y="127" text-anchor="middle" font-size="10.5" fill="currentColor">namespaces · cgroups</text>
+      <line x1="280" y1="146" x2="480" y2="146" stroke="currentColor" stroke-width="1" stroke-dasharray="5 4"/>
+      <text x="380" y="160" text-anchor="middle" font-size="10" fill="currentColor" opacity="0.75">same syscall boundary</text>
+      <rect x="280" y="168" width="200" height="46" fill="none" stroke="currentColor" stroke-width="1.5"/>
+      <text x="380" y="188" text-anchor="middle" font-size="11.5" fill="currentColor">Linux kernel</text>
+      <text x="380" y="205" text-anchor="middle" font-size="10" fill="currentColor" opacity="0.75">shared with every container</text>
+
+      <!-- column 3: unikernel -->
+      <rect x="540" y="34" width="200" height="102" fill="var(--accent-soft)" stroke="var(--accent)" stroke-width="2"/>
+      <text x="640" y="58" text-anchor="middle" font-size="12" font-weight="600" fill="currentColor">your program</text>
+      <line x1="556" y1="68" x2="724" y2="68" stroke="var(--accent)" stroke-width="1" opacity="0.5"/>
+      <text x="640" y="85" text-anchor="middle" font-size="10.5" fill="currentColor">musl · lwIP · mbedTLS</text>
+      <text x="640" y="101" text-anchor="middle" font-size="10.5" fill="currentColor">curl · CA bundle</text>
+      <text x="640" y="122" text-anchor="middle" font-size="10" fill="currentColor" opacity="0.85">one address space · one image</text>
+      <text x="640" y="152" text-anchor="middle" font-size="10" fill="currentColor" opacity="0.75">no boundary to cross</text>
+      <rect x="540" y="162" width="200" height="52" fill="none" stroke="currentColor" stroke-width="1.5"/>
+      <text x="640" y="182" text-anchor="middle" font-size="11.5" fill="currentColor">BareMetal exokernel</text>
+      <text x="640" y="199" text-anchor="middle" font-size="10" fill="currentColor" opacity="0.75">multiplexes hardware only</text>
+
+      <!-- shared base -->
+      <rect x="20" y="238" width="720" height="40" fill="none" stroke="currentColor" stroke-width="1.5"/>
+      <text x="380" y="263" text-anchor="middle" font-size="11.5" fill="currentColor">hypervisor (Firecracker) · hardware</text>
+
+      <line x1="120" y1="214" x2="120" y2="236" stroke="currentColor" stroke-width="1.2" marker-end="url(#ar)"/>
+      <line x1="380" y1="214" x2="380" y2="236" stroke="currentColor" stroke-width="1.2" marker-end="url(#ar)"/>
+      <line x1="640" y1="214" x2="640" y2="236" stroke="currentColor" stroke-width="1.2" marker-end="url(#ar)"/>
+
+      <text x="380" y="304" text-anchor="middle" font-size="11" fill="currentColor" opacity="0.8">a container removes no layer — it namespaces the one above the kernel</text>
+      <text x="380" y="324" text-anchor="middle" font-size="11" fill="var(--accent)" font-weight="600">a unikernel removes the kernel's abstractions and links what it needs instead</text>
+    </svg>
+    <figcaption>The same program in three settings. What changes on the right is not that the box is smaller — it is that the dashed line is gone.</figcaption>
+  </figure>
+
+  <p>The consequences follow directly from the picture. The attack surface is what you linked and nothing else: there is no shell to get, no second process to pivot into, no package manager to exploit. The image is small because unreferenced library code is never linked. Boot is fast because there is no userland to bring up. And the whole thing is a single artifact, so "what is running in production" has one answer.</p>
+  <p>The costs are equally direct. One program means no sidecars and no local tooling. No shell means no logging in to look around when something is wrong — you get the serial console and whatever you thought to print. Configuration usually has to be compiled in. And when something in the library OS is wrong, you cannot apt-get the fix; you rebuild.</p>
+</section>
+
+<section>
+  <h2>BareMetal, specifically</h2>
+  <p>The system we used is <a href="https://github.com/ReturnInfinity">BareMetal</a> by Return Infinity: an exokernel written from scratch in x86-64 assembly, with an accompanying project, BareMetal-AppPort, that ports the library OS pieces an ordinary C program expects — musl for libc, lwIP for TCP/IP, mbedTLS for TLS, libcurl for HTTP, plus SQLite, libsodium, lwext4 and even CPython.</p>
+  <p>That combination is what makes the exercise interesting. You write ordinary C, against ordinary APIs, and what comes out is a bootable machine image of a few megabytes that runs under Firecracker with no Linux anywhere in the picture.</p>
+  <div class="console"><pre>$ ./1-build.sh bmagent.c cjson/cJSON.c
+Building...
+Linking...
+Built bmagent.app
+Unikernel mode enabled
+
+$ ls -l baremetal.elf
+-rwxr-xr-x 1 user user 2883040 baremetal.elf</pre></div>
+  <p>2.88 MB, and that is the entire machine.</p>
+</section>
+
+<section>
+  <h2>What we built on it</h2>
+  <p>Four programs, each pushing on a different property of the platform.</p>
+
+  <h3>1 · A prime search that phones home</h3>
+  <p>The first question was whether a unikernel could hold a TLS conversation with a public API at all. A twin-prime search that posts its records to Telegram answered it: <strong>24 HTTPS POSTs, 24 acknowledged, zero failures</strong>, inside a 16 MiB instance — mbedTLS, lwIP, curl and a full Mozilla CA bundle all resident alongside the running search.</p>
+  <p>We had budgeted 256 MiB for the TLS handshake. The platform's per-instance ceiling turned out to be 16 MiB, which rejected our deployment, and it then worked at 16 MiB anyway. That prediction was published before it was tested, and it was wrong.</p>
+
+  <h3>2 · A swarm with no coordinator</h3>
+  <p>Three instances hunting Cunningham chains — primes where <em>p</em>, 2<em>p</em>+1, 4<em>p</em>+3 and so on are all prime. Coordination used no queue, no database and no leader: worker <em>i</em> of <em>N</em> takes the candidates where <em>k</em> ≡ <em>i</em> (mod <em>N</em>). Coverage is complete and disjoint by arithmetic, and a worker dying costs exactly its own share.</p>
+  <p>It found <strong>56 chains, six of length nine</strong>, each re-verified afterwards with an independent implementation. The smallest:</p>
+  <div class="console"><pre>198,479,579 → 396,959,159 → 793,918,319 → 1,587,836,639 → 3,175,673,279
+→ 6,351,346,559 → 12,702,693,119 → 25,405,386,239 → 50,810,772,479</pre></div>
+  <p>It also failed instructively. The first partition split the odd numbers by index, which quietly pinned each worker to a fixed residue class mod 6 — and two of the three classes cannot produce a chain at all. One worker could never extend past length 1, another never saw a prime, and both looked perfectly healthy: running, networked, error-free, heartbeating. Effective parallelism was 1 for several hours before the arithmetic gave it away.</p>
+
+  <h3>3 · An agent that supervises the swarm</h3>
+  <p>The workers are dumb C loops, which is correct — testing primes needs no model. What needs one is <em>"is worker 1 broken, and if so, what broke?"</em>, because the branch tree is not enumerable: it crashed, it was reclaimed, DNS failed, quota hit, or it is perfectly healthy and its slice of the number line simply had nothing to announce — in which case silence is correct and intervening is the bug.</p>
+  <p>That last case is exactly what went wrong first, and the fix generalises well beyond this project. It is in the last section.</p>
+
+  <h3>4 · An agent you can text</h3>
+  <p>The one that ties it together: an LLM agent with tool calling, running as a unikernel, that anyone can hold a conversation with. Its tools mostly report on the machine it inhabits, so its answers are measurements rather than claims.</p>
+
+  <figure>
+    <svg viewBox="0 0 720 300" role="img" aria-label="The agent, a 2.88 MB unikernel in 16 MiB of RAM, exchanges HTTPS with four external services: Telegram for messages, Gemini for reasoning, Firecrawl for web search, and Redis over HTTP for the memory it cannot keep locally because the instance has no writable disk.">
+      <defs>
+        <marker id="ar2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+          <path d="M 0 0 L 10 5 L 0 10 z" fill="currentColor"/>
+        </marker>
+      </defs>
+
+      <!-- centre: the unikernel -->
+      <rect x="250" y="110" width="220" height="86" fill="var(--accent-soft)" stroke="var(--accent)" stroke-width="2"/>
+      <text x="360" y="136" text-anchor="middle" font-size="13" font-weight="600" fill="currentColor">the agent</text>
+      <text x="360" y="156" text-anchor="middle" font-size="10.5" fill="currentColor">2.88 MB unikernel · 16 MiB RAM</text>
+      <text x="360" y="173" text-anchor="middle" font-size="10.5" fill="currentColor">no OS · no disk · no heap</text>
+      <text x="360" y="189" text-anchor="middle" font-size="10" fill="currentColor" opacity="0.8">768 KB static buffers</text>
+
+      <!-- four peers -->
+      <rect x="40" y="30" width="150" height="40" fill="none" stroke="currentColor" stroke-width="1.5"/>
+      <text x="115" y="55" text-anchor="middle" font-size="11.5" fill="currentColor">Telegram</text>
+
+      <rect x="530" y="30" width="150" height="40" fill="none" stroke="currentColor" stroke-width="1.5"/>
+      <text x="605" y="55" text-anchor="middle" font-size="11.5" fill="currentColor">Gemini</text>
+
+      <rect x="530" y="236" width="150" height="40" fill="none" stroke="currentColor" stroke-width="1.5"/>
+      <text x="605" y="261" text-anchor="middle" font-size="11.5" fill="currentColor">Firecrawl</text>
+
+      <rect x="40" y="236" width="150" height="40" fill="none" stroke="currentColor" stroke-width="1.5"/>
+      <text x="115" y="255" text-anchor="middle" font-size="11.5" fill="currentColor">Redis</text>
+      <text x="115" y="269" text-anchor="middle" font-size="9.5" fill="currentColor" opacity="0.75">its memory</text>
+
+      <!-- edges -->
+      <line x1="190" y1="60" x2="250" y2="122" stroke="currentColor" stroke-width="1.3" marker-end="url(#ar2)" marker-start="url(#ar2)"/>
+      <text x="196" y="100" font-size="10" fill="currentColor" opacity="0.85">poll · reply</text>
+
+      <line x1="470" y1="122" x2="530" y2="60" stroke="currentColor" stroke-width="1.3" marker-end="url(#ar2)" marker-start="url(#ar2)"/>
+      <text x="474" y="100" font-size="10" fill="currentColor" opacity="0.85">think · tool calls</text>
+
+      <line x1="470" y1="184" x2="530" y2="244" stroke="currentColor" stroke-width="1.3" marker-end="url(#ar2)"/>
+      <text x="474" y="222" font-size="10" fill="currentColor" opacity="0.85">search · read</text>
+
+      <line x1="250" y1="184" x2="190" y2="244" stroke="var(--accent)" stroke-width="1.6" marker-end="url(#ar2)" marker-start="url(#ar2)"/>
+      <text x="150" y="222" font-size="10" fill="var(--accent)" font-weight="600">remember · recall</text>
+
+      <text x="360" y="292" text-anchor="middle" font-size="10.5" fill="currentColor" opacity="0.8">every edge is HTTPS, verified against the CA bundle inside the image</text>
+    </svg>
+    <figcaption>The agent has no local storage at all, so the notes it keeps about people travel the same path as everything else it knows.</figcaption>
+  </figure>
+
+  <p>It allocates nothing on the heap. cJSON is pointed at a static bump arena through <code>cJSON_InitHooks</code>, the buffers are fixed arrays, and partway down the file the allocator ceases to exist:</p>
+  <div class="console"><pre>#define malloc   DO_NOT_malloc
+#define realloc  DO_NOT_realloc
+#define free     DO_NOT_free</pre></div>
+  <p>Any code added below that line fails to compile if it reaches for the heap. A typical answer uses 8–54 KB of a 384 KB arena, which is reset after every exchange — so memory is bounded by one question rather than by uptime.</p>
+
+  <div class="callout">
+    <h4>Memory on a machine with no disk</h4>
+    <p>Cloud instances turned out to have no writable filesystem at all: <code>open(O_CREAT)</code> fails with <code>ENOENT</code>. The same binary on a local run with a real 512 MB disk writes happily and the value survives a restart, so this is the platform, not the program.</p>
+    <p>So its memory lives a network round-trip away — Redis behind an HTTP interface, reached over the same TLS stack as everything else. At boot it proves the path and, incidentally, counts its own restarts:</p>
+    <p><code>[+] memory reachable: this is boot #3, remembered across restarts</code></p>
+    <p>The key is built in C from the incoming chat id, never chosen by the model — so it cannot read another person's notes however it is asked to.</p>
+  </div>
+</section>
+
+<section>
+  <h2>What it measured</h2>
+  <div class="scroll">
+  <table>
+    <tr><th>Property</th><th class="num">Value</th><th>How</th></tr>
+    <tr><td>Image size, full agent</td><td class="num">2,883,040 B</td><td>program + musl + lwIP + mbedTLS + curl + cJSON + CA bundle</td></tr>
+    <tr><td>RAM ceiling</td><td class="num">16 MiB</td><td>platform limit; TLS and a conversation both fit</td></tr>
+    <tr><td>Static footprint</td><td class="num">768 KB</td><td>arena 384 + HTTP 256 + payload 128</td></tr>
+    <tr><td>Arena per answer</td><td class="num">8–54 KB</td><td>upper end with web results in context</td></tr>
+    <tr><td>Heap allocations</td><td class="num">0</td><td>compiler-enforced</td></tr>
+    <tr><td>Program start → first HTTPS</td><td class="num">888 ms</td><td>cycle counter, calibrated; excludes VM boot</td></tr>
+    <tr><td>Incremental rebuild</td><td class="num">≈1 s</td><td>after the one-time library build</td></tr>
+    <tr><td>Compute, unikernel</td><td class="num">0.80 M/s</td><td rowspan="2">same source, same host, matched at <code>-O0</code></td></tr>
+    <tr><td>Compute, Linux process</td><td class="num">2.67 M/s</td></tr>
+  </table>
+  </div>
+  <p>That last pair is the honest performance picture: <strong>3.3× slower at matched optimisation</strong>, on the same physical machine. Against a normal <code>-O2</code> Linux build the gap looks like 4.1×, but roughly a fifth of that is simply that BareMetal's build script carries no <code>-O</code> flag, so application code compiles unoptimised. We did not isolate the remaining difference; <code>-mcmodel=large</code> in the port's flags and the provenance of the 128-bit division helper are where we would look first.</p>
+
+  <div class="callout warn">
+    <h4>One finding that matters more than the rest</h4>
+    <p>The runtime does not compute deterministically for our workload. Three passes over an identical fixed range, <em>inside a single boot</em>, returned three different prime counts — always undercounts. It reproduces on real cloud hardware as well as on a nested-virtualisation host, it is unaffected by memory size, and Linux is exactly deterministic at both <code>-O0</code> and <code>-O2</code>.</p>
+    <p>A forty-line reproducer isolates it to 64-bit modular arithmetic with no primality logic, no allocation and no libc call in the loop: 20,000,000 evaluations of one fixed modular exponentiation give <strong>0 mismatches on Linux and 32 in the unikernel</strong>. We could not determine the cause; interrupt-time register preservation in the guest is the first thing we would audit, because it predicts the signature — a low, rate-dependent error frequency in a long-running compute loop.</p>
+    <p>The practical consequence for a search workload is that it silently <em>misses</em> results. It does not invent them — everything the swarm reported was independently verified — so finds stay trustworthy while coverage cannot be called exhaustive.</p>
+  </div>
+</section>
+
+<section>
+  <h2>When this shape makes sense</h2>
+  <p>The case for unikernels is strongest where the workload is a single long-lived network service with a narrow job: an edge function, a protocol gateway, a metering or signing service, a bot. You get a tiny attack surface, an image measured in megabytes, a fast start, and one artifact that is unambiguously what is running.</p>
+  <p>The case is weakest where you need the things a kernel is good at. Multiple cooperating processes, a shell for the 3 a.m. investigation, dynamic configuration, mature observability, a filesystem you can rely on, or a team who can debug what they already know. Our own experience is a fair sample: the platform did everything advertised, and every hour we lost went to something adjacent — a network script that would have disconnected the host, a build flag that made a benchmark meaningless, an absent filesystem, an arithmetic bug we could reproduce but not explain.</p>
+  <p>Neither list is a verdict. They are the shape of the trade, and it is a real trade rather than a free lunch.</p>
+</section>
+
+<section>
+  <h2>The lesson that generalises</h2>
+  <p>Three of our four programs are agents, and the same mistake happened in all three. It is worth naming because it is not about unikernels at all.</p>
+  <p>The supervisor's job was to notice broken workers and restart them. Its system prompt said, in plain words, that a worker with no recent findings is not necessarily unhealthy. On its first run against a completely healthy swarm, it restarted a worker anyway — reasoning that it had "only reported best 1", which indicated no finds. The restart left that instance stopped, so the intervention degraded the system it was meant to protect.</p>
+  <p>The fix was not a better sentence. It was moving the decision out of the model's reach: health computed in C from status, network and error lines, with find counts excluded by construction; a restart tool that <em>refuses</em> a healthy target and cannot be argued past; one corrective action per run, counted in a variable. After that, the healthy-swarm run took zero actions and the fault-injection run detected, restarted, re-verified and reported.</p>
+  <p>The same pattern recurred everywhere. The research agent cited URLs it had never fetched, so citations are now checked against what the run actually retrieved. The chat agent announced "I need to search for that" and stopped, leaving the person with a sentence and no answer.</p>
+  <div class="callout">
+    <h4>Guardrails in code, judgement in the prompt</h4>
+    <p>If a rule must hold, encode it where the model cannot reach: a validated enum, a refused call, a counter, an allowlist. Prompts are requests. A limit that lives in a prompt is a limit you are hoping for.</p>
+    <p>The corollary matters too, and is easy to over-apply: things that are genuinely judgement — which query to try next, whether the evidence settles the question, when to open a file rather than search again — belong in the prompt, and trying to encode them in C produces a brittle mess. Two of our fixes went one way and two went the other, and telling them apart is most of the skill.</p>
+  </div>
+</section>
+
+<section>
+  <h2>Reproducing any of it</h2>
+  <p>Both repositories are MIT.</p>
+  <p><a href="https://github.com/tabibazar/unikernel-c">github.com/tabibazar/unikernel-c</a> — the prime hunter, the Cunningham swarm, the supervising agent, a stateless research agent, the benchmark harnesses and the nondeterminism reproducer, plus a technical report with the full measurements.</p>
+  <p><a href="https://github.com/tabibazar/baremetal-agent">github.com/tabibazar/baremetal-agent</a> — the agent you can text, with build instructions for Linux, macOS, a local Firecracker run, and BareMetal Cloud; the self-hosted Redis-over-HTTP memory service; and the disk test that established there is no local filesystem.</p>
+  <p>Everything builds from the same source on Linux, macOS and BareMetal, which is what makes it practical to develop: iterate as an ordinary binary in seconds, then rebuild as a machine image in about one more.</p>
+</section>
+
+<footer>
+  <p>Written after two days of building on BareMetal and BareMetal-AppPort by Return Infinity, whose responsiveness to a stream of bug reports is the reason the harder measurements exist at all. Every figure here was measured rather than recalled; where a cause is unknown, it is labelled unknown.</p>
+</footer>
+
+</div>
