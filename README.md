@@ -2,7 +2,7 @@
 
 Small C programs that run as [BareMetal](https://github.com/ReturnInfinity) unikernels — no operating system, no runtime, no interpreter — and still speak HTTPS to the outside world.
 
-Two of them:
+Five of them:
 
 | | What it is |
 |---|---|
@@ -12,7 +12,7 @@ Two of them:
 | **`supervisor/`** | The agent that watches the swarm: diagnoses faults from evidence and heals them, with the guardrails in code rather than in the prompt. |
 | **`research/`** | A stateless research agent: ask a question, it searches and reads until it can answer, then exits carrying nothing forward. |
 
-Both compile unchanged for Linux, macOS, and BareMetal.
+They all compile unchanged for Linux, macOS, and BareMetal.
 
 ## Why this exists
 
