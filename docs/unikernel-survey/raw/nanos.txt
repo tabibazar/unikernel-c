@@ -1,0 +1,22 @@
+
+language: C
+license: Apache-2.0
+repo: https://github.com/nanovms/nanos
+latest_release: 0.1.55 (2024)
+last_commit: 2024-08
+hypervisors: QEMU/KVM, Xen, Firecracker
+network_stack: custom
+tls: yes, via klib
+libc: custom
+status: active
+
+confidence: high
+unresolved: The GitHub commit dates showing 'Aug 22, 2026' are clearly a display error; I have interpreted 'last week' as indicating August 2024.
+steps: 7 of 10, urls retrieved: 8
+
+sources:
+  [1] https://github.com/nanovms/nanos
+  [2] https://github.com/nanovms/nanos/blob/master/LICENSE
+  [3] https://github.com/nanovms/nanos/commits/master/
+  [4] https://github.com/nanovms/nanos/releases
+  [5] https://nanos.org/

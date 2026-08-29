@@ -1,0 +1,13 @@
+
+Mini-OS is a unikernel or library operating system that is part of the Xen Project. Its source code repository is located at https://github.com/xen-project/mini-os. The primary implementation language is C. The project uses a BSD-2-Clause license, with some components optionally covered by GPLv2 if enabled. The most recent release appears to be `xen-RELEASE-4.7.0`, tagged on June 20, 2016. The last commit to the repository was on September 6, 2016, suggesting the project is currently dormant. It targets the Xen Project Hypervisor. For its network stack, Mini-OS uses LWIP, which needs to be downloaded separately. It includes "minimal libc support". Whether it supports TLS and via what mechanism is unknown.
+
+confidence: high
+unresolved: Whether it supports TLS and via what mechanism is unknown.
+steps: 7 of 12, urls retrieved: 9
+
+sources:
+  [1] https://github.com/xen-project/mini-os
+  [2] https://github.com/xen-project/mini-os/blob/master/COPYING
+  [3] https://github.com/xen-project/mini-os/blob/master/README
+  [4] https://github.com/xen-project/mini-os/blob/master/Makefile
+  [5] https://github.com/xen-project/mini-os/tags

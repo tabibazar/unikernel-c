@@ -1,0 +1,10 @@
+
+Unikernel Linux (UKL) is primarily implemented in C. Its source code repository is located at https://github.com/unikernelLinux/ukl. The project operates under the GNU Lesser General Public License v2.1 (LGPL-2.1). As of August 2023, the last commit indicates active development. There are no specific releases mentioned, so the latest release is reported as 'none'. UKL targets QEMU/KVM and bare metal environments. It utilizes the standard Linux network stack and glibc for its C library. Information regarding TLS implementation is not specified in the available documentation.
+
+confidence: high
+steps: 7 of 10, urls retrieved: 11
+
+sources:
+  [1] https://github.com/unikernelLinux/ukl
+  [2] https://github.com/unikernelLinux/ukl/blob/main/COPYING.LIB
+  [3] https://github.com/unikernelLinux/ukl/blob/main/README.md

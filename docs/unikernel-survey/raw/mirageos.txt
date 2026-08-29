@@ -1,0 +1,10 @@
+
+MirageOS is an OCaml-based unikernel project with its source repository located at https://github.com/mirage/mirage. The project is actively developed, with the latest recorded release being v4.11.2 on July 28, 2026, and recent commits in July 2026. It targets various hypervisors, including Xen, KVM, FreeBSD's BHyve, and OpenBSD's VMM. The network stack is custom-built, as indicated by mentions of direct TCP/IP stacks and DHCP functionalities within the project. The license, TLS library used, and libc implementation could not be established from the provided sources.
+
+confidence: high
+steps: 8 of 10, urls retrieved: 10
+
+sources:
+  [1] https://github.com/mirage/mirage
+  [2] https://github.com/mirage/mirage/blob/main/CHANGES.md
+  [3] https://github.com/mirage/mirage/blob/main/README.md

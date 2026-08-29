@@ -1,0 +1,13 @@
+
+Unikraft's main implementation language is C, and it is licensed under BSD-3. The source repository is located at https://github.com/unikraft/unikraft. The latest release is v0.21.0 (Ijiraq) from 2026, and the last commit was in August 2026, indicating an active project status. It targets hypervisors such as QEMU/KVM, Xen, and Linux userspace. Its network stack is lwIP, and it uses nolibc for its C library. Information regarding its TLS library implementation is not explicitly stated in the provided sources.
+
+confidence: high
+unresolved: TLS library used for application-level encryption.
+steps: 7 of 10, urls retrieved: 12
+
+sources:
+  [1] https://github.com/unikraft/unikraft
+  [2] https://github.com/unikraft/unikraft/blob/staging/COPYING.md
+  [3] https://github.com/unikraft/unikraft/blob/staging/README.md
+  [4] https://archive.fosdem.org/2021/stands.fosdem.org/stands/unikraft/
+  [5] https://arxiv.org/html/2405.04036v1

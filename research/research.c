@@ -48,7 +48,7 @@
 #define SCRAPE_URL   "https://api.firecrawl.dev/v2/scrape"
 
 #ifndef MAX_STEPS
-#define MAX_STEPS      10        // search/read rounds before it must answer
+#define MAX_STEPS      12        // search/read rounds before it must answer
 #endif
 #define SEARCH_RESULTS 5         // results kept per search
 #define DESC_CAP       320       // per-result description, bytes
@@ -74,8 +74,31 @@ static size_t collect(void *contents, size_t size, size_t nmemb, void *userp) {
     return total;
 }
 
-// Caller frees. status_out receives the HTTP status.
+// Retries a request that failed in a way retrying can fix. Rate limiting is the
+// common case here: several of these agents running at once will trip a search
+// API's limits, and a tool that treats one 429 as "this fact does not exist"
+// turns my own concurrency into a permanent hole in the results.
+static char *post_json_once(const char *url, const char *body, const char *bearer, long *status_out);
+
 static char *post_json(const char *url, const char *body, const char *bearer, long *status_out) {
+    int backoff = 2;
+    for (int attempt = 1; attempt <= 4; attempt++) {
+        long status = 0;
+        char *r = post_json_once(url, body, bearer, &status);
+        if (status_out) *status_out = status;
+        if (r && status < 400) return r;
+        int retryable = (status == 429 || status >= 500 || status == 0);
+        free(r);
+        if (!retryable || attempt == 4) return NULL;
+        fprintf(stderr, "    [~] %s returned %ld, retrying in %ds\n", url, status, backoff);
+        sleep((unsigned)backoff);
+        backoff *= 2;
+    }
+    return NULL;
+}
+
+// Caller frees. status_out receives the HTTP status.
+static char *post_json_once(const char *url, const char *body, const char *bearer, long *status_out) {
     CURL *h = curl_easy_init();
     if (!h) return NULL;
 
@@ -204,7 +227,7 @@ static const char *TOOLS_JSON =
 "     \"description\":\"Give the final answer. This is the only way to finish. Cite only urls you actually retrieved in this run.\","
 "     \"parameters\":{\"type\":\"object\",\"properties\":{"
 "        \"answer\":{\"type\":\"string\",\"description\":\"The answer, in a few sentences. Say what is established and how you know.\"},"
-"        \"sources\":{\"type\":\"array\",\"items\":{\"type\":\"string\"},\"description\":\"Urls that support the answer.\"},"
+"        \"sources\":{\"type\":\"string\",\"description\":\"Urls that support the answer, separated by spaces.\"},"
 "        \"confidence\":{\"type\":\"string\",\"enum\":[\"high\",\"medium\",\"low\"]},"
 "        \"unresolved\":{\"type\":\"string\",\"description\":\"Anything you could not establish, or empty if nothing.\"}},"
 "        \"required\":[\"answer\",\"sources\",\"confidence\"]}}}"
@@ -371,8 +394,21 @@ static void tool_submit_answer(const cJSON *args) {
     g_confidence = strdup(cJSON_IsString(c) ? c->valuestring : "unstated");
     g_unresolved = strdup(cJSON_IsString(u) ? u->valuestring : "");
 
+    // Accepts either shape: a space-separated string (what the schema asks for
+    // now) or an array (what it used to ask for, and what a model may still
+    // produce). Being lenient in what is accepted costs a few lines and removes
+    // a whole class of failure.
     g_source_count = g_sources_stripped = 0;
-    if (cJSON_IsArray(s)) {
+    if (cJSON_IsString(s)) {
+        char buf[4096];
+        snprintf(buf, sizeof(buf), "%s", s->valuestring);
+        char *save = NULL;
+        for (char *t = strtok_r(buf, " ,\n\t", &save); t; t = strtok_r(NULL, " ,\n\t", &save)) {
+            if (strncmp(t, "http", 4) != 0) continue;
+            if (!url_was_seen(t)) { g_sources_stripped++; continue; }
+            if (g_source_count < 16) snprintf(g_sources[g_source_count++], URL_LEN, "%s", t);
+        }
+    } else if (cJSON_IsArray(s)) {
         cJSON *it = NULL;
         cJSON_ArrayForEach(it, s) {
             if (!cJSON_IsString(it)) continue;
@@ -448,8 +484,19 @@ static cJSON *llm_attempt(const cJSON *messages, int *retryable) {
     cJSON *choices = cJSON_GetObjectItemCaseSensitive(json, "choices");
     cJSON *msg = NULL;
     if (cJSON_IsArray(choices) && cJSON_GetArraySize(choices) > 0) {
-        cJSON *m = cJSON_GetObjectItemCaseSensitive(cJSON_GetArrayItem(choices, 0), "message");
+        cJSON *choice = cJSON_GetArrayItem(choices, 0);
+        cJSON *m = cJSON_GetObjectItemCaseSensitive(choice, "message");
         if (m) msg = cJSON_Duplicate(m, 1);
+        if (m) {
+            cJSON *c  = cJSON_GetObjectItemCaseSensitive(m, "content");
+            cJSON *tc = cJSON_GetObjectItemCaseSensitive(m, "tool_calls");
+            if ((!cJSON_IsString(c) || !*c->valuestring) &&
+                (!cJSON_IsArray(tc) || cJSON_GetArraySize(tc) == 0)) {
+                cJSON *fr = cJSON_GetObjectItemCaseSensitive(choice, "finish_reason");
+                fprintf(stderr, "    [!] empty turn, finish_reason=%s\n",
+                        cJSON_IsString(fr) ? fr->valuestring : "(absent)");
+            }
+        }
     }
     cJSON_Delete(json);
     return msg;

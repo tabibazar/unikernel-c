@@ -1,0 +1,11 @@
+
+UniK (solo-io/unik) is a unikernel and microVM compilation and deployment platform. Its source repository is located at https://github.com/solo-io/unik. The primary implementation language is Go. It is licensed under the Apache 2.0 License. The most recent release is 0.0, dated May 23, 2016. It was last committed to around July 17, 2019. UniK targets various hypervisors including Virtualbox, vSphere, and Firecracker, and also supports ARM processors for embedded devices like the Raspberry Pi. The network stack and libc it uses are unknown, as is whether it supports TLS and via what. Given the last commit date and release date, the project appears to be dormant.
+
+confidence: high
+unresolved: The network stack, libc, and TLS support are unknown.
+steps: 6 of 12, urls retrieved: 6
+
+sources:
+  [1] https://github.com/solo-io/unik
+  [2] https://github.com/solo-io/unik/wiki/UniK:-Build-and-Run-Unikernels-with-Ease
+  [3] https://github.com/solo-io/unik/tags

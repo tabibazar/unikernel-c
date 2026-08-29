@@ -1,0 +1,10 @@
+
+Gramine is a library OS for Intel SGX, with its source repository at https://github.com/gramineproject/gramine. It is primarily implemented in C and is an active project, with the most recent release, v1.9, on approximately June 18, 2024, and the last commit around June 20, 2024. It targets environments that support Intel SGX, with ongoing work for Docker integration. The specific license, network stack, TLS support, and libc used are all unknown from the available information.
+
+confidence: high
+steps: 9 of 12, urls retrieved: 8
+
+sources:
+  [1] https://github.com/gramineproject/gramine
+  [2] https://gramineproject.io/
+  [3] https://github.com/gramineproject/gramine/tags

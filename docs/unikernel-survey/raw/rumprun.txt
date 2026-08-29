@@ -1,0 +1,12 @@
+
+The Rumprun unikernel project's source repository is located at https://github.com/rumpkernel/rumprun. It is primarily implemented in C, leveraging NetBSD source components. The project is distributed under a 2-clause BSD license. There are no formal releases (tags) listed in the repository. The most recent commit to the main repository was on May 11, 2020, indicating that the project is dormant.
+
+Rumprun targets various hypervisors, including KVM and Xen, and also supports execution on bare metal. It uses the NetBSD network stack for its networking capabilities. TLS is supported, with references suggesting it is facilitated through libraries like OpenSSL. The project utilizes the NetBSD libc.
+
+confidence: high
+steps: 10 of 12, urls retrieved: 14
+
+sources:
+  [1] https://github.com/rumpkernel/rumprun
+  [2] https://github.com/rumpkernel/rumprun/blob/master/LICENSE
+  [3] https://github.com/rumpkernel/rumprun/blob/master/README.md

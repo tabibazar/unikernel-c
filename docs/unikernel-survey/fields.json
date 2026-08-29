@@ -1,0 +1,369 @@
+{
+  "baremetal": {
+    "language": "x86-64 Assembly",
+    "license": "MIT",
+    "repo": "https://github.com/ReturnInfinity/BareMetal",
+    "latest_release": "2026.01 (January 2026)",
+    "last_commit": "2026-06",
+    "hypervisors": [
+      "bare metal",
+      "virtualized environments"
+    ],
+    "network_stack": "custom",
+    "tls": "unknown",
+    "libc": "custom",
+    "status": "active",
+    "sources": [
+      "https://github.com/ReturnInfinity/BareMetal",
+      "https://github.com/ReturnInfinity/BareMetal/blob/main/LICENSE",
+      "https://github.com/ReturnInfinity/BareMetal/tree/main/src"
+    ]
+  },
+  "clickos": {
+    "language": "C/C++",
+    "license": "MIT-like with a clause requiring prior written permission for advertising or publicity, while restricted portions are subject to the GNU General Public License Version 2",
+    "repo": "https://github.com/sysml/clickos",
+    "latest_release": "v0.2 (June 17, 2014)",
+    "last_commit": "October 16, 2017",
+    "hypervisors": "Xen",
+    "network_stack": "Click modular router",
+    "tls": null,
+    "libc": null,
+    "status": "dormant",
+    "sources": [
+      "https://github.com/sysml/clickos",
+      "https://github.com/sysml/clickos/blob/master/COPYING",
+      "https://github.com/sysml/clickos/tags"
+    ]
+  },
+  "clive": {
+    "language": null,
+    "license": null,
+    "repo": null,
+    "latest_release": null,
+    "last_commit": null,
+    "hypervisors": null,
+    "network_stack": null,
+    "tls": null,
+    "libc": null,
+    "status": null,
+    "sources": []
+  },
+  "drawbridge": {
+    "language": "C/C++",
+    "license": null,
+    "repo": null,
+    "latest_release": null,
+    "last_commit": null,
+    "hypervisors": "custom \"picoprocess\" isolation container",
+    "network_stack": null,
+    "tls": null,
+    "libc": null,
+    "status": "archived",
+    "sources": [
+      "https://www.microsoft.com/en-us/research/project/drawbridge/",
+      "https://github.com/thinkcz/DrawBridge"
+    ]
+  },
+  "gramine": {
+    "language": "C",
+    "license": null,
+    "repo": "https://github.com/gramineproject/gramine",
+    "latest_release": "v1.9 on approximately June 18, 2024",
+    "last_commit": "around June 20, 2024",
+    "hypervisors": "Intel SGX",
+    "network_stack": null,
+    "tls": null,
+    "libc": null,
+    "status": "active",
+    "sources": [
+      "https://github.com/gramineproject/gramine",
+      "https://gramineproject.io/",
+      "https://github.com/gramineproject/gramine/tags"
+    ]
+  },
+  "halvm": {
+    "language": "Haskell",
+    "license": "BSD 3-Clause \"New\" or \"Revised\" License",
+    "repo": "https://github.com/GaloisInc/HaLVM",
+    "latest_release": null,
+    "last_commit": "December 6, 2018",
+    "hypervisors": "Xen",
+    "network_stack": null,
+    "tls": null,
+    "libc": null,
+    "status": "dormant",
+    "sources": [
+      "https://github.com/GaloisInc/HaLVM",
+      "https://github.com/GaloisInc/HaLVM/blob/master/LICENSE"
+    ]
+  },
+  "hermitos": {
+    "language": "Rust",
+    "license": "Apache License, Version 2.0 and MIT License",
+    "repo": "https://github.com/hermit-os/hermit-rs",
+    "latest_release": null,
+    "last_commit": "August 24, 2026",
+    "hypervisors": "KVM",
+    "network_stack": "smoltcp",
+    "tls": null,
+    "libc": null,
+    "status": null,
+    "sources": [
+      "https://github.com/hermit-os/hermit-rs",
+      "https://github.com/hermit-os/hermit-rs/commits/main/",
+      "http://unikernel.org/projects/"
+    ]
+  },
+  "includeos": {
+    "language": "C++",
+    "license": "Apache License 2.0",
+    "repo": "https://github.com/includeos/includeos",
+    "latest_release": "v0.15.0 Cunning Conan, May 9, 2019",
+    "last_commit": "roughly 3 months ago (as of August 2023)",
+    "hypervisors": "x86, ukvm (via Solo5)",
+    "network_stack": "custom IP network stack (IPv4/IPv6 dual-stack, TCP/UDP client/server, SLAAC)",
+    "tls": null,
+    "libc": "libc++ and libc++abi (version 7.0.1)",
+    "status": "active",
+    "sources": [
+      "https://github.com/includeos/includeos",
+      "https://github.com/includeos/IncludeOS/blob/main/LICENSE",
+      "https://github.com/includeos/IncludeOS/releases"
+    ]
+  },
+  "ling": {
+    "language": [
+      "Erlang",
+      "C"
+    ],
+    "license": "custom permissive license similar to BSD",
+    "repo": "https://github.com/cloudozer/ling",
+    "latest_release": "v0.3.2r (February 4, 2015)",
+    "last_commit": "October 12, 2015",
+    "hypervisors": [
+      "Xen"
+    ],
+    "network_stack": null,
+    "tls": null,
+    "libc": null,
+    "status": "dormant",
+    "sources": [
+      "https://github.com/cloudozer/ling",
+      "https://github.com/cloudozer/ling/blob/master/LICENSE",
+      "https://github.com/cloudozer/ling/tags"
+    ]
+  },
+  "mini-os": {
+    "language": "C",
+    "license": "BSD-2-Clause, with some components optionally covered by GPLv2 if enabled",
+    "repo": "https://github.com/xen-project/mini-os",
+    "latest_release": "xen-RELEASE-4.7.0, tagged on June 20, 2016",
+    "last_commit": "September 6, 2016",
+    "hypervisors": "Xen Project Hypervisor",
+    "network_stack": "LWIP",
+    "tls": null,
+    "libc": "minimal libc support",
+    "status": "dormant",
+    "sources": [
+      "https://github.com/xen-project/mini-os",
+      "https://github.com/xen-project/mini-os/blob/master/COPYING",
+      "https://github.com/xen-project/mini-os/blob/master/README"
+    ]
+  },
+  "mirageos": {
+    "language": "OCaml",
+    "license": null,
+    "repo": "https://github.com/mirage/mirage",
+    "latest_release": "v4.11.2 on July 28, 2026",
+    "last_commit": "July 2026",
+    "hypervisors": [
+      "Xen",
+      "KVM",
+      "FreeBSD's BHyve",
+      "OpenBSD's VMM"
+    ],
+    "network_stack": "custom-built",
+    "tls": null,
+    "libc": null,
+    "status": "active",
+    "sources": [
+      "https://github.com/mirage/mirage",
+      "https://github.com/mirage/mirage/blob/main/CHANGES.md",
+      "https://github.com/mirage/mirage/blob/main/README.md"
+    ]
+  },
+  "nanos": {
+    "language": "C",
+    "license": "Apache-2.0",
+    "repo": "https://github.com/nanovms/nanos",
+    "latest_release": "0.1.55 (2024)",
+    "last_commit": "2024-08",
+    "hypervisors": "QEMU/KVM, Xen, Firecracker",
+    "network_stack": "custom",
+    "tls": "yes, via klib",
+    "libc": "custom",
+    "status": "active",
+    "sources": [
+      "https://github.com/nanovms/nanos",
+      "https://github.com/nanovms/nanos/blob/master/LICENSE",
+      "https://github.com/nanovms/nanos/commits/master/"
+    ]
+  },
+  "osv": {
+    "language": "C++, Rust",
+    "license": "3-clause BSD license",
+    "repo": "https://github.com/cloudius-systems/osv",
+    "latest_release": "v0.57.0, dated December 14, 2022",
+    "last_commit": "approximately two weeks ago",
+    "hypervisors": [
+      "QEMU/KVM",
+      "Firecracker",
+      "Xen",
+      "VMWare",
+      "VirtualBox",
+      "Hyperkit"
+    ],
+    "network_stack": "its own full-featured TCP/IP network stack, though the master branch currently only implements an IPv4 subset",
+    "tls": "available",
+    "libc": "its own custom libc implementation, designed for libc-level compatibility with Linux applications",
+    "status": "active",
+    "sources": [
+      "https://github.com/cloudius-systems/osv",
+      "https://github.com/cloudius-systems/osv/tags",
+      "https://github.com/cloudius-systems/osv/blob/master/LICENSE"
+    ]
+  },
+  "rumprun": {
+    "language": "C",
+    "license": "2-clause BSD",
+    "repo": "https://github.com/rumpkernel/rumprun",
+    "latest_release": null,
+    "last_commit": "May 11, 2020",
+    "hypervisors": [
+      "KVM",
+      "Xen",
+      "bare metal"
+    ],
+    "network_stack": "NetBSD network stack",
+    "tls": "OpenSSL",
+    "libc": "NetBSD libc",
+    "status": "dormant",
+    "sources": [
+      "https://github.com/rumpkernel/rumprun",
+      "https://github.com/rumpkernel/rumprun/blob/master/LICENSE",
+      "https://github.com/rumpkernel/rumprun/blob/master/README.md"
+    ]
+  },
+  "runtimejs": {
+    "language": "JavaScript",
+    "license": "unknown",
+    "repo": "https://github.com/runtimejs/runtime",
+    "latest_release": "unknown",
+    "last_commit": "unknown",
+    "hypervisors": "unknown",
+    "network_stack": "unknown",
+    "tls": "unknown",
+    "libc": "unknown",
+    "status": "dormant",
+    "sources": [
+      "https://github.com/runtimejs/runtime"
+    ]
+  },
+  "solo5": {
+    "language": "C",
+    "license": "ISC License",
+    "repo": "https://github.com/Solo5/solo5",
+    "latest_release": "v0.13.0 (Aug 28, 2026)",
+    "last_commit": "August 2026",
+    "hypervisors": "QEMU/KVM, sandboxed process (via spt)",
+    "network_stack": null,
+    "tls": null,
+    "libc": null,
+    "status": "active",
+    "sources": [
+      "https://github.com/Solo5/solo5",
+      "https://github.com/Solo5/solo5/blob/main/LICENSE",
+      "https://github.com/Solo5/solo5/tags"
+    ]
+  },
+  "torokernel": {
+    "language": "Pascal",
+    "license": "GNU General Public License v3.0",
+    "repo": "https://github.com/torokernel/torokernel",
+    "latest_release": null,
+    "last_commit": "February 2024",
+    "hypervisors": null,
+    "network_stack": null,
+    "tls": null,
+    "libc": null,
+    "status": "active",
+    "sources": [
+      "https://github.com/torokernel/torokernel",
+      "https://github.com/torokernel/torokernel/blob/master/COPYING"
+    ]
+  },
+  "unik": {
+    "language": "Go",
+    "license": "Apache 2.0 License",
+    "repo": "https://github.com/solo-io/unik",
+    "latest_release": "0.0, dated May 23, 2016",
+    "last_commit": "July 17, 2019",
+    "hypervisors": [
+      "Virtualbox",
+      "vSphere",
+      "Firecracker",
+      "ARM processors (Raspberry Pi)"
+    ],
+    "network_stack": null,
+    "tls": null,
+    "libc": null,
+    "status": "dormant",
+    "sources": [
+      "https://github.com/solo-io/unik",
+      "https://github.com/solo-io/unik/wiki/UniK:-Build-and-Run-Unikernels-with-Ease",
+      "https://github.com/solo-io/unik/tags"
+    ]
+  },
+  "unikernel-linux": {
+    "language": "C",
+    "license": "LGPL-2.1",
+    "repo": "https://github.com/unikernelLinux/ukl",
+    "latest_release": "none",
+    "last_commit": "August 2023",
+    "hypervisors": [
+      "QEMU/KVM",
+      "bare metal"
+    ],
+    "network_stack": "Linux network stack",
+    "tls": null,
+    "libc": "glibc",
+    "status": "active",
+    "sources": [
+      "https://github.com/unikernelLinux/ukl",
+      "https://github.com/unikernelLinux/ukl/blob/main/COPYING.LIB",
+      "https://github.com/unikernelLinux/ukl/blob/main/README.md"
+    ]
+  },
+  "unikraft": {
+    "language": "C",
+    "license": "BSD-3",
+    "repo": "https://github.com/unikraft/unikraft",
+    "latest_release": "v0.21.0 (Ijiraq) from 2026",
+    "last_commit": "August 2026",
+    "hypervisors": [
+      "QEMU/KVM",
+      "Xen",
+      "Linux userspace"
+    ],
+    "network_stack": "lwIP",
+    "tls": null,
+    "libc": "nolibc",
+    "status": "active",
+    "sources": [
+      "https://github.com/unikraft/unikraft",
+      "https://github.com/unikraft/unikraft/blob/staging/COPYING.md",
+      "https://github.com/unikraft/unikraft/blob/staging/README.md"
+    ]
+  }
+}

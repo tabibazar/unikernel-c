@@ -173,6 +173,17 @@ Search and page reading are [Firecrawl](https://firecrawl.dev), which returns pa
 - **Reading is confined to hosts that search surfaced**, so it cannot wander onto a domain it invented — but it may navigate freely within a site it legitimately found.
 - **Running out of budget produces an answer, not silence.** On the last step it is asked for what it has, with the gaps named in `unresolved`.
 
+### A survey it produced
+
+`docs/unikernel-survey.md` is the output of running this agent twenty times, once per unikernel
+project: language, licence, latest release, last commit, hypervisors, network stack, TLS, libc and
+status, with the sources for each. Eight of the twenty are still active; only three could be shown
+to support TLS.
+
+The raw answers and the driver are in `docs/unikernel-survey/`, including the two failures worth
+knowing about — self-inflicted rate limiting, and a ten-field question that exhausted the step
+budget before the agent would commit.
+
 ### Two things learned by watching it fail
 
 The first version required a read URL to have appeared *exactly* in a search result. That sounded safe and was useless: the fact lived in `setup.sh`, a repository landing page does not contain it, and a file inside a repo never appears as its own search result. The agent could see where the answer was and was forbidden to go there. Same-host is the rule that keeps the property worth having.

@@ -1,0 +1,21 @@
+
+The HermitOS unikernel, specifically the `hermit-rs` implementation, is primarily written in Rust. It is dual-licensed under the Apache License, Version 2.0 and the MIT License. The repository URL is https://github.com/hermit-os/hermit-rs. The last commit to the main branch was on August 24, 2026.
+
+confidence: high
+steps: 6 of 12, urls retrieved: 11
+
+sources:
+  [1] https://github.com/hermit-os/hermit-rs
+  [2] https://github.com/hermit-os/hermit-rs/commits/main/
+
+HermitOS targets the KVM hypervisor. It uses `smoltcp` as its network stack. While not explicitly stated to have an integrated TLS library, its support for various programming languages (C, C++, Fortran, Go) implies it can support applications that utilize TLS. HermitOS does not use a traditional Linux libc like glibc; instead, it's a Rust-based unikernel that provides a compatible environment for applications written in C/C++, Go, and Fortran, likely through its own minimal or compatible C library implementation.
+
+confidence: high
+unresolved: Whether HermitOS directly includes a TLS library or relies solely on application-level libraries for TLS support. The specific name of the libc implementation, if it's a custom one, is not explicitly stated, but its compatibility with C/C++/Go/Fortran implies a functional equivalent.
+steps: 11 of 12, urls retrieved: 21
+
+sources:
+  [1] http://unikernel.org/projects/
+  [2] https://hermit-os.org/
+  [3] https://rust-osdev.com/showcase/hermit/
+  [4] https://arxiv.org/html/2405.04036v1

@@ -1,0 +1,13 @@
+
+The LING (Erlang on Xen unikernel) project's source repository is located at https://github.com/cloudozer/ling. It is primarily implemented in Erlang, with underlying components likely in C. The license is a custom permissive license similar to BSD. The most recent release is v0.3.2r, dated February 4, 2015. The last commit to the repository was on October 12, 2015. LING targets the Xen hypervisor. It supports TCP (indicated by `gen_tcp` tests). Given the last commit and release dates, the project appears to be dormant or archived.
+
+confidence: high
+unresolved: The specific network stack used, the specific libc used, and whether it supports TLS.
+steps: 9 of 12, urls retrieved: 12
+
+sources:
+  [1] https://github.com/cloudozer/ling
+  [2] https://github.com/cloudozer/ling/blob/master/LICENSE
+  [3] https://github.com/cloudozer/ling/tags
+  [4] https://github.com/cloudozer/ling/blob/master/HACKING.md
+  [5] https://github.com/cloudozer/ling/blob/master/README.md

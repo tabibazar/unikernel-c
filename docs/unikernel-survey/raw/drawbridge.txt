@@ -1,0 +1,10 @@
+
+Microsoft Research's Drawbridge project is a research prototype of a new form of virtualization for application sandboxing. The implementation language is C/C++, as it is a modified version of Windows and utilizes Windows 8 binaries. The project is archived, as explicitly stated on its official Microsoft Research page. Drawbridge targets a custom "picoprocess" isolation container rather than traditional hardware hypervisors. The official source repository URL, licence, most recent release, approximate last commit date, specific network stack, TLS support mechanism, and libc used are all unknown.
+
+confidence: high
+unresolved: Official source repository URL, licence, most recent release, approximate last commit date, network stack used, whether it supports TLS and via what, and what libc it uses.
+steps: 5 of 12, urls retrieved: 5
+
+sources:
+  [1] https://www.microsoft.com/en-us/research/project/drawbridge/
+  [2] https://github.com/thinkcz/DrawBridge

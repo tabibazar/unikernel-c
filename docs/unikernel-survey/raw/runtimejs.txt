@@ -1,0 +1,18 @@
+
+language: JavaScript
+license: unknown
+repo: https://github.com/runtimejs/runtime
+latest_release: unknown
+last_commit: unknown
+hypervisors: unknown
+network_stack: unknown
+tls: unknown
+libc: unknown
+status: dormant
+
+confidence: low
+unresolved: I was unable to access the GitHub repository page or the project's website (runtimejs.org) to gather more detailed information about its license, latest release, last commit date, targeted hypervisors, network stack, TLS implementation, or libc usage. The project appears to be dormant based on the '[not maintained]' tag in the GitHub search result.
+steps: 7 of 10, urls retrieved: 5
+
+sources:
+  [1] https://github.com/runtimejs/runtime

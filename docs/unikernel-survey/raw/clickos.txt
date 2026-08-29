@@ -1,0 +1,12 @@
+
+ClickOS is a unikernel or library operating system project for network functions. Its source repository is located at https://github.com/sysml/clickos. The implementation language is primarily C/C++. The licensing is a combination: most of the code is under an MIT-like license with a clause requiring prior written permission for advertising or publicity, while restricted portions are subject to the GNU General Public License Version 2. The most recent tagged release within the ClickOS repository is `v0.2`, released on June 17, 2014. The repository was last committed to on October 16, 2017, suggesting the project is dormant. ClickOS targets the Xen hypervisor and utilizes the Click modular router software as its network stack. Support for TLS and the specific libc used are unknown.
+
+confidence: high
+unresolved: Whether ClickOS supports TLS and via what mechanism; the specific libc it uses.
+steps: 6 of 12, urls retrieved: 13
+
+sources:
+  [1] https://github.com/sysml/clickos
+  [2] https://github.com/sysml/clickos/blob/master/COPYING
+  [3] https://github.com/sysml/clickos/tags
+  [4] https://github.com/sysml/clickos/blob/master/LICENSE

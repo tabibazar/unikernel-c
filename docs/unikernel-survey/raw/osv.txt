@@ -1,0 +1,12 @@
+
+OSv, a unikernel project by Cloudius Systems, has its source repository at https://github.com/cloudius-systems/osv. The project is primarily implemented in C++, with some components also written in Rust. It is licensed under the 3-clause BSD license. The most recent release is v0.57.0, dated December 14, 2022, and the repository was last committed to approximately two weeks ago. OSv targets multiple hypervisors, including QEMU/KVM, Firecracker, Xen, VMWare, VirtualBox, and Hyperkit. It utilizes its own full-featured TCP/IP network stack, though the master branch currently only implements an IPv4 subset. TLS support is available, as suggested by the presence of a "rust-httpserver" application in its associated apps repository. OSv uses its own custom libc implementation, designed for libc-level compatibility with Linux applications. Based on the recent commits and releases, the project appears to be active.
+
+confidence: high
+steps: 7 of 12, urls retrieved: 11
+
+sources:
+  [1] https://github.com/cloudius-systems/osv
+  [2] https://github.com/cloudius-systems/osv/tags
+  [3] https://github.com/cloudius-systems/osv/blob/master/LICENSE
+  [4] https://mikelangelo-project.eu/technology/universal-unikernel-osv/
+  [5] https://news.ycombinator.com/item?id=25405672

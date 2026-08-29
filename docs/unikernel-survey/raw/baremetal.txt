@@ -1,0 +1,19 @@
+
+language: x86-64 Assembly
+license: MIT
+repo: https://github.com/ReturnInfinity/BareMetal
+latest_release: 2026.01 (January 2026)
+last_commit: 2026-06
+hypervisors: bare metal, virtualized environments
+network_stack: custom
+tls: unknown
+libc: custom
+status: active
+
+confidence: high
+steps: 6 of 10, urls retrieved: 7
+
+sources:
+  [1] https://github.com/ReturnInfinity/BareMetal
+  [2] https://github.com/ReturnInfinity/BareMetal/blob/main/LICENSE
+  [3] https://github.com/ReturnInfinity/BareMetal/tree/main/src

@@ -1,0 +1,9 @@
+
+The HaLVM (Haskell Lightweight Virtual Machine) project by Galois is implemented in Haskell. Its source repository is located at `https://github.com/GaloisInc/HaLVM`, and it is licensed under the BSD 3-Clause "New" or "Revised" License. The repository was archived on March 10, 2020, making it read-only, indicating it is currently dormant. The most recent commit was approximately eight years ago, on December 6, 2018. There are no formal releases indicated by GitHub tags. HaLVM targets the Xen hypervisor. The specific network stack it uses, whether it supports TLS and how, and the libc it uses are unknown.
+
+confidence: high
+steps: 5 of 12, urls retrieved: 6
+
+sources:
+  [1] https://github.com/GaloisInc/HaLVM
+  [2] https://github.com/GaloisInc/HaLVM/blob/master/LICENSE

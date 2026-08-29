@@ -1,0 +1,10 @@
+
+ToroKernel is primarily implemented in Pascal and is licensed under the GNU General Public License v3.0. Its official source repository is https://github.com/torokernel/torokernel. The last commit was made in February 2024, suggesting that the project is actively maintained. Information regarding its latest release, targeted hypervisors, network stack, TLS implementation, and libc is not readily available from the provided sources.
+
+confidence: high
+unresolved: Latest release version, targeted hypervisors, network stack, TLS implementation, and libc used are unknown.
+steps: 9 of 10, urls retrieved: 6
+
+sources:
+  [1] https://github.com/torokernel/torokernel
+  [2] https://github.com/torokernel/torokernel/blob/master/COPYING

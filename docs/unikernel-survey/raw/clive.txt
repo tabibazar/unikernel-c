@@ -1,0 +1,3 @@
+
+NO ANSWER after 12 steps.
+It retrieved 18 sources but never reached something it was willing to state.

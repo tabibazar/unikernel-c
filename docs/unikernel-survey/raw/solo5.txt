@@ -1,0 +1,21 @@
+
+language: C
+license: ISC License
+repo: https://github.com/Solo5/solo5
+latest_release: v0.13.0 (Aug 28, 2026)
+last_commit: August 2026
+hypervisors: QEMU/KVM, sandboxed process (via spt)
+network_stack: unknown
+tls: unknown
+libc: unknown
+status: active
+
+confidence: high
+steps: 8 of 10, urls retrieved: 9
+
+sources:
+  [1] https://github.com/Solo5/solo5
+  [2] https://github.com/Solo5/solo5/blob/main/LICENSE
+  [3] https://github.com/Solo5/solo5/tags
+  [4] https://github.com/Solo5/solo5/blob/main/README.md
+  [5] https://github.com/Solo5/solo5/blob/main/RELEASE.md

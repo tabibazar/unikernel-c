@@ -1,0 +1,13 @@
+
+IncludeOS is a C++ unikernel project whose source repository is located at `https://github.com/includeos/includeos`. It is licensed under the Apache License 2.0. The most recent release is v0.15.0 Cunning Conan, a pre-release from May 9, 2019. However, the repository shows activity with the most recent commit roughly 3 months ago (as of August 2023), indicating it is still active.
+
+IncludeOS targets x86 hardware and hypervisors, with specific mention of support for ukvm via Solo5. It uses its own custom IP network stack, which includes IPv4/IPv6 dual-stack capabilities and TCP/UDP client/server functionality, along with SLAAC for IPv6 autoconfiguration. For its C standard library, it uses libc++ and libc++abi (version 7.0.1 as of the last major release).
+
+confidence: high
+unresolved: Whether it supports TLS and via what mechanism is unknown.
+steps: 12 of 12, urls retrieved: 14
+
+sources:
+  [1] https://github.com/includeos/includeos
+  [2] https://github.com/includeos/IncludeOS/blob/main/LICENSE
+  [3] https://github.com/includeos/IncludeOS/releases
