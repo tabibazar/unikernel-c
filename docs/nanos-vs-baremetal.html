@@ -1,0 +1,313 @@
+<title>Nanos vs BareMetal</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+  :root {
+    --ground:#f6f4ef; --surface:#fff; --surface-alt:#efece4; --ink:#17140e; --ink-soft:#55503f;
+    --ink-faint:#8a8471; --rule:#ddd8ca; --accent:#a35f00; --accent-soft:#f6e8cd;
+    --ok:#2f6b3d; --ok-soft:#e2efe4; --bad:#a03028; --bad-soft:#f7e3e1;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground:#0b0906; --surface:#14110b; --surface-alt:#1d1810; --ink:#ece5d6; --ink-soft:#b3a68a;
+      --ink-faint:#7d7259; --rule:#2e2718; --accent:#ffb000; --accent-soft:#3a2c10;
+      --ok:#7fc08c; --ok-soft:#16261a; --bad:#e8776c; --bad-soft:#2c1512;
+    }
+  }
+  :root[data-theme="dark"] {
+    --ground:#0b0906; --surface:#14110b; --surface-alt:#1d1810; --ink:#ece5d6; --ink-soft:#b3a68a;
+    --ink-faint:#7d7259; --rule:#2e2718; --accent:#ffb000; --accent-soft:#3a2c10;
+    --ok:#7fc08c; --ok-soft:#16261a; --bad:#e8776c; --bad-soft:#2c1512;
+  }
+  * { box-sizing:border-box; }
+  body { background:var(--ground); color:var(--ink); font-family:"IBM Plex Sans",system-ui,sans-serif;
+         font-size:16.5px; line-height:1.62; margin:0; padding:0 24px 96px; -webkit-font-smoothing:antialiased; }
+  .wrap { max-width:1020px; margin:0 auto; }
+  header { padding:74px 0 30px; border-bottom:2px solid var(--ink); }
+  .eyebrow { font-family:"IBM Plex Mono",monospace; font-size:12px; letter-spacing:0.14em;
+             text-transform:uppercase; color:var(--accent); margin:0 0 18px; }
+  h1 { font-family:"IBM Plex Mono",monospace; font-weight:600; font-size:clamp(31px,5.4vw,50px);
+       line-height:1.04; letter-spacing:-0.028em; text-wrap:balance; margin:0 0 20px; }
+  .standfirst { font-size:19px; line-height:1.55; color:var(--ink-soft); max-width:64ch; margin:0; }
+  section { margin:0 0 52px; }
+  h2 { font-family:"IBM Plex Mono",monospace; font-size:13px; font-weight:600; letter-spacing:0.14em;
+       text-transform:uppercase; color:var(--accent); margin:52px 0 10px; padding-bottom:10px;
+       border-bottom:1px solid var(--rule); }
+  h3 { font-size:20px; font-weight:600; margin:30px 0 6px; text-wrap:balance; }
+  p { margin:13px 0; max-width:70ch; }
+  code { font-family:"IBM Plex Mono",monospace; font-size:0.87em; background:var(--surface-alt);
+         padding:1px 5px; border-radius:2px; }
+  a { color:var(--accent); }
+  .scroll { overflow-x:auto; }
+  table { border-collapse:collapse; width:100%; margin:16px 0; font-size:13.5px; }
+  th,td { text-align:left; padding:8px 11px; border-bottom:1px solid var(--rule); vertical-align:top; }
+  th { font-family:"IBM Plex Mono",monospace; font-size:10.5px; letter-spacing:0.08em;
+       text-transform:uppercase; color:var(--ink-faint); font-weight:500; white-space:nowrap; }
+  td.mono, th.mono { font-family:"IBM Plex Mono",monospace; font-variant-numeric:tabular-nums; white-space:nowrap; }
+  tr.them td { background:var(--accent-soft); }
+  td.good { color:var(--ok); font-weight:600; }
+  td.bad  { color:var(--bad); font-weight:600; }
+
+  /* verdict scoreboard */
+  .cards { display:grid; grid-template-columns:repeat(auto-fit,minmax(215px,1fr)); gap:16px; margin:30px 0 8px; }
+  .card { border:1px solid var(--rule); background:var(--surface); padding:20px 20px 18px; }
+  .card .lab { font-family:"IBM Plex Mono",monospace; font-size:10.5px; letter-spacing:0.1em;
+               text-transform:uppercase; color:var(--ink-faint); margin:0 0 10px; }
+  .card .big { font-family:"IBM Plex Mono",monospace; font-size:42px; line-height:1;
+               letter-spacing:-0.04em; font-weight:600; margin:0 0 8px; font-variant-numeric:tabular-nums; }
+  .card .sub { font-size:13.5px; line-height:1.42; color:var(--ink-soft); margin:0; max-width:none; }
+  .win .big  { color:var(--ok); }
+  .lose .big { color:var(--bad); }
+
+  figure { margin:26px 0; }
+  figcaption { font-size:13.5px; color:var(--ink-faint); margin-top:10px; max-width:70ch; }
+  svg { max-width:100%; height:auto; display:block; }
+
+  .callout { border:1px solid var(--rule); border-left:3px solid var(--accent); background:var(--surface);
+             padding:17px 19px; margin:22px 0; }
+  .callout.warn { border-left-color:var(--bad); }
+  .callout p { margin:8px 0 0; max-width:none; }
+  .callout p:first-child { margin-top:0; }
+  .callout h4 { font-family:"IBM Plex Mono",monospace; font-size:13px; font-weight:600; margin:0 0 8px; }
+  pre { font-family:"IBM Plex Mono",monospace; font-size:12.5px; line-height:1.75; background:var(--surface-alt);
+        border-left:3px solid var(--bad); padding:15px 18px; overflow-x:auto; margin:18px 0; }
+  footer { border-top:2px solid var(--ink); padding-top:20px; margin-top:60px; font-size:14px; color:var(--ink-faint); }
+</style>
+
+<div class="wrap">
+
+<header>
+  <p class="eyebrow">One host · five runs of everything · 29 August 2026</p>
+  <h1>Nanos vs BareMetal</h1>
+  <p class="standfirst">Only two other platforms in the field run unikernels. This is a head-to-head against one of them, on a single machine, with the same C source on both sides — and a control that settles a question we had been carrying for weeks.</p>
+</header>
+
+<section>
+  <div class="cards">
+    <div class="card win">
+      <p class="lab">Boot to first instruction</p>
+      <p class="big">8×</p>
+      <p class="sub">BareMetal reaches its application in <strong>31 ms</strong> against Nanos' 240 ms. Thirty-one times faster than Linux under the same hypervisor.</p>
+    </div>
+    <div class="card win">
+      <p class="lab">Smallest memory it runs in</p>
+      <p class="big">4 MiB</p>
+      <p class="sub">Nanos will not boot below 16 MiB. No competitor in the wider field sells a unit under 128 MB.</p>
+    </div>
+    <div class="card lose">
+      <p class="lab">Compute, identical source</p>
+      <p class="big">3.7×</p>
+      <p class="sub">BareMetal takes 51.7 s where Nanos takes 14.1 s. Not the compiler, not the hypervisor.</p>
+    </div>
+    <div class="card lose">
+      <p class="lab">Wrong answers per run</p>
+      <p class="big">~1360</p>
+      <p class="sub">Out of 20 million identical calculations. Nanos and Linux: zero, every run.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>The setup, and its one honest caveat</h2>
+  <p>Everything ran on one machine: an AMD EPYC host with 2 shared vCPU, 8 GB and hardware KVM. Comparing across two clouds measures the clouds, so there is only one. Five runs of every configuration; the numbers below are medians, because two shared vCPUs make a single timing a statement about scheduling luck.</p>
+  <p>Each guest runs under the virtual machine monitor its own platform ships with, because neither would boot under the other's. BareMetal's ELF carries no PVH note, so QEMU's microvm refuses it outright; it runs under <strong>Firecracker 1.16.1</strong> — which is also what BareMetal Cloud runs. Nanos boots from a disk image with its own loader under <strong>QEMU 8.2.2 with KVM</strong>, which is what <code>ops</code> runs. Both get one vCPU, 512 MiB, and a serial console piped through a timestamper.</p>
+  <p>That is a real confound, and it is why the control below exists.</p>
+
+  <div class="callout">
+    <h4>The optimisation question, settled first</h4>
+    <p>BareMetal's build script passes no <code>-O</code> flag at all, so its application is compiled at <code>-O0</code>. Every Linux and Nanos binary was therefore built <em>both</em> ways. On this workload <code>-O0</code> against <code>-O2</code> is 14.01 s against 12.85 s — about 8%. Worth knowing before reading a 3.7× gap as a compiler flag.</p>
+  </div>
+</section>
+
+<section>
+  <h2>Boot: BareMetal wins by an order of magnitude</h2>
+  <figure>
+    <svg viewBox="0 0 720 208" role="img" aria-label="Time from hypervisor start to the application's first instruction: BareMetal 0.031 seconds, Nanos 0.240 seconds, Linux under the same Firecracker 0.95 seconds. A native Linux process, with no virtual machine at all, takes 0.027 seconds.">
+      <g font-family="IBM Plex Mono, monospace" font-size="12.5" fill="currentColor">
+        <text x="0" y="14" font-size="10.5" opacity="0.6">SECONDS FROM VMM EXEC TO THE APPLICATION'S FIRST PRINTED LINE</text>
+
+        <text x="0" y="47">BareMetal</text>
+        <rect x="150" y="36" width="17" height="15" fill="#ffb000"/>
+        <text x="177" y="47" fill="#ffb000" font-weight="600">0.031</text>
+
+        <text x="0" y="80">Nanos</text>
+        <rect x="150" y="69" width="131" height="15" fill="currentColor" opacity="0.55"/>
+        <text x="291" y="80" opacity="0.8">0.240</text>
+
+        <text x="0" y="113">Linux (same FC)</text>
+        <rect x="150" y="102" width="519" height="15" fill="currentColor" opacity="0.3"/>
+        <text x="679" y="113" opacity="0.8">0.95</text>
+
+        <line x1="150" y1="133" x2="700" y2="133" stroke="currentColor" opacity="0.18"/>
+
+        <text x="0" y="158">no VM at all</text>
+        <rect x="150" y="147" width="15" height="15" fill="currentColor" opacity="0.35"/>
+        <text x="175" y="158" opacity="0.65">0.027 — an ordinary process on the host</text>
+
+        <text x="0" y="196" font-size="11" opacity="0.55">BareMetal boots a whole virtual machine in the time it takes Linux to start a process.</text>
+      </g>
+    </svg>
+    <figcaption>Medians of five. The bottom row is the floor: starting a plain process on the host, no virtualisation involved. BareMetal, with a full VM in between, is within noise of it.</figcaption>
+  </figure>
+
+  <p>NanoVMs publishes <strong>“~60 ms”</strong> for boot. That is defensible as raw kernel time — Nanos has its network up at about 0.19 s — but what a user waits for before their own code runs is nearer <strong>0.24 s</strong>, four times the headline. Return Infinity publishes no boot figure at all, and would win this column decisively if it did.</p>
+</section>
+
+<section>
+  <h2>Size and memory: the whole artifact is smaller than the other kernel</h2>
+  <div class="scroll">
+  <table>
+    <tr><th>Artifact</th><th class="mono">Bytes</th><th>What it contains</th></tr>
+    <tr class="them"><td><strong>BareMetal, complete bootable ELF</strong></td><td class="mono">1,323,504</td><td>kernel + app + musl + lwIP + mbedTLS + curl, in one file</td></tr>
+    <tr><td>Nanos <code>kernel.img</code>, alone</td><td class="mono">1,792,016</td><td>the kernel only — the app is separate</td></tr>
+    <tr><td>Nanos bootable disk image</td><td class="mono">14,182,912</td><td>3.8 MB actually allocated; sparse</td></tr>
+    <tr><td>Linux <code>vmlinux</code> used for the control</td><td class="mono">20,176,896</td><td>for scale</td></tr>
+  </table>
+  </div>
+  <p>And the memory floor, found by walking the same trivial program down until it stopped working: <strong>BareMetal runs in 4 MiB</strong> and fails at 3. <strong>Nanos runs in 16 MiB</strong> and fails at 12. For scale, the smallest unit any competitor in the wider field will sell you is 128 MB.</p>
+</section>
+
+<section>
+  <h2>Compute: 3.7× slower, and it is not what you would guess</h2>
+  <figure>
+    <svg viewBox="0 0 720 214" role="img" aria-label="Seconds to complete 20 million identical modular exponentiations: Linux at -O2 12.85, Nanos at -O2 12.91, Linux at -O0 14.01, Nanos at -O0 14.06, Linux under Firecracker 14.14, and BareMetal 51.68.">
+      <g font-family="IBM Plex Mono, monospace" font-size="12.5" fill="currentColor">
+        <text x="0" y="14" font-size="10.5" opacity="0.6">SECONDS · 20,000,000 IDENTICAL MODULAR EXPONENTIATIONS · IDENTICAL SOURCE</text>
+
+        <text x="0" y="43">Linux -O2</text>
+        <rect x="168" y="32" width="129" height="14" fill="currentColor" opacity="0.3"/>
+        <text x="307" y="43" opacity="0.8">12.85</text>
+
+        <text x="0" y="70">Nanos -O2</text>
+        <rect x="168" y="59" width="129" height="14" fill="currentColor" opacity="0.55"/>
+        <text x="307" y="70" opacity="0.8">12.91</text>
+
+        <text x="0" y="97">Linux -O0</text>
+        <rect x="168" y="86" width="140" height="14" fill="currentColor" opacity="0.3"/>
+        <text x="318" y="97" opacity="0.8">14.01</text>
+
+        <text x="0" y="124">Nanos -O0</text>
+        <rect x="168" y="113" width="141" height="14" fill="currentColor" opacity="0.55"/>
+        <text x="319" y="124" opacity="0.8">14.06</text>
+
+        <text x="0" y="151">Linux, in FC</text>
+        <rect x="168" y="140" width="141" height="14" fill="currentColor" opacity="0.3"/>
+        <text x="319" y="151" opacity="0.8">14.14</text>
+
+        <text x="0" y="178">BareMetal</text>
+        <rect x="168" y="167" width="517" height="14" fill="#ffb000"/>
+        <text x="0" y="202" font-size="11" opacity="0.55">Everything else lands within 10% of everything else. One does not.</text>
+        <text x="608" y="178" font-weight="600" fill="#0b0906">51.68</text>
+      </g>
+    </svg>
+    <figcaption>Medians of five, fixed work, byte-identical source. Nanos costs under 1% against native Linux at either optimisation level.</figcaption>
+  </figure>
+  <p>Three explanations are eliminated by the rows above. <strong>Not the compiler</strong>, because <code>-O0</code> against <code>-O2</code> is 8% and the gap is 370%. <strong>Not the hypervisor</strong>, because Linux under the same Firecracker lands within 1% of native. <strong>Not the host</strong>, because everything ran on it. Something in the BareMetal port is paying 3.7× for 64-bit modular arithmetic, and this experiment does not say what — it only narrows the field.</p>
+</section>
+
+<section>
+  <h2>Determinism: the result that needed a control</h2>
+  <p>The test computes one fixed modular exponentiation twenty million times. The inputs never change, so a correct machine returns the same answer twenty million times and the mismatch count is zero by construction. Anything else is the machine giving two different answers to the same question.</p>
+
+  <div class="scroll">
+  <table>
+    <tr><th>Platform</th><th>VMM</th><th class="mono">Mismatches per 20M, five runs</th></tr>
+    <tr><td>Linux, native process</td><td>none</td><td class="mono good">0 &nbsp; 0 &nbsp; 0 &nbsp; 0 &nbsp; 0</td></tr>
+    <tr><td>Nanos (<code>-O0</code> and <code>-O2</code>)</td><td>QEMU + KVM</td><td class="mono good">0 &nbsp; 0 &nbsp; 0 &nbsp; 0 &nbsp; 0</td></tr>
+    <tr><td><strong>Linux — the control</strong></td><td><strong>Firecracker</strong></td><td class="mono good">0 &nbsp; 0 &nbsp; 0 &nbsp; 0 &nbsp; 0</td></tr>
+    <tr class="them"><td><strong>BareMetal</strong></td><td>Firecracker</td><td class="mono bad">1393 &nbsp; 1399 &nbsp; 1324 &nbsp; 1361 &nbsp; 1362</td></tr>
+  </table>
+  </div>
+
+  <figure>
+    <svg viewBox="0 0 720 300" role="img" aria-label="Diagram: BareMetal on Firecracker gives about 1360 wrong answers while Nanos on QEMU gives zero, but the kernel and the hypervisor both differ between those two rows, so the cause is ambiguous. Booting ordinary Linux on the same Firecracker changes only the kernel, and it returns zero, isolating the fault to BareMetal.">
+      <defs>
+        <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+          <path d="M0,0 L10,5 L0,10 z" fill="currentColor"/>
+        </marker>
+      </defs>
+      <g font-family="IBM Plex Mono, monospace" font-size="12" fill="currentColor">
+        <text x="0" y="12" font-size="10.5" opacity="0.6">KERNEL</text>
+        <text x="212" y="12" font-size="10.5" opacity="0.6">VMM</text>
+        <text x="410" y="12" font-size="10.5" opacity="0.6">HOST</text>
+        <text x="576" y="12" font-size="10.5" opacity="0.6">RESULT</text>
+
+        <!-- row 1 -->
+        <rect x="0" y="26" width="150" height="36" fill="none" stroke="currentColor"/>
+        <text x="75" y="49" text-anchor="middle">BareMetal</text>
+        <line x1="150" y1="44" x2="205" y2="44" stroke="currentColor" marker-end="url(#ar)"/>
+        <rect x="212" y="26" width="140" height="36" fill="none" stroke="currentColor"/>
+        <text x="282" y="49" text-anchor="middle">Firecracker</text>
+        <line x1="352" y1="44" x2="403" y2="44" stroke="currentColor" marker-end="url(#ar)"/>
+        <rect x="410" y="26" width="140" height="36" fill="none" stroke="currentColor"/>
+        <text x="480" y="49" text-anchor="middle">EPYC + KVM</text>
+        <line x1="550" y1="44" x2="569" y2="44" stroke="currentColor" marker-end="url(#ar)"/>
+        <text x="576" y="49" fill="#d0453b" font-weight="600">~1360 wrong</text>
+
+        <!-- row 2 -->
+        <rect x="0" y="90" width="150" height="36" fill="none" stroke="currentColor"/>
+        <text x="75" y="113" text-anchor="middle">Nanos</text>
+        <line x1="150" y1="108" x2="205" y2="108" stroke="currentColor" marker-end="url(#ar)"/>
+        <rect x="212" y="90" width="140" height="36" fill="none" stroke="currentColor"/>
+        <text x="282" y="113" text-anchor="middle">QEMU + KVM</text>
+        <line x1="352" y1="108" x2="403" y2="108" stroke="currentColor" marker-end="url(#ar)"/>
+        <rect x="410" y="90" width="140" height="36" fill="none" stroke="currentColor"/>
+        <text x="480" y="113" text-anchor="middle">EPYC + KVM</text>
+        <line x1="550" y1="108" x2="569" y2="108" stroke="currentColor" marker-end="url(#ar)"/>
+        <text x="576" y="113" fill="#3f9e5d" font-weight="600">0 wrong</text>
+
+        <!-- confound bracket -->
+        <path d="M6,140 L6,152 L346,152 L346,140" fill="none" stroke="currentColor" opacity="0.5" stroke-dasharray="3 3"/>
+        <text x="176" y="170" text-anchor="middle" font-size="11.5" opacity="0.75">two things differ at once — the kernel AND the VMM</text>
+        <text x="176" y="188" text-anchor="middle" font-size="11.5" opacity="0.75">so these two rows alone cannot say which one is at fault</text>
+
+        <line x1="0" y1="208" x2="720" y2="208" stroke="currentColor" opacity="0.2"/>
+
+        <!-- control row -->
+        <text x="0" y="230" font-size="10.5" fill="#ffb000" letter-spacing="1">THE CONTROL — CHANGE ONLY THE KERNEL</text>
+        <rect x="0" y="242" width="150" height="36" fill="none" stroke="#ffb000" stroke-width="1.5"/>
+        <text x="75" y="265" text-anchor="middle" fill="#ffb000">Linux</text>
+        <line x1="150" y1="260" x2="205" y2="260" stroke="currentColor" marker-end="url(#ar)"/>
+        <rect x="212" y="242" width="140" height="36" fill="none" stroke="currentColor"/>
+        <text x="282" y="265" text-anchor="middle">Firecracker</text>
+        <line x1="352" y1="260" x2="403" y2="260" stroke="currentColor" marker-end="url(#ar)"/>
+        <rect x="410" y="242" width="140" height="36" fill="none" stroke="currentColor"/>
+        <text x="480" y="265" text-anchor="middle">EPYC + KVM</text>
+        <line x1="550" y1="260" x2="569" y2="260" stroke="currentColor" marker-end="url(#ar)"/>
+        <text x="576" y="265" fill="#3f9e5d" font-weight="600">0 wrong</text>
+      </g>
+    </svg>
+    <figcaption>The same static binary, at the same optimisation level, on the same host, through the same Firecracker — with only the kernel swapped. It comes back clean, five times out of five. That isolates the fault to BareMetal: not the hardware, not KVM, not Firecracker.</figcaption>
+  </figure>
+
+  <p>The rate here is <strong>6.8 × 10⁻⁵</strong>, against 1.6 × 10⁻⁶ measured earlier on different hardware — roughly <strong>forty times more frequent</strong> on this host than where it was first caught.</p>
+</section>
+
+<section>
+  <h2>It returns wrong answers, not just a warning counter</h2>
+  <p>The second program counts primes over a fixed range. The work is deterministic, so every run must produce the same count. Five BareMetal runs:</p>
+  <pre>primes=4267876
+primes=4267777
+primes=4267803
+primes=4267888
+primes=4267838</pre>
+  <p>Five runs, five different answers. Linux and Nanos return <strong>4268930</strong> every single time.</p>
+  <p>The error is one-directional: BareMetal only ever <em>under</em>counts, so the corruption is causing the primality test to reject genuine primes rather than accept composites — what you would expect if a value is being disturbed between a multiply and its comparison. About 1,100 primes in 4.27 million go missing, so roughly one result in four thousand is wrong, with nothing printed to say so.</p>
+
+  <div class="callout warn">
+    <h4>Why this is the finding that matters</h4>
+    <p>Return Infinity's stated vertical is quantitative research, compliance automation and trading infrastructure, sold on <em>deterministic scheduling</em>. A workload that silently returns a slightly different answer each run is a poor fit for that pitch, and this is a small enough reproducer — no allocation, no I/O, no threads, sixty lines — to be a starting point rather than a complaint.</p>
+  </div>
+</section>
+
+<section>
+  <h2>What this does not measure</h2>
+  <p>No TLS or HTTPS comparison. This host has no TUN driver, so a Firecracker guest on it has no network at all and BareMetal could not be given one. The 888 ms program-start-to-completed-HTTPS figure we have for BareMetal was measured on BareMetal Cloud, on different hardware, and is not comparable to anything here.</p>
+  <p>Nanos was run locally through <code>ops</code>, not on NanoVMs' hosted product, so nothing here evaluates their cloud — only their kernel. And two shared vCPUs make this a poor host for absolute throughput: the ratios are the result, the seconds are not.</p>
+  <p>Every number above is a median of five runs from serial logs timestamped on the host. The scripts, the raw logs and the full result table are in the repository, so the whole thing can be re-run on better hardware by anyone who doubts it — which, given what it claims, someone should.</p>
+</section>
+
+<footer>
+  <p>Measured 29 August 2026 on one AMD EPYC host. Firecracker 1.16.1, QEMU 8.2.2, ops 0.1.46 with Nanos 0.1.55, gcc 13.3.0. Scripts, raw serial logs and the full results table: <a href="https://github.com/tabibazar/unikernel-c/tree/main/docs/nanos-vs-baremetal">github.com/tabibazar/unikernel-c</a>. Companion to <a href="https://github.com/tabibazar/unikernel-c/blob/main/docs/competitor-landscape.html">the competitive landscape</a>.</p>
+</footer>
+
+</div>
