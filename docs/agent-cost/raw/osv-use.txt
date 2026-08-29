@@ -1,0 +1,9 @@
+
+OSv is an open-source, versatile, and modular unikernel designed to run single unmodified Linux applications securely as microVMs on top of a hypervisor. It has been designed to run unmodified x86-64 and aarch64 Linux. The project aims to provide an operating system specifically optimized for running single applications within a virtual machine environment. Based on the page read and thorough web searches, there is no explicit documentation of specific production or industrial users of OSv. I could not find any documented examples of companies or organizations using OSv in a production or industrial setting.
+
+confidence: high
+steps: 9 of 12, urls retrieved: 11
+COST llm_calls=9 tokens_in=32513 tokens_out=646 searches=4 fetches=3 steps=9
+
+sources:
+  [1] https://github.com/cloudius-systems/osv

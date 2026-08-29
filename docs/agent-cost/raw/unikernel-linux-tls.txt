@@ -1,0 +1,10 @@
+
+The Unikernel-Linux project supports TLS through its own re-engineered implementation called "nqsb-TLS". This custom TLS stack is designed to address security vulnerabilities found in existing TLS implementations. The "nqsb-TLS" can be compiled into Xen unikernels and is used to support applications such as HTTPS, IMAP, Git, and Websocket clients and servers.
+
+confidence: high
+steps: 5 of 12, urls retrieved: 6
+COST llm_calls=5 tokens_in=12965 tokens_out=328 searches=1 fetches=2 steps=5
+
+sources:
+  [1] http://unikernel.org/resources/
+  [2] http://unikernel.org/files/2015-nqsbtls-usenixsec.pdf

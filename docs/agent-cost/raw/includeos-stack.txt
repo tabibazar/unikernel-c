@@ -1,0 +1,9 @@
+
+IncludeOS uses its own custom IP stack. For its C standard library, it provides compatibility with Linux through the use of the Musl library.
+
+confidence: high
+steps: 4 of 12, urls retrieved: 5
+COST llm_calls=4 tokens_in=6590 tokens_out=160 searches=1 fetches=1 steps=4
+
+sources:
+  [1] http://www.includeos.org/technology.html

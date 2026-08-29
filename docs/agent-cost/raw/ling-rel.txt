@@ -1,0 +1,11 @@
+
+The LING unikernel project is licensed under a custom license, which permits redistribution and use in source and binary forms under certain conditions. The most recent tagged release for LING is "Raspberry Pi 0" (v0.3.2r), released on February 24, 2015.
+
+confidence: high
+steps: 9 of 12, urls retrieved: 13
+COST llm_calls=9 tokens_in=46308 tokens_out=457 searches=2 fetches=5 steps=9
+
+sources:
+  [1] https://github.com/cloudozer/ling/blob/master/LICENSE
+  [2] https://github.com/cloudozer/ling/releases
+  [3] https://erlangonxen.org/download/

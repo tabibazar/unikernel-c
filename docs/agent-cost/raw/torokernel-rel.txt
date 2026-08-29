@@ -1,0 +1,10 @@
+
+ToroKernel is licensed under the GNU General Public License v3.0. Its most recent tagged release is "ToroKernel" from October 23, 2020.
+
+confidence: high
+steps: 6 of 12, urls retrieved: 7
+COST llm_calls=6 tokens_in=30764 tokens_out=286 searches=1 fetches=3 steps=6
+
+sources:
+  [1] https://github.com/torokernel/torokernel/blob/master/COPYING
+  [2] https://github.com/torokernel/torokernel/tags

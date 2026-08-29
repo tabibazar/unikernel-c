@@ -1,0 +1,10 @@
+
+The unikernel or library OS project 'Clive' is an operating system written in Go, designed for distributed and cloud computing environments. Its main design philosophy is to remove most of the software stack from the cloud, enabling applications and services to be compiled directly with the libraries needed to run on bare hardware. It uses a CSP-like style for system interfaces, where applications communicate through channels that can be bridged to networks, pipes, and other I/O. There is no documented information about production or industrial users of Clive in the pages I reviewed; it appears to be a research-oriented project.
+
+confidence: medium
+steps: 8 of 12, urls retrieved: 12
+COST llm_calls=8 tokens_in=22285 tokens_out=466 searches=3 fetches=2 steps=8
+
+sources:
+  [1] http://unikernel.org/projects/
+  [2] https://lsub.org/clive/

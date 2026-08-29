@@ -1,0 +1,9 @@
+
+HermitOS supports TLS through the BearSSL library. The CHERIoT network stack, which is part of HermitOS, incorporates the BearSSL TLS implementation.
+
+confidence: high
+steps: 8 of 12, urls retrieved: 24
+COST llm_calls=8 tokens_in=19193 tokens_out=250 searches=5 fetches=1 steps=8
+
+sources:
+  [1] https://cheriot.org/book/networking.html

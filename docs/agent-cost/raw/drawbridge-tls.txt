@@ -1,0 +1,13 @@
+
+Drawbridge, a Microsoft Research project on unikernels and library OS, does not explicitly state whether it supports TLS or via which specific library (e.g., mbedTLS, OpenSSL, BearSSL) in the information reviewed. The project focuses on a new form of virtualization for application sandboxing using picoprocesses and a Windows library OS. It mentions running existing Windows applications like Internet Explorer and IIS, which would typically use TLS, but the documentation does not specify how TLS is handled within the Drawbridge environment itself.
+
+confidence: medium
+unresolved: Whether Drawbridge supports TLS, and if so, which library it uses.
+steps: 5 of 12, urls retrieved: 10
+COST llm_calls=5 tokens_in=9281 tokens_out=525 searches=2 fetches=1 steps=5
+
+sources:
+  [1] https://www.microsoft.com/en-us/research/project/drawbridge/
+  [2] https://www.microsoft.com/en-us/research/blog/tag/drawbridge/
+  [3] https://www.microsoft.com/en-us/research/project/drawbridge/groups/
+  [4] https://www.microsoft.com/en-us/research/project/drawbridge/%22/

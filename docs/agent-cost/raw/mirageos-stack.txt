@@ -1,0 +1,13 @@
+
+MirageOS utilizes its own custom network stack, `mirage-tcpip`, which is written entirely in OCaml and provides support for IPv4, IPv6, ICMP, UDP, and TCP. It has a "direct" stack designed for unikernel execution on hypervisors and a "socket" stack for testing. Regarding a C standard library, the retrieved information indicates that MirageOS is a "library operating system" implemented in OCaml, and there is no mention of it providing or relying on a traditional libc such as musl, newlib, or NetBSD libc. This suggests that it handles system-level functionalities through its OCaml libraries rather than a separate C library.
+
+confidence: high
+steps: 7 of 12, urls retrieved: 10
+COST llm_calls=7 tokens_in=20932 tokens_out=612 searches=2 fetches=2 steps=7
+
+sources:
+  [1] https://github.com/mirage/mirage-tcpip
+  [2] https://tarides.com/blog/2024-01-24-mirageos-designing-a-more-resilient-networking-stack-with-tcp/
+  [3] https://mirage.io/docs/hello-world
+  [4] https://xenproject.org/projects/mirage-os/
+  [5] https://mirageos.org/blog/announcing-mirage-40

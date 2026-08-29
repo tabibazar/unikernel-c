@@ -1,0 +1,10 @@
+
+The Solo5 project is licensed under a liberal ISC license. Its most recent tagged release is v0.13.0, which was released on August 28, 2024, at 09:27.
+
+confidence: high
+steps: 5 of 12, urls retrieved: 9
+COST llm_calls=5 tokens_in=11375 tokens_out=234 searches=2 fetches=1 steps=5
+
+sources:
+  [1] https://github.com/Solo5/solo5
+  [2] https://github.com/Solo5/solo5/releases

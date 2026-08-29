@@ -1,0 +1,20 @@
+
+MirageOS is a "library operating system" designed for building secure, high-performance network applications as unikernels. These unikernels are efficient, have a minimal attack surface, and are suitable for deployment in cloud environments and on embedded devices.
+
+Documented production or industrial users of MirageOS include:
+
+*   **Docker Desktop**: It uses VPNKit, which leverages MirageOS to bridge the compatibility between Linux primitives and macOS or Windows, handling network traffic for numerous containers.
+*   **Tarides**: This company utilizes MirageOS for its Mr. MIME project, a library built on unikernels for secure email traffic handling.
+*   **Mirage.io Website**: The official MirageOS website runs as a self-hosted MirageOS appliance on the Xen hypervisor.
+*   **http://decks.openmirage.org**: This platform uses distinct MirageOS appliances for presenting conference slides.
+
+Tarides also generally mentions that Robur uses MirageOS, though specific details of their implementation were not provided in the read pages.
+
+confidence: high
+unresolved: Specific details on how Robur uses MirageOS were not found.
+steps: 5 of 12, urls retrieved: 5
+COST llm_calls=5 tokens_in=14234 tokens_out=784 searches=1 fetches=2 steps=5
+
+sources:
+  [1] https://mirage.io/docs/overview-of-mirage
+  [2] https://tarides.com/blog/2022-04-14-what-s-new-in-mirageos-4/

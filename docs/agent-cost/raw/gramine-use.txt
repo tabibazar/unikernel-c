@@ -1,0 +1,10 @@
+
+Gramine is a library OS project primarily used to run unmodified applications within Intel® Software Guard Extensions (Intel® SGX) environments. It acts as a compatibility layer, allowing applications to leverage SGX's confidentiality and integrity benefits without significant code changes. Developers define application environments and isolation policies through manifest files. Golem Network and Invisible Things Lab (ITL) have actively contributed to Gramine's development and have integrated it, with a working demo in 2018. However, while the project's timeline mentions deployment in Azure cloud for a Secure PPML tutorial, and ITL/Golem's work to deploy it within the Golem Network, there is no explicit documentation on the pages read confirming current production or industrial usage by named entities.
+
+confidence: medium
+unresolved: Definitive documentation of Gramine's current production or industrial use by a named entity is not explicitly stated.
+steps: 5 of 12, urls retrieved: 9
+COST llm_calls=5 tokens_in=11025 tokens_out=641 searches=2 fetches=1 steps=5
+
+sources:
+  [1] https://gramineproject.io/

@@ -1,0 +1,9 @@
+
+Based on the available information, the unikernel or library OS project 'ClickOS' does not explicitly state support for TLS, nor does it specify the use of any particular TLS library such as mbedTLS, OpenSSL, or BearSSL. The research paper "Enabling Dynamic Network Processing with ClickOS", which details the system's architecture and networking, makes no mention of TLS or related security protocols.
+
+confidence: high
+steps: 11 of 12, urls retrieved: 38
+COST llm_calls=11 tokens_in=34523 tokens_out=423 searches=8 fetches=1 steps=11
+
+sources:
+  [1] https://conferences.sigcomm.org/sigcomm/2012/paper/sigcomm/p293.pdf

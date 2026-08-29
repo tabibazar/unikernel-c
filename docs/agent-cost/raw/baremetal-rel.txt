@@ -1,0 +1,11 @@
+
+The 'BareMetal' unikernel project is licensed under the MIT License. Its most recent tagged release is "2026.04", dated April 29, 2026.
+
+confidence: high
+steps: 7 of 12, urls retrieved: 8
+COST llm_calls=7 tokens_in=34004 tokens_out=306 searches=1 fetches=4 steps=7
+
+sources:
+  [1] https://github.com/ReturnInfinity/BareMetal/tags
+
+1 cited url was removed: not retrieved in this run.

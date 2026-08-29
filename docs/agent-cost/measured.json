@@ -1,0 +1,15 @@
+{
+  "n": 80,
+  "answered": 79,
+  "wall_min": 22.0,
+  "tin": 1608011,
+  "tout": 31532,
+  "calls": 498,
+  "searches": 184,
+  "fetches": 143,
+  "credits": 570,
+  "llm_cost": 0.5612333,
+  "fc_cost": 1.824,
+  "sec_median": 13.0,
+  "sec_mean": 17.275
+}

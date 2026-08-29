@@ -1,0 +1,10 @@
+
+The MirageOS project is licensed under the ISC License. The most recent tagged release is `v4.11.2`, which was released on July 28, 2026.
+
+confidence: high
+steps: 9 of 12, urls retrieved: 11
+COST llm_calls=9 tokens_in=58822 tokens_out=346 searches=2 fetches=5 steps=9
+
+sources:
+  [1] https://github.com/mirage/mirage/blob/main/LICENSE.md
+  [2] https://github.com/mirage/mirage/tags

@@ -1,0 +1,11 @@
+
+The documentation for runtime.js does not explicitly state whether it supports TLS, nor does it mention which library it would use if it did (e.g., mbedTLS, OpenSSL, BearSSL). While runtime.js aims to be compatible with some Node.js APIs, and Node.js has a built-in TLS module, the read sources do not confirm that runtime.js implements this specific functionality or detail its underlying cryptographic library.
+
+confidence: low
+unresolved: The sources do not explicitly state if runtime.js supports TLS or which library it uses for such support.
+steps: 6 of 12, urls retrieved: 8
+COST llm_calls=6 tokens_in=16642 tokens_out=379 searches=2 fetches=2 steps=6
+
+sources:
+  [1] https://github.com/runtimejs/runtime
+  [2] http://runtimejs.org/

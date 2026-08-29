@@ -1,0 +1,9 @@
+
+ToroKernel is a unikernel or library OS project primarily used for developing and running microservices efficiently. It offers benefits such as fast boot times (150ms), a small disk footprint (~130kb), and low memory consumption (<4MB), by allowing microservices to run directly on hypervisors like KVM, Xen, VirtualBox, HyperV, Firecracker, and NEMU, leveraging VirtIO for I/O. There are no documented production or industrial users of ToroKernel in the pages reviewed.
+
+confidence: high
+steps: 4 of 12, urls retrieved: 5
+COST llm_calls=4 tokens_in=8601 tokens_out=349 searches=1 fetches=1 steps=4
+
+sources:
+  [1] https://torokernel.io/

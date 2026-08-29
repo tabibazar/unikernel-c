@@ -1,0 +1,10 @@
+
+Rumprun is a unikernel project that enables existing POSIX-compatible applications to run as unikernels on hypervisors such as Xen. It achieves this by utilizing "rump kernels," which provide a collection of portable, componentized drivers. This effectively allows the operating system's kernel code to function as a library for the application, creating a minimal and efficient runtime environment. The project originated from efforts to run NetBSD kernel drivers in userspace for testing and development, eventually evolving into a system for running full POSIX applications in a unikernel context. Based on the information gathered, there are no documented production or industrial users of Rumprun identified in the search results or pages read.
+
+confidence: medium
+unresolved: Specific documented production or industrial users of Rumprun.
+steps: 5 of 12, urls retrieved: 9
+COST llm_calls=5 tokens_in=10826 tokens_out=474 searches=2 fetches=1 steps=5
+
+sources:
+  [1] https://xenproject.org/blog/on-rump-kernels-and-the-rumprun-unikernel/

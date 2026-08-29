@@ -1,0 +1,11 @@
+
+Rumprun is licensed under a 2-clause BSD license. The Rumprun GitHub repository does not have any tagged releases, therefore the most recent tagged release and its date cannot be determined.
+
+confidence: high
+unresolved: The most recent tagged release and its date.
+steps: 6 of 12, urls retrieved: 8
+COST llm_calls=6 tokens_in=16268 tokens_out=284 searches=2 fetches=2 steps=6
+
+sources:
+  [1] https://github.com/rumpkernel/rumprun/blob/master/LICENSE
+  [2] https://github.com/rumpkernel/rumprun/releases

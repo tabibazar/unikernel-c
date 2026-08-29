@@ -1,0 +1,10 @@
+
+The Gramine project is licensed under LGPL-3.0-or-later. Its most recent tagged release is v1.9, which was released on June 20, 2025.
+
+confidence: high
+steps: 6 of 12, urls retrieved: 9
+COST llm_calls=6 tokens_in=17471 tokens_out=299 searches=2 fetches=2 steps=6
+
+sources:
+  [1] https://github.com/gramineproject/gramine/blob/master/LICENSE.addendum.txt
+  [2] https://github.com/gramineproject/gramine/releases

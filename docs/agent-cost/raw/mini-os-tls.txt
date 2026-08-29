@@ -1,0 +1,12 @@
+
+The official Mini-OS project, a tiny OS kernel distributed with the Xen Project Hypervisor, does not appear to directly support TLS, nor does its documentation specify the use of any particular TLS library. While Mini-OS serves as a basis for other unikernel projects, some of which (like MirageOS) are known to handle TLS, the core Mini-OS itself does not seem to include this functionality. A separate, educational project named "grisuno/miniOS" on GitHub does state that its kernel "speaks TLS 1.2 on top of TCP." However, this is a distinct project from the official Xen Project Mini-OS. No source for the official Mini-OS explicitly states that it supports TLS.
+
+confidence: high
+steps: 11 of 12, urls retrieved: 28
+COST llm_calls=11 tokens_in=37166 tokens_out=631 searches=7 fetches=2 steps=11
+
+sources:
+  [1] https://wiki.xenproject.org/wiki/Mini-OS
+  [2] https://github.com/mirage/mini-os
+  [3] https://github.com/grisuno/miniOS/blob/main/README.md
+  [4] http://unikernel.org/resources/

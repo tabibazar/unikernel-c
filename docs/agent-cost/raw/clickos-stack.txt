@@ -1,0 +1,10 @@
+
+ClickOS utilizes the newlib C library. For its network stack, it employs a custom implementation that involves an extensive overhaul of Xen's I/O subsystem, including changes to the back-end switch, virtual network devices, and both back-end and front-end drivers. This approach is designed for high-performance network function virtualization and integrates with the Click modular router for network processing.
+
+confidence: high
+steps: 6 of 12, urls retrieved: 15
+COST llm_calls=6 tokens_in=13483 tokens_out=565 searches=3 fetches=1 steps=6
+
+sources:
+  [1] https://classpages.cselabs.umn.edu/Fall-2017/csci8211/Papers/NFV%20ClickOS%20and%20the%20Art%20of%20Network%20Function%20Virtualization-nsdi14-paper-martins.pdf
+  [2] https://www.researchgate.net/publication/294892213_ClickOS_and_the_Art_of_Network_Function_Virtualization

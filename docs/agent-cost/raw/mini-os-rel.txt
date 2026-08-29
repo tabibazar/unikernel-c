@@ -1,0 +1,10 @@
+
+The Mini-OS project, maintained by the Xen Project, is primarily licensed under the BSD license. However, enabling certain optional features (CONFIG_TPMFRONT, CONFIG_TPMBACK, CONFIG_TPM_TIS) would cause the entire work to be covered by the GNU General Public License version 2 (GPLv2). The most recent tagged release is `xen-RELEASE-4.7.0`, released on June 20, 2016.
+
+confidence: high
+steps: 9 of 12, urls retrieved: 18
+COST llm_calls=9 tokens_in=36208 tokens_out=471 searches=3 fetches=4 steps=9
+
+sources:
+  [1] https://github.com/xen-project/mini-os/blob/master/COPYING
+  [2] https://github.com/xen-project/mini-os/tags

@@ -1,0 +1,10 @@
+
+Drawbridge was a Microsoft Research project. Its official project page does not specify a license. The project has concluded, and there are no mentions of tagged releases or associated dates on the provided project page.
+
+confidence: low
+unresolved: The license and any tagged releases and dates could not be found.
+steps: 5 of 12, urls retrieved: 10
+COST llm_calls=5 tokens_in=9078 tokens_out=254 searches=2 fetches=1 steps=5
+
+sources:
+  [1] https://www.microsoft.com/en-us/research/project/drawbridge/

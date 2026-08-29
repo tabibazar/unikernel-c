@@ -1,0 +1,10 @@
+
+The BareMetal OS project, a 64-bit operating system written in Assembly for x86-64 systems, does not mention any support for TLS or any specific TLS libraries in its documentation on GitHub. Therefore, based on the pages I have read, it is not possible to confirm if it supports TLS.
+
+confidence: high
+unresolved: Whether BareMetal OS supports TLS and, if so, which library it uses.
+steps: 7 of 12, urls retrieved: 15
+COST llm_calls=7 tokens_in=17791 tokens_out=311 searches=4 fetches=1 steps=7
+
+sources:
+  [1] https://github.com/ownmac/BareMetal-OS

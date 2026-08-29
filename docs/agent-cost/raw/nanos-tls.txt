@@ -1,0 +1,9 @@
+
+The Nanos unikernel supports TLS via a "tls klib" (kernel library). This klib acts as a plugin to the system. While TLS functionality is confirmed to be integrated, the specific underlying TLS library used (e.g., mbedTLS, OpenSSL, or BearSSL) is not explicitly stated in the provided documentation.
+
+confidence: high
+steps: 7 of 12, urls retrieved: 18
+COST llm_calls=7 tokens_in=16477 tokens_out=394 searches=4 fetches=1 steps=7
+
+sources:
+  [1] https://nanovms.com/dev/tutorials/introducing-console-drivers-to-stream-to-gcp-logging-aws-cloudwatch

@@ -1,0 +1,10 @@
+
+BareMetal OS is a 64-bit operating system for x86-64 compatible PCs, written entirely in assembly language. It is designed as a learning tool to demonstrate how a simple OS works. Potential uses include serving as a base for raw number crunching applications, possibly in a cluster environment, or as a foundation for other OS projects. The project explicitly states that it is not intended to become a general-purpose operating system. There is no documented evidence of BareMetal OS being used in production or by industrial users in the pages I reviewed.
+
+confidence: medium
+unresolved: Whether BareMetal OS has any production or industrial users.
+steps: 6 of 12, urls retrieved: 13
+COST llm_calls=6 tokens_in=12895 tokens_out=389 searches=3 fetches=1 steps=6
+
+sources:
+  [1] https://github.com/itfrombit/BareMetal-OS

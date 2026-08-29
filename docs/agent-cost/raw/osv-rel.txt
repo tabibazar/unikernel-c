@@ -1,0 +1,10 @@
+
+The OSv unikernel project is licensed under the 3-clause BSD license. Its most recent tagged release is v0.57.0, which was released on December 14, 2022.
+
+confidence: high
+steps: 6 of 12, urls retrieved: 7
+COST llm_calls=6 tokens_in=27484 tokens_out=310 searches=1 fetches=3 steps=6
+
+sources:
+  [1] https://github.com/cloudius-systems/osv/blob/master/LICENSE
+  [2] https://github.com/cloudius-systems/osv/tags

@@ -1,0 +1,10 @@
+
+The Unikernel-Linux project, a collaboration between Red Hat and Boston University, is a research initiative aiming to transform the Linux kernel into a unikernel. Its purpose is to enable applications to utilize the performance and security benefits of unikernels while continuing to use established Linux and glibc code. This approach seeks to simplify compilation for various applications and facilitate maintenance by the broader Linux developer community. As an ongoing research project, there are no documented production or industrial users of Unikernel-Linux found in the provided sources.
+
+confidence: medium
+unresolved: No documented production or industrial users of Unikernel-Linux were found.
+steps: 4 of 12, urls retrieved: 5
+COST llm_calls=4 tokens_in=7783 tokens_out=419 searches=1 fetches=1 steps=4
+
+sources:
+  [1] https://research.redhat.com/blog/research_project/unikernel-linux/

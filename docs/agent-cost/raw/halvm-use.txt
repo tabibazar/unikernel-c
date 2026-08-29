@@ -1,0 +1,10 @@
+
+The HaLVM (Haskell Lightweight Virtual Machine) unikernel is used for building lightweight services in the cloud, particularly web services, by compiling necessary operating system components into a single binary that runs directly on Xen. This approach offers advantages in terms of size, flexibility, and security. Adam Wick, the creator of HaLVM, has led projects at Galois, Inc. that employed HaLVM for communications and network security. No other specific documented production or industrial users of HaLVM are mentioned in the provided sources.
+
+confidence: high
+unresolved: No other production or industrial users of HaLVM are documented in the retrieved information.
+steps: 4 of 12, urls retrieved: 5
+COST llm_calls=4 tokens_in=6604 tokens_out=420 searches=1 fetches=1 steps=4
+
+sources:
+  [1] https://www.thestrangeloop.com/2015/an-introduction-to-unikernels-with-the-halvm.html

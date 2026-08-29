@@ -1,0 +1,12 @@
+
+LING, a unikernel project based on Erlang/OTP, does not appear to use a standard network stack like lwIP or a common libc implementation such as musl, newlib, or NetBSD libc. Instead, it seems to employ a highly customized approach. For its network stack, LING interacts directly with the network interface, potentially leveraging AF_PACKET, as indicated by a commit message "afpacket: recv seems to work" in its `core/include` directory. This suggests a direct, low-level network interaction rather than a full, traditional network stack. Regarding its libc, LING is described as removing "the majority of vector files" and using "only three external libraries," implying a minimal, custom, or integrated C library rather than a widely recognized standalone libc. The project's GitHub repository shows a significant amount of custom C code within its `core` directory, supporting the notion of a highly tailored environment.
+
+confidence: high
+steps: 11 of 12, urls retrieved: 12
+COST llm_calls=11 tokens_in=82314 tokens_out=779 searches=2 fetches=5 steps=11
+
+sources:
+  [1] http://unikernel.org/projects/
+  [2] https://github.com/cloudozer/ling
+  [3] https://github.com/cloudozer/ling/tree/master/core/include
+  [4] https://github.com/cloudozer/ling/blob/master/Makefile

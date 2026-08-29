@@ -1,0 +1,9 @@
+
+Unikraft is a unikernel or library OS project used for building minimal, ultra-lightweight virtual machines. Its applications include creating sandboxes with strong VM isolation for tasks like AI agents, enabling headless browsers (e.g., Chromium, Firefox) with sub-10ms cold starts, and providing full remote desktop environments that can cold-start and restore statefully in under 10ms. Unikraft is designed for fast cold-start times (under 10ms), high density (over 100K instances per server), and improved unit economics. Documented production or industrial users listed on Unikraft's website include Prisma, Axiom, AgentQL, Netlify, Datum, FlutterFlow, BrowserUse, Cuemby, Kernel, and Altrina.
+
+confidence: high
+steps: 4 of 12, urls retrieved: 5
+COST llm_calls=4 tokens_in=8251 tokens_out=490 searches=1 fetches=1 steps=4
+
+sources:
+  [1] https://unikraft.com/

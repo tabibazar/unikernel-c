@@ -1,0 +1,10 @@
+
+HermitOS is licensed under the Apache License, Version 2.0. The most recent tagged release is "Hermit for Rust 0.13.2", released on March 13, 2026.
+
+confidence: high
+steps: 7 of 12, urls retrieved: 10
+COST llm_calls=7 tokens_in=23736 tokens_out=389 searches=2 fetches=3 steps=7
+
+sources:
+  [1] https://gitlab.git.nrw/rwth-acs/public/hermit-os/kernel/-/blob/main/LICENSE-APACHE
+  [2] https://github.com/hermit-os/hermit-rs/releases

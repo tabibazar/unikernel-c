@@ -1,0 +1,10 @@
+
+Rumprun is a unikernel project that aims to run existing POSIX applications. While unikernels generally offer security benefits by reducing the attack surface, the provided sources do not explicitly state whether Rumprun itself supports TLS, nor do they specify which library (e.g., mbedTLS, OpenSSL, BearSSL) it would use for such support. The project's GitHub page and various blog posts about Rumprun do not contain this information.
+
+confidence: low
+unresolved: Whether Rumprun supports TLS and, if so, via which library.
+steps: 6 of 12, urls retrieved: 15
+COST llm_calls=6 tokens_in=16313 tokens_out=362 searches=3 fetches=1 steps=6
+
+sources:
+  [1] https://github.com/rumpkernel/rumprun

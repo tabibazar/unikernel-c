@@ -1,0 +1,10 @@
+
+UniK is a project that automates the compilation and deployment of unikernels and MicroVMs. It enables applications written in languages like C/C++, Golang, Java, Node.js, and Python to be converted into unikernels. These unikernels can then be deployed as virtual machines across various platforms, including OpenStack, VirtualBox, QEMU, AWS, vSphere, ukvm, and Xen. UniK integrates with existing unikernel projects such as Rumprun, OSv, IncludeOS, and MirageOS. As of a 2020 article, UniK was described as a "research project." Based on the pages reviewed, there is no documented evidence of UniK being used by production or industrial users.
+
+confidence: medium
+steps: 5 of 12, urls retrieved: 5
+COST llm_calls=5 tokens_in=17480 tokens_out=544 searches=1 fetches=2 steps=5
+
+sources:
+  [1] https://github.com/solo-io/unik
+  [2] https://medium.com/life-tips/digging-into-unikernels-332a69a719f7

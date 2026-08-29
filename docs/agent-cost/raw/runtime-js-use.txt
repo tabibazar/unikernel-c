@@ -1,0 +1,10 @@
+
+runtime.js is an open-source library operating system (unikernel) for the cloud that allows JavaScript applications to be bundled and deployed as lightweight, immutable VM images. It is built on the V8 JavaScript engine and uses an event-driven, non-blocking I/O model similar to Node.js, supporting KVM as the hypervisor. The project aims for compatibility with the npm module ecosystem and supports some Node.js APIs. However, the official website explicitly states that the project is "in development and not ready for production use." Furthermore, the GitHub repository indicates that the project was archived on July 3, 2020, and is no longer maintained. Based on the available documentation, there are no documented production or industrial users of runtime.js.
+
+confidence: high
+steps: 5 of 12, urls retrieved: 5
+COST llm_calls=5 tokens_in=11344 tokens_out=503 searches=1 fetches=2 steps=5
+
+sources:
+  [1] http://runtimejs.org/
+  [2] https://github.com/runtimejs/runtime

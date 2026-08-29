@@ -1,0 +1,10 @@
+
+The UniK project is licensed under the Apache License 2.0. Its most recent tagged release is "0.0", which was released on May 23, 2016.
+
+confidence: high
+steps: 6 of 12, urls retrieved: 7
+COST llm_calls=6 tokens_in=27216 tokens_out=270 searches=1 fetches=3 steps=6
+
+sources:
+  [1] https://github.com/solo-io/unik/blob/master/LICENSE
+  [2] https://github.com/solo-io/unik/tags

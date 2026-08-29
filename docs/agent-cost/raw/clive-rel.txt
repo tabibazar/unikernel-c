@@ -1,0 +1,11 @@
+
+The Clive unikernel is licensed under the MIT License. Its official GitHub repository (https://github.com/fjballest/clive) was archived on July 2, 2022, and is read-only. There are no tagged releases with dates available in the repository.
+
+confidence: high
+steps: 11 of 12, urls retrieved: 20
+COST llm_calls=11 tokens_in=47386 tokens_out=448 searches=5 fetches=4 steps=11
+
+sources:
+  [1] https://github.com/fjballest/clive/blob/master/LICENSE
+  [2] https://github.com/fjballest/clive
+  [3] https://github.com/fjballest/clive/tags

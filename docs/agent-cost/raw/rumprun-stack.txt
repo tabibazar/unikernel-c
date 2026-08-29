@@ -1,0 +1,9 @@
+
+The Rumprun unikernel uses the NetBSD network stack. It is designed to work with existing libc implementations, as "rump kernels already offered the set of system calls expected by libc."
+
+confidence: high
+steps: 4 of 12, urls retrieved: 5
+COST llm_calls=4 tokens_in=6853 tokens_out=222 searches=1 fetches=1 steps=4
+
+sources:
+  [1] https://xenproject.org/blog/on-rump-kernels-and-the-rumprun-unikernel/

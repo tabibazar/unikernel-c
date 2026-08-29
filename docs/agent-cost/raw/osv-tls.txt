@@ -1,0 +1,10 @@
+
+The consulted sources do not state whether the unikernel or library OS project 'OSv' supports TLS, or which library it would use.
+
+confidence: low
+unresolved: Whether OSv supports TLS and, if so, which library it uses.
+steps: 7 of 12, urls retrieved: 9
+COST llm_calls=7 tokens_in=21463 tokens_out=340 searches=3 fetches=1 steps=7
+
+sources:
+  [1] https://github.com/cloudius-systems/osv

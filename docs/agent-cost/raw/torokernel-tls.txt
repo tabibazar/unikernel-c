@@ -1,0 +1,10 @@
+
+I could not find any information on whether the unikernel or library OS project 'ToroKernel' supports TLS, or which library it would use. The official ToroKernel website and other search results did not provide details regarding TLS support.
+
+confidence: low
+unresolved: Whether ToroKernel supports TLS and, if so, which library it uses.
+steps: 5 of 12, urls retrieved: 9
+COST llm_calls=5 tokens_in=11356 tokens_out=209 searches=2 fetches=1 steps=5
+
+sources:
+  [1] https://torokernel.io/

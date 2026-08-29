@@ -1,0 +1,12 @@
+
+The Microsoft Research project 'Drawbridge' was a research prototype focused on a new form of virtualization for application sandboxing. It combined a 'picoprocess' (a lightweight isolation container) with a 'library OS' (a version of Windows adapted to run within the picoprocess). The goal was to provide secure isolation, persistent compatibility, and execution continuity with reduced resource overhead compared to traditional virtual machines. While Drawbridge could run various Windows applications as a prototype, it was explicitly stated as a research project and not a production system. There are no documented production or industrial users of Drawbridge; the project has concluded, and its influence is primarily seen in its contribution to concepts for secure containers, for example, potentially in SQL Server on Linux.
+
+confidence: high
+steps: 4 of 12, urls retrieved: 5
+COST llm_calls=4 tokens_in=7356 tokens_out=703 searches=1 fetches=1 steps=4
+
+sources:
+  [1] https://www.microsoft.com/en-us/research/project/drawbridge/
+  [2] https://www.cs.utexas.edu/~witchel/S25-380L/papers/porter11asplos-drawbridge.pdf
+  [3] https://www.zdnet.com/article/microsoft-goes-public-with-its-drawbridge-operating-system-research-project/
+  [4] https://www.microsoft.com/en-us/sql-server/blog/2016/12/16/sql-server-on-linux-how-introduction/

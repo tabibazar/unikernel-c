@@ -1,0 +1,11 @@
+
+The HaLVM project is licensed under the BSD 3-Clause "New" or "Revised" License. The full text of this license is available in the `LICENSE` file within the project's GitHub repository. The most recent explicitly dated release mentioned is version 1.0, which was released on November 30, 2010. The project's GitHub repository currently shows "0 Tags", indicating no further tagged releases beyond this initial announcement, and the repository was archived on March 10, 2020.
+
+confidence: high
+steps: 7 of 12, urls retrieved: 9
+COST llm_calls=7 tokens_in=22070 tokens_out=494 searches=2 fetches=2 steps=7
+
+sources:
+  [1] https://github.com/GaloisInc/HaLVM/blob/master/LICENSE
+  [2] https://github.com/GaloisInc/HaLVM
+  [3] https://www.galois.com/articles/galois-releases-haskell-lightweight-virtual-machine-halvm

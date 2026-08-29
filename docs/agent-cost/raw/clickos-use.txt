@@ -1,0 +1,10 @@
+
+ClickOS is a high-performance, virtualized software middlebox platform designed to address the limitations of hardware-based network appliances. It allows for the implementation of various network functions as software, such as firewalls, carrier-grade NAT, and load balancers. ClickOS virtual machines are notable for their small size (5MB), fast boot times (around 30 milliseconds), and low latency (45 microseconds). It can handle millions of packets per second and can run over a hundred virtual machines concurrently on a commodity server while saturating a 10Gb network connection. While ClickOS is presented as a solution for Network Function Virtualization (NFV), the academic paper "ClickOS and the Art of Network Function Virtualization" (published in 2014) does not document any specific production or industrial users of ClickOS itself.
+
+confidence: high
+unresolved: No documented production or industrial users of ClickOS were found in the read material.
+steps: 4 of 12, urls retrieved: 5
+COST llm_calls=4 tokens_in=8115 tokens_out=695 searches=1 fetches=1 steps=4
+
+sources:
+  [1] https://classpages.cselabs.umn.edu/Fall-2017/csci8211/Papers/NFV%20ClickOS%20and%20the%20Art%20of%20Network%20Function%20Virtualization-nsdi14-paper-martins.pdf

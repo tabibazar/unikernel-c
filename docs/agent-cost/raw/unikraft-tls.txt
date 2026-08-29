@@ -1,0 +1,9 @@
+
+Unikraft supports TLS through external libraries that have been ported to it, including OpenSSL.
+
+confidence: high
+steps: 4 of 12, urls retrieved: 5
+COST llm_calls=4 tokens_in=7699 tokens_out=153 searches=1 fetches=1 steps=4
+
+sources:
+  [1] https://asplos22.unikraft.org/getting-started/

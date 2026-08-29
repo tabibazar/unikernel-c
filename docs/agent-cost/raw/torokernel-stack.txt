@@ -1,0 +1,9 @@
+
+ToroKernel uses a custom network stack described as "Single Thread Event Loop Networking." It does not provide a standard libc, instead offering a "simple kernel API dedicated to microservices," as user applications run within the kernel at the most privileged level.
+
+confidence: high
+steps: 4 of 12, urls retrieved: 5
+COST llm_calls=4 tokens_in=7999 tokens_out=393 searches=1 fetches=1 steps=4
+
+sources:
+  [1] https://events19.linuxfoundation.org/wp-content/uploads/2017/12/Toro-Kernel-A-Dedicated-Kernel-for-Microservices-Matias-Vara-Larsen-Silicon-Gears-Cesar-Bernardini-Barracuda-1.pdf

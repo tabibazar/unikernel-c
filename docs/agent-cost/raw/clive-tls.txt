@@ -1,0 +1,10 @@
+
+Clive, a unikernel operating system designed for distributed and cloud computing environments and written in Go, does not have any explicit mention of TLS support or the use of any specific TLS library (such as mbedTLS, OpenSSL, or BearSSL) in the reviewed sources.
+
+confidence: high
+steps: 6 of 12, urls retrieved: 10
+COST llm_calls=6 tokens_in=15342 tokens_out=267 searches=2 fetches=2 steps=6
+
+sources:
+  [1] http://unikernel.org/projects/
+  [2] https://lsub.org/clive/

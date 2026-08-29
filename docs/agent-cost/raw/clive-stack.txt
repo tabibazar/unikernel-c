@@ -1,0 +1,10 @@
+
+The Clive unikernel project is an operating system written in the Go programming language, designed for distributed and cloud computing environments. However, the available information does not specify which network stack it utilizes (e.g., lwIP, a custom stack) or what libc it provides (e.g., musl, newlib).
+
+confidence: low
+unresolved: Details on Clive's network stack and libc implementation.
+steps: 9 of 12, urls retrieved: 8
+COST llm_calls=9 tokens_in=21718 tokens_out=376 searches=4 fetches=1 steps=9
+
+sources:
+  [1] http://unikernel.org/projects/

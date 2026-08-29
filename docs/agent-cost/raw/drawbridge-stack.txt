@@ -1,0 +1,9 @@
+
+Drawbridge uses a customized Windows-based library OS. Therefore, it uses the network stack and libc that are part of this 'enlightened' Windows version, rather than a separate, distinct network stack like lwIP or a specific libc like musl or newlib.
+
+confidence: high
+steps: 4 of 12, urls retrieved: 5
+COST llm_calls=4 tokens_in=7026 tokens_out=199 searches=1 fetches=1 steps=4
+
+sources:
+  [1] http://unikernel.org/projects/

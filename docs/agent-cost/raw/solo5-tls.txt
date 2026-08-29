@@ -1,0 +1,11 @@
+
+Solo5, as a unikernel and library OS project, does not natively implement TLS itself. Instead, it serves as a platform for unikernels like MirageOS. MirageOS, when running on Solo5, provides TLS support, including TLS 1.3. This TLS functionality within MirageOS appears to leverage cryptographic libraries such as `fiat-p256` and `hacl_x25519`. One source from 2020 also indicated plans to implement TLS support "as soon as the feature is available," which is consistent with the current approach of using MirageOS for TLS functionality on Solo5.
+
+confidence: high
+steps: 7 of 12, urls retrieved: 24
+COST llm_calls=7 tokens_in=13692 tokens_out=499 searches=5 fetches=0 steps=7
+
+sources:
+  [1] https://discuss.ocaml.org/t/sending-receiving-https-requests-with-mirageos/5590
+  [2] https://mirage.io/blog/tls-1-3-mirageos
+  [3] https://tfjmp.org/publication/2020-cloudcom/2020-cloudcom.pdf

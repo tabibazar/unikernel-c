@@ -1,0 +1,10 @@
+
+The UniK project's GitHub page does not explicitly state whether UniK supports TLS or which library it uses for such functionality. Based on the available information, it is not possible to confirm if UniK directly provides TLS support or integrates with specific TLS libraries like mbedTLS, OpenSSL, or BearSSL.
+
+confidence: low
+unresolved: Whether UniK supports TLS and, if so, which library it uses.
+steps: 5 of 12, urls retrieved: 5
+COST llm_calls=5 tokens_in=12317 tokens_out=298 searches=2 fetches=1 steps=5
+
+sources:
+  [1] https://github.com/solo-io/unik

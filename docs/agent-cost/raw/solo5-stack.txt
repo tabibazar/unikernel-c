@@ -1,0 +1,10 @@
+
+Solo5 does not provide a specific network stack or libc. It functions as a sandboxed execution environment that redefines the interface between a unikernel application and its host. Unikernels running on Solo5 are therefore expected to provide their own network stack and libc implementation, which then interact with the host through Solo5's minimal API.
+
+confidence: high
+steps: 10 of 12, urls retrieved: 22
+COST llm_calls=10 tokens_in=48955 tokens_out=435 searches=4 fetches=4 steps=10
+
+sources:
+  [1] https://github.com/Solo5/solo5
+  [2] https://github.com/Solo5/solo5/blob/main/docs/architecture.md

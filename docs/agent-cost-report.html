@@ -1,0 +1,179 @@
+<title>73,309 Questions</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+  :root {
+    --ground:#f6f4ef; --surface:#fff; --surface-alt:#efece4; --ink:#17140e; --ink-soft:#55503f;
+    --ink-faint:#8a8471; --rule:#ddd8ca; --accent:#a35f00; --accent-soft:#f6e8cd;
+    --ok:#2f6b3d; --bad:#a03028; --console-bg:#17140e; --console-fg:#f0d9a8; --console-dim:#9c8a63;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground:#0b0906; --surface:#14110b; --surface-alt:#1d1810; --ink:#ece5d6; --ink-soft:#b3a68a;
+      --ink-faint:#7d7259; --rule:#2e2718; --accent:#ffb000; --accent-soft:#3a2c10;
+      --ok:#7fc08c; --bad:#e8776c; --console-bg:#060504; --console-fg:#ffb000; --console-dim:#8f6a1a;
+    }
+  }
+  :root[data-theme="dark"] {
+    --ground:#0b0906; --surface:#14110b; --surface-alt:#1d1810; --ink:#ece5d6; --ink-soft:#b3a68a;
+    --ink-faint:#7d7259; --rule:#2e2718; --accent:#ffb000; --accent-soft:#3a2c10;
+    --ok:#7fc08c; --bad:#e8776c; --console-bg:#060504; --console-fg:#ffb000; --console-dim:#8f6a1a;
+  }
+  * { box-sizing:border-box; }
+  body { background:var(--ground); color:var(--ink); font-family:"IBM Plex Sans",system-ui,sans-serif;
+         font-size:16.5px; line-height:1.64; margin:0; padding:0 24px 96px; -webkit-font-smoothing:antialiased; }
+  .wrap { max-width:860px; margin:0 auto; }
+  header { padding:74px 0 34px; border-bottom:2px solid var(--ink); }
+  .eyebrow { font-family:"IBM Plex Mono",monospace; font-size:12px; letter-spacing:0.14em;
+             text-transform:uppercase; color:var(--accent); margin:0 0 18px; }
+  h1 { font-family:"IBM Plex Mono",monospace; font-weight:600; font-size:clamp(30px,5.4vw,48px);
+       line-height:1.06; letter-spacing:-0.025em; text-wrap:balance; margin:0 0 20px; }
+  .standfirst { font-size:19px; line-height:1.55; color:var(--ink-soft); max-width:60ch; margin:0; }
+  section { margin:0 0 52px; }
+  h2 { font-family:"IBM Plex Mono",monospace; font-size:13px; font-weight:600; letter-spacing:0.14em;
+       text-transform:uppercase; color:var(--accent); margin:0 0 8px; padding-bottom:10px;
+       border-bottom:1px solid var(--rule); }
+  h3 { font-size:19px; font-weight:600; margin:30px 0 6px; text-wrap:balance; }
+  p { margin:14px 0; max-width:68ch; }
+  code { font-family:"IBM Plex Mono",monospace; font-size:0.88em; background:var(--surface-alt);
+         padding:1px 5px; border-radius:2px; }
+  a { color:var(--accent); }
+  .scroll { overflow-x:auto; }
+  table { border-collapse:collapse; width:100%; margin:18px 0; font-size:14.5px; }
+  th,td { text-align:left; padding:9px 12px; border-bottom:1px solid var(--rule); vertical-align:top; }
+  th { font-family:"IBM Plex Mono",monospace; font-size:11px; letter-spacing:0.1em;
+       text-transform:uppercase; color:var(--ink-faint); font-weight:500; }
+  td.num,th.num { font-family:"IBM Plex Mono",monospace; font-variant-numeric:tabular-nums;
+                  text-align:right; white-space:nowrap; }
+  .big { font-family:"IBM Plex Mono",monospace; font-size:clamp(44px,8vw,86px); font-weight:600;
+         color:var(--accent); line-height:1; letter-spacing:-0.03em; margin:6px 0 2px; }
+  .console { background:var(--console-bg); color:var(--console-fg); font-family:"IBM Plex Mono",monospace;
+             font-size:12.5px; line-height:1.6; padding:16px 18px; overflow-x:auto; margin:18px 0;
+             border-left:3px solid var(--accent); }
+  .console pre { margin:0; }
+  .callout { border:1px solid var(--rule); border-left:3px solid var(--accent); background:var(--surface);
+             padding:18px 20px; margin:22px 0; }
+  .callout.warn { border-left-color:var(--bad); }
+  .callout p { margin:8px 0 0; max-width:none; }
+  .callout p:first-child { margin-top:0; }
+  .callout h4 { font-family:"IBM Plex Mono",monospace; font-size:13px; font-weight:600; margin:0 0 8px; }
+  footer { border-top:2px solid var(--ink); padding-top:20px; margin-top:60px; font-size:14px; color:var(--ink-faint); }
+</style>
+
+<div class="wrap">
+
+<header>
+  <p class="eyebrow">Measured 28 August 2026</p>
+  <h1>73,309 Questions</h1>
+  <p class="standfirst">A research agent ran for 22 minutes and answered 80 questions. This is what that cost, what the same thing would cost run continuously for a fortnight, and where the projection stops being trustworthy.</p>
+</header>
+
+<section>
+  <h2>What was actually run</h2>
+  <p>Not a synthetic benchmark. The agent filled the two weakest columns of a survey of twenty unikernel projects — whether each supports TLS, and what network stack and libc it uses — which an earlier pass had left mostly unknown. Eighty questions, two at a time, each one a separate stateless process that searches, reads pages, and answers or admits it cannot.</p>
+  <p>Every unit recorded its own wall time, model calls, tokens in and out, and search and fetch counts. Firecrawl's credit endpoint gave measured consumption rather than an estimate, and Gemini's pricing page was read on the day.</p>
+</section>
+
+<section>
+  <h2>The measurement</h2>
+  <div class="scroll">
+  <table>
+    <tr><th>Measure</th><th class="num">Total</th><th class="num">Per question</th></tr>
+    <tr><td>Questions answered</td><td class="num">79 of 80</td><td class="num">98.8%</td></tr>
+    <tr><td>Wall clock</td><td class="num">22 min</td><td class="num">13 s median</td></tr>
+    <tr><td>Model calls</td><td class="num">498</td><td class="num">6.2</td></tr>
+    <tr><td>Input tokens</td><td class="num">1,608,011</td><td class="num">20,100</td></tr>
+    <tr><td>Output tokens</td><td class="num">31,532</td><td class="num">394</td></tr>
+    <tr><td>Searches + page fetches</td><td class="num">327</td><td class="num">4.1</td></tr>
+    <tr><td>Firecrawl credits</td><td class="num">570</td><td class="num">7.1</td></tr>
+    <tr><td><strong>Cost at paid rates</strong></td><td class="num"><strong>$2.39</strong></td><td class="num"><strong>$0.030</strong></td></tr>
+  </table>
+  </div>
+  <p>Two things in that table are worth more than the total.</p>
+
+  <div class="callout">
+    <h4>Input outweighs output 51 to 1</h4>
+    <p>1.6 million tokens in, 31 thousand out. The loop re-sends the whole conversation on every step, so a six-step question transmits its own history six times. Output — the part that feels like the work — is 2% of the tokens.</p>
+    <p>That single ratio decides the economics, because input is priced at $0.30 per million and output at $2.50. Cached input is $0.03. On this workload, prompt caching is not an optimisation; it is the difference between two bills.</p>
+  </div>
+
+  <div class="callout">
+    <h4>The model is not the expensive part</h4>
+    <p>$0.56 of model against $1.82 of search and page fetching. <strong>76% of the cost is reading the web</strong>, not thinking about it. Every conversation about agent economics I have seen focuses on the token bill; here it is the minority of spend.</p>
+  </div>
+</section>
+
+<section>
+  <h2>Fourteen days at the same rate</h2>
+  <p>3.64 questions a minute, sustained, is 218 an hour and <strong>73,309 in a fortnight</strong>.</p>
+  <div class="scroll">
+  <table>
+    <tr><th>Over 14 days</th><th class="num">Volume</th></tr>
+    <tr><td>Research questions</td><td class="num">73,309</td></tr>
+    <tr><td>Model calls</td><td class="num">456,349</td></tr>
+    <tr><td>Input tokens</td><td class="num">1.47 billion</td></tr>
+    <tr><td>Output tokens</td><td class="num">28.9 million</td></tr>
+    <tr><td>Firecrawl credits</td><td class="num">522,327</td></tr>
+  </table>
+  </div>
+
+  <div class="scroll">
+  <table>
+    <tr><th>Cost line</th><th class="num">14 days</th></tr>
+    <tr><td>Gemini 2.5 Flash, as measured</td><td class="num">$514</td></tr>
+    <tr><td>…with 80% of input served from cache</td><td class="num">$196</td></tr>
+    <tr><td>Firecrawl — Hobby top-ups, $0.0032/credit</td><td class="num">$1,671</td></tr>
+    <tr><td>Firecrawl — Growth top-ups, $0.0020/credit</td><td class="num">$1,045</td></tr>
+    <tr><td>Firecrawl — 1M-credit plan, $0.0006/credit</td><td class="num">$313</td></tr>
+    <tr><td><strong>Total, depending on tier and caching</strong></td><td class="num"><strong>$509 – $2,186</strong></td></tr>
+  </table>
+  </div>
+  <p>A fourfold spread from procurement decisions alone, before anyone touches the code. The cheap end needs prompt caching and a plan sized to the volume; the expensive end is what you pay by scaling a starter tier with top-ups.</p>
+</section>
+
+<section>
+  <h2>The same work by hand</h2>
+  <p>Each question is a targeted lookup: two to four searches, opening a repository or a documentation page, finding a licence or a last-commit date, and writing it down without getting it wrong. Call it five minutes for someone competent and careful.</p>
+  <div class="scroll">
+  <table>
+    <tr><th>Minutes per question</th><th class="num">Hours</th><th class="num">Working days</th><th class="num">Person-years</th><th class="num">At $50/hour</th></tr>
+    <tr><td>3 — fast, shallow</td><td class="num">3,665</td><td class="num">458</td><td class="num">2.0</td><td class="num">$183,273</td></tr>
+    <tr><td><strong>5 — careful</strong></td><td class="num"><strong>6,109</strong></td><td class="num"><strong>764</strong></td><td class="num"><strong>3.3</strong></td><td class="num"><strong>$305,455</strong></td></tr>
+    <tr><td>10 — with verification</td><td class="num">12,218</td><td class="num">1,527</td><td class="num">6.6</td><td class="num">$610,909</td></tr>
+  </table>
+  </div>
+  <p class="big">≈ 150×</p>
+  <p>Roughly three person-years of lookups for somewhere between five hundred and two thousand dollars. The ratio is the headline, and it is real. What follows is why it is also misleading.</p>
+</section>
+
+<section>
+  <h2>Where the projection breaks</h2>
+
+  <h3>The queue is the constraint, not the money</h3>
+  <p>Running for a fortnight requires <strong>73,309 questions worth asking</strong>. Our entire twenty-project survey — a genuinely useful piece of work — consumed 80. That is a tenth of one percent of the fortnight. Finding four orders of magnitude more questions that anyone wants answered is a much harder problem than paying for them, and nothing in the cost model helps with it.</p>
+
+  <h3>98.8% completion is not 98.8% correctness</h3>
+  <p>One question in eighty ended without an answer. That number says nothing about whether the other 79 are right. We know they are not uniformly right: this run and the previous one disagreed about OSv — one said TLS support was available, the other that no source it read stated it. Same agent, same question, different day.</p>
+  <p>Two runs disagreeing is the cheapest possible reminder that a single run is evidence, not truth. Verification costs roughly what generation costs, which halves the effective rate and is not in the table above.</p>
+
+  <h3>Nobody reads 73,309 answers</h3>
+  <p>The output would be about 70 MB of prose. Turning that into something usable needs an extraction pass — we ran one, and it needed its own model calls — and then human curation, which is exactly the cost the agent was supposed to remove. The bottleneck moves from producing answers to deciding which ones matter.</p>
+
+  <h3>Unattended for a fortnight is a fiction</h3>
+  <p>In 22 minutes of running, three failure modes appeared that needed a person: concurrency tripping the search API's rate limiter, a tool schema the model kept malforming, and a question so large it exhausted the step budget before the agent would commit. Each needed a code change. A fourteen-day run assumes none of that happens for two weeks, which is not what any two-week period looks like.</p>
+  <p>This is the honest argument for a supervising agent rather than a bigger prompt: something has to notice at 3am that the queue has stopped moving, work out why, and either fix it or say clearly that it cannot.</p>
+
+  <h3>And the rate limits bite before the budget does</h3>
+  <p>456,349 model calls in a fortnight is 22.6 a minute, sustained, day and night. That is comfortably past free-tier limits. The $509 figure is not a way to get the work for free; it is what the work costs once you are paying properly for it.</p>
+</section>
+
+<section>
+  <h2>What the 22 minutes actually produced</h2>
+  <p>The run was not a demo. The survey's most important column — can this project do TLS, the line between a research toy and something that can face the internet — went from <strong>3 of 20 established to 8</strong>, with the library named in each case: ocaml-tls for MirageOS, BearSSL for HermitOS, OpenSSL and others ported for Unikraft, a tls klib for Nanos, RA-TLS for Gramine. Solo5 was established as <em>not</em> providing TLS itself, which is equally useful to know.</p>
+  <p>That is thirty cents of API time against several hours of a person's afternoon, and it is the honest scale at which this technology is currently worth deploying: not seventy thousand questions, but the eighty you actually needed and were not going to do by hand.</p>
+</section>
+
+<footer>
+  <p>Measurements from 80 real research units on 28 August 2026. Model prices read from Google's pricing page that day; Firecrawl consumption read from its credit endpoint before and after the run. Raw per-unit data, the runner and the agent are in <a href="https://github.com/tabibazar/unikernel-c">github.com/tabibazar/unikernel-c</a>. The two-week figures are arithmetic on measured rates, not an observed run — every assumption behind them is stated above.</p>
+</footer>
+
+</div>

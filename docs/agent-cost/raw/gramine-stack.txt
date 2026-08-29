@@ -1,0 +1,11 @@
+
+Gramine does not implement a full network stack; instead, it relies on the host operating system's network stack for most operations. For its C library, Gramine provides a patched version of either musl or GNU C Library (glibc), with glibc being the default option.
+
+confidence: high
+steps: 5 of 12, urls retrieved: 8
+COST llm_calls=5 tokens_in=11684 tokens_out=363 searches=2 fetches=1 steps=5
+
+sources:
+  [1] https://gramine.readthedocs.io/en/stable/devel/building.html
+  [2] https://gramine.readthedocs.io/en/stable/devel/features.html
+  [3] https://dl.acm.org/doi/pdf/10.1145/3658644.3690323

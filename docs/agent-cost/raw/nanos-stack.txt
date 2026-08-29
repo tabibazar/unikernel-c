@@ -1,0 +1,12 @@
+
+Nanos uses a highly modified fork of LWIP for its network stack. While it aims for binary compatibility with Linux by implementing the Linux system call interface and providing an ELF loader, the specific libc it provides is not explicitly stated in the reviewed pages.
+
+confidence: medium
+unresolved: The specific libc used by Nanos (e.g., musl, newlib) is not explicitly stated.
+steps: 7 of 12, urls retrieved: 10
+COST llm_calls=7 tokens_in=23865 tokens_out=529 searches=2 fetches=3 steps=7
+
+sources:
+  [1] https://arxiv.org/html/2403.00515v1
+
+1 cited url was removed: not retrieved in this run.

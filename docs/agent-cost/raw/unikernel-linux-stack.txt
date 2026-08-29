@@ -1,0 +1,10 @@
+
+The Unikernel-Linux (UKL) project uses glibc (GNU C Library) as its libc, with a configuration option to enable a glibc bypass. The project's GitHub repository includes a glibc submodule. The specific network stack used by Unikernel-Linux is not explicitly stated on its main GitHub page.
+
+confidence: medium
+unresolved: The network stack used by Unikernel-Linux.
+steps: 4 of 12, urls retrieved: 5
+COST llm_calls=4 tokens_in=9367 tokens_out=269 searches=1 fetches=1 steps=4
+
+sources:
+  [1] https://github.com/unikernelLinux/ukl

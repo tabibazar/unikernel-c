@@ -1,0 +1,9 @@
+
+Gramine supports TLS through its RA-TLS (Remote Attestation TLS) functionality, and it utilizes mbedTLS for this purpose. This is indicated by the reference to the "ra-tls-mbedtls example" within the documentation for the `gramine-ratls` Python package, which serves as a wrapper for Gramine's binary libraries involved in generating and verifying RA-TLS certificates.
+
+confidence: high
+steps: 4 of 12, urls retrieved: 5
+COST llm_calls=4 tokens_in=6760 tokens_out=267 searches=1 fetches=1 steps=4
+
+sources:
+  [1] https://pypi.org/project/gramine-ratls/

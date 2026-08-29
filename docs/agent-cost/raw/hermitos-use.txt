@@ -1,0 +1,11 @@
+
+HermitOS is a Rust-based, lightweight unikernel designed for scalable and predictable runtimes in high-performance and cloud computing. Its primary applications include virtual machines and high-performance computing due to its reduced overhead. It supports applications written in Rust natively, and also allows for C/C++, Go, and Fortran applications to run on top of its Rust-based library operating system. Based on the information reviewed, there are no documented production or industrial users of HermitOS.
+
+confidence: medium
+unresolved: No documented production or industrial users were found.
+steps: 4 of 12, urls retrieved: 5
+COST llm_calls=4 tokens_in=8659 tokens_out=380 searches=1 fetches=1 steps=4
+
+sources:
+  [1] https://hermit-os.org/
+  [2] https://github.com/hermit-os/hermit-rs/wiki

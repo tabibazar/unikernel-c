@@ -58,6 +58,10 @@
 
 static const char *g_llm_url, *g_llm_model, *g_llm_key, *g_fc_key;
 
+// Cost accounting. Nothing here changes behaviour; it exists so a run can be
+// priced from what it actually consumed rather than from an estimate.
+static long g_llm_calls, g_tok_in, g_tok_out, g_search_calls, g_fetch_calls;
+
 // ---------------------------------------------------------------- http
 
 struct buf { char *p; size_t n; };
@@ -262,6 +266,7 @@ static void tool_web_search(const cJSON *args) {
     cJSON_Delete(req);
     if (!body) { set_result("{\"error\":\"could not build request\"}"); return; }
 
+    g_search_calls++;
     long status = 0;
     char *resp = post_json(SEARCH_URL, body, g_fc_key, &status);
     free(body);
@@ -335,6 +340,7 @@ static void tool_read_page(const cJSON *args) {
     cJSON_Delete(req);
     if (!body) { set_result("{\"error\":\"could not build request\"}"); return; }
 
+    g_fetch_calls++;
     long status = 0;
     char *resp = post_json(SCRAPE_URL, body, g_fc_key, &status);
     free(body);
@@ -481,6 +487,16 @@ static cJSON *llm_attempt(const cJSON *messages, int *retryable) {
     free(resp);
     if (!json) { fprintf(stderr, "    [!] model returned unparseable JSON\n"); return NULL; }
 
+    // usage is reported per response by the OpenAI-compatible endpoint
+    cJSON *usage = cJSON_GetObjectItemCaseSensitive(json, "usage");
+    if (usage) {
+        cJSON *pi = cJSON_GetObjectItemCaseSensitive(usage, "prompt_tokens");
+        cJSON *co = cJSON_GetObjectItemCaseSensitive(usage, "completion_tokens");
+        if (cJSON_IsNumber(pi)) g_tok_in  += (long)pi->valuedouble;
+        if (cJSON_IsNumber(co)) g_tok_out += (long)co->valuedouble;
+    }
+    g_llm_calls++;
+
     cJSON *choices = cJSON_GetObjectItemCaseSensitive(json, "choices");
     cJSON *msg = NULL;
     if (cJSON_IsArray(choices) && cJSON_GetArraySize(choices) > 0) {
@@ -622,6 +638,8 @@ int main(int argc, char **argv) {
         printf("NO ANSWER after %d steps.\n", steps_used);
         printf("It retrieved %d source%s but never reached something it was willing to state.\n",
                g_seen_count, g_seen_count == 1 ? "" : "s");
+        printf("COST llm_calls=%ld tokens_in=%ld tokens_out=%ld searches=%ld fetches=%ld steps=%d\n",
+               g_llm_calls, g_tok_in, g_tok_out, g_search_calls, g_fetch_calls, steps_used);
         free(g_result);
         return 2;
     }
@@ -630,6 +648,8 @@ int main(int argc, char **argv) {
     printf("confidence: %s\n", g_confidence);
     if (g_unresolved && *g_unresolved) printf("unresolved: %s\n", g_unresolved);
     printf("steps: %d of %d, urls retrieved: %d\n", steps_used, MAX_STEPS, g_seen_count);
+    printf("COST llm_calls=%ld tokens_in=%ld tokens_out=%ld searches=%ld fetches=%ld steps=%d\n",
+           g_llm_calls, g_tok_in, g_tok_out, g_search_calls, g_fetch_calls, steps_used);
 
     if (g_source_count) {
         printf("\nsources:\n");

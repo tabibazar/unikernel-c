@@ -1,0 +1,11 @@
+
+I was unable to determine the specific network stack and libc implementation used by Mini-OS. The Xen Wiki pages for Mini-OS provide an overview of the project and its initialization process, but do not detail these components. While general information about unikernels suggests they select necessary libraries for network stacks and libc, this information is not specific to Mini-OS itself.
+
+confidence: low
+unresolved: The specific network stack (e.g., lwIP, custom) and libc implementation (e.g., musl, newlib, custom) used by Mini-OS.
+steps: 12 of 12, urls retrieved: 29
+COST llm_calls=12 tokens_in=46232 tokens_out=446 searches=8 fetches=2 steps=12
+
+sources:
+  [1] https://wiki.xenproject.org/wiki/Mini-OS
+  [2] https://wiki.xenproject.org/wiki/Mini-OS-DevNotes

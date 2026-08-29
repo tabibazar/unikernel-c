@@ -1,0 +1,9 @@
+
+Nanos, a unikernel or library OS project, is used for deploying applications as small, secure, and lightweight virtual machines. These unikernels do not contain a traditional operating system like Linux or Windows, offering advantages such as faster boot times, enhanced security by eliminating unnecessary components, and increased server density. NanoVMs, the company behind Nanos, lists several organizations as customers on its website, including Gevulot, Tally, Terraflow, and AggreCost. However, specific documented production or industrial use cases for Nanos by these customers are not detailed on the website.
+
+confidence: high
+steps: 4 of 12, urls retrieved: 5
+COST llm_calls=4 tokens_in=8120 tokens_out=349 searches=1 fetches=1 steps=4
+
+sources:
+  [1] https://nanovms.com/

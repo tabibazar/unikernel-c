@@ -1,0 +1,10 @@
+
+The BareMetal OS project uses Newlib as its C standard library. The provided information does not specify which network stack it utilizes.
+
+confidence: high
+unresolved: The specific network stack used by BareMetal OS.
+steps: 6 of 12, urls retrieved: 15
+COST llm_calls=6 tokens_in=15260 tokens_out=227 searches=3 fetches=1 steps=6
+
+sources:
+  [1] https://github.com/ownmac/BareMetal-OS

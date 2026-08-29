@@ -1,0 +1,10 @@
+
+OSv utilizes a network stack that was originally imported from FreeBSD. For its C standard library, OSv provides a `libc` that is greatly based on musl.
+
+confidence: high
+steps: 4 of 12, urls retrieved: 5
+COST llm_calls=4 tokens_in=7352 tokens_out=216 searches=1 fetches=1 steps=4
+
+sources:
+  [1] https://github.com/cloudius-systems/osv/wiki/Components-of-OSv
+  [2] https://en.wikipedia.org/wiki/OSv

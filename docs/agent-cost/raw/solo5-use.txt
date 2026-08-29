@@ -1,0 +1,9 @@
+
+Solo5 is a sandboxed execution environment for unikernels, acting as a middleware that interfaces unikernel applications with their host systems. It was originally developed at IBM Research to enable MirageOS to run on Linux/KVM and has since expanded to support various unikernels across different sandboxing technologies and hypervisors. It handles fundamental tasks like unikernel booting, network access, and block device interaction. While Solo5 provides a crucial underlying layer for unikernel development, it is not an end-developer product. There is no documented information about production or industrial users of Solo5 in the pages reviewed.
+
+confidence: high
+steps: 5 of 12, urls retrieved: 8
+COST llm_calls=5 tokens_in=13086 tokens_out=410 searches=2 fetches=1 steps=5
+
+sources:
+  [1] https://github.com/Solo5/solo5

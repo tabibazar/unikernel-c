@@ -1,0 +1,11 @@
+
+Unikraft is licensed under the BSD-3-Clause license. Its most recent tagged release is "RELEASE-0.21.0", which was released on April 20, 2026.
+
+confidence: high
+steps: 5 of 12, urls retrieved: 6
+COST llm_calls=5 tokens_in=17493 tokens_out=258 searches=1 fetches=2 steps=5
+
+sources:
+  [1] https://github.com/unikraft/unikraft
+  [2] https://github.com/unikraft/unikraft/tags
+  [3] https://xenproject.org/projects/unikraft/

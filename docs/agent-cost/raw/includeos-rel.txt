@@ -1,0 +1,10 @@
+
+IncludeOS is licensed under the Apache License 2.0. The most recent tagged release is v0.15.1, which was released on June 2, 2024.
+
+confidence: high
+steps: 6 of 12, urls retrieved: 7
+COST llm_calls=6 tokens_in=29541 tokens_out=269 searches=1 fetches=3 steps=6
+
+sources:
+  [1] https://github.com/includeos/includeos/blob/main/LICENSE
+  [2] https://github.com/includeos/IncludeOS/tags

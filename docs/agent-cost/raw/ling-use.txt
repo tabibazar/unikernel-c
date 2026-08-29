@@ -1,0 +1,10 @@
+
+LING is a unikernel based on Erlang/OTP that processes `.beam` files. It allows developers to write code in Erlang and deploy it as LING unikernels. It is designed to be a minimal system, using few external libraries and no OpenSSL. I could not find any documented production or industrial users of LING on the pages I read.
+
+confidence: low
+unresolved: Documented production or industrial users of LING.
+steps: 3 of 12, urls retrieved: 5
+COST llm_calls=3 tokens_in=4400 tokens_out=157 searches=1 fetches=1 steps=3
+
+sources:
+  [1] http://unikernel.org/projects/

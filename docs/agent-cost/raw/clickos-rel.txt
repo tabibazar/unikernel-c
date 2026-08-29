@@ -1,0 +1,11 @@
+
+The ClickOS project operates under a dual-licensing model. The majority of the software is released under an MIT-like license (the "Click license") which includes a clause from the W3C license requiring prior written permission for using copyright holders' names in publicity. Certain restricted parts of the software are governed by the GNU General Public License, Version 2. The most recent tagged release for ClickOS is `v0.2`, dated June 17, 2014.
+
+confidence: high
+steps: 6 of 12, urls retrieved: 8
+COST llm_calls=6 tokens_in=37002 tokens_out=473 searches=1 fetches=4 steps=6
+
+sources:
+  [1] https://github.com/sysml/clickos/blob/master/COPYING
+  [2] https://github.com/sysml/clickos/blob/master/LICENSE
+  [3] https://github.com/sysml/clickos/tags

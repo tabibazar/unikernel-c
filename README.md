@@ -184,6 +184,16 @@ The raw answers and the driver are in `docs/unikernel-survey/`, including the tw
 knowing about — self-inflicted rate limiting, and a ten-field question that exhausted the step
 budget before the agent would commit.
 
+### What it costs
+
+`docs/agent-cost-report.html` measures 80 real research units — 22 minutes, 79 answered, every
+unit's tokens, calls and fetches recorded, with Firecrawl consumption read from its credit
+endpoint rather than estimated. Raw per-unit data is in `docs/agent-cost/units.tsv`.
+
+Two findings that were not obvious before measuring: input tokens outweigh output **51 to 1**,
+because the loop re-sends the conversation each step — so prompt caching is the difference between
+two bills, not an optimisation. And **76% of the cost is search and page fetching**, not the model.
+
 ### Two things learned by watching it fail
 
 The first version required a read URL to have appeared *exactly* in a search result. That sounded safe and was useless: the fact lived in `setup.sh`, a repository landing page does not contain it, and a file inside a repo never appears as its own search result. The agent could see where the answer was and was forbidden to go there. Same-host is the rule that keeps the property worth having.

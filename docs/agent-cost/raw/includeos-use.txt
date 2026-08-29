@@ -1,0 +1,10 @@
+
+IncludeOS is a library operating system (a type of unikernel) designed for single-task computers. It allows applications to be compiled with the necessary operating system functionality directly into the application itself, resulting in a standalone, bootable image. This approach aims to solve several problems: improved security through immutability and a reduced attack surface, smaller image and memory footprint, and enhanced performance and predictable low latency due to the absence of context switches. A key application area for IncludeOS is Virtual Networking Appliances, such as firewalls and load balancers, where the developers have observed excellent performance compared to Linux. However, based on the pages I have read, there are no documented production or industrial users of IncludeOS.
+
+confidence: high
+unresolved: Documented production or industrial users.
+steps: 5 of 12, urls retrieved: 9
+COST llm_calls=5 tokens_in=10744 tokens_out=504 searches=2 fetches=1 steps=5
+
+sources:
+  [1] https://www.includeos.org/technology.html

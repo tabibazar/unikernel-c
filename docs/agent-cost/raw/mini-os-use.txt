@@ -1,0 +1,11 @@
+
+Mini-OS is a small operating system kernel that is included with the Xen hypervisor and is used as a foundation for developing other unikernels. However, despite its role in the unikernel ecosystem, no specific documented production or industrial users of Mini-OS itself were found in the reviewed sources. Its primary utility appears to be as a building block for more specialized unikernel projects.
+
+confidence: medium
+unresolved: Specific documented production or industrial users of Mini-OS.
+steps: 5 of 12, urls retrieved: 7
+COST llm_calls=5 tokens_in=12815 tokens_out=368 searches=2 fetches=1 steps=5
+
+sources:
+  [1] https://github.com/cetic/unikernels
+  [2] https://blog.container-solutions.com/all-about-unikernels-part-1-what-they-are

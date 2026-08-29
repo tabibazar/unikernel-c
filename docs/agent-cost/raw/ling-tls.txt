@@ -1,0 +1,16 @@
+
+No source read explicitly states whether the LING unikernel project supports TLS, nor which library (such as mbedTLS, OpenSSL, or BearSSL) it would use if it did. The LING GitHub page, a primary resource for the project, does not provide this information.
+
+confidence: low
+unresolved: Whether LING supports TLS and which library it uses.
+steps: 5 of 12, urls retrieved: 8
+COST llm_calls=5 tokens_in=13856 tokens_out=440 searches=2 fetches=1 steps=5
+
+sources:
+  [1] https://github.com/cloudozer/ling
+  [2] https://next.redhat.com/2018/11/14/ukl-a-unikernel-based-on-linux/
+  [3] http://unikernel.org/resources/
+  [4] https://github.com/cetic/unikernels
+  [5] https://lwn.net/Articles/728682/
+  [6] https://en.wikipedia.org/wiki/Unikernel
+  [7] http://unikernel.org/projects/

@@ -1,0 +1,9 @@
+
+HermitOS utilizes `smoltcp` for its network stack, which is implemented entirely in Rust. It does not include a traditional C library (libc); instead, the kernel functions are integrated as a static library directly into the application.
+
+confidence: high
+steps: 8 of 12, urls retrieved: 22
+COST llm_calls=8 tokens_in=20232 tokens_out=286 searches=5 fetches=1 steps=8
+
+sources:
+  [1] https://rust-osdev.com/showcase/hermit/
