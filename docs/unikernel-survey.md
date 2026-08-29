@@ -23,6 +23,22 @@ a model's background knowledge, which would turn 'unverified' into 'plausible-lo
 reference point. Their years come from the most recent dated release instead, and both
 should be treated as uncertain rather than dormant.
 
+### Corrections from a second pass (29 Aug 2026)
+
+A focused follow-up run improved two cells and produced one outright error, both worth recording:
+
+- **Clive is no longer unknown.** MIT licence, repository `github.com/fjballest/clive`, archived
+  2 July 2022, no tagged releases. It should be counted among the dead, not the undetermined.
+- **HermitOS does NOT use BearSSL.** A run reported that, citing `cheriot.org` — a real page it
+  genuinely fetched, about the unrelated CHERIoT platform, which does use BearSSL. The citation
+  check passed because the URL was real; the inference was false. HermitOS's TLS story remains
+  unestablished.
+
+That second item is the more useful of the two. Verifying that a cited page exists does not verify
+that it is about the thing you asked, and a cheap domain-vs-subject comparison would have caught
+it. The same sweep flags two more claims as weakly sourced: Gramine's TLS answer cites PyPI, and
+Unikernel Linux's cites a general unikernel portal rather than the project.
+
 Two further caveats worth stating plainly:
 
 - **BareMetal's TLS cell is empty, and we know it does TLS** — we ran mbedTLS, lwIP and

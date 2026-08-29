@@ -168,8 +168,15 @@
 
 <section>
   <h2>What the 22 minutes actually produced</h2>
-  <p>The run was not a demo. The survey's most important column — can this project do TLS, the line between a research toy and something that can face the internet — went from <strong>3 of 20 established to 8</strong>, with the library named in each case: ocaml-tls for MirageOS, BearSSL for HermitOS, OpenSSL and others ported for Unikraft, a tls klib for Nanos, RA-TLS for Gramine. Solo5 was established as <em>not</em> providing TLS itself, which is equally useful to know.</p>
+  <p>The run was not a demo. The survey's most important column — can this project do TLS, the line between a research toy and something that can face the internet — gained six new answers: ocaml-tls for MirageOS, a tls klib for Nanos, ported OpenSSL for Unikraft, RA-TLS for Gramine, an LWN-sourced yes for IncludeOS, and Solo5 established as <em>not</em> providing TLS itself, which is equally useful. A second run also resolved Clive, previously unknown entirely: MIT licence, repository archived on 2 July 2022.</p>
   <p>That is thirty cents of API time against several hours of a person's afternoon, and it is the honest scale at which this technology is currently worth deploying: not seventy thousand questions, but the eighty you actually needed and were not going to do by hand.</p>
+
+  <div class="callout warn">
+    <h4>Correction, and the error type that caused it</h4>
+    <p>An earlier version of this page said the column went from three established to eight, and named BearSSL as HermitOS's TLS library. <strong>That claim is wrong.</strong> Asked about HermitOS, the agent searched, landed on <code>cheriot.org</code>, and reported the CHERIoT platform's network stack as though it were HermitOS's. CHERIoT is an unrelated project that does use BearSSL.</p>
+    <p>The citation was real — the page was genuinely fetched, so the verification that strips invented URLs passed it without complaint. What was false was the inference drawn from a real page about a different project. <strong>Verifying that a source exists does not verify that it is about the thing you asked.</strong></p>
+    <p>A cheap mechanical check catches it: compare the cited domain against the project. <code>cheriot.org</code> for a question about HermitOS is a mismatch a script can flag, and the same sweep raised two more claims as weakly sourced — Gramine's TLS answer citing PyPI, and Unikernel Linux's citing a general unikernel portal rather than the project. Domain-mismatch flagging is now the obvious next guardrail, and it is not yet built.</p>
+  </div>
 </section>
 
 <footer>
