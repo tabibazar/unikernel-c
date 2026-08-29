@@ -1,0 +1,10 @@
+
+CodeSandbox.io's microVMs use a credit-based pricing model, with each VM credit costing $0.01486. They offer a Free tier (400 monthly credits), a Build plan, a Scale plan, and Enterprise options. The smallest instance explicitly mentioned is a "Nano" VM, which provides 2 vCPUs and 2 GiB of RAM. I could not find any published cold-start or boot-time figures directly from CodeSandbox.io's official pages in the resources I reviewed.
+
+confidence: high
+unresolved: Published cold-start or boot-time figures for CodeSandbox.io microVMs.
+steps: 7 of 12, urls retrieved: 11
+COST llm_calls=7 tokens_in=17427 tokens_out=415 searches=3 fetches=1 steps=7
+
+sources:
+  [1] https://apis.io/plans/codesandbox/codesandbox-plans-pricing/

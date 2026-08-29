@@ -1,0 +1,12 @@
+
+e2b.dev agent sandboxes provide isolated environments for AI agents to securely execute code, process data, and run tools. They are designed for enterprise-grade security, offering hardware-level isolation. E2B runs workloads on Firecracker microVMs, utilizing KVM virtualization for kernel-level isolation.
+
+confidence: high
+steps: 2 of 12, urls retrieved: 5
+COST llm_calls=2 tokens_in=1950 tokens_out=178 searches=1 fetches=0 steps=2
+
+sources:
+  [1] https://e2b.dev/
+  [2] https://docs.e2b.dev/
+  [3] https://checkthat.ai/brands/e2b
+  [4] https://pub.towardsai.net/e2b-ai-sandboxes-features-applications-real-world-impact-75e949ded8a7

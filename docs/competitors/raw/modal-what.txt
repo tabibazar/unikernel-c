@@ -1,0 +1,10 @@
+
+Modal.com provides high-performance AI infrastructure for developers, enabling them to run compute-intensive applications such as AI inference, training, batch processing, and sandboxes. The platform uses containerization and virtualization, specifically running workloads on gVisor, a sandboxing technology developed by Google and used in Google Cloud Run and Google Kubernetes Engine.
+
+confidence: high
+steps: 5 of 12, urls retrieved: 8
+COST llm_calls=5 tokens_in=9179 tokens_out=289 searches=2 fetches=1 steps=5
+
+sources:
+  [1] https://modal.com/
+  [2] https://modal.com/docs/guide/security

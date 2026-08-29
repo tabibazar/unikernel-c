@@ -1,0 +1,10 @@
+
+E2B.dev agent sandboxes operate on a freemium model with a "Hobby" tier (free) and paid "Pro" ($150/month) and "Ultimate/Enterprise" tiers, all with additional usage costs. Usage is billed per second. The smallest instance configurable includes 1 vCPU ($0.000014/second) and 512 MiB of RAM ($0.0000045/GiB/second). The Hobby tier includes 10 GiB of storage, while the Pro tier includes 20 GiB. E2B sandboxes have a measured cold-start time of 717ms to create a new sandbox and 662ms to resume a paused one; these are independent measurements, not marketing claims.
+
+confidence: high
+steps: 5 of 12, urls retrieved: 5
+COST llm_calls=5 tokens_in=16171 tokens_out=597 searches=1 fetches=2 steps=5
+
+sources:
+  [1] https://e2b.dev/pricing
+  [2] https://blog.logrocket.com/comparing-ai-agent-sandbox-platforms-e2b-modal-daytona-and-more/

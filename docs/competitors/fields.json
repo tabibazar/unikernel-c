@@ -1,0 +1,176 @@
+{
+  "aws-lambda": {
+    "company": "AWS",
+    "offering": "AWS Lambda MicroVMs",
+    "isolation_tech": "Firecracker microVMs",
+    "pricing_model": "Based on number of requests and duration of code execution (GB-seconds), with a free tier included.",
+    "smallest_instance": "128 MB (memory)",
+    "cold_start_claim": "P50 cold start times for Go functions between 50-100ms and for Rust functions between 50-80ms. P99 cold start times are reported as 150-250ms for Go and 100-200ms for Rust. For Java with SnapStart, cold start times can be reduced from several seconds to around 180ms.",
+    "target_customer": null,
+    "sources": [
+      "https://aws.amazon.com/lambda/lambda-microvms/",
+      "https://aws.amazon.com/lambda/pricing/",
+      "https://dev.to/aws/cold-starts-are-dead-5fod"
+    ]
+  },
+  "cloudflare-workers": {
+    "company": "Cloudflare",
+    "offering": "Workers (global serverless functions platform)",
+    "isolation_tech": "V8 isolates",
+    "pricing_model": "Free plan with limited usage; Paid plan starting at $5 USD/month with additional usage billed per request and CPU millisecond; no data transfer charges.",
+    "smallest_instance": "128 MB",
+    "cold_start_claim": "Eliminated cold starts by pre-loading during the TLS handshake; previously cited as 'under 5 milliseconds'.",
+    "target_customer": null,
+    "sources": [
+      "https://www.cloudflare.com/products/workers/",
+      "https://developers.cloudflare.com/workers/reference/how-workers-works/",
+      "https://developers.cloudflare.com/workers/platform/pricing/"
+    ]
+  },
+  "codesandbox": {
+    "company": "CodeSandbox.io",
+    "offering": "instant cloud development environments that allow users to programmatically spin up isolated sandboxes for executing code, particularly useful for AI agents and code playgrounds. Its microVM infrastructure enables fast startup times, secure and isolated execution of untrusted code, scalability for millions of concurrent VMs, and features like continuous context with customizable hibernation and auto-resume.",
+    "isolation_tech": "Firecracker microVMs",
+    "pricing_model": "credit-based pricing model, with each VM credit costing $0.01486. Offers a Free tier (400 monthly credits), a Build plan, a Scale plan, and Enterprise options.",
+    "smallest_instance": "Nano VM (2 vCPUs, 2 GiB of RAM)",
+    "cold_start_claim": "within 2 seconds",
+    "target_customer": "AI agents and code playgrounds",
+    "sources": [
+      "https://codesandbox.io/",
+      "https://apis.io/plans/codesandbox/codesandbox-plans-pricing/"
+    ]
+  },
+  "daytona": {
+    "company": "Daytona.io",
+    "offering": "Secure and elastic infrastructure for running AI-generated code, enabling the creation and termination of sandboxes. Includes process execution, file system operations, Git integration, and LSP support.",
+    "isolation_tech": "microVMs (full OS-level isolation)",
+    "pricing_model": "pay-as-you-go, per-second billing (vCPU, memory, storage, GPU)",
+    "smallest_instance": "per vCPU and GiB",
+    "cold_start_claim": "sub-90ms cold-start time for Docker containers",
+    "target_customer": "AI applications (AI evaluations, code interpreters, coding agents, data analysis, data visualization, reinforcement learning)",
+    "sources": [
+      "https://www.daytona.io/",
+      "https://www.daytona.io/dotfiles/vms-pause-and-fork",
+      "https://www.daytona.io/pricing"
+    ]
+  },
+  "deno-deploy": {
+    "company": "Deno Deploy",
+    "offering": "multi-tenant, globally distributed cloud platform for hosting JavaScript and TypeScript applications",
+    "isolation_tech": "V8 isolates",
+    "pricing_model": "tiered pricing model with Free ($0/month), Pro ($20/month), Builder ($200/month), and Enterprise (custom) plans. These plans vary in included requests, egress bandwidth, custom domains, active CPU hours, memory time, and other features, with overage charges for exceeding limits on paid plans.",
+    "smallest_instance": "768 MB (memory allocation)",
+    "cold_start_claim": "Cold starts in Deno Deploy are highly optimized and complete within 100 milliseconds for hello world applications, and within a few hundred milliseconds for larger applications.",
+    "target_customer": null,
+    "sources": [
+      "https://deno.com/blog/build-secure-performant-cloud-platform",
+      "https://deno.com/deploy/pricing",
+      "https://docs.deno.com/deploy/reference/runtime/"
+    ]
+  },
+  "e2b": {
+    "company": "e2b.dev",
+    "offering": "agent sandboxes provide isolated environments for AI agents to securely execute code, process data, and run tools.",
+    "isolation_tech": "hardware-level isolation. E2B runs workloads on Firecracker microVMs, utilizing KVM virtualization for kernel-level isolation.",
+    "pricing_model": "freemium model with a \"Hobby\" tier (free) and paid \"Pro\" ($150/month) and \"Ultimate/Enterprise\" tiers, all with additional usage costs. Usage is billed per second.",
+    "smallest_instance": "1 vCPU ($0.000014/second) and 512 MiB of RAM ($0.0000045/GiB/second).",
+    "cold_start_claim": "717ms to create a new sandbox and 662ms to resume a paused one",
+    "target_customer": null,
+    "sources": [
+      "https://e2b.dev/",
+      "https://docs.e2b.dev/",
+      "https://checkthat.ai/brands/e2b"
+    ]
+  },
+  "flyio": {
+    "company": "Fly.io",
+    "offering": "content delivery network for Docker containers, distributing applications on bare metal servers across global data centers",
+    "isolation_tech": "Firecracker microVMs",
+    "pricing_model": "pay-as-you-go, billing separately for machines, RAM, storage volumes, bandwidth, and IP addresses. Machine reservations offer 40% savings.",
+    "smallest_instance": {
+      "name": "shared-cpu-1x",
+      "specs": "1 shared CPU and 256MB of RAM",
+      "price": "$2 per month ($0.0028 per hour)"
+    },
+    "cold_start_claim": "Fly Machines... boot in under a second",
+    "target_customer": null,
+    "sources": [
+      "https://fly.io/blog/sandboxing-and-workload-isolation/",
+      "https://fly.io/",
+      "https://fly.io/pricing/"
+    ]
+  },
+  "koyeb": {
+    "company": "Koyeb",
+    "offering": "A high-performance, serverless platform for deploying applications globally, including microservices, APIs, and AI inference. It provides automatic scaling, a global edge network with over 50 locations for low latency, and accelerated infrastructure utilizing high-performance CPUs, GPUs, and accelerators.",
+    "isolation_tech": "Firecracker microVMs",
+    "pricing_model": "Pay only for what you use, by the second, with \"Scale-to-Zero\" functionality. Various plans (Pro, Scale, Enterprise) provide compute credits and additional features.",
+    "smallest_instance": "1 GB RAM (for \"Free 5h\" Serverless Postgres option); 32GB RAM (L4 instance for general serverless compute); RTX-4000-SFF-ADA at $0.50/hr (6 vCPU, 44GB RAM, 240GB Disk) for lowest-priced serverless compute.",
+    "cold_start_claim": null,
+    "target_customer": null,
+    "sources": [
+      "https://www.koyeb.com/blog/the-koyeb-serverless-engine-from-kubernetes-to-nomad-firecracker-and-kuma",
+      "https://www.koyeb.com/",
+      "https://www.koyeb.com/pricing"
+    ]
+  },
+  "modal": {
+    "company": "Modal.com",
+    "offering": "high-performance AI infrastructure for developers, enabling them to run compute-intensive applications such as AI inference, training, batch processing, and sandboxes",
+    "isolation_tech": "containerization and virtualization, specifically running workloads on gVisor",
+    "pricing_model": "pay-as-you-go, billing for actual compute time by the CPU cycle and memory usage. Offers Starter, Team, and Enterprise plans.",
+    "smallest_instance": "0.125 CPU cores per container",
+    "cold_start_claim": "aims for 'supercharging sub-second startup'; GPU memory snapshots can achieve 'usually 3-5x faster' cold starts, and for Mistral 3, '10x faster cold starts with GPU snapshotting'",
+    "target_customer": "developers",
+    "sources": [
+      "https://modal.com/",
+      "https://modal.com/docs/guide/security",
+      "https://modal.com/pricing"
+    ]
+  },
+  "nanovms": {
+    "company": "NanoVMs",
+    "offering": "Unikernel for deploying to any cloud, managed services, support, and training.",
+    "isolation_tech": "Unikernels, providing stronger isolation and minimizing software running.",
+    "pricing_model": "On-demand, billed per second with a one-minute minimum.",
+    "smallest_instance": "Not explicitly defined as a fixed unit; memory is 'Only Limited by Instance Size'.",
+    "cold_start_claim": "An un-optimized Nanos workload demonstrated a boot time of around 60ms (raw kernel boot time, considered a 'vanity metric'); 'real cold boot times' for applications are typically measured in seconds.",
+    "target_customer": "Companies",
+    "sources": [
+      "https://nanovms.com/",
+      "https://www.linkedin.com/company/nanovms",
+      "https://nanovms.com/blog/nanovms-announces-first-plug-play-unikernel-tool"
+    ]
+  },
+  "northflank": {
+    "company": "Northflank",
+    "offering": "A runtime platform for AI-native companies and engineering teams. It enables deployments of applications, databases, and cron workloads, supporting GPU workloads, CI/CD, Git integration, free SSL, custom domains, and deployment to Northflank's managed cloud or user's AWS, GCP, or Azure accounts. Features include secure code execution for AI agents, VectorDBs, Jupyter notebooks, custom autoscaling, and managed addons for databases, caches, and queues.",
+    "isolation_tech": [
+      "Kata Containers with Cloud Hypervisor (microVM-based virtualization)",
+      "Firecracker microVMs (microVM-based virtualization)",
+      "gVisor (syscall interception)"
+    ],
+    "pricing_model": "Pay-as-you-go for compute resources (CPU, memory, GPU) based on hourly or monthly consumption. Also offers a free 'Sandbox' tier with limited resources and an 'Enterprise' tier for custom solutions.",
+    "smallest_instance": "nf-compute-10 plan (0.1 shared vCPU, 256MB memory)",
+    "cold_start_claim": "The free 'Sandbox' tier offers \"Always-on-compute \u2013 no sleeping :)\", implying no cold starts for free tier services. No specific measured or marketing cold-start or boot-time figures are published for other tiers or instance types.",
+    "target_customer": "AI-native companies and engineering teams",
+    "sources": [
+      "https://northflank.com/",
+      "https://northflank.com/blog/what-is-a-sandbox-and-isolation-technologies",
+      "https://northflank.com/pricing"
+    ]
+  },
+  "unikraft-cloud": {
+    "company": "Unikraft",
+    "offering": "KraftCloud",
+    "isolation_tech": "Firecracker microVMs",
+    "pricing_model": "millisecond-native, scales to zero (not charged for idle instances), free Hobby plan available",
+    "smallest_instance": "Hobby plan: 1 vCPU, 2GiB memory per instance (minimum implied from 2 instances, 2 vCPUs, 4GiB memory)",
+    "cold_start_claim": "millisecond cold starts, <10ms all workloads",
+    "target_customer": null,
+    "sources": [
+      "https://unikraft.com/how-it-works/",
+      "https://unikraft.com/pricing/"
+    ]
+  }
+}

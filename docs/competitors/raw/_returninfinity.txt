@@ -1,0 +1,13 @@
+
+Return Infinity (returninfinity.com) sells and offers a core product called **BareMetal**, which is a kernel designed for high-performance computing by directly exposing hardware resources to software. They also provide **BareMetal Cloud**, a cloud service built on this technology, featuring decoupled memory-vCPU charges. Additionally, they offer specialized services for the **Financial Services** industry, including solutions for quantitative research, compliance automation, and trading infrastructure, emphasizing deterministic scheduling and deployment sovereignty to meet regulatory requirements. No specific pricing information is publicly available in the provided search results.
+
+confidence: high
+steps: 3 of 12, urls retrieved: 10
+COST llm_calls=3 tokens_in=3145 tokens_out=493 searches=2 fetches=0 steps=3
+
+sources:
+  [1] https://returninfinity.com/homepage2
+  [2] https://returninfinity.com/
+  [3] https://ca.linkedin.com/company/returninfinity
+  [4] https://github.com/ReturnInfinity
+  [5] https://www.cbinsights.com/company/return-infinity

@@ -1,0 +1,9 @@
+
+Northflank operates on a 'Pay-as-you-go' pricing model for its compute resources (CPU, memory, and GPU), with charges based on consumption (hourly or monthly). They also offer a free 'Sandbox' tier with limited resources and an 'Enterprise' tier for custom solutions. The smallest instance available is the 'nf-compute-10' plan, which includes 0.1 shared vCPU and 256MB of memory. The smallest memory size you can purchase is 256MB. Northflank states that its Sandbox tier offers "Always-on-compute – no sleeping :)", implying no cold starts for free tier services. However, no specific measured or marketing cold-start or boot-time figures are published for any other tiers or instance types.
+
+confidence: high
+steps: 4 of 12, urls retrieved: 5
+COST llm_calls=4 tokens_in=12805 tokens_out=463 searches=1 fetches=1 steps=4
+
+sources:
+  [1] https://northflank.com/pricing

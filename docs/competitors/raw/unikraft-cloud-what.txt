@@ -1,0 +1,9 @@
+
+Unikraft's KraftCloud offers a cloud platform for applications and services that features millisecond cold starts, scale-to-zero capabilities, and rapid autoscaling. It achieves high density (100,000+ instances per server) and efficiency by converting Dockerfiles into specialized microVM images that are 10 times smaller. KraftCloud runs workloads on Firecracker microVMs, which provide strong hardware isolation for each instance.
+
+confidence: high
+steps: 4 of 12, urls retrieved: 5
+COST llm_calls=4 tokens_in=6542 tokens_out=295 searches=1 fetches=1 steps=4
+
+sources:
+  [1] https://unikraft.com/how-it-works/

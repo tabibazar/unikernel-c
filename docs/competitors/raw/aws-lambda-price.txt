@@ -1,0 +1,10 @@
+
+The pricing model for AWS Lambda, which utilizes Firecracker, is based on the number of requests and the duration of code execution, measured in GB-seconds. There is a free tier included. The smallest memory size you can allocate for a Lambda function is 128 MB, and you can allocate memory in 1 MB increments up to 10,240 MB.Regarding cold-start or boot-time figures, when AWS Lambda migrated to Firecracker microVMs in 2019, the cold start overhead decreased from over ten seconds to under a second. More recent figures, observed in production workloads, indicate P50 cold start times for Go functions between 50-100ms and for Rust functions between 50-80ms. P99 cold start times are reported as 150-250ms for Go and 100-200ms for Rust. For Java with SnapStart, cold start times can be reduced from several seconds (e.g., 5.8s for Spring Boot) to around 180ms. These figures are presented as measurements from observed production workloads.
+
+confidence: high
+steps: 6 of 12, urls retrieved: 10
+COST llm_calls=6 tokens_in=19041 tokens_out=687 searches=2 fetches=2 steps=6
+
+sources:
+  [1] https://aws.amazon.com/lambda/pricing/
+  [2] https://dev.to/aws/cold-starts-are-dead-5fod

@@ -1,0 +1,10 @@
+
+Cloudflare Workers offers a global serverless functions platform, allowing users to deploy fast, elastic, and serverless functions that scale automatically. It runs workloads on V8 isolates, which are an order of magnitude faster than traditional virtual machines or containers, providing a lightweight execution environment.
+
+confidence: unstated
+steps: 3 of 12, urls retrieved: 9
+COST llm_calls=3 tokens_in=3268 tokens_out=143 searches=2 fetches=0 steps=3
+
+sources:
+  [1] https://www.cloudflare.com/products/workers/
+  [2] https://developers.cloudflare.com/workers/reference/how-workers-works/

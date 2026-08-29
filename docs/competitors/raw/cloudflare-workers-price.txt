@@ -1,0 +1,11 @@
+
+Cloudflare Workers offers a Free plan and a Paid plan. The Free plan includes limited usage (e.g., 100,000 requests/day, 10ms CPU/invocation). The Paid plan starts at $5 USD/month, including 10 million requests and 30 million CPU milliseconds, with additional usage billed at $0.30/million requests and $0.02/million CPU milliseconds. There are no charges for data transfer. The smallest instance or memory size available is 128 MB for both Free and Paid plans. Cloudflare states that they have eliminated cold starts for Workers by pre-loading them during the TLS handshake. Prior to this, Workers were cited to have cold start times of "under 5 milliseconds" (a measurement), but the current "zero cold start" is presented as a feature.
+
+confidence: high
+steps: 8 of 12, urls retrieved: 14
+COST llm_calls=8 tokens_in=36944 tokens_out=651 searches=3 fetches=3 steps=8
+
+sources:
+  [1] https://developers.cloudflare.com/workers/platform/pricing/
+  [2] https://developers.cloudflare.com/workers/platform/limits/
+  [3] https://blog.cloudflare.com/eliminating-cold-starts-with-cloudflare-workers/

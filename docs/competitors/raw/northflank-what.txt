@@ -1,0 +1,10 @@
+
+Northflank.com offers a runtime platform for AI-native companies, enabling deployments of applications, databases, and cron workloads. It provides features such as CI/CD, Git integration for builds and deployments, free SSL, custom domains, and the ability to deploy on Northflank's managed cloud or to a user's own AWS, GCP, or Azure account. The platform supports GPU workloads, including the deployment and scaling of OSS models, secure code execution for AI agents, VectorDBs, Jupyter notebooks, and custom autoscaling. It also provides managed addons for databases, caches, and queues, and focuses on helping engineering teams run, release, scale, observe, and secure their applications, offering an "operating system for your engineering team." Northflank runs workloads on a combination of isolation technologies. For sandboxing, they utilize Kata Containers with Cloud Hypervisor, Firecracker microVMs, and gVisor, depending on the specific workload's requirements. These technologies contribute to secure isolation, with Kata Containers and Firecracker providing microVM-based virtualization, and gVisor offering syscall interception.
+
+confidence: high
+steps: 6 of 12, urls retrieved: 8
+COST llm_calls=6 tokens_in=18291 tokens_out=642 searches=2 fetches=2 steps=6
+
+sources:
+  [1] https://northflank.com/
+  [2] https://northflank.com/blog/what-is-a-sandbox-and-isolation-technologies

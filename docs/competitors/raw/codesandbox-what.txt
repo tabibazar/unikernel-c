@@ -1,0 +1,9 @@
+
+CodeSandbox.io offers instant cloud development environments that allow users to programmatically spin up isolated sandboxes for executing code, particularly useful for AI agents and code playgrounds. Its microVM infrastructure enables fast startup times (within 2 seconds), secure and isolated execution of untrusted code, scalability for millions of concurrent VMs, and features like continuous context with customizable hibernation and auto-resume. CodeSandbox runs its workloads on Firecracker microVMs for isolation.
+
+confidence: high
+steps: 5 of 12, urls retrieved: 5
+COST llm_calls=5 tokens_in=11801 tokens_out=321 searches=1 fetches=2 steps=5
+
+sources:
+  [1] https://codesandbox.io/

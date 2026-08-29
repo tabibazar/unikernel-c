@@ -1,0 +1,10 @@
+
+NanoVMs utilizes an on-demand pricing model, billed per second with a one-minute minimum. They also indicate that most cloud providers offer an always-on VM running a unikernel for approximately $4/month. The smallest instance or memory size is not explicitly defined as a fixed unit, but their documentation states that memory is "Only Limited by Instance Size" and can reach up to 1400GB. They claim that even their smallest instance types are more cost-effective than Lambda or Cloud Run offerings. For cold-start or boot-time, an un-optimized Nanos workload demonstrated a boot time of around 60ms. However, NanoVMs clarifies that this is a raw kernel boot time and is considered a "vanity metric," as "real cold boot times" for applications, which include application-level setup, are typically measured in seconds.
+
+confidence: high
+steps: 5 of 12, urls retrieved: 10
+COST llm_calls=5 tokens_in=11928 tokens_out=586 searches=2 fetches=2 steps=5
+
+sources:
+  [1] https://nanovms.com/dev/tutorials/measuring-unikernel-cold-boot-time-with-perf
+  [2] https://nanovms.com/usecases/serverless

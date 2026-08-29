@@ -1,0 +1,10 @@
+
+Fly.io provides a content delivery network for Docker containers, distributing applications on bare metal servers across global data centers and connecting them with a WireGuard mesh for faster access. Their infrastructure features high-performance hardware including EPYC CPUs, ECC RAM, NVMe storage, and robust networking. For workload isolation, Fly.io leverages Firecracker microVMs, the same virtualization technology used by Amazon Lambda and Fargate.
+
+confidence: high
+steps: 4 of 12, urls retrieved: 5
+COST llm_calls=4 tokens_in=7855 tokens_out=329 searches=1 fetches=1 steps=4
+
+sources:
+  [1] https://fly.io/blog/sandboxing-and-workload-isolation/
+  [2] https://fly.io/

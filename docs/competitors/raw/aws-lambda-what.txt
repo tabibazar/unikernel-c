@@ -1,0 +1,9 @@
+
+AWS Lambda MicroVMs, powered by Firecracker virtualization, offer isolated, stateful code execution within a serverless compute primitive. These MicroVMs launch nearly instantly, preserve full memory and disk state for up to 8 hours, and automatically suspend when idle. They provide VM-level isolation, running each tenant on an isolated kernel, memory space, and disk state. The isolation technology used is Firecracker microVMs.
+
+confidence: high
+steps: 4 of 12, urls retrieved: 5
+COST llm_calls=4 tokens_in=7371 tokens_out=291 searches=1 fetches=1 steps=4
+
+sources:
+  [1] https://aws.amazon.com/lambda/lambda-microvms/

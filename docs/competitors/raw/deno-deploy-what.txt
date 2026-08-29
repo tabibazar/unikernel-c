@@ -1,0 +1,9 @@
+
+Deno Deploy offers a multi-tenant, globally distributed cloud platform for hosting JavaScript and TypeScript applications. It runs workloads on V8 isolates, providing a high level of security through maximum tenant isolation.
+
+confidence: high
+steps: 4 of 12, urls retrieved: 5
+COST llm_calls=4 tokens_in=7523 tokens_out=199 searches=1 fetches=1 steps=4
+
+sources:
+  [1] https://deno.com/blog/build-secure-performant-cloud-platform

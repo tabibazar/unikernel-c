@@ -1,0 +1,11 @@
+
+NanoVMs offers a Unikernel that allows users to deploy unikernels to any cloud. They also provide managed services, support, and training for companies using this technology. The isolation technology they use for running workloads is unikernels, which provide stronger isolation and minimize the amount of software running.
+
+confidence: high
+steps: 2 of 12, urls retrieved: 5
+COST llm_calls=2 tokens_in=1671 tokens_out=155 searches=1 fetches=0 steps=2
+
+sources:
+  [1] https://nanovms.com/
+  [2] https://www.linkedin.com/company/nanovms
+  [3] https://nanovms.com/blog/nanovms-announces-first-plug-play-unikernel-tool

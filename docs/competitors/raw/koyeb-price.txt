@@ -1,0 +1,9 @@
+
+Koyeb's pricing model is based on "pay only for what you use, by the second," and includes "Scale-to-Zero" functionality. They offer various plans (Pro, Scale, Enterprise) that provide compute credits and additional features. The smallest memory size available is 1 GB RAM, offered with the "Free 5h" Serverless Postgres option. For general serverless compute instances, the smallest listed RAM is 32GB (L4 instance). The lowest-priced serverless compute instance is the "RTX-4000-SFF-ADA" at $0.50/hr, featuring 6 vCPU, 44GB RAM, and 240GB Disk. There are no published cold-start or boot-time figures provided on the pricing page.
+
+confidence: high
+steps: 4 of 12, urls retrieved: 5
+COST llm_calls=4 tokens_in=13782 tokens_out=465 searches=1 fetches=1 steps=4
+
+sources:
+  [1] https://www.koyeb.com/pricing

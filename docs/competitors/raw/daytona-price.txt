@@ -1,0 +1,10 @@
+
+Daytona.io uses a "pay-as-you-go" pricing model, with per-second billing. Costs are itemized for vCPU ($0.0504/h), memory ($0.0162/GiB/h), and storage ($0.000108/GiB/h after the first 5 free GiB). GPU usage for various Nvidia models is also billed hourly. There is a free tier with $200 in compute credits and a Startup Program offering up to $50k in credits. While no specific smallest instance is detailed, the pricing is per vCPU and GiB, indicating these are the smallest measurable units. Daytona claims a "sub-90ms" cold-start time for Docker containers, which is presented as a marketing claim/reported value rather than an independent measurement.
+
+confidence: high
+steps: 6 of 12, urls retrieved: 5
+COST llm_calls=6 tokens_in=20951 tokens_out=582 searches=1 fetches=2 steps=6
+
+sources:
+  [1] https://www.daytona.io/pricing
+  [2] https://www.morphllm.com/comparisons/daytona-alternative

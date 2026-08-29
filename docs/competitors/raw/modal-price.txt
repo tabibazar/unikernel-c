@@ -1,0 +1,11 @@
+
+Modal's pricing model is pay-as-you-go, billing for actual compute time by the CPU cycle. They offer three plans: Starter ($0 + compute/month), Team ($250/month + compute/month), and Enterprise (custom pricing). The smallest instance or memory size you can purchase is a minimum of 0.125 CPU cores per container. Memory is billed at $0.00000222/GiB/sec. Modal aims for "supercharging sub-second startup" and states that GPU memory snapshots can achieve "usually 3-5x faster" cold starts, and for Mistral 3, "10x faster cold starts with GPU snapshotting." These cold-start figures are marketing claims made by Modal and are not presented as independent measurements.
+
+confidence: high
+steps: 5 of 12, urls retrieved: 10
+COST llm_calls=5 tokens_in=13886 tokens_out=504 searches=2 fetches=1 steps=5
+
+sources:
+  [1] https://modal.com/pricing
+  [2] https://modal.com/blog/gpu-mem-snapshots
+  [3] https://modal.com/blog/mistral-3

@@ -1,0 +1,9 @@
+
+KraftCloud uses a "millisecond-native" pricing model that scales to zero, meaning users are not charged for idle instances. They offer a free Hobby plan, which is the smallest instance available, including 2 running instances, 2 total vCPUs, and 4GiB total memory. This implies a minimum of 1 vCPU and 2GiB of memory per instance. KraftCloud claims a cold-start time of "<10ms all workloads" as a marketing claim.
+
+confidence: high
+steps: 4 of 12, urls retrieved: 5
+COST llm_calls=4 tokens_in=7512 tokens_out=339 searches=1 fetches=1 steps=4
+
+sources:
+  [1] https://unikraft.com/pricing/

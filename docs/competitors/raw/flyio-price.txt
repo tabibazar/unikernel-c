@@ -1,0 +1,11 @@
+
+Fly.io utilizes a pay-as-you-go pricing model for its infrastructure, billing separately for resources such as machines, RAM, storage volumes, bandwidth, and IP addresses. Optional "Serious Support" is available for $29/month, and HIPAA/SOC2 compliance features cost $99/month. Users can save 40% by making machine reservations. The smallest instance offered is a `shared-cpu-1x` machine, providing 1 shared CPU and 256MB of RAM, priced at approximately $2 per month ($0.0028 per hour). Fly.io claims that its "Fly Machines... boot in under a second," which is presented as a marketing statement.
+
+confidence: high
+steps: 5 of 12, urls retrieved: 8
+COST llm_calls=5 tokens_in=9802 tokens_out=490 searches=2 fetches=1 steps=5
+
+sources:
+  [1] https://fly.io/pricing/
+  [2] https://fly.io/docs/about/pricing/
+  [3] https://fly.io/

@@ -1,0 +1,10 @@
+
+Daytona.io provides secure and elastic infrastructure for running AI-generated code, enabling the creation and termination of sandboxes in milliseconds. Its offerings include process execution, file system operations, Git integration, and LSP support. The service is optimized for AI applications such as AI evaluations, code interpreters, coding agents, data analysis, data visualization, and reinforcement learning. Daytona runs workloads on microVMs, which offer full OS-level isolation, a shift from its earlier use of shared-kernel containers.
+
+confidence: high
+steps: 5 of 12, urls retrieved: 10
+COST llm_calls=5 tokens_in=14351 tokens_out=381 searches=2 fetches=1 steps=5
+
+sources:
+  [1] https://www.daytona.io/
+  [2] https://www.daytona.io/dotfiles/vms-pause-and-fork

@@ -1,0 +1,10 @@
+
+Koyeb offers a high-performance, serverless platform for deploying applications globally, including microservices, APIs, and AI inference. It provides automatic scaling, a global edge network with over 50 locations for low latency, and accelerated infrastructure utilizing high-performance CPUs, GPUs, and accelerators. Users can deploy code, containers, or models using Git or a CLI. Koyeb runs workloads on Firecracker microVMs for isolation. Their serverless engine, which initially used Kubernetes, was re-engineered to a custom stack based on Nomad, Firecracker, and Kuma. Firecracker is highlighted as a lightweight virtualization technology that ensures multi-tenancy security and isolation.
+
+confidence: high
+steps: 5 of 12, urls retrieved: 5
+COST llm_calls=5 tokens_in=15272 tokens_out=499 searches=1 fetches=2 steps=5
+
+sources:
+  [1] https://www.koyeb.com/blog/the-koyeb-serverless-engine-from-kubernetes-to-nomad-firecracker-and-kuma
+  [2] https://www.koyeb.com/

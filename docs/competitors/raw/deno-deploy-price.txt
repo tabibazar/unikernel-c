@@ -1,0 +1,14 @@
+
+Deno Deploy offers a tiered pricing model with Free ($0/month), Pro ($20/month), Builder ($200/month), and Enterprise (custom) plans. These plans vary in included requests, egress bandwidth, custom domains, active CPU hours, memory time, and other features, with overage charges for exceeding limits on paid plans.
+
+The smallest memory allocation you can buy is 768 MB, which is the default for "memory time" billing. Pro and Builder plans allow for configuring higher memory limits.
+
+For cold start times, Deno Deploy states that "Cold starts in Deno Deploy are highly optimized and complete within 100 milliseconds for hello world applications, and within a few hundred milliseconds for larger applications." This is presented as a marketing claim about general performance rather than a measured benchmark.
+
+confidence: high
+steps: 6 of 12, urls retrieved: 9
+COST llm_calls=6 tokens_in=18611 tokens_out=511 searches=2 fetches=2 steps=6
+
+sources:
+  [1] https://deno.com/deploy/pricing
+  [2] https://docs.deno.com/deploy/reference/runtime/
