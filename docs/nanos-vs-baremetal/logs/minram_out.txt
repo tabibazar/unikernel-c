@@ -1,0 +1,24 @@
+=== baremetal ===
+  512 MiB: ok
+  256 MiB: ok
+  128 MiB: ok
+  64 MiB: ok
+  32 MiB: ok
+  24 MiB: ok
+  16 MiB: ok
+  12 MiB: ok
+  8 MiB: ok
+  6 MiB: ok
+  4 MiB: ok
+  3 MiB: FAILED
+  -> smallest working: 4 MiB
+=== nanos ===
+  512 MiB: ok
+  256 MiB: ok
+  128 MiB: ok
+  64 MiB: ok
+  32 MiB: ok
+  24 MiB: ok
+  16 MiB: ok
+  12 MiB: FAILED
+  -> smallest working: 16 MiB

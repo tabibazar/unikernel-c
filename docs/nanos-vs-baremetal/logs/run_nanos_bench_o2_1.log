@@ -1,0 +1,4 @@
+0.2539	[0.211751] en1: assigned 10.0.2.15
+0.2567	BENCH_START work=40000000 start=100000001
+2.2355	[2.192957] en1: assigned FE80::5054:FF:FE12:3456
+12.5368	BENCH_DONE pass=1 candidates=40000000 primes=4268930 sophie=290137 elapsed_s=12 rate=3333333

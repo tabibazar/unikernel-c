@@ -1,0 +1,2 @@
+0.0152	BENCH_START work=40000000 start=100000001
+14.9730	BENCH_DONE pass=1 candidates=40000000 primes=4268930 sophie=290137 elapsed_s=15 rate=2666666

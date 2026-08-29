@@ -1,0 +1,4 @@
+0.2315	[0.192972] en1: assigned 10.0.2.15
+0.2358	SELFCHECK_START iters=20000000 expected=1725478354784765408
+2.2138	[2.174884] en1: assigned FE80::5054:FF:FE12:3456
+14.3982	SELFCHECK_DONE iters=20000000 mismatches=0 rate=0.000e+00 first_bad=0 at_iter=0

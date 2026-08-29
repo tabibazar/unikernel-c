@@ -1,0 +1,17 @@
+0.0276	2026-08-29T15:22:45.784524106 [anonymous-instance:main] Running Firecracker v1.16.1
+0.0276	2026-08-29T15:22:45.806673231 [anonymous-instance:main] Subleaf 2 not expected for CPUID leaf 0xB.
+0.0276	2026-08-29T15:22:45.807293453 [anonymous-instance:main] Artificially kick devices
+0.0277	2026-08-29T15:22:45.807444440 [anonymous-instance:fc_vcpu 0] Received a VcpuEvent::Resume message with immediate_exit enabled. immediate_exit was disabled before proceeding
+0.0277	2026-08-29T15:22:45.807459162 [anonymous-instance:main] Successfully started microvm that was configured from one single json
+0.0320	========================================
+0.0350	BareMetal Firecracker - Starting Payload
+0.0381	========================================
+0.0438	SELFCHECK_START iters=200000 expected=1725478354784765408
+0.5779	SELFCHECK_DONE iters=200000 mismatches=16 rate=8.000e-05 first_bad=4215794764192176214 at_iter=4759
+0.5790	========================================
+0.5802	BareMetal Firecracker - Finished Payload
+0.5814	========================================
+0.5814	2026-08-29T15:22:46.364187611 [anonymous-instance:main] Vmm is stopping.
+0.5814	2026-08-29T15:22:46.364220490 [anonymous-instance:main] Killing vCPU threads
+0.5815	2026-08-29T15:22:46.364244386 [anonymous-instance:fc_vcpu 0] Requested a vCPU run with immediate_exit enabled. The operation was skipped
+0.6460	2026-08-29T15:22:46.428723573 [anonymous-instance:main] Firecracker exiting successfully. exit_code=0

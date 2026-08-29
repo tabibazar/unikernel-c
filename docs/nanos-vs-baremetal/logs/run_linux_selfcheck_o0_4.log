@@ -1,0 +1,2 @@
+0.0128	SELFCHECK_START iters=20000000 expected=1725478354784765408
+13.9656	SELFCHECK_DONE iters=20000000 mismatches=0 rate=0.000e+00 first_bad=0 at_iter=0

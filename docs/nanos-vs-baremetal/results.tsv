@@ -1,0 +1,51 @@
+platform	test	opt	run	mem_mib	wall_s	first_out_s	start_s	done_s	result
+linux	selfcheck	o0	1	512	14.093091514	0.0265	0.0265	14.0843	SELFCHECK_DONE iters=20000000 mismatches=0 rate=0.000e+00 first_bad=0 at_iter=0
+linux	selfcheck	o2	1	512	12.993303656	0.0278	0.0278	12.9848	SELFCHECK_DONE iters=20000000 mismatches=0 rate=0.000e+00 first_bad=0 at_iter=0
+nanos	selfcheck	o0	1	512	15.549428717	0.2663	0.2695	14.3837	SELFCHECK_DONE iters=20000000 mismatches=0 rate=0.000e+00 first_bad=0 at_iter=0
+nanos	selfcheck	o2	1	512	14.546583505	0.2568	0.2603	13.3249	SELFCHECK_DONE iters=20000000 mismatches=0 rate=0.000e+00 first_bad=0 at_iter=0
+baremetal	selfcheck	bm	1	512	52.637223554	0.0143	0.0305	51.8502	SELFCHECK_DONE iters=20000000 mismatches=1393 rate=6.965e-05 first_bad=5831112050361398827 at_iter=8152
+linux	selfcheck	o0	2	512	14.064138751	0.0268	0.0268	14.0584	SELFCHECK_DONE iters=20000000 mismatches=0 rate=0.000e+00 first_bad=0 at_iter=0
+linux	selfcheck	o2	2	512	12.849346775	0.0120	0.0120	12.8414	SELFCHECK_DONE iters=20000000 mismatches=0 rate=0.000e+00 first_bad=0 at_iter=0
+nanos	selfcheck	o0	2	512	15.549539174	0.3127	0.3163	14.3704	SELFCHECK_DONE iters=20000000 mismatches=0 rate=0.000e+00 first_bad=0 at_iter=0
+nanos	selfcheck	o2	2	512	14.540751417	0.2747	0.2785	13.1852	SELFCHECK_DONE iters=20000000 mismatches=0 rate=0.000e+00 first_bad=0 at_iter=0
+baremetal	selfcheck	bm	2	512	52.632049305	0.0211	0.0376	51.5572	SELFCHECK_DONE iters=20000000 mismatches=1399 rate=6.995e-05 first_bad=14318533858486360743 at_iter=18498
+linux	selfcheck	o0	3	512	14.031796644	0.0316	0.0316	14.0233	SELFCHECK_DONE iters=20000000 mismatches=0 rate=0.000e+00 first_bad=0 at_iter=0
+linux	selfcheck	o2	3	512	12.871502119	0.0119	0.0119	12.8618	SELFCHECK_DONE iters=20000000 mismatches=0 rate=0.000e+00 first_bad=0 at_iter=0
+nanos	selfcheck	o0	3	512	15.545205308	0.2359	0.2396	14.2883	SELFCHECK_DONE iters=20000000 mismatches=0 rate=0.000e+00 first_bad=0 at_iter=0
+nanos	selfcheck	o2	3	512	14.546336964	0.2069	0.2099	13.1191	SELFCHECK_DONE iters=20000000 mismatches=0 rate=0.000e+00 first_bad=0 at_iter=0
+baremetal	selfcheck	bm	3	512	52.636952046	0.0271	0.0421	51.7266	SELFCHECK_DONE iters=20000000 mismatches=1324 rate=6.620e-05 first_bad=1374985782301139114 at_iter=2671
+linux	selfcheck	o0	4	512	13.973222865	0.0128	0.0128	13.9656	SELFCHECK_DONE iters=20000000 mismatches=0 rate=0.000e+00 first_bad=0 at_iter=0
+linux	selfcheck	o2	4	512	12.878044734	0.0113	0.0113	12.8722	SELFCHECK_DONE iters=20000000 mismatches=0 rate=0.000e+00 first_bad=0 at_iter=0
+nanos	selfcheck	o0	4	512	15.545850088	0.2236	0.2276	14.2837	SELFCHECK_DONE iters=20000000 mismatches=0 rate=0.000e+00 first_bad=0 at_iter=0
+nanos	selfcheck	o2	4	512	14.544678481	0.3090	0.3124	13.2386	SELFCHECK_DONE iters=20000000 mismatches=0 rate=0.000e+00 first_bad=0 at_iter=0
+baremetal	selfcheck	bm	4	512	52.636501800	0.0136	0.0270	51.7543	SELFCHECK_DONE iters=20000000 mismatches=1361 rate=6.805e-05 first_bad=11392151372320601537 at_iter=4686
+linux	selfcheck	o0	5	512	14.039529007	0.0276	0.0276	14.0333	SELFCHECK_DONE iters=20000000 mismatches=0 rate=0.000e+00 first_bad=0 at_iter=0
+linux	selfcheck	o2	5	512	12.859899879	0.0122	0.0122	12.8548	SELFCHECK_DONE iters=20000000 mismatches=0 rate=0.000e+00 first_bad=0 at_iter=0
+nanos	selfcheck	o0	5	512	15.542696617	0.2315	0.2358	14.3982	SELFCHECK_DONE iters=20000000 mismatches=0 rate=0.000e+00 first_bad=0 at_iter=0
+nanos	selfcheck	o2	5	512	14.542593467	0.2819	0.2860	13.1770	SELFCHECK_DONE iters=20000000 mismatches=0 rate=0.000e+00 first_bad=0 at_iter=0
+baremetal	selfcheck	bm	5	512	52.629929339	0.0262	0.0264	51.6980	SELFCHECK_DONE iters=20000000 mismatches=1362 rate=6.810e-05 first_bad=14183116896161983351 at_iter=7183
+linux	bench	o0	1	512	14.978982878	0.0152	0.0152	14.9730	BENCH_DONE pass=1 candidates=40000000 primes=4268930 sophie=290137 elapsed_s=15 rate=2666666
+linux	bench	o2	1	512	12.264604456	0.0141	0.0141	12.2591	BENCH_DONE pass=1 candidates=40000000 primes=4268930 sophie=290137 elapsed_s=12 rate=3333333
+nanos	bench	o0	1	512	16.547687295	0.2502	0.2554	15.4535	BENCH_DONE pass=1 candidates=40000000 primes=4268930 sophie=290137 elapsed_s=15 rate=2666666
+nanos	bench	o2	1	512	13.541878437	0.2539	0.2567	12.5368	BENCH_DONE pass=1 candidates=40000000 primes=4268930 sophie=290137 elapsed_s=12 rate=3333333
+baremetal	bench	bm	1	512	52.626842909	0.0293	0.0347	51.1646	BENCH_DONE pass=1 candidates=40000000 primes=4267803 sophie=289965 elapsed_s=51 rate=784313
+linux	bench	o0	2	512	15.019264932	0.0266	0.0266	15.0107	BENCH_DONE pass=1 candidates=40000000 primes=4268930 sophie=290137 elapsed_s=15 rate=2666666
+linux	bench	o2	2	512	12.266898485	0.0106	0.0106	12.2583	BENCH_DONE pass=1 candidates=40000000 primes=4268930 sophie=290137 elapsed_s=12 rate=3333333
+nanos	bench	o0	2	512	16.559024157	0.2732	0.2768	15.3565	BENCH_DONE pass=1 candidates=40000000 primes=4268930 sophie=290137 elapsed_s=15 rate=2666666
+nanos	bench	o2	2	512	13.532686319	0.2352	0.2384	12.4960	BENCH_DONE pass=1 candidates=40000000 primes=4268930 sophie=290137 elapsed_s=12 rate=3333333
+baremetal	bench	bm	2	512	51.621601114	0.0112	0.0387	51.0225	BENCH_DONE pass=1 candidates=40000000 primes=4267888 sophie=289976 elapsed_s=51 rate=784313
+linux	bench	o0	3	512	14.942069379	0.0263	0.0263	14.9349	BENCH_DONE pass=1 candidates=40000000 primes=4268930 sophie=290137 elapsed_s=15 rate=2666666
+linux	bench	o2	3	512	12.269230299	0.0109	0.0109	12.2606	BENCH_DONE pass=1 candidates=40000000 primes=4268930 sophie=290137 elapsed_s=12 rate=3333333
+nanos	bench	o0	3	512	16.547521025	0.2772	0.2814	15.8090	BENCH_DONE pass=1 candidates=40000000 primes=4268930 sophie=290137 elapsed_s=16 rate=2500000
+nanos	bench	o2	3	512	13.534018822	0.2171	0.2203	12.5479	BENCH_DONE pass=1 candidates=40000000 primes=4268930 sophie=290137 elapsed_s=12 rate=3333333
+baremetal	bench	bm	3	512	52.630268469	0.0273	0.0360	51.3088	BENCH_DONE pass=1 candidates=40000000 primes=4267777 sophie=289957 elapsed_s=51 rate=784313
+linux	bench	o0	4	512	14.931861775	0.0270	0.0270	14.9272	BENCH_DONE pass=1 candidates=40000000 primes=4268930 sophie=290137 elapsed_s=15 rate=2666666
+linux	bench	o2	4	512	12.308040059	0.0117	0.0117	12.3020	BENCH_DONE pass=1 candidates=40000000 primes=4268930 sophie=290137 elapsed_s=12 rate=3333333
+nanos	bench	o0	4	512	16.543416004	0.2315	0.2357	15.4329	BENCH_DONE pass=1 candidates=40000000 primes=4268930 sophie=290137 elapsed_s=15 rate=2666666
+nanos	bench	o2	4	512	13.540433233	0.3242	0.3275	12.6355	BENCH_DONE pass=1 candidates=40000000 primes=4268930 sophie=290137 elapsed_s=12 rate=3333333
+baremetal	bench	bm	4	512	52.627683914	0.0263	0.0309	51.2421	BENCH_DONE pass=1 candidates=40000000 primes=4267876 sophie=289986 elapsed_s=51 rate=784313
+linux	bench	o0	5	512	14.960419174	0.0313	0.0313	14.9526	BENCH_DONE pass=1 candidates=40000000 primes=4268930 sophie=290137 elapsed_s=15 rate=2666666
+linux	bench	o2	5	512	12.268785711	0.0109	0.0109	12.2601	BENCH_DONE pass=1 candidates=40000000 primes=4268930 sophie=290137 elapsed_s=12 rate=3333333
+nanos	bench	o0	5	512	16.551683703	0.2374	0.2404	15.2731	BENCH_DONE pass=1 candidates=40000000 primes=4268930 sophie=290137 elapsed_s=15 rate=2666666
+nanos	bench	o2	5	512	13.546464960	0.2895	0.2924	12.5570	BENCH_DONE pass=1 candidates=40000000 primes=4268930 sophie=290137 elapsed_s=12 rate=3333333
+baremetal	bench	bm	5	512	52.633078794	0.0269	0.0336	51.1419	BENCH_DONE pass=1 candidates=40000000 primes=4267838 sophie=289980 elapsed_s=51 rate=784313
