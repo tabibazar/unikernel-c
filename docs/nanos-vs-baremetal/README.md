@@ -141,6 +141,14 @@ the *same* Firecracker, on the same host, with the same binary at the same
 optimisation level, removes that: it comes back clean. **The nondeterminism is
 BareMetal's** — not the hardware's, not KVM's, not Firecracker's.
 
+**The cause is now found.** A follow-up investigation root-caused it: a
+maskable timer interrupt landing inside libgcc's software `__umodti3`
+(the 128÷64 division the modulo compiles to at `-O0`) corrupts a register
+BareMetal's interrupt handler fails to preserve. Masking interrupts drives it to
+zero; replacing the software routine with a single atomic `divq` drives it to
+zero with interrupts on. Full write-up and reproducers in
+[docs/arithmetic-fault](../arithmetic-fault/).
+
 It is also worse here than where it was first caught: a rate of 6.8 × 10⁻⁵
 against 1.6 × 10⁻⁶ measured earlier, roughly forty times more frequent on this
 AMD EPYC host.
