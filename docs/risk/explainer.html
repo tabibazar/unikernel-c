@@ -1,0 +1,132 @@
+<meta charset="utf-8">
+<title>risk engine explainer</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+  @page{size:1080px 1080px;margin:0}
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:#0b0906;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  :root{--accent:#ffb000}
+  .slide{width:1080px;height:1080px;background:#0b0906;color:#ece5d6;font-family:"IBM Plex Sans",system-ui,sans-serif;
+    padding:80px 78px 66px;position:relative;page-break-after:always;display:flex;flex-direction:column;overflow:hidden}
+  .slide:last-child{page-break-after:auto}
+  .step{font-family:"IBM Plex Mono",monospace;font-size:22px;letter-spacing:0.14em;text-transform:uppercase;color:#7d7259;margin-bottom:8px}
+  .eyebrow{font-family:"IBM Plex Mono",monospace;font-size:24px;letter-spacing:0.14em;text-transform:uppercase;color:#ffb000;margin-bottom:22px}
+  h1{font-family:"IBM Plex Mono",monospace;font-size:62px;line-height:1.05;letter-spacing:-0.03em;font-weight:600}
+  h2{font-family:"IBM Plex Mono",monospace;font-size:46px;line-height:1.1;letter-spacing:-0.02em;font-weight:600;margin-bottom:22px}
+  p{font-size:32px;line-height:1.44;color:#d8cfbc}p+p{margin-top:16px}
+  .lede{font-size:37px;color:#b3a68a;margin-top:24px}
+  .hi{color:#ffb000}.bad{color:#e8776c}.ok{color:#7fc08c}.spacer{flex:1}
+  .kicker{font-family:"IBM Plex Mono",monospace;font-size:25px;line-height:1.42;color:#ffb000;border-top:2px solid #2e2718;padding-top:20px;margin-top:22px;padding-right:70px}
+  .num{position:absolute;right:78px;bottom:54px;font-family:"IBM Plex Mono",monospace;font-size:22px;color:#6a6047}
+  .huge{font-family:"IBM Plex Mono",monospace;font-size:110px;font-weight:600;color:#ffb000;line-height:1;letter-spacing:-0.04em}
+  .eq{font-family:"IBM Plex Mono",monospace;font-size:30px;line-height:1.55;background:#050403;border-left:6px solid #ffb000;padding:22px 26px;margin:20px 0;color:#ffb000;white-space:pre-wrap}
+  .code{font-family:"IBM Plex Mono",monospace;font-size:24px;line-height:1.6;background:#050403;border-left:6px solid #ffb000;padding:20px 24px;margin:18px 0;color:#ffb000;white-space:pre}
+  table{width:100%;border-collapse:collapse;margin:14px 0;font-size:27px;font-family:"IBM Plex Mono",monospace}
+  td,th{text-align:left;padding:12px 8px;border-bottom:1px solid #2e2718}
+  th{font-size:19px;letter-spacing:0.06em;text-transform:uppercase;color:#7d7259;font-weight:500}
+  td.n{text-align:right;font-variant-numeric:tabular-nums}
+  .cap{font-family:"IBM Plex Mono",monospace;font-size:21px;color:#8f7a4a;text-align:center;margin-top:10px}
+  svg{width:100%;height:auto}
+  body{display:flex;flex-direction:column;align-items:center;gap:14px;padding:14px 0}
+  .slide{flex:none;transform-origin:top center}
+  @media screen and (max-width:1120px){.slide{transform:scale(calc(100vw/1120));margin-bottom:calc((100vw/1120 - 1)*1080px)}}
+  @media print{body{display:block;gap:0;padding:0}.slide{transform:none;margin-bottom:0}}
+</style><div class="slide"><p class="eyebrow">An explainer, in 15 slides</p>
+  <h1>How to price a derivative and measure its risk &mdash; by rolling dice.</h1>
+  <p class="lede">Monte Carlo simulation, from the model to the risk number, on a 16 MiB computer with no operating system.</p>
+  <div class="spacer"></div>
+  <p class="kicker">Every figure here was computed on the machine, and checked against an exact formula.</p><p class="num">1 / 15</p></div>
+<div class="slide"><p class="step">The question</p><h2>Two things a trading desk needs to know.</h2>
+  <p><span class="hi">Price:</span> what is this option worth today?</p>
+  <p><span class="hi">Risk:</span> if the market moves against me, how much could I lose &mdash; and how likely is that?</p>
+  <p>An <em>option</em> here is the right to buy a stock at a fixed price (the strike) on a future date. It pays off only if the stock ends up above the strike.</p>
+  <div class="spacer"></div><p class="num">2 / 15</p></div>
+<div class="slide"><p class="step">Step 1 &mdash; the model</p><h2>A stock price is a random walk with drift.</h2>
+  <p>The standard model is Geometric Brownian Motion. Over a small step of time, the price is nudged by a fixed drift and a random shock:</p>
+  <div class="eq">S(t+dt) = S(t) &middot; exp( (r &minus; &frac12;&sigma;&sup2;)&middot;dt + &sigma;&middot;&radic;dt &middot; Z )</div>
+  <p style="font-size:28px">r is the interest rate, &sigma; the volatility, and Z a random draw from a bell curve. Chain these steps together and you get one possible future for the price.</p>
+  <div class="spacer"></div><p class="num">3 / 15</p></div>
+<div class="slide"><p class="step">Step 1 &mdash; the model</p><h2>Eight futures, drawn by the machine.</h2>
+  <figure><svg viewBox="0 0 800 340" role="img" aria-label="Eight simulated stock price paths over 52 weeks, starting from 100, wandering above and below the strike."><polyline points="60.0,200.0 73.8,184.2 87.7,175.3 101.5,175.5 115.4,178.1 129.2,161.7 143.1,163.2 156.9,180.8 170.8,193.0 184.6,200.0 198.5,200.8 212.3,212.3 226.2,198.9 240.0,184.5 253.8,194.1 267.7,183.8 281.5,183.1 295.4,185.8 309.2,180.8 323.1,187.3 336.9,182.4 350.8,185.5 364.6,187.2 378.5,179.7 392.3,166.9 406.2,174.0 420.0,172.3 433.8,164.1 447.7,161.3 461.5,157.7 475.4,163.7 489.2,167.6 503.1,166.6 516.9,171.5 530.8,167.5 544.6,174.1 558.5,171.5 572.3,166.1 586.2,149.1 600.0,164.6 613.8,168.3 627.7,183.7 641.5,207.5 655.4,219.0 669.2,221.3 683.1,225.3 696.9,234.0 710.8,241.8 724.6,238.9 738.5,236.8 752.3,238.0 766.2,240.3 780.0,240.5" fill="none" stroke="#ffb000" stroke-width="2" opacity="0.85"/><polyline points="60.0,200.0 73.8,201.6 87.7,210.2 101.5,210.4 115.4,222.0 129.2,224.5 143.1,216.0 156.9,206.6 170.8,213.0 184.6,207.6 198.5,202.0 212.3,211.0 226.2,203.6 240.0,207.6 253.8,224.8 267.7,226.2 281.5,221.1 295.4,229.2 309.2,227.3 323.1,222.0 336.9,222.8 350.8,226.6 364.6,236.2 378.5,242.2 392.3,231.8 406.2,223.5 420.0,216.8 433.8,204.8 447.7,214.4 461.5,232.9 475.4,229.3 489.2,223.8 503.1,220.7 516.9,221.1 530.8,224.8 544.6,236.4 558.5,228.4 572.3,222.1 586.2,230.8 600.0,222.0 613.8,211.7 627.7,207.6 641.5,197.1 655.4,208.9 669.2,218.7 683.1,221.8 696.9,217.5 710.8,216.3 724.6,216.3 738.5,216.2 752.3,220.4 766.2,215.3 780.0,215.9" fill="none" stroke="#ffc84d" stroke-width="2" opacity="0.85"/><polyline points="60.0,200.0 73.8,208.4 87.7,211.6 101.5,216.6 115.4,233.1 129.2,237.3 143.1,244.6 156.9,239.3 170.8,247.5 184.6,245.8 198.5,254.9 212.3,247.8 226.2,246.6 240.0,256.4 253.8,257.2 267.7,246.4 281.5,231.9 295.4,225.5 309.2,224.4 323.1,223.2 336.9,248.7 350.8,252.8 364.6,249.4 378.5,250.9 392.3,250.6 406.2,237.5 420.0,226.0 433.8,229.0 447.7,215.7 461.5,216.7 475.4,208.2 489.2,203.2 503.1,196.1 516.9,200.5 530.8,209.4 544.6,197.5 558.5,201.8 572.3,206.0 586.2,205.1 600.0,213.2 613.8,207.2 627.7,212.9 641.5,221.0 655.4,215.5 669.2,224.1 683.1,227.7 696.9,213.5 710.8,219.4 724.6,210.7 738.5,214.4 752.3,229.1 766.2,233.9 780.0,236.8" fill="none" stroke="#e8976c" stroke-width="2" opacity="0.85"/><polyline points="60.0,200.0 73.8,192.2 87.7,197.9 101.5,205.4 115.4,196.6 129.2,184.0 143.1,193.0 156.9,199.3 170.8,205.1 184.6,200.0 198.5,200.4 212.3,208.7 226.2,205.3 240.0,203.9 253.8,204.3 267.7,206.0 281.5,196.8 295.4,197.7 309.2,204.4 323.1,203.8 336.9,202.3 350.8,202.6 364.6,212.0 378.5,201.0 392.3,208.2 406.2,212.0 420.0,208.8 433.8,209.7 447.7,203.5 461.5,204.7 475.4,198.1 489.2,203.7 503.1,199.0 516.9,203.7 530.8,209.6 544.6,194.0 558.5,174.1 572.3,168.0 586.2,174.3 600.0,170.7 613.8,163.8 627.7,170.9 641.5,160.3 655.4,141.6 669.2,130.3 683.1,125.5 696.9,132.0 710.8,115.5 724.6,120.4 738.5,107.3 752.3,114.0 766.2,119.0 780.0,125.5" fill="none" stroke="#7fb0ff" stroke-width="2" opacity="0.85"/><polyline points="60.0,200.0 73.8,214.8 87.7,194.0 101.5,202.9 115.4,214.0 129.2,225.2 143.1,225.8 156.9,215.8 170.8,203.2 184.6,208.1 198.5,207.6 212.3,200.3 226.2,203.3 240.0,212.3 253.8,192.9 267.7,191.2 281.5,192.4 295.4,204.4 309.2,188.1 323.1,187.1 336.9,179.5 350.8,188.4 364.6,189.9 378.5,198.8 392.3,196.7 406.2,188.7 420.0,184.8 433.8,170.2 447.7,145.7 461.5,128.3 475.4,130.8 489.2,129.0 503.1,116.5 516.9,115.1 530.8,101.0 544.6,122.0 558.5,108.0 572.3,121.4 586.2,105.8 600.0,97.1 613.8,100.8 627.7,85.8 641.5,89.4 655.4,100.8 669.2,96.5 683.1,78.9 696.9,89.7 710.8,83.2 724.6,79.1 738.5,76.6 752.3,54.3 766.2,58.1 780.0,72.1" fill="none" stroke="#7fc08c" stroke-width="2" opacity="0.85"/><polyline points="60.0,200.0 73.8,206.1 87.7,182.6 101.5,180.8 115.4,168.4 129.2,164.2 143.1,165.2 156.9,166.9 170.8,164.8 184.6,169.0 198.5,169.1 212.3,169.0 226.2,180.4 240.0,182.0 253.8,173.5 267.7,177.7 281.5,179.4 295.4,179.5 309.2,184.0 323.1,186.7 336.9,179.9 350.8,191.6 364.6,192.6 378.5,197.2 392.3,195.0 406.2,199.9 420.0,199.1 433.8,191.4 447.7,204.4 461.5,203.3 475.4,193.8 489.2,188.6 503.1,182.6 516.9,208.3 530.8,203.5 544.6,208.6 558.5,209.5 572.3,208.0 586.2,202.0 600.0,196.8 613.8,186.9 627.7,182.3 641.5,179.0 655.4,167.0 669.2,170.4 683.1,181.9 696.9,180.1 710.8,168.8 724.6,166.8 738.5,178.5 752.3,181.5 766.2,163.9 780.0,180.5" fill="none" stroke="#c99cff" stroke-width="2" opacity="0.85"/><polyline points="60.0,200.0 73.8,205.9 87.7,205.4 101.5,207.1 115.4,219.2 129.2,195.9 143.1,194.7 156.9,200.1 170.8,207.7 184.6,213.7 198.5,207.1 212.3,211.4 226.2,210.3 240.0,201.2 253.8,182.7 267.7,187.0 281.5,169.6 295.4,166.0 309.2,159.7 323.1,156.9 336.9,155.2 350.8,161.7 364.6,153.9 378.5,139.4 392.3,151.6 406.2,157.8 420.0,171.2 433.8,170.0 447.7,172.4 461.5,162.5 475.4,152.4 489.2,166.9 503.1,156.7 516.9,154.1 530.8,171.8 544.6,168.1 558.5,167.5 572.3,158.5 586.2,163.4 600.0,156.5 613.8,154.3 627.7,136.9 641.5,138.4 655.4,137.8 669.2,122.0 683.1,115.2 696.9,114.4 710.8,95.4 724.6,102.7 738.5,113.2 752.3,104.6 766.2,101.4 780.0,108.6" fill="none" stroke="#ff8fa3" stroke-width="2" opacity="0.85"/><polyline points="60.0,200.0 73.8,204.0 87.7,202.7 101.5,205.4 115.4,207.5 129.2,212.7 143.1,204.3 156.9,193.9 170.8,187.6 184.6,175.0 198.5,167.5 212.3,146.0 226.2,156.2 240.0,144.0 253.8,155.8 267.7,153.1 281.5,152.4 295.4,157.7 309.2,179.5 323.1,173.0 336.9,155.2 350.8,148.1 364.6,139.2 378.5,148.0 392.3,148.1 406.2,150.3 420.0,153.1 433.8,151.5 447.7,158.5 461.5,158.1 475.4,165.6 489.2,164.4 503.1,151.7 516.9,144.7 530.8,138.7 544.6,129.6 558.5,128.9 572.3,123.3 586.2,102.8 600.0,104.0 613.8,94.6 627.7,58.1 641.5,67.6 655.4,43.2 669.2,60.1 683.1,64.5 696.9,71.1 710.8,72.9 724.6,55.3 738.5,60.6 752.3,54.6 766.2,38.8 780.0,28.4" fill="none" stroke="#9fe6d0" stroke-width="2" opacity="0.85"/><line x1="60" y1="200.0" x2="780" y2="200.0" stroke="#7d7259" stroke-width="1.5" stroke-dasharray="4 4"/>
+    <g font-family="IBM Plex Mono, monospace" font-size="19" fill="#8f7a4a">
+      <text x="60" y="336">week 0</text><text x="780" y="336" text-anchor="end">week 52</text>
+      <text x="66" y="194" fill="#7d7259">strike 100</text></g></svg>
+  <p class="cap">Each line is one random future. We roll millions of them.</p></figure>
+  <div class="spacer"></div><p class="num">4 / 15</p></div>
+<div class="slide"><p class="step">Step 2 &mdash; the price</p><h2>Average the payoff, and discount it.</h2>
+  <p>For each simulated future, the option pays <span class="hi">max(final price &minus; strike, 0)</span>. Average that across every path, and bring it back to today's money:</p>
+  <div class="eq">price &asymp; e^(&minus;rT) &middot; average of max(S_T &minus; K, 0)</div>
+  <p style="font-size:28px">That is the whole method. The hard part is knowing when to trust the average.</p>
+  <div class="spacer"></div><p class="num">5 / 15</p></div>
+<div class="slide"><p class="step">Step 2 &mdash; the price</p><h2>More rolls, tighter answer.</h2>
+  <figure><svg viewBox="0 0 800 340" role="img" aria-label="The Monte Carlo price estimate with error bars converging onto the exact Black-Scholes value as the number of samples increases from a thousand to eight million."><line x1="80" y1="189.3" x2="770" y2="189.3" stroke="#7fc08c" stroke-width="2.5"/><line x1="80.0" y1="165.5" x2="80.0" y2="26.9" stroke="#ffb000" stroke-width="2.5"/><circle cx="80.0" cy="96.2" r="5" fill="#ffb000"/><line x1="256.8" y1="167.8" x2="256.8" y2="124.6" stroke="#ffb000" stroke-width="2.5"/><circle cx="256.8" cy="146.2" r="5" fill="#ffb000"/><line x1="433.6" y1="202.5" x2="433.6" y2="189.1" stroke="#ffb000" stroke-width="2.5"/><circle cx="433.6" cy="195.8" r="5" fill="#ffb000"/><line x1="610.3" y1="194.6" x2="610.3" y2="190.4" stroke="#ffb000" stroke-width="2.5"/><circle cx="610.3" cy="192.5" r="5" fill="#ffb000"/><line x1="770.0" y1="190.3" x2="770.0" y2="188.8" stroke="#ffb000" stroke-width="2.5"/><circle cx="770.0" cy="189.6" r="5" fill="#ffb000"/>
+    <g font-family="IBM Plex Mono, monospace" font-size="19" fill="#8f7a4a">
+      <text x="80" y="336">1e3</text><text x="425" y="336" text-anchor="middle">samples &rarr;</text><text x="770" y="336" text-anchor="end">8e6</text>
+      <text x="775" y="70" fill="#7fc08c" text-anchor="end">exact price</text></g></svg>
+  <p class="cap">Error shrinks like 1/&radic;N: 100&times; the samples, 10&times; the accuracy.</p></figure>
+  <div class="spacer"></div><p class="num">6 / 15</p></div>
+<div class="slide"><p class="step">Step 3 &mdash; the check</p><h2>For this option, the exact answer is known.</h2>
+  <p>A simple European call has a closed form &mdash; the 1973 Black&ndash;Scholes formula. It is the ruler we measure the simulation against.</p>
+  <table>
+    <tr><th>method</th><th class="n">price</th></tr>
+    <tr><td>Black&ndash;Scholes (exact)</td><td class="n hi">10.4506</td></tr>
+    <tr><td>Monte Carlo, 8M paths</td><td class="n ok">10.4498 &plusmn; 0.0026</td></tr>
+  </table>
+  <p style="font-size:28px">Within one standard error. The dice found the formula.</p>
+  <div class="spacer"></div><p class="num">7 / 15</p></div>
+<div class="slide"><p class="step">A free improvement</p><h2>Antithetic variates: cancel the noise.</h2>
+  <p>For every random shock Z you draw, also use its mirror &minus;Z. When one path runs lucky, its twin runs unlucky, and the two errors partly cancel.</p>
+  <div class="code">plain       10.4486 +- 0.0052
+antithetic  10.4498 +- 0.0026    (4x less variance)</div>
+  <p style="font-size:28px">Same number of draws, half the error bar. Free accuracy from a symmetry.</p>
+  <div class="spacer"></div><p class="num">8 / 15</p></div>
+<div class="slide"><p class="step">Step 4 &mdash; the sensitivities</p><h2>The Greeks: how the price reacts.</h2>
+  <table>
+    <tr><th>greek</th><th class="n">value</th><th>what it measures</th></tr>
+    <tr><td>delta</td><td class="n hi">0.637</td><td>move per $1 of stock</td></tr>
+    <tr><td>gamma</td><td class="n">0.019</td><td>how delta itself moves</td></tr>
+    <tr><td>vega</td><td class="n">0.375</td><td>per 1% of volatility</td></tr>
+    <tr><td>theta</td><td class="n bad">&minus;0.018</td><td>lost per day of time</td></tr>
+    <tr><td>rho</td><td class="n">0.532</td><td>per 1% of interest rate</td></tr>
+  </table>
+  <p style="font-size:26px">The simulation recovers delta (0.637) and vega (0.375) too, matching the formula.</p>
+  <div class="spacer"></div><p class="num">9 / 15</p></div>
+<div class="slide"><p class="step">Step 5 &mdash; the risk</p><h2>Risk is not one number. It is a distribution.</h2>
+  <p>To measure risk, simulate the near future of a position &mdash; here, $1M of the stock over 10 trading days &mdash; and look at the whole spread of profits and losses.</p>
+  <p>Most outcomes cluster near zero. The question is how bad the bad tail gets.</p>
+  <div class="spacer"></div><p class="num">10 / 15</p></div>
+<div class="slide"><p class="step">Step 5 &mdash; the risk</p><h2>Value-at-Risk reads off the tail.</h2>
+  <figure><svg viewBox="0 0 800 330" role="img" aria-label="The profit and loss distribution, a bell curve; the 95th and 99th percentile loss thresholds are marked on the left tail."><rect x="61.0" y="300.0" width="16.0" height="0.0" fill="#e8776c" opacity="0.88"/><rect x="79.0" y="299.9" width="16.0" height="0.1" fill="#e8776c" opacity="0.88"/><rect x="97.0" y="299.6" width="16.0" height="0.4" fill="#e8776c" opacity="0.88"/><rect x="115.0" y="299.4" width="16.0" height="0.6" fill="#e8776c" opacity="0.88"/><rect x="133.0" y="298.9" width="16.0" height="1.1" fill="#e8776c" opacity="0.88"/><rect x="151.0" y="297.6" width="16.0" height="2.4" fill="#e8776c" opacity="0.88"/><rect x="169.0" y="294.6" width="16.0" height="5.4" fill="#e8776c" opacity="0.88"/><rect x="187.0" y="290.5" width="16.0" height="9.5" fill="#e8776c" opacity="0.88"/><rect x="205.0" y="284.4" width="16.0" height="15.6" fill="#e8776c" opacity="0.88"/><rect x="223.0" y="273.3" width="16.0" height="26.7" fill="#e8776c" opacity="0.88"/><rect x="241.0" y="259.6" width="16.0" height="40.4" fill="#e8776c" opacity="0.88"/><rect x="259.0" y="239.9" width="16.0" height="60.1" fill="#e8776c" opacity="0.88"/><rect x="277.0" y="211.8" width="16.0" height="88.2" fill="#ffb000" opacity="0.88"/><rect x="295.0" y="182.6" width="16.0" height="117.4" fill="#ffb000" opacity="0.88"/><rect x="313.0" y="148.3" width="16.0" height="151.7" fill="#ffb000" opacity="0.88"/><rect x="331.0" y="111.7" width="16.0" height="188.3" fill="#ffb000" opacity="0.88"/><rect x="349.0" y="81.8" width="16.0" height="218.2" fill="#ffb000" opacity="0.88"/><rect x="367.0" y="48.3" width="16.0" height="251.7" fill="#ffb000" opacity="0.88"/><rect x="385.0" y="31.5" width="16.0" height="268.5" fill="#ffb000" opacity="0.88"/><rect x="403.0" y="22.5" width="16.0" height="277.5" fill="#ffb000" opacity="0.88"/><rect x="421.0" y="20.0" width="16.0" height="280.0" fill="#ffb000" opacity="0.88"/><rect x="439.0" y="31.4" width="16.0" height="268.6" fill="#ffb000" opacity="0.88"/><rect x="457.0" y="55.1" width="16.0" height="244.9" fill="#ffb000" opacity="0.88"/><rect x="475.0" y="79.4" width="16.0" height="220.6" fill="#ffb000" opacity="0.88"/><rect x="493.0" y="110.1" width="16.0" height="189.9" fill="#ffb000" opacity="0.88"/><rect x="511.0" y="146.7" width="16.0" height="153.3" fill="#ffb000" opacity="0.88"/><rect x="529.0" y="174.6" width="16.0" height="125.4" fill="#ffb000" opacity="0.88"/><rect x="547.0" y="204.4" width="16.0" height="95.6" fill="#ffb000" opacity="0.88"/><rect x="565.0" y="228.6" width="16.0" height="71.4" fill="#ffb000" opacity="0.88"/><rect x="583.0" y="248.2" width="16.0" height="51.8" fill="#ffb000" opacity="0.88"/><rect x="601.0" y="262.4" width="16.0" height="37.6" fill="#ffb000" opacity="0.88"/><rect x="619.0" y="275.2" width="16.0" height="24.8" fill="#ffb000" opacity="0.88"/><rect x="637.0" y="284.3" width="16.0" height="15.7" fill="#ffb000" opacity="0.88"/><rect x="655.0" y="289.4" width="16.0" height="10.6" fill="#ffb000" opacity="0.88"/><rect x="673.0" y="292.8" width="16.0" height="7.2" fill="#ffb000" opacity="0.88"/><rect x="691.0" y="296.4" width="16.0" height="3.6" fill="#ffb000" opacity="0.88"/><rect x="709.0" y="298.0" width="16.0" height="2.0" fill="#ffb000" opacity="0.88"/><rect x="727.0" y="299.0" width="16.0" height="1.0" fill="#ffb000" opacity="0.88"/><rect x="745.0" y="299.3" width="16.0" height="0.7" fill="#ffb000" opacity="0.88"/><rect x="763.0" y="299.2" width="16.0" height="0.8" fill="#ffb000" opacity="0.88"/><line x1="420.0" y1="20" x2="420.0" y2="300" stroke="#8f7a4a" stroke-width="1.5" stroke-dasharray="3 3"/><line x1="279.2" y1="20" x2="279.2" y2="300" stroke="#e8776c" stroke-width="2.5"/><line x1="222.3" y1="20" x2="222.3" y2="300" stroke="#e8776c" stroke-width="2.5" stroke-dasharray="5 4"/><line x1="60" y1="300" x2="780" y2="300" stroke="#ece5d6" stroke-width="1.5"/>
+    <g font-family="IBM Plex Mono, monospace" font-size="19">
+      <text x="250" y="322" fill="#e8776c" text-anchor="middle">VaR95 / VaR99</text>
+      <text x="60" y="322" fill="#7d7259">loss</text><text x="780" y="322" text-anchor="end" fill="#7d7259">gain</text></g></svg></figure>
+  <p style="font-size:27px"><span class="hi">VaR95 = $62k</span> means: on the worst 1 day in 20, you lose at least this.</p>
+  <div class="spacer"></div><p class="num">11 / 15</p></div>
+<div class="slide"><p class="step">Step 5 &mdash; the risk</p><h2>Expected Shortfall: how bad, when it is bad.</h2>
+  <p>Value-at-Risk is a threshold. It says nothing about how far past it you can go. Expected Shortfall answers that &mdash; the <em>average</em> loss on the worst days.</p>
+  <table>
+    <tr><td>VaR 95%</td><td class="n">$62,327</td></tr>
+    <tr><td>VaR 99%</td><td class="n">$87,507</td></tr>
+    <tr><td>Expected Shortfall 99%</td><td class="n bad">$99,624</td></tr>
+  </table>
+  <p style="font-size:26px">When the worst 1% happens, the average loss is worse than the VaR line.</p>
+  <div class="spacer"></div><p class="num">12 / 15</p></div>
+<div class="slide"><p class="step">The whole machine</p><h2>One unikernel, every service load-bearing.</h2>
+  <div class="code">Telegram   the instrument, in plain English
+Firecrawl  live market data over HTTPS
+Gemini     parse it into parameters
+RDRAND     the random shocks (hardware entropy)
+compute    simulate, price, measure
+Redis      an immutable audit record
+PNG + Telegram   the chart and the answer</div>
+  <div class="spacer"></div><p class="num">13 / 15</p></div>
+<div class="slide"><p class="step">Why a unikernel</p><h2>Determinism is the product.</h2>
+  <p>A regulated risk number must be <span class="hi">reproducible and auditable</span> &mdash; every run logged, every run repeatable. That is not free: this platform silently computed wrong <span class="bad">1 in 4,000</span> times until we root-caused and fixed it.</p>
+  <p>And the randomness is real: every shock comes from the CPU's hardware entropy, proven against ent, FIPS 140-2 and dieharder. A unikernel has no /dev/random; this one makes its own.</p>
+  <div class="spacer"></div><p class="num">14 / 15</p></div>
+<div class="slide"><p class="eyebrow">Open source</p>
+  <h2>The engine, the proofs, the walkthrough.</h2>
+  <div class="code">github.com/tabibazar/unikernel-c</div>
+  <p>Monte Carlo pricing with variance reduction and Greeks, Value-at-Risk from the simulated distribution, and the hardware RNG it all runs on &mdash; a few hundred lines of C, no operating system, no math library.</p>
+  <div class="spacer"></div>
+  <p class="kicker">Built on Return Infinity's BareMetal. Prices by Black&ndash;Scholes; the dice are the machine's own.</p><p class="num">15 / 15</p></div>

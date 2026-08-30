@@ -1,6 +1,9 @@
 RISK_START S0=100 K=100 r=0.05 vol=0.20 T=1.0
-BLACK_SCHOLES call=10.4506 delta=0.6368
-MC_PLAIN      call=10.4486 +- 0.0052  (err vs BS -0.0019)
-MC_ANTITHETIC call=10.4521 +- 0.0026  (err vs BS +0.0016)  variance_cut=4.0x
-MC_DELTA      delta=0.6368 (BS 0.6368)
-VAR notional=1000000 horizon=10d  VaR95=62372  VaR99=86914  ES99=98985
+BS call=10.4506 delta=0.6368 gamma=0.0188 vega=0.3752 theta=-0.0176 rho=0.5323
+CONV n=1000 price=10.7716 se=0.2390 err=+0.3211
+CONV n=10000 price=10.5993 se=0.0745 err=+0.1487
+CONV n=100000 price=10.4283 se=0.0232 err=-0.0223
+CONV n=1000000 price=10.4397 se=0.0073 err=-0.0109
+CONV n=8000000 price=10.4498 se=0.0026 err=-0.0008
+MC_FINAL price=10.4498 delta=0.6369 vega=0.3752 (BS delta=0.6368 vega=0.3752)
+VAR VaR95=62327 VaR99=87507 ES99=99624
