@@ -1,0 +1,31 @@
+=== SOURCE PROBE (BareMetal under Firecracker, AMD EPYC) ===
+cpuid: rdrand=1 rdseed=1
+rdrand: success=4096/4096  bit_ones=131176/262144 (50.04%)  stuck=0  and=0 or=~0
+rdseed: success=4096/4096  bit_ones=130894/262144 (49.93%)  and=0 or=~0
+rdtsc_jitter: lsb_ones=6165/8192 (75%, biased)
+
+=== TRNG SELF-TEST, BareMetal ===
+STAT raw_jit    ones=66.42%  monobit_z=84.09  chi2=108570  serial_corr=+0.6277  min_entropy=3.210/8   (FAIL, as expected)
+STAT condition  ones=49.99%  monobit_z=0.11   chi2=241     serial_corr=+0.0093  min_entropy=7.771/8   (PASS)
+health: rct=0 apt=0   rdseed_fail=0
+
+=== ent, 7,817,574 bytes generated on BareMetal ===
+Entropy = 7.999976 bits per byte
+Optimum compression would reduce size by 0 percent
+Chi square = 260.50, exceeded 39.31% of the time  (ideal band 10-90%)
+Arithmetic mean = 127.4921  (127.5 = random)
+Monte Carlo Pi = 3.140699148 (error 0.03 percent)
+Serial correlation = -0.000025
+
+=== rngtest, FIPS 140-2, same 7.8 MB ===
+successes: 3126
+failures:  1        (expected false-positive rate ~1 per few thousand blocks)
+
+=== dieharder on live BareMetal-generator stream (no file, no rewind) ===
+diehard_parking_lot   p=0.545  PASSED
+diehard_2dsphere      p=0.318  PASSED
+
+=== dieharder marsaglia_tsang_gcd on the 7.8 MB FILE ===
+our TRNG:       p=0.00000000  FAILED
+/dev/urandom:   p=0.00000000  FAILED   <-- reference source fails identically:
+                                            a small-file rewind artifact, not the RNG
