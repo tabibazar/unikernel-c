@@ -1,0 +1,6 @@
+RISK_START S0=100 K=100 r=0.05 vol=0.20 T=1.0
+BLACK_SCHOLES call=10.4506 delta=0.6368
+MC_PLAIN      call=10.4486 +- 0.0052  (err vs BS -0.0019)
+MC_ANTITHETIC call=10.4521 +- 0.0026  (err vs BS +0.0016)  variance_cut=4.0x
+MC_DELTA      delta=0.6368 (BS 0.6368)
+VAR notional=1000000 horizon=10d  VaR95=62372  VaR99=86914  ES99=98985

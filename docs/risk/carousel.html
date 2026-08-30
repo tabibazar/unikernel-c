@@ -1,0 +1,136 @@
+<meta charset="utf-8">
+<title>risk engine carousel</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+  @page { size:1080px 1080px; margin:0; }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  html,body { background:#0b0906; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  :root{ --accent:#ffb000; }
+  .slide{ width:1080px; height:1080px; background:#0b0906; color:#ece5d6; font-family:"IBM Plex Sans",system-ui,sans-serif;
+    padding:84px 80px 70px; position:relative; page-break-after:always; display:flex; flex-direction:column; overflow:hidden; }
+  .slide:last-child{ page-break-after:auto; }
+  .eyebrow{ font-family:"IBM Plex Mono",monospace; font-size:24px; letter-spacing:0.16em; text-transform:uppercase; color:#ffb000; margin-bottom:28px; }
+  h1{ font-family:"IBM Plex Mono",monospace; font-size:66px; line-height:1.05; letter-spacing:-0.03em; font-weight:600; }
+  h2{ font-family:"IBM Plex Mono",monospace; font-size:50px; line-height:1.09; letter-spacing:-0.025em; font-weight:600; margin-bottom:24px; }
+  p{ font-size:33px; line-height:1.42; color:#d8cfbc; } p+p{ margin-top:18px; }
+  .lede{ font-size:38px; color:#b3a68a; margin-top:28px; }
+  .hi{ color:#ffb000; } .bad{ color:#e8776c; } .ok{ color:#7fc08c; } .spacer{ flex:1; }
+  .kicker{ font-family:"IBM Plex Mono",monospace; font-size:26px; line-height:1.42; color:#ffb000; border-top:2px solid #2e2718; padding-top:22px; margin-top:24px; padding-right:80px; }
+  .num{ position:absolute; right:80px; bottom:56px; font-family:"IBM Plex Mono",monospace; font-size:22px; color:#6a6047; }
+  .huge{ font-family:"IBM Plex Mono",monospace; font-size:120px; font-weight:600; color:#ffb000; line-height:1; letter-spacing:-0.04em; }
+  .code{ font-family:"IBM Plex Mono",monospace; font-size:25px; line-height:1.6; background:#050403; border-left:6px solid #ffb000; padding:22px 26px; margin:22px 0; color:#ffb000; white-space:pre; }
+  table{ width:100%; border-collapse:collapse; margin:18px 0; font-size:29px; font-family:"IBM Plex Mono",monospace; }
+  td,th{ text-align:left; padding:14px 8px; border-bottom:1px solid #2e2718; }
+  th{ font-size:20px; letter-spacing:0.08em; text-transform:uppercase; color:#7d7259; font-weight:500; }
+  td.n{ text-align:right; font-variant-numeric:tabular-nums; }
+  .pipe{ font-family:"IBM Plex Mono",monospace; font-size:26px; line-height:2.0; }
+  .pipe .a{ color:#ffb000; } .pipe .d{ color:#7d7259; }
+  /* responsive web view; PDF unaffected */
+  body{ display:flex; flex-direction:column; align-items:center; gap:14px; padding:14px 0; }
+  .slide{ flex:none; transform-origin:top center; }
+  @media screen and (max-width:1120px){ .slide{ transform:scale(calc(100vw/1120)); margin-bottom:calc((100vw/1120 - 1)*1080px);} }
+  @media print{ body{display:block;gap:0;padding:0} .slide{transform:none;margin-bottom:0} }
+</style><div class="slide">
+  <p class="eyebrow">A quant risk engine &middot; in 16 MiB &middot; no operating system</p>
+  <h1>We priced a derivative and measured its risk on a computer with no OS &mdash; and checked it against the exact answer.</h1>
+  <p class="lede">Monte Carlo, hardware randomness, and a Black&ndash;Scholes ground truth.</p>
+  <p class="num">1 / 9</p>
+  <div class="spacer"></div>
+  <p class="kicker">This is the market Return Infinity sells into: deterministic, auditable compute for finance.</p>
+</div>
+<div class="slide">
+  <p class="eyebrow">The problem</p>
+  <h2>Two questions a trading desk asks every day.</h2>
+  <p><span class="hi">What is this option worth?</span> &mdash; and <span class="hi">how much could I lose?</span></p>
+  <p>Real portfolios have no pricing formula, and risk is not one number but a whole loss distribution. The only general tool is simulation: draw thousands of random futures, price each, and read the answer off the spread.</p>
+  <div class="spacer"></div>
+  <p class="num">2 / 9</p>
+</div>
+<div class="slide">
+  <p class="eyebrow">One unikernel, the whole pipeline</p>
+  <h2>Every external service, load-bearing.</h2>
+  <div class="pipe">
+    <span class="a">Telegram</span> <span class="d">&mdash; the instrument, in plain English</span><br>
+    <span class="a">Firecrawl</span> <span class="d">&mdash; live market data over HTTPS</span><br>
+    <span class="a">Gemini LLM</span> <span class="d">&mdash; parse it into parameters</span><br>
+    <span class="a">RDRAND</span> <span class="d">&mdash; the random price paths</span><br>
+    <span class="a">compute</span> <span class="d">&mdash; simulate, price, measure risk</span><br>
+    <span class="a">Redis</span> <span class="d">&mdash; an immutable audit record</span><br>
+    <span class="a">PNG + Telegram</span> <span class="d">&mdash; the chart and the answer back</span>
+  </div>
+  <div class="spacer"></div>
+  <p class="num">3 / 9</p>
+</div>
+<div class="slide">
+  <p class="eyebrow">The validation &mdash; the part that makes it real</p>
+  <h2>Simulation, meet the exact answer.</h2>
+  <p>A European call has a closed form: Black&ndash;Scholes. If the simulation lands on it within its error bar, the engine is correct.</p>
+  <table>
+    <tr><th>method</th><th class="n">call price</th></tr>
+    <tr><td>Black&ndash;Scholes (exact)</td><td class="n hi">10.4506</td></tr>
+    <tr><td>Monte Carlo, 8M paths</td><td class="n ok">10.4521 &plusmn; 0.0026</td></tr>
+    <tr><td>delta (both)</td><td class="n">0.6368</td></tr>
+  </table>
+  <p style="font-size:28px">Within one standard error. The random walk found the analytic price.</p>
+  <div class="spacer"></div>
+  <p class="num">4 / 9</p>
+</div>
+<div class="slide">
+  <p class="eyebrow">A quant trick, shown honestly</p>
+  <p class="huge">4&times;</p>
+  <h2 style="margin-top:18px">less variance, for free.</h2>
+  <p>Pair every random shock Z with its mirror &minus;Z &mdash; antithetic variates. The two cancel each other's noise, so the error bar halves without a single extra sample.</p>
+  <div class="code">plain       10.4486 +- 0.0052
+antithetic  10.4521 +- 0.0026   (4.0x)</div>
+  <div class="spacer"></div>
+  <p class="num">5 / 9</p>
+</div>
+<div class="slide">
+  <p class="eyebrow">The risk, from the loss distribution</p>
+  <h2>10-day Value-at-Risk on a $1M position.</h2>
+  <figure>
+  <svg viewBox="0 0 800 380" style="width:100%;height:auto" role="img" aria-label="Profit and loss distribution from 200000 simulated 10-day returns, a bell curve centred near zero; the 95% and 99% Value-at-Risk thresholds are marked on the loss side.">
+    <rect x="71.0" y="329.9" width="15.5" height="0.1" fill="#e8776c" opacity="0.9"/><rect x="88.5" y="329.9" width="15.5" height="0.1" fill="#e8776c" opacity="0.9"/><rect x="106.0" y="329.7" width="15.5" height="0.3" fill="#e8776c" opacity="0.9"/><rect x="123.5" y="329.4" width="15.5" height="0.6" fill="#e8776c" opacity="0.9"/><rect x="141.0" y="328.9" width="15.5" height="1.1" fill="#e8776c" opacity="0.9"/><rect x="158.5" y="327.5" width="15.5" height="2.5" fill="#e8776c" opacity="0.9"/><rect x="176.0" y="325.2" width="15.5" height="4.8" fill="#e8776c" opacity="0.9"/><rect x="193.5" y="320.6" width="15.5" height="9.4" fill="#e8776c" opacity="0.9"/><rect x="211.0" y="313.3" width="15.5" height="16.7" fill="#e8776c" opacity="0.9"/><rect x="228.5" y="300.0" width="15.5" height="30.0" fill="#e8776c" opacity="0.9"/><rect x="246.0" y="284.6" width="15.5" height="45.4" fill="#e8776c" opacity="0.9"/><rect x="263.5" y="265.2" width="15.5" height="64.8" fill="#e8776c" opacity="0.9"/><rect x="281.0" y="239.2" width="15.5" height="90.8" fill="#ffb000" opacity="0.85"/><rect x="298.5" y="201.7" width="15.5" height="128.3" fill="#ffb000" opacity="0.85"/><rect x="316.0" y="168.2" width="15.5" height="161.8" fill="#ffb000" opacity="0.85"/><rect x="333.5" y="131.7" width="15.5" height="198.3" fill="#ffb000" opacity="0.85"/><rect x="351.0" y="95.6" width="15.5" height="234.4" fill="#ffb000" opacity="0.85"/><rect x="368.5" y="64.4" width="15.5" height="265.6" fill="#ffb000" opacity="0.85"/><rect x="386.0" y="44.0" width="15.5" height="286.0" fill="#ffb000" opacity="0.85"/><rect x="403.5" y="33.5" width="15.5" height="296.5" fill="#ffb000" opacity="0.85"/><rect x="421.0" y="30.0" width="15.5" height="300.0" fill="#ffb000" opacity="0.85"/><rect x="438.5" y="40.7" width="15.5" height="289.3" fill="#ffb000" opacity="0.85"/><rect x="456.0" y="65.7" width="15.5" height="264.3" fill="#ffb000" opacity="0.85"/><rect x="473.5" y="91.8" width="15.5" height="238.2" fill="#ffb000" opacity="0.85"/><rect x="491.0" y="125.1" width="15.5" height="204.9" fill="#ffb000" opacity="0.85"/><rect x="508.5" y="160.9" width="15.5" height="169.1" fill="#ffb000" opacity="0.85"/><rect x="526.0" y="193.3" width="15.5" height="136.7" fill="#ffb000" opacity="0.85"/><rect x="543.5" y="227.3" width="15.5" height="102.7" fill="#ffb000" opacity="0.85"/><rect x="561.0" y="250.8" width="15.5" height="79.2" fill="#ffb000" opacity="0.85"/><rect x="578.5" y="274.5" width="15.5" height="55.5" fill="#ffb000" opacity="0.85"/><rect x="596.0" y="289.9" width="15.5" height="40.1" fill="#ffb000" opacity="0.85"/><rect x="613.5" y="303.8" width="15.5" height="26.2" fill="#ffb000" opacity="0.85"/><rect x="631.0" y="312.2" width="15.5" height="17.8" fill="#ffb000" opacity="0.85"/><rect x="648.5" y="319.1" width="15.5" height="10.9" fill="#ffb000" opacity="0.85"/><rect x="666.0" y="323.7" width="15.5" height="6.3" fill="#ffb000" opacity="0.85"/><rect x="683.5" y="326.1" width="15.5" height="3.9" fill="#ffb000" opacity="0.85"/><rect x="701.0" y="327.7" width="15.5" height="2.3" fill="#ffb000" opacity="0.85"/><rect x="718.5" y="328.8" width="15.5" height="1.2" fill="#ffb000" opacity="0.85"/><rect x="736.0" y="329.2" width="15.5" height="0.8" fill="#ffb000" opacity="0.85"/><rect x="753.5" y="329.0" width="15.5" height="1.0" fill="#ffb000" opacity="0.85"/>
+<line x1="420.0" y1="30" x2="420.0" y2="330" stroke="#8f7a4a" stroke-width="1.5" stroke-dasharray="3 3"/>
+<line x1="283.0" y1="30" x2="283.0" y2="330" stroke="#e8776c" stroke-width="2.5"/>
+<line x1="229.1" y1="30" x2="229.1" y2="330" stroke="#e8776c" stroke-width="2.5" stroke-dasharray="5 4"/>
+<line x1="70" y1="330" x2="770" y2="330" stroke="#ece5d6" stroke-width="1.5"/>
+    <g font-family="IBM Plex Mono, monospace" font-size="20" fill="#ece5d6">
+      <text x="420" y="358" text-anchor="middle" fill="#8f7a4a">0</text>
+      <text x="283" y="358" text-anchor="middle" fill="#e8776c">VaR95</text>
+      <text x="215" y="358" text-anchor="middle" fill="#e8776c">VaR99</text>
+      <text x="70" y="358" fill="#7d7259">loss</text>
+      <text x="770" y="358" text-anchor="end" fill="#7d7259">gain</text>
+    </g>
+  </svg>
+  </figure>
+  <div class="code">VaR95 = $62,372   VaR99 = $86,914   ES99 = $98,985</div>
+  <div class="spacer"></div>
+  <p class="num">6 / 9</p>
+</div>
+<div class="slide">
+  <p class="eyebrow">Why a unikernel, and not a container</p>
+  <h2>Every run is logged, and every run is reproducible.</h2>
+  <p>Each simulation writes an immutable record to Redis &mdash; the audit trail MiFID II and SEC rules require. And reproducibility is not free: this same platform silently computed wrong <span class="bad">1 in 4,000</span> times until we root-caused and fixed it.</p>
+  <p>A risk number you cannot reproduce is a risk number you cannot defend.</p>
+  <div class="spacer"></div>
+  <p class="kicker">Determinism is the product. We found the one bug that broke it, and closed it.</p>
+  <p class="num">7 / 9</p>
+</div>
+<div class="slide">
+  <p class="eyebrow">Where the randomness came from</p>
+  <h2>The CPU's own entropy, proven clean.</h2>
+  <p>Millions of Gaussian shocks, each built from <span class="hi">RDRAND</span> &mdash; the hardware source shown the day before to pass ent, FIPS 140-2 and dieharder. A unikernel has no <span class="hi">/dev/random</span>; this one makes its own, correctly.</p>
+  <p>No math library either: exp, ln, sqrt and the normal distribution are a few dozen lines of C. The program <em>is</em> the machine.</p>
+  <div class="spacer"></div>
+  <p class="num">8 / 9</p>
+</div>
+<div class="slide">
+  <p class="eyebrow">Open source</p>
+  <h2>The engine, the RNG, and the proofs.</h2>
+  <div class="code">github.com/tabibazar/unikernel-c</div>
+  <p>Monte Carlo pricing with variance reduction and Greeks, Value-at-Risk from the simulated distribution, the hardware RNG it runs on, and the evidence for all of it &mdash; in 16 MiB, with no operating system.</p>
+  <div class="spacer"></div>
+  <p class="kicker">Built on Return Infinity's BareMetal. Prices by Black&ndash;Scholes; the randomness is the machine's own.</p>
+  <p class="num">9 / 9</p>
+</div>
