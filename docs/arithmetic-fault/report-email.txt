@@ -1,0 +1,70 @@
+Subject: BareMetal bug, root-caused: timer interrupt corrupts __umodti3
+         (nondeterministic 64-bit modular arithmetic)
+
+Hi Ian,
+
+Following up on the arithmetic nondeterminism I flagged earlier -- I've now
+root-caused it, with reproducers and a controlled proof of the mechanism. Short
+version: it's a register-preservation bug in the interrupt path, not a CPU or
+hypervisor issue, and there's a one-line workaround your users can apply today.
+
+The bug
+
+A maskable interrupt -- in a Firecracker guest, the timer -- landing inside
+libgcc's software routine __umodti3 corrupts a register the routine is using.
+__umodti3 is the 128/64 division that `a * b % m` compiles to at -O0; it's built
+from many instructions, so it can be interrupted partway through. The interrupt
+handler clobbers a register without saving/restoring it, and the division
+resumes and finishes with a corrupted intermediate. The multiply never faults,
+because mulq is a single instruction and atomic with respect to interrupts.
+
+The CPU is fine -- native Linux and NanoVMs' Nanos run the identical arithmetic
+cleanly on the same EPYC host, because their handlers preserve every register.
+
+How I proved it (each step changes one variable; raw logs in the repo)
+
+  1. Split the operation. Repeating one fixed mulmod 200M times and checking the
+     multiply and the modulo separately: the multiply is never wrong; the modulo
+     faults 127 times. The wrong remainder is byte-identical every time
+     (bb77c5a9f2d3bb82 vs. correct b10537588efd4e70) -- deterministic, so a
+     specific mis-computation, not random upset.
+
+  2. The instruction. Modulo is `call __umodti3`; multiply is one mulq. That
+     interruptibility is the only structural difference.
+
+  3. Mask interrupts. With cli before the loop: 0 faults over 200M, where the
+     baseline predicts 127. Masking in the guest fixes it, so it's guest
+     interrupt handling, not hypervisor preemption.
+
+  4. Make it atomic. Reducing the same product two ways in one run, interrupts
+     on -- the software routine faults 109 times; a single inline-asm divq
+     faults 0.
+
+Verified against the original reproducer: selfcheck's powmod rewritten to use
+divq goes from 1398 mismatches per 20M to zero, interrupts enabled -- and runs
+slightly faster.
+
+The fix (yours)
+
+Almost certainly the timer ISR clobbers a register without saving it. Worth
+auditing register save/restore across the whole interrupt path -- this will
+silently affect any multi-instruction routine that spans an interrupt, not just
+128-bit division, which makes it more serious than the rate alone suggests. The
+deterministic wrong value is a fingerprint: comparing your ISR against the
+__umodti3 disassembly should pin the exact register.
+
+Workaround for users, until then
+
+Make the reduction a single atomic instruction -- either compile hot modular
+arithmetic at -O2 (gcc emits divq directly when it can prove the quotient fits,
+which it always can for reduced operands a, b < m), or use inline-asm divq. Both
+close this particular hole.
+
+Reproducers, results, and the full write-up:
+https://github.com/tabibazar/unikernel-c/tree/main/docs/arithmetic-fault
+
+Happy to walk through any of it, and glad to help confirm a fix against the
+reproducers once you have one.
+
+Best,
+Reza
