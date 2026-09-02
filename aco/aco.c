@@ -86,6 +86,12 @@
 #ifndef ACO_MIGRATE
 #define ACO_MIGRATE 0
 #endif
+
+/* Dump the final tour as city indices, for plotting. Off by default: a swarm
+   worker's console is a scarce channel and a 442-city tour is a lot of it. */
+#ifndef ACO_PRINT_TOUR
+#define ACO_PRINT_TOUR 0
+#endif
 #ifndef ACO_MIGRATE_EVERY
 #define ACO_MIGRATE_EVERY 200
 #endif
@@ -647,6 +653,15 @@ int main(int argc, char **argv) {
        platform whose printf may lack %f */
     long gap_bp = (long)(10000.0 * (double)(best_len - ACO_OPTIMUM) / (double)ACO_OPTIMUM);
     long ms = (long)(el * 1000.0);
+#if ACO_PRINT_TOUR
+    printf("ACO_TOUR");
+    for (int i = 0; i < ACO_N; i++) printf(" %d", best_tour[i]);
+    printf("\n");
+    printf("ACO_NN");
+    { static int nn[ACO_N]; int32_t nl = nearest_neighbour_tour(nn);
+      for (int i = 0; i < ACO_N; i++) printf(" %d", nn[i]);
+      printf("\nACO_NN_LEN %d\n", nl); }
+#endif
     printf("ACO_DONE worker=%d instance=%s seed=%llu iters=%ld best=%d optimum=%d gap_bp=%ld "
            "ms=%ld valid=%d\n",
            ACO_WORKER_ID, ACO_NAME, (unsigned long long)seed, it, best_len, ACO_OPTIMUM, gap_bp,

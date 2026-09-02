@@ -1,0 +1,96 @@
+ACO_START worker=2 instance=pcb442 n=442 optimum=50778 beta=2 ants=25 cache=1 ls=1 seed=3 static_bytes=1197378
+ACO_MIGRATE_IN worker=2 iters=500 adopted=51759
+ACO_MIGRATE_IN worker=2 iters=1000 adopted=51757
+ACO_MIGRATE_OUT worker=2 iters=1000 published=51757
+ACO_MIGRATE_OUT worker=2 iters=1500 published=51757
+ACO_MIGRATE_OUT worker=2 iters=2000 published=51757
+ACO_PROGRESS worker=2 instance=pcb442 seed=3 iters=2000 best=51757 gap_bp=192
+ACO_MIGRATE_OUT worker=2 iters=4000 published=51477
+ACO_PROGRESS worker=2 instance=pcb442 seed=3 iters=4000 best=51477 gap_bp=137
+ACO_MIGRATE_OUT worker=2 iters=5000 published=51477
+ACO_MIGRATE_OUT worker=2 iters=6000 published=51477
+ACO_PROGRESS worker=2 instance=pcb442 seed=3 iters=6000 best=51477 gap_bp=137
+ACO_MIGRATE_OUT worker=2 iters=6500 published=51477
+ACO_MIGRATE_OUT worker=2 iters=7000 published=51477
+ACO_MIGRATE_OUT worker=2 iters=7500 published=51477
+ACO_MIGRATE_OUT worker=2 iters=8000 published=51477
+ACO_PROGRESS worker=2 instance=pcb442 seed=3 iters=8000 best=51477 gap_bp=137
+ACO_MIGRATE_OUT worker=2 iters=8500 published=51477
+ACO_MIGRATE_OUT worker=2 iters=9000 published=51477
+ACO_MIGRATE_OUT worker=2 iters=9500 published=51477
+ACO_MIGRATE_OUT worker=2 iters=10000 published=51477
+ACO_PROGRESS worker=2 instance=pcb442 seed=3 iters=10000 best=51477 gap_bp=137
+ACO_MIGRATE_OUT worker=2 iters=10500 published=51477
+ACO_MIGRATE_OUT worker=2 iters=11000 published=51477
+ACO_MIGRATE_OUT worker=2 iters=11500 published=51477
+ACO_MIGRATE_OUT worker=2 iters=12000 published=51477
+ACO_PROGRESS worker=2 instance=pcb442 seed=3 iters=12000 best=51477 gap_bp=137
+ACO_MIGRATE_OUT worker=2 iters=13500 published=51477
+ACO_PROGRESS worker=2 instance=pcb442 seed=3 iters=14000 best=51477 gap_bp=137
+ACO_MIGRATE_OUT worker=2 iters=16000 published=51477
+ACO_PROGRESS worker=2 instance=pcb442 seed=3 iters=16000 best=51477 gap_bp=137
+ACO_MIGRATE_OUT worker=2 iters=16500 published=51477
+ACO_MIGRATE_OUT worker=2 iters=17000 published=51477
+ACO_MIGRATE_OUT worker=2 iters=17500 published=51477
+ACO_PROGRESS worker=2 instance=pcb442 seed=3 iters=18000 best=51477 gap_bp=137
+ACO_MIGRATE_OUT worker=2 iters=18500 published=51477
+ACO_MIGRATE_OUT worker=2 iters=19500 published=51477
+ACO_PROGRESS worker=2 instance=pcb442 seed=3 iters=20000 best=51477 gap_bp=137
+ACO_MIGRATE_OUT worker=2 iters=20500 published=51477
+ACO_MIGRATE_OUT worker=2 iters=21000 published=51477
+ACO_MIGRATE_OUT worker=2 iters=21500 published=51477
+ACO_PROGRESS worker=2 instance=pcb442 seed=3 iters=22000 best=51477 gap_bp=137
+ACO_MIGRATE_OUT worker=2 iters=22500 published=51477
+ACO_MIGRATE_OUT worker=2 iters=23000 published=51477
+ACO_MIGRATE_OUT worker=2 iters=23500 published=51477
+ACO_MIGRATE_OUT worker=2 iters=24000 published=51477
+ACO_PROGRESS worker=2 instance=pcb442 seed=3 iters=24000 best=51477 gap_bp=137
+ACO_MIGRATE_OUT worker=2 iters=24500 published=51477
+ACO_MIGRATE_OUT worker=2 iters=25000 published=51477
+ACO_MIGRATE_OUT worker=2 iters=25500 published=51477
+ACO_MIGRATE_OUT worker=2 iters=26000 published=51477
+ACO_PROGRESS worker=2 instance=pcb442 seed=3 iters=26000 best=51477 gap_bp=137
+ACO_PROGRESS worker=2 instance=pcb442 seed=3 iters=28000 best=51477 gap_bp=137
+ACO_MIGRATE_OUT worker=2 iters=28500 published=51477
+ACO_MIGRATE_OUT worker=2 iters=29500 published=51477
+ACO_MIGRATE_OUT worker=2 iters=30000 published=51477
+ACO_PROGRESS worker=2 instance=pcb442 seed=3 iters=30000 best=51477 gap_bp=137
+ACO_MIGRATE_OUT worker=2 iters=31000 published=51477
+ACO_MIGRATE_OUT worker=2 iters=32000 published=51477
+ACO_PROGRESS worker=2 instance=pcb442 seed=3 iters=32000 best=51477 gap_bp=137
+ACO_MIGRATE_OUT worker=2 iters=32500 published=51477
+ACO_MIGRATE_OUT worker=2 iters=33000 published=51477
+ACO_MIGRATE_OUT worker=2 iters=33500 published=51477
+ACO_MIGRATE_OUT worker=2 iters=34000 published=51477
+ACO_PROGRESS worker=2 instance=pcb442 seed=3 iters=34000 best=51477 gap_bp=137
+ACO_MIGRATE_OUT worker=2 iters=34500 published=51477
+ACO_MIGRATE_OUT worker=2 iters=35500 published=51477
+ACO_MIGRATE_OUT worker=2 iters=36000 published=51477
+ACO_PROGRESS worker=2 instance=pcb442 seed=3 iters=36000 best=51477 gap_bp=137
+ACO_MIGRATE_OUT worker=2 iters=37500 published=51477
+ACO_PROGRESS worker=2 instance=pcb442 seed=3 iters=38000 best=51477 gap_bp=137
+ACO_MIGRATE_OUT worker=2 iters=38500 published=51477
+ACO_MIGRATE_OUT worker=2 iters=39000 published=51477
+ACO_MIGRATE_OUT worker=2 iters=39500 published=51477
+ACO_MIGRATE_OUT worker=2 iters=40000 published=51477
+ACO_PROGRESS worker=2 instance=pcb442 seed=3 iters=40000 best=51477 gap_bp=137
+ACO_MIGRATE_OUT worker=2 iters=41000 published=51477
+ACO_MIGRATE_OUT worker=2 iters=42000 published=51477
+ACO_PROGRESS worker=2 instance=pcb442 seed=3 iters=42000 best=51477 gap_bp=137
+ACO_MIGRATE_OUT worker=2 iters=42500 published=51477
+ACO_MIGRATE_OUT worker=2 iters=43000 published=51477
+ACO_MIGRATE_OUT worker=2 iters=43500 published=51477
+ACO_MIGRATE_OUT worker=2 iters=44000 published=51477
+ACO_PROGRESS worker=2 instance=pcb442 seed=3 iters=44000 best=51477 gap_bp=137
+ACO_MIGRATE_OUT worker=2 iters=45500 published=51477
+ACO_MIGRATE_OUT worker=2 iters=46000 published=51477
+ACO_PROGRESS worker=2 instance=pcb442 seed=3 iters=46000 best=51477 gap_bp=137
+ACO_MIGRATE_OUT worker=2 iters=46500 published=51477
+ACO_MIGRATE_OUT worker=2 iters=47500 published=51477
+ACO_MIGRATE_OUT worker=2 iters=48000 published=51477
+ACO_PROGRESS worker=2 instance=pcb442 seed=3 iters=48000 best=51477 gap_bp=137
+ACO_MIGRATE_OUT worker=2 iters=48500 published=51477
+ACO_MIGRATE_OUT worker=2 iters=49000 published=51477
+ACO_MIGRATE_OUT worker=2 iters=50000 published=51477
+ACO_PROGRESS worker=2 instance=pcb442 seed=3 iters=50000 best=51477 gap_bp=137
+ACO_DONE worker=2 instance=pcb442 seed=3 iters=50000 best=51477 optimum=50778 gap_bp=137 ms=0 valid=1
