@@ -13,6 +13,12 @@ Host: Apple arm64, clang `-O2 -std=c99`, one core, distance cache on.
 | kroA100 | 10 | 5.33% | 5,394 | 0 of 5 |
 | pcb442 | 10 | 21.01% | 906 | 0 of 5 |
 
+The gap column is **not** a quality measurement and does not contradict
+[`../../aco/VALIDATION.md`](../../aco/VALIDATION.md), which reports 0.45% on
+kroA100. These runs are capped at 500 iterations so that the two runs of a
+seed do identical work; that budget is far below convergence and the gaps are
+correspondingly large. What matters here is the last column.
+
 ## Same-seed divergence: 0 of 10 pairs
 
 Each seed is run twice with an identical iteration count, so the two runs
