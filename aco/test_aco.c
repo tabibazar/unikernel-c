@@ -41,6 +41,10 @@ static void test_rng_unit_range_and_mean(void) {
     CHECK(mean > 0.498 && mean < 0.502, "rng_unit mean is not ~0.5");
 }
 
+/* The tests below hardcode the tiny5 fixture's five cities. Compiled against
+   any other instance they would index a 5-element array with ACO_N entries,
+   which is a stack overflow, not a test. */
+#if ACO_N == 5
 static void test_euc2d_rounds_to_nearest(void) {
     /* tiny5: (0,0)(3,4)(10,0)(0,10)(6,8). TSPLIB EUC_2D is nint(). */
     CHECK(euc2d(0, 1) == 5,  "euc2d(0,1) should be 5");
@@ -68,6 +72,8 @@ static void test_validity_rejects_duplicates_and_range(void) {
     CHECK(!tour_is_valid(dup), "a repeated city is invalid");
     CHECK(!tour_is_valid(oob), "an out-of-range city is invalid");
 }
+
+#endif /* ACO_N == 5 */
 
 static void test_candidates_are_the_nearest(void) {
     build_candidates();
@@ -127,19 +133,61 @@ static void test_same_seed_same_result(void) {
     CHECK(best_len == first, "identical seed must give an identical result");
 }
 
+
+#if ACO_LOCAL_SEARCH
+static void test_two_opt_only_improves_and_keeps_validity(void) {
+    /* The invariant that catches a wrong reversal: 2-opt must never lengthen a
+       tour and must never break the permutation. A mis-oriented reverse_seg
+       does both, and silently. */
+    rng_seed(5); build_candidates();
+    for (int trial = 0; trial < 200; trial++) {
+        int t[ACO_N];
+        for (int i = 0; i < ACO_N; i++) t[i] = i;
+        for (int i = ACO_N - 1; i > 0; i--) {      /* Fisher-Yates shuffle */
+            int j = (int)(rng_next() % (uint64_t)(i + 1));
+            int tmp = t[i]; t[i] = t[j]; t[j] = tmp;
+        }
+        int32_t before = tour_length(t);
+        two_opt(t);
+        int32_t after = tour_length(t);
+        CHECK(tour_is_valid(t), "2-opt must preserve the permutation");
+        CHECK(after <= before, "2-opt must never lengthen a tour");
+    }
+}
+
+static void test_two_opt_is_a_fixed_point(void) {
+    /* Running it twice must change nothing: the first pass leaves no
+       improving move, so a second pass that finds one means the search
+       terminated early or the gain arithmetic disagrees with tour_length. */
+    rng_seed(6); build_candidates();
+    int t[ACO_N];
+    for (int i = 0; i < ACO_N; i++) t[i] = i;
+    two_opt(t);
+    int32_t once = tour_length(t);
+    two_opt(t);
+    CHECK(tour_length(t) == once, "a second 2-opt pass must find nothing");
+}
+#endif
+
 int main(void) {
     test_sqrt_matches_libm();
     test_rng_is_reproducible();
     test_rng_unit_range_and_mean();
+#if ACO_N == 5
     test_euc2d_rounds_to_nearest();
     test_tour_length_closes_the_loop();
     test_tour_length_is_rotation_invariant();
     test_validity_rejects_duplicates_and_range();
+#endif
     test_candidates_are_the_nearest();
     test_pheromone_stays_clamped();
     test_every_constructed_tour_is_valid();
     test_best_length_never_increases();
     test_same_seed_same_result();
+#if ACO_LOCAL_SEARCH
+    test_two_opt_only_improves_and_keeps_validity();
+    test_two_opt_is_a_fixed_point();
+#endif
     if (failures) { printf("FAILED (%d)\n", failures); return 1; }
-    printf("ok\n"); return 0;
+    printf("ok (n=%d, ls=%d)\n", ACO_N, ACO_LOCAL_SEARCH); return 0;
 }

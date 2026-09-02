@@ -10,7 +10,8 @@ CC         ?= cc
 CFLAGS     ?= -O2 -Wall -Wextra -std=c99
 INSTANCE   ?= berlin52
 DIST_CACHE ?= 1
-BIN        := build/aco-$(INSTANCE)-c$(DIST_CACHE)
+LOCAL_SEARCH ?= 1
+BIN        := build/aco-$(INSTANCE)-c$(DIST_CACHE)-l$(LOCAL_SEARCH)
 
 all: $(BIN)
 	@echo "$(BIN)"
@@ -19,7 +20,7 @@ build:
 	@mkdir -p build
 
 $(BIN): aco.c instances/$(INSTANCE).h | build
-	$(CC) $(CFLAGS) -DACO_DIST_CACHE=$(DIST_CACHE) \
+	$(CC) $(CFLAGS) -DACO_DIST_CACHE=$(DIST_CACHE) -DACO_LOCAL_SEARCH=$(LOCAL_SEARCH) \
 	      -DACO_INSTANCE_HEADER='"instances/$(INSTANCE).h"' -o $@ aco.c
 
 build/test_aco: test_aco.c aco.c instances/tiny5.h | build

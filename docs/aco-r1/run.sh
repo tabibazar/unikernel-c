@@ -21,10 +21,10 @@ field() { awk -v k="$1" '{for(i=1;i<=NF;i++){split($i,a,"=");if(a[1]==k)print a[
 printf 'instance\tseed\trun\tbest\toptimum\tgap_bp\titers\tms\n' > "$OUT"
 for inst in kroA100 pcb442; do
     [ -f "instances/$inst.h" ] || continue
-    make -s INSTANCE="$inst" DIST_CACHE=1 >/dev/null
+    make -s INSTANCE="$inst" DIST_CACHE=1 LOCAL_SEARCH=1 >/dev/null
     for seed in 1 2 3 4 5; do
         for run in 1 2; do
-            line=$(./build/aco-"$inst"-c1 --iters 500 --seed "$seed" | grep ACO_DONE)
+            line=$(./build/aco-"$inst"-c1-l1 --iters 500 --seed "$seed" | grep ACO_DONE)
             best=$(field best    <<<"$line")
             opt=$(field optimum  <<<"$line")
             gap=$(field gap_bp   <<<"$line")

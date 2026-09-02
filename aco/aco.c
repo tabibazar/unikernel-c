@@ -40,6 +40,14 @@
 #define ACO_DIST_CACHE 1
 #endif
 
+/* 2-opt local search on every constructed tour. Canonical MMAS for TSP runs a
+   local search and this engine originally had none, which is why the gap grew
+   with n: 0.45% at n=100 but 14.1% at n=442, with nine of ten seeds converging
+   to the identical tour. Switchable so the contribution stays measurable. */
+#ifndef ACO_LOCAL_SEARCH
+#define ACO_LOCAL_SEARCH 1
+#endif
+
 /* ---- xoshiro256++, seeded by splitmix64 ----
    Not RDRAND: that costs hundreds of cycles per draw and cannot be replayed.
    RDSEED mints the seed on BareMetal; the seed is logged so a run can be
@@ -158,6 +166,78 @@ void build_candidates(void) {
     }
 }
 
+
+/* ---- 2-opt with neighbour lists and don't-look bits ----
+   The standard formulation (Bentley; Johnson & McGeoch). Three things make it
+   affordable: candidates are distance-sorted so the scan breaks as soon as
+   d(a,c) >= d(a,b) and no gain is possible; a don't-look bit retires a city
+   until one of its neighbours changes; and a reversal always flips the shorter
+   of the two arcs, which bounds each move at n/2 swaps. */
+#if ACO_LOCAL_SEARCH
+static int           pos_[ACO_N];
+static unsigned char dlb[ACO_N];
+
+static inline int nxt(int i) { return (i + 1) % ACO_N; }
+static inline int prv(int i) { return (i + ACO_N - 1) % ACO_N; }
+
+/* Reverse tour positions i..j inclusive, walking forward from i. Flipping the
+   complement yields the same cyclic tour, so take whichever arc is shorter. */
+static void reverse_seg(int *t, int i, int j) {
+    const int n = ACO_N;
+    int len = (j - i + n) % n + 1;
+    if (len > n - len) {
+        int ni = (j + 1) % n, nj = (i - 1 + n) % n;
+        i = ni; j = nj; len = n - len;
+    }
+    for (int k = 0; k < len / 2; k++) {
+        int x = (i + k) % n, y = (j - k + n) % n;
+        int tx = t[x], ty = t[y];
+        t[x] = ty; t[y] = tx;
+        pos_[ty] = x; pos_[tx] = y;
+    }
+}
+
+static void two_opt(int *t) {
+    for (int i = 0; i < ACO_N; i++) pos_[t[i]] = i;
+    memset(dlb, 0, sizeof dlb);
+    int active = 1;
+    while (active) {
+        active = 0;
+        for (int a = 0; a < ACO_N; a++) {
+            if (dlb[a]) continue;
+            int moved = 0;
+            for (int dir = 0; dir < 2 && !moved; dir++) {
+                int ia = pos_[a];
+                int ib = dir ? prv(ia) : nxt(ia);
+                int b  = t[ib];
+                int32_t d_ab = euc2d(a, b);
+                for (int k = 0; k < CAND_LEN; k++) {
+                    int c = cand[a][k];
+                    if (c == a || c == b) continue;
+                    int32_t d_ac = euc2d(a, c);
+                    if (d_ac >= d_ab) break;   /* sorted: no further gain */
+                    int ic = pos_[c];
+                    int id = dir ? prv(ic) : nxt(ic);
+                    int d  = t[id];
+                    if (d == a) continue;
+                    int32_t gain = d_ab + euc2d(c, d) - d_ac - euc2d(b, d);
+                    if (gain > 0) {
+                        /* succ: ...a b...c d... -> reverse b..c, giving a-c and b-d
+                           pred: ...b a...d c... -> reverse a..d, giving a-c and b-d */
+                        if (dir == 0) reverse_seg(t, pos_[b], pos_[c]);
+                        else          reverse_seg(t, pos_[a], pos_[d]);
+                        dlb[a] = dlb[b] = dlb[c] = dlb[d] = 0;
+                        moved = 1; active = 1;
+                        break;
+                    }
+                }
+            }
+            if (!moved) dlb[a] = 1;
+        }
+    }
+}
+#endif
+
 /* ---- MAX-MIN Ant System ----
    Only the best ant deposits, and tau is clamped into [tau_min, tau_max].
    That clamp is what stops premature convergence, and it needs no libm:
@@ -194,6 +274,10 @@ static void set_bounds(int32_t l_best) {
 void mmas_init(void) {
     build_candidates();
     best_len = nearest_neighbour_tour(best_tour);
+#if ACO_LOCAL_SEARCH
+    two_opt(best_tour);
+    best_len = tour_length(best_tour);
+#endif
     set_bounds(best_len);
     for (int i = 0; i < ACO_N; i++)
         for (int j = 0; j < ACO_N; j++) tau[i][j] = tau_max;
@@ -254,6 +338,9 @@ int32_t mmas_iterate(void) {
     static int iter_tour[ACO_N];
     for (int a = 0; a < ACO_ANTS; a++) {
         construct(ant_tour);
+#if ACO_LOCAL_SEARCH
+        two_opt(ant_tour);
+#endif
         int32_t len = tour_length(ant_tour);
         if (len < iter_best) { iter_best = len; memcpy(iter_tour, ant_tour, sizeof iter_tour); }
     }
@@ -300,9 +387,9 @@ int main(int argc, char **argv) {
         else if (!strcmp(argv[i], "--seed"))    seed    = strtoull(argv[++i], 0, 10);
         else if (!strcmp(argv[i], "--iters"))   iters   = strtol(argv[++i], 0, 10);
     }
-    printf("ACO_START instance=%s n=%d optimum=%d beta=%d ants=%d cache=%d seed=%llu static_bytes=%zu\n",
+    printf("ACO_START instance=%s n=%d optimum=%d beta=%d ants=%d cache=%d ls=%d seed=%llu static_bytes=%zu\n",
            ACO_NAME, ACO_N, ACO_OPTIMUM, ACO_BETA, ACO_ANTS, ACO_DIST_CACHE,
-           (unsigned long long)seed, static_bytes());
+           ACO_LOCAL_SEARCH, (unsigned long long)seed, static_bytes());
 
     rng_seed(seed); mmas_init();
     clock_t t0 = clock(); long it = 0;
