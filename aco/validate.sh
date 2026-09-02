@@ -13,9 +13,13 @@ for spec in berlin52:20:10 kroA100:30:10 pcb442:60:10 rat783:60:5; do
     # in the same wall-clock and quietly drift the numbers away from the
     # write-up. (It does not change the verdict: 2x iterations moved
     # pcb442 from 15.45% to 14.49%.)
-    make -s INSTANCE="$name" CFLAGS="-O2 -Wall -Wextra -std=c99 -DACO_DIST_CACHE=0" >/dev/null
+    make -s INSTANCE="$name" DIST_CACHE=0 >/dev/null
     echo "=== $name (${secs}s x ${seeds} seeds) ==="
     for seed in $(seq 1 "$seeds"); do
-        ./build/aco-"$name" --seconds "$secs" --seed "$seed" | grep ACO_DONE
+        out=$(./build/aco-"$name"-c0 --seconds "$secs" --seed "$seed")
+        # Assert the binary really is the pinned configuration, rather than
+        # trusting that make rebuilt it.
+        grep -q "cache=0" <<<"$out" || { echo "FATAL: wrong cache setting" >&2; exit 1; }
+        grep ACO_DONE <<<"$out"
     done
 done
