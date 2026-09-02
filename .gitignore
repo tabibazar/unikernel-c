@@ -19,3 +19,5 @@ disk.img
 .env
 .superpowers/
 aco/build/
+.DS_Store
+__pycache__/
