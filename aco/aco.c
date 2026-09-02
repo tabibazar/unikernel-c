@@ -48,6 +48,20 @@
 #define ACO_LOCAL_SEARCH 1
 #endif
 
+/* Fixed iteration budget, compiled in. BareMetal passes no argv -- the same
+   reason it has no environment -- so a build for it cannot be told what to do
+   on a command line, and the --seconds default is useless there because
+   clock() does not advance: the run spins forever. Set this for any BareMetal
+   build; leave it 0 on a host, where argv works. */
+#ifndef ACO_ITERS
+#define ACO_ITERS 0
+#endif
+
+/* Likewise the seed: no argv means it has to be baked in per build. */
+#ifndef ACO_SEED
+#define ACO_SEED 1
+#endif
+
 /* ---- xoshiro256++, seeded by splitmix64 ----
    Not RDRAND: that costs hundreds of cycles per draw and cannot be replayed.
    RDSEED mints the seed on BareMetal; the seed is logged so a run can be
@@ -381,7 +395,8 @@ static size_t static_bytes(void) {
 }
 
 int main(int argc, char **argv) {
-    double seconds = 10.0; uint64_t seed = 1; long iters = -1;
+    double seconds = 10.0; uint64_t seed = (uint64_t)ACO_SEED;
+    long iters = (ACO_ITERS > 0) ? (long)ACO_ITERS : -1;
     for (int i = 1; i < argc - 1; i++) {
         if      (!strcmp(argv[i], "--seconds")) seconds = atof(argv[++i]);
         else if (!strcmp(argv[i], "--seed"))    seed    = strtoull(argv[++i], 0, 10);
@@ -393,6 +408,17 @@ int main(int argc, char **argv) {
 
     rng_seed(seed); mmas_init();
     clock_t t0 = clock(); long it = 0;
+    /* If clock() never advances (BareMetal), a seconds-based run cannot
+       terminate. Refuse rather than spin, and say why. */
+    if (iters <= 0) {
+        clock_t probe = clock();
+        for (volatile long z = 0; z < 20000000L && clock() == probe; z++) { }
+        if (clock() == probe) {
+            printf("ACO_ABORT reason=clock_does_not_advance "
+                   "hint=build_with_-DACO_ITERS=N\n");
+            return 2;
+        }
+    }
     for (;;) {
         mmas_iterate(); it++;
         double el = (double)(clock() - t0) / CLOCKS_PER_SEC;
