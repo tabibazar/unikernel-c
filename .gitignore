@@ -21,3 +21,5 @@ disk.img
 aco/build/
 .DS_Store
 __pycache__/
+aco/build/
+aco/**/register_urls.h

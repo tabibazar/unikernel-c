@@ -1,0 +1,10 @@
+ACO_START worker=0 instance=pcb442 n=442 optimum=50778 beta=2 ants=25 cache=1 ls=1 seed=1 static_bytes=1197378
+ACO_PROGRESS worker=0 instance=pcb442 seed=1 iters=2000 best=51757 gap_bp=192
+ACO_PROGRESS worker=0 instance=pcb442 seed=1 iters=4000 best=51757 gap_bp=192
+ACO_PROGRESS worker=0 instance=pcb442 seed=1 iters=6000 best=51757 gap_bp=192
+ACO_PROGRESS worker=0 instance=pcb442 seed=1 iters=8000 best=51650 gap_bp=171
+ACO_PROGRESS worker=0 instance=pcb442 seed=1 iters=10000 best=51497 gap_bp=141
+ACO_PROGRESS worker=0 instance=pcb442 seed=1 iters=12000 best=51497 gap_bp=141
+ACO_PROGRESS worker=0 instance=pcb442 seed=1 iters=14000 best=51497 gap_bp=141
+ACO_PROGRESS worker=0 instance=pcb442 seed=1 iters=16000 best=51497 gap_bp=141
+ACO_PROGRESS worker=0 instance=pcb442 seed=1 iters=18000 best=51497 gap_bp=141

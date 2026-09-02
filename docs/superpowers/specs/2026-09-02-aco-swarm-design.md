@@ -154,6 +154,43 @@ Publishes are naturally self-limiting, because best-so-far improvements get
 rarer as the search converges. A minimum publish interval per worker guards the
 early phase, when they do not.
 
+### Amendment, 2 September 2026 — the register moves off Telegram
+
+The Telegram design above is sound in the abstract and unusable in this
+account. `bmagent`, a separate agent running on BareMetal Cloud, has been
+polling `getUpdates` with the same bot token for 316,503 seconds and confirming
+each update with an offset, which deletes it server-side. Every message sent to
+the bot to discover a chat id was consumed before it could be read. The
+single-consumer property this design already documented is what defeated it --
+just from a direction not anticipated: the competing consumer was the
+operator's own service, not a second ACO worker.
+
+**The register is now an S3 bucket addressed by presigned URLs.**
+
+- Worker *N* PUTs `best-w<N>`, and GETs its peers' keys, taking the maximum
+  client-side. Each worker owns exactly one key, so there is no
+  last-writer-wins race and no compare-and-swap.
+- The URLs are generated on the build host and compiled in, exactly as the
+  Telegram token was. A presigned URL carries its own credential in the query
+  string, so **the guest performs a plain HTTPS GET or PUT and needs no SigV4
+  signing code at all** -- no HMAC plumbing in the unikernel, and no growth in
+  image size beyond the curl already required.
+- Payload is plain text, `len=<n> tour=<base64>`, parseable with `sscanf`. No
+  JSON parser is pulled into the ACO image.
+- A missing peer key returns 404, which the worker treats as "nothing published
+  yet". Verified against the live API.
+- The migration interval is counted in **iterations**, not seconds: `clock()`
+  does not advance on BareMetal, so a time-based interval cannot exist there.
+
+Why this over the alternatives: nothing to run or keep alive, no shared-consumer
+problem, no production infrastructure touched, and outbound HTTPS only -- the
+constraint that killed inbound serving still holds.
+
+Images built with these URLs are bearer capabilities and are secret-bearing,
+the same class as the token-bearing cunningham images, and lower risk: scoped
+to two keys and expiring in seven days. They are never committed, and the
+bucket is deleted after the run.
+
 ### Two backends, one interface
 
 ```c
