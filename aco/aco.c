@@ -62,6 +62,20 @@
 #define ACO_SEED 1
 #endif
 
+/* Print a progress line every N iterations. A swarm worker's console is the
+   only channel back on BareMetal Cloud (`bm-api.sh instances logs`), and a run
+   that prints nothing until it finishes is indistinguishable from one that
+   has hung. 0 disables. */
+#ifndef ACO_PROGRESS_EVERY
+#define ACO_PROGRESS_EVERY 0
+#endif
+
+/* Worker identity, for a swarm. Purely cosmetic in R2: the islands are
+   independent and coordinate through nothing at all. */
+#ifndef ACO_WORKER_ID
+#define ACO_WORKER_ID 0
+#endif
+
 /* ---- xoshiro256++, seeded by splitmix64 ----
    Not RDRAND: that costs hundreds of cycles per draw and cannot be replayed.
    RDSEED mints the seed on BareMetal; the seed is logged so a run can be
@@ -402,8 +416,8 @@ int main(int argc, char **argv) {
         else if (!strcmp(argv[i], "--seed"))    seed    = strtoull(argv[++i], 0, 10);
         else if (!strcmp(argv[i], "--iters"))   iters   = strtol(argv[++i], 0, 10);
     }
-    printf("ACO_START instance=%s n=%d optimum=%d beta=%d ants=%d cache=%d ls=%d seed=%llu static_bytes=%zu\n",
-           ACO_NAME, ACO_N, ACO_OPTIMUM, ACO_BETA, ACO_ANTS, ACO_DIST_CACHE,
+    printf("ACO_START worker=%d instance=%s n=%d optimum=%d beta=%d ants=%d cache=%d ls=%d seed=%llu static_bytes=%zu\n",
+           ACO_WORKER_ID, ACO_NAME, ACO_N, ACO_OPTIMUM, ACO_BETA, ACO_ANTS, ACO_DIST_CACHE,
            ACO_LOCAL_SEARCH, (unsigned long long)seed, static_bytes());
 
     rng_seed(seed); mmas_init();
@@ -421,6 +435,13 @@ int main(int argc, char **argv) {
     }
     for (;;) {
         mmas_iterate(); it++;
+#if ACO_PROGRESS_EVERY > 0
+        if (it % (ACO_PROGRESS_EVERY) == 0) {
+            long g = (long)(10000.0 * (double)(best_len - ACO_OPTIMUM) / (double)ACO_OPTIMUM);
+            printf("ACO_PROGRESS worker=%d instance=%s seed=%llu iters=%ld best=%d gap_bp=%ld\n",
+                   ACO_WORKER_ID, ACO_NAME, (unsigned long long)seed, it, best_len, g);
+        }
+#endif
         double el = (double)(clock() - t0) / CLOCKS_PER_SEC;
         if (iters > 0 ? it >= iters : el >= seconds) break;
     }
@@ -429,9 +450,9 @@ int main(int argc, char **argv) {
        platform whose printf may lack %f */
     long gap_bp = (long)(10000.0 * (double)(best_len - ACO_OPTIMUM) / (double)ACO_OPTIMUM);
     long ms = (long)(el * 1000.0);
-    printf("ACO_DONE instance=%s seed=%llu iters=%ld best=%d optimum=%d gap_bp=%ld "
+    printf("ACO_DONE worker=%d instance=%s seed=%llu iters=%ld best=%d optimum=%d gap_bp=%ld "
            "ms=%ld valid=%d\n",
-           ACO_NAME, (unsigned long long)seed, it, best_len, ACO_OPTIMUM, gap_bp,
+           ACO_WORKER_ID, ACO_NAME, (unsigned long long)seed, it, best_len, ACO_OPTIMUM, gap_bp,
            ms, tour_is_valid(best_tour));
     return 0;
 }
