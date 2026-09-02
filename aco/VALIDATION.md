@@ -3,6 +3,14 @@
 Unit tests cannot establish that an optimiser optimises. This is the gate the
 plan set before any result was seen, and the result it actually produced.
 
+> **Status.** The table below is the *construction-only* engine — the
+> configuration the pre-set gate was written against, and the one whose miss is
+> reported here unedited. 2-opt local search was adopted afterwards; the closed
+> decision and the numbers it produced are at the [end of this
+> document](#local-search-decision-taken), raw sweep in
+> [`VALIDATION-ls.txt`](VALIDATION-ls.txt). Everything from R1 onward runs with
+> local search on.
+
 Host: Apple arm64, clang `-O2 -std=c99`, one core, distances on the fly
 (`ACO_DIST_CACHE=0`, the configuration these runs used). Parameters frozen by
 the spec: alpha 1, beta 2, rho 0.02, 25 ants, candidate list 20.
@@ -85,7 +93,7 @@ starting tour. (A first attempt at this check was vacuous: at 200 iterations
 the search had not yet beaten the nearest-neighbour start, which is
 seed-independent, so every run returned the same number.)
 
-## Open decision: local search
+## Local search: the decision as it stood
 
 Adding 2-opt is a **missing standard component** of MMAS-for-TSP, not a tuned
 parameter, and it would close most of the gap on pcb442 and rat783.
@@ -96,3 +104,53 @@ baseline serves that comparison as well as a 2% one would. Beating LKH is
 explicitly out of scope. The decision is recorded here rather than taken
 quietly, because taking it after seeing these numbers is exactly the move the
 spec's no-tuning rule exists to prevent.
+
+## Local search: decision taken
+
+Adopted. `ACO_LOCAL_SEARCH` defaults to 1, `validate.sh` pins it and asserts
+the built binary really reports `ls=1`, and every rung from
+[`../docs/aco-r1/`](../docs/aco-r1/) onward ran in this configuration.
+
+Same script, same pre-set gate, same frozen parameters, `CACHE=1 LS=1`. Raw
+output: [`VALIDATION-ls.txt`](VALIDATION-ls.txt) (the construction-only sweep
+above is [`VALIDATION.txt`](VALIDATION.txt)).
+
+| instance | n | optimum | seeds | at optimum | median gap | best gap | iters/s | valid |
+|---|---:|---:|---:|---:|---:|---:|---:|---|
+| berlin52 | 52 | 7,542 | 10 | **10** | 0 | 0 | 11,283 | all |
+| kroA100 | 100 | 21,282 | 10 | **10** | 0 | 0 | 6,216 | all |
+| pcb442 | 442 | 50,778 | 10 | 0 | 1.51% | 0.99% | 601 | all |
+| rat783 | 783 | 8,806 | 5 | 0 | 3.72% | 3.39% | 293 | all |
+
+| criterion | required | construction-only | with 2-opt | |
+|---|---|---|---|---|
+| every tour a valid permutation | all | all 35 | all 35 | **pass** |
+| berlin52 at optimum | >= 8/10 | 10/10 | 10/10 | **pass** |
+| kroA100 at optimum | >= 5/10 | 0/10 | 10/10 | **pass** |
+| kroA100 worst gap | < 2% | 0.45% | 0 | **pass** |
+| pcb442 median gap | < 5% | 14.10% | 1.51% | **pass** |
+
+Every criterion the construction-only engine failed now passes, and the two it
+already passed it now passes at zero.
+
+This is the predicted result, not a discovered one. The section above named the
+missing 2-opt as the cause of the gap *before* these numbers existed, and said
+adopting it would close most of it. That ordering is the whole point: the fix
+was a standard component of MMAS-for-TSP that the spec had simply never named,
+and no frozen parameter was touched to obtain the table.
+
+Three things the table does not say:
+
+- **It is not evidence that 2-opt is cheap.** The `iters/s` column is not
+  comparable to the top table, which was measured with `ACO_DIST_CACHE=0`.
+  These runs have the cache on, so a roughly 2x gain from caching and whatever
+  local search costs are confounded in that one column. Nothing here isolates
+  either.
+- **rat783 is still short** of published MMAS-with-local-search results at
+  3.72%. Closing that wants 3-opt or don't-look bits. Not pursued: beating LKH
+  remains out of scope.
+- **It does not change R4's design.** R4 still compares corrupted against
+  uncorrupted runs of the *same* configuration, and would have been served by
+  the 14% baseline too. The gain here is that the rungs run on an engine that
+  is competitive rather than merely correct, so a platform-induced deviation
+  shows up against a tight baseline instead of a loose one.
