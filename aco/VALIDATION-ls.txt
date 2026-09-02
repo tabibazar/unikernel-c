@@ -1,0 +1,40 @@
+config: DIST_CACHE=1 LOCAL_SEARCH=1
+=== berlin52 (20s x 10 seeds) ===
+ACO_DONE instance=berlin52 seed=1 iters=225377 best=7542 optimum=7542 gap_bp=0 ms=20000 valid=1
+ACO_DONE instance=berlin52 seed=2 iters=224675 best=7542 optimum=7542 gap_bp=0 ms=20000 valid=1
+ACO_DONE instance=berlin52 seed=3 iters=225309 best=7542 optimum=7542 gap_bp=0 ms=20000 valid=1
+ACO_DONE instance=berlin52 seed=4 iters=226554 best=7542 optimum=7542 gap_bp=0 ms=20000 valid=1
+ACO_DONE instance=berlin52 seed=5 iters=226569 best=7542 optimum=7542 gap_bp=0 ms=20000 valid=1
+ACO_DONE instance=berlin52 seed=6 iters=225255 best=7542 optimum=7542 gap_bp=0 ms=20000 valid=1
+ACO_DONE instance=berlin52 seed=7 iters=225327 best=7542 optimum=7542 gap_bp=0 ms=20000 valid=1
+ACO_DONE instance=berlin52 seed=8 iters=225449 best=7542 optimum=7542 gap_bp=0 ms=20000 valid=1
+ACO_DONE instance=berlin52 seed=9 iters=225821 best=7542 optimum=7542 gap_bp=0 ms=20000 valid=1
+ACO_DONE instance=berlin52 seed=10 iters=226408 best=7542 optimum=7542 gap_bp=0 ms=20000 valid=1
+=== kroA100 (30s x 10 seeds) ===
+ACO_DONE instance=kroA100 seed=1 iters=186645 best=21282 optimum=21282 gap_bp=0 ms=30000 valid=1
+ACO_DONE instance=kroA100 seed=2 iters=186477 best=21282 optimum=21282 gap_bp=0 ms=30000 valid=1
+ACO_DONE instance=kroA100 seed=3 iters=186984 best=21282 optimum=21282 gap_bp=0 ms=30000 valid=1
+ACO_DONE instance=kroA100 seed=4 iters=186677 best=21282 optimum=21282 gap_bp=0 ms=30000 valid=1
+ACO_DONE instance=kroA100 seed=5 iters=186527 best=21282 optimum=21282 gap_bp=0 ms=30000 valid=1
+ACO_DONE instance=kroA100 seed=6 iters=186663 best=21282 optimum=21282 gap_bp=0 ms=30000 valid=1
+ACO_DONE instance=kroA100 seed=7 iters=187076 best=21282 optimum=21282 gap_bp=0 ms=30000 valid=1
+ACO_DONE instance=kroA100 seed=8 iters=186084 best=21282 optimum=21282 gap_bp=0 ms=30000 valid=1
+ACO_DONE instance=kroA100 seed=9 iters=186352 best=21282 optimum=21282 gap_bp=0 ms=30000 valid=1
+ACO_DONE instance=kroA100 seed=10 iters=185437 best=21282 optimum=21282 gap_bp=0 ms=30000 valid=1
+=== pcb442 (60s x 10 seeds) ===
+ACO_DONE instance=pcb442 seed=1 iters=36106 best=51497 optimum=50778 gap_bp=141 ms=60000 valid=1
+ACO_DONE instance=pcb442 seed=2 iters=36074 best=51588 optimum=50778 gap_bp=159 ms=60001 valid=1
+ACO_DONE instance=pcb442 seed=3 iters=36084 best=51282 optimum=50778 gap_bp=99 ms=60000 valid=1
+ACO_DONE instance=pcb442 seed=4 iters=36127 best=51622 optimum=50778 gap_bp=166 ms=60000 valid=1
+ACO_DONE instance=pcb442 seed=5 iters=36107 best=51479 optimum=50778 gap_bp=138 ms=60001 valid=1
+ACO_DONE instance=pcb442 seed=6 iters=36121 best=51664 optimum=50778 gap_bp=174 ms=60001 valid=1
+ACO_DONE instance=pcb442 seed=7 iters=36156 best=51594 optimum=50778 gap_bp=160 ms=60001 valid=1
+ACO_DONE instance=pcb442 seed=8 iters=36141 best=51502 optimum=50778 gap_bp=142 ms=60000 valid=1
+ACO_DONE instance=pcb442 seed=9 iters=36098 best=51424 optimum=50778 gap_bp=127 ms=60000 valid=1
+ACO_DONE instance=pcb442 seed=10 iters=35835 best=51614 optimum=50778 gap_bp=164 ms=60000 valid=1
+=== rat783 (60s x 5 seeds) ===
+ACO_DONE instance=rat783 seed=1 iters=17604 best=9140 optimum=8806 gap_bp=379 ms=60001 valid=1
+ACO_DONE instance=rat783 seed=2 iters=17564 best=9121 optimum=8806 gap_bp=357 ms=60002 valid=1
+ACO_DONE instance=rat783 seed=3 iters=17644 best=9137 optimum=8806 gap_bp=375 ms=60003 valid=1
+ACO_DONE instance=rat783 seed=4 iters=17605 best=9105 optimum=8806 gap_bp=339 ms=60001 valid=1
+ACO_DONE instance=rat783 seed=5 iters=17656 best=9134 optimum=8806 gap_bp=372 ms=60002 valid=1
