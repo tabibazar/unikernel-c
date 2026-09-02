@@ -43,6 +43,27 @@ Two observations support that reading rather than a defect hunt:
 
 No parameter was tuned to chase the gate. The miss is reported, per the plan.
 
+## Why the hand-rolled sqrt cannot distort a distance
+
+`euc2d` is `nint(sqrt(dx^2+dy^2))`, and it is the one place where the
+hand-rolled root could have changed a result. It cannot, and the reason is
+arithmetic rather than testing.
+
+Coordinates are integers, so `m = dx^2+dy^2` is a non-negative integer. Rounding
+flips only if `sqrt(m)` sits near a half-integer `t = k + 1/2`. But
+`t^2 = k^2 + k + 1/4`, and `k^2 + k` is an integer, so `|m - t^2| >= 1/4` always.
+Hence
+
+    |sqrt(m) - t| = |m - t^2| / (sqrt(m) + t) >= 1 / (8*sqrt(m))
+
+At the largest distance in these instances (~5,700) that floor is about
+2.2e-5. One ulp at that magnitude is about 9e-13. `a_sqrt` would have to be
+wrong by more than ten million ulps to move a single rounded distance.
+
+So the distances are TSPLIB-exact whatever the root's last bits do — which is
+also why berlin52's published optimum of 7,542 is reproduced exactly, rather
+than approached.
+
 ## Decision: adopt the distance cache
 
 The spec permitted a `uint16` distance matrix "only if measured iteration rate

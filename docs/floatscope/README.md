@@ -42,8 +42,10 @@ SCOPE_DONE  iters=200000000 mul_bad=0 div_bad=0 sw_sqrt_bad=0 hw_sqrt_bad=0
 ```
 
 Clean over 200,000,000 iterations on macOS/arm64, and `sw_sqrt` agrees with the
-hardware instruction bit for bit — which also establishes that the hand-rolled
-Newton root in `aco.c` is correctly rounded, not merely close.
+hardware instruction bit for bit **on this input**. That is agreement on one
+value, not a proof of correct rounding everywhere — see
+[`../../aco/VALIDATION.md`](../../aco/VALIDATION.md) for why the distances are
+exact regardless of how many ulps `a_sqrt` is off.
 
 Two properties were checked rather than assumed:
 
