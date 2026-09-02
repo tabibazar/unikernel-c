@@ -1,0 +1,46 @@
+Raw console output, captured from BareMetal under Firecracker.
+
+Host:        AWS c5.metal (Intel Xeon, 96 vCPU), us-east-1
+Guest:       BareMetal-App, setup.sh exit 0
+Hypervisor:  Firecracker 1.7.0
+Builder OS:  Ubuntu 24.04 (ami-0d7f022123f8ff19d)
+Date:        2 September 2026
+
+=== fs : floatscope, 200,000,000 iterations ===
+SCOPE_START hw_sqrt_is_real=1 iters=200000000 mul=4011c5831add62e4 div=3fdccf6429be6622 sw_sqrt=4000dccdf82c9163 hw_sqrt=4000dccdf82c9163
+SCOPE_DONE iters=200000000 mul_bad=0 div_bad=0 sw_sqrt_bad=0 hw_sqrt_bad=0 sw_sqrt_rate=0.000e+00
+(wall clock, measured outside the VM: 10 s)
+
+=== fsl : floatscope, 2,000,000,000 iterations ===
+SCOPE_START hw_sqrt_is_real=1 iters=2000000000 mul=4011c5831add62e4 div=3fdccf6429be6622 sw_sqrt=4000dccdf82c9163 hw_sqrt=4000dccdf82c9163
+SCOPE_DONE iters=2000000000 mul_bad=0 div_bad=0 sw_sqrt_bad=0 hw_sqrt_bad=0 sw_sqrt_rate=0.000e+00
+(wall clock, measured outside the VM: 100 s)
+
+=== fault : faultscope, positive control, same host and same boot ===
+SCOPE_START iters=200000000 prod=78547880b6031473:f58d71ae9c47917b rem=b10537588efd4e70
+EVENT i=3652683 mul=0 mod=1  prod=78547880b6031473:f58d71ae9c47917b (xor 0000000000000000:0000000000000000)  rem=bb77c5a9f2d3bb82 (xor 0a72f2f17c2ef5f2)
+EVENT i=10526168 mul=0 mod=1  prod=78547880b6031473:f58d71ae9c47917b (xor 0000000000000000:0000000000000000)  rem=bb77c5a9f2d3bb82 (xor 0a72f2f17c2ef5f2)
+EVENT i=12907568 mul=0 mod=1  prod=78547880b6031473:f58d71ae9c47917b (xor 0000000000000000:0000000000000000)  rem=bb77c5a9f2d3bb82 (xor 0a72f2f17c2ef5f2)
+EVENT i=13338323 mul=0 mod=1  prod=78547880b6031473:f58d71ae9c47917b (xor 0000000000000000:0000000000000000)  rem=bb77c5a9f2d3bb82 (xor 0a72f2f17c2ef5f2)
+EVENT i=14479753 mul=0 mod=1  prod=78547880b6031473:f58d71ae9c47917b (xor 0000000000000000:0000000000000000)  rem=bb77c5a9f2d3bb82 (xor 0a72f2f17c2ef5f2)
+SCOPE_DONE iters=200000000 mul_bad=0 mod_bad=37 both=0 mul_rate=0.000e+00 mod_rate=1.850e-07
+(wall clock, measured outside the VM: 15 s)
+
+Note the wrong remainder bb77c5a9f2d3bb82 is byte-identical to the value
+recorded in ../arithmetic-fault/results.txt, which was measured on an AMD EPYC
+host. Same wrong value, different CPU vendor.
+
+=== host control: the same floatscope binary on Linux, arm64 and x86-64 ===
+SCOPE_DONE iters=200000000 mul_bad=0 div_bad=0 sw_sqrt_bad=0 hw_sqrt_bad=0 sw_sqrt_rate=0.000e+00
+
+=== aco : R1, same amalgamated source built two ways on one c5.metal ===
+seed   gcc -O2 Linux    BareMetal      identical
+1      52214            52214          yes
+2      51759            51759          yes
+3      51984            51984          yes
+4      52037            52037          yes
+5      52201            52201          yes
+(pcb442, 500 iterations, distance cache on, 2-opt on)
+
+Every BareMetal ACO run reports ms=0: clock() does not advance on the platform,
+so wall clock was taken from outside the VM in every case above.
