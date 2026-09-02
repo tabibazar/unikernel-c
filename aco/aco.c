@@ -102,7 +102,13 @@ static void build_dist(void) {
         for (int j = 0; j < ACO_N; j++) dist[i][j] = (uint16_t)euc2d_compute(i, j);
     dist_ready = 1;
 }
-static inline int32_t euc2d(int a, int b) { return (int32_t)dist[a][b]; }
+/* Lazily built, because a caller that reaches euc2d before build_candidates
+   would otherwise read a zero-filled matrix and get silent nonsense rather
+   than a crash. The branch is perfectly predicted after the first call. */
+static inline int32_t euc2d(int a, int b) {
+    if (!dist_ready) build_dist();
+    return (int32_t)dist[a][b];
+}
 #else
 static inline int32_t euc2d(int a, int b) { return euc2d_compute(a, b); }
 #endif
