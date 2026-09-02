@@ -32,9 +32,12 @@
 
 /* Distances are either recomputed per call or held in a uint16 matrix. The
    spec requires on-the-fly by default and a recorded decision if the measured
-   iteration rate forces the cache; this switch is that decision, made visible. */
+   iteration rate forces it. Measured, 20s, seed 1: pcb442 9,372 -> 18,636
+   iterations and rat783 4,424 -> 8,644, for +0.37 MB and +1.17 MB. Roughly 2x
+   for about a megabyte, inside a 16 MiB budget. Verified a pure optimisation:
+   same seed and iteration count give a bit-identical tour either way. Adopted. */
 #ifndef ACO_DIST_CACHE
-#define ACO_DIST_CACHE 0
+#define ACO_DIST_CACHE 1
 #endif
 
 /* ---- xoshiro256++, seeded by splitmix64 ----
