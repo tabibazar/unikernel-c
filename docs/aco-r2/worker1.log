@@ -8,3 +8,20 @@ ACO_PROGRESS worker=1 instance=pcb442 seed=2 iters=12000 best=51588 gap_bp=159
 ACO_PROGRESS worker=1 instance=pcb442 seed=2 iters=14000 best=51588 gap_bp=159
 ACO_PROGRESS worker=1 instance=pcb442 seed=2 iters=16000 best=51588 gap_bp=159
 ACO_PROGRESS worker=1 instance=pcb442 seed=2 iters=18000 best=51588 gap_bp=159
+ACO_PROGRESS worker=1 instance=pcb442 seed=2 iters=20000 best=51588 gap_bp=159
+ACO_PROGRESS worker=1 instance=pcb442 seed=2 iters=22000 best=51588 gap_bp=159
+ACO_PROGRESS worker=1 instance=pcb442 seed=2 iters=24000 best=51588 gap_bp=159
+ACO_PROGRESS worker=1 instance=pcb442 seed=2 iters=26000 best=51588 gap_bp=159
+ACO_PROGRESS worker=1 instance=pcb442 seed=2 iters=28000 best=51588 gap_bp=159
+ACO_PROGRESS worker=1 instance=pcb442 seed=2 iters=30000 best=51588 gap_bp=159
+ACO_PROGRESS worker=1 instance=pcb442 seed=2 iters=32000 best=51588 gap_bp=159
+ACO_PROGRESS worker=1 instance=pcb442 seed=2 iters=34000 best=51588 gap_bp=159
+ACO_PROGRESS worker=1 instance=pcb442 seed=2 iters=36000 best=51588 gap_bp=159
+ACO_PROGRESS worker=1 instance=pcb442 seed=2 iters=38000 best=51444 gap_bp=131
+ACO_PROGRESS worker=1 instance=pcb442 seed=2 iters=40000 best=51444 gap_bp=131
+ACO_PROGRESS worker=1 instance=pcb442 seed=2 iters=42000 best=51444 gap_bp=131
+ACO_PROGRESS worker=1 instance=pcb442 seed=2 iters=44000 best=51444 gap_bp=131
+ACO_PROGRESS worker=1 instance=pcb442 seed=2 iters=46000 best=51444 gap_bp=131
+ACO_PROGRESS worker=1 instance=pcb442 seed=2 iters=48000 best=51444 gap_bp=131
+ACO_PROGRESS worker=1 instance=pcb442 seed=2 iters=50000 best=51444 gap_bp=131
+ACO_DONE worker=1 instance=pcb442 seed=2 iters=50000 best=51444 optimum=50778 gap_bp=131 ms=0 valid=1
