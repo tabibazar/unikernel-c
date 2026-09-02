@@ -17,3 +17,5 @@ disk.img
 .gemini_key
 .bm_key
 .env
+.superpowers/
+aco/build/
