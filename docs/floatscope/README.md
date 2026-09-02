@@ -62,12 +62,65 @@ It must read `1` for the result to mean anything.
 
 ## Results on BareMetal
 
-**Pending.** Requires a Linux host with a BareMetal-App checkout; see
-[Reproducing](#reproducing). No provisional numbers are recorded here.
+**The interrupt-time corruption does not reach SSE state.** Measured on an
+AWS `c5.metal` (Intel Xeon) under Firecracker 1.7.0, BareMetal-App at
+`SETUP_EXIT=0`:
 
-Either outcome is worth having. Clean narrows the existing bug report to the
-integer path. Dirty extends it materially — and would mean the platform
-corrupts floating-point arithmetic, which no measurement here has yet shown.
+```
+SCOPE_START hw_sqrt_is_real=1 iters=2000000000 mul=4011c5831add62e4
+            div=3fdccf6429be6622 sw_sqrt=4000dccdf82c9163 hw_sqrt=4000dccdf82c9163
+SCOPE_DONE  iters=2000000000 mul_bad=0 div_bad=0 sw_sqrt_bad=0 hw_sqrt_bad=0
+```
+
+Two billion iterations, 100 seconds of wall time, not one deviation — in any of
+the four operations, including the multi-instruction software square root that
+is structurally the same shape as the `__umodti3` routine that does fault.
+
+### The positive control, which is what makes the zero mean anything
+
+A null result is worthless without evidence that interrupts were firing during
+it. So the original integer probe was rebuilt and run **on the same host, same
+boot, same Firecracker**:
+
+| probe | operation | iterations | wall | faults | rate |
+|---|---|---:|---:|---:|---:|
+| `faultscope` | 128/64 integer modulo | 200,000,000 | 15 s | **37** | 1.85e-7 |
+| `floatscope` | FP mul, div, sw sqrt, hw sqrt | 2,000,000,000 | 100 s | **0** | < 1.5e-9 |
+
+The integer fault reproduced at 2.5 faults per second of exposure. Had the
+floating-point path been equally vulnerable, the 100-second run should have
+produced roughly 250 of them. It produced none. The 95% upper bound on the FP
+rate is 1.5e-9 per iteration, at least **80x below** the integer rate measured
+beside it.
+
+### And the fingerprint travelled
+
+The August measurement was taken on an **AMD EPYC** host. This one is an
+**Intel Xeon**, and the corrupted remainder is byte-identical:
+
+```
+correct  b10537588efd4e70
+wrong    bb77c5a9f2d3bb82     (xor 0a72f2f17c2ef5f2)
+```
+
+The same wrong value on different silicon, from a different vendor, is strong
+evidence for the software diagnosis already reached in
+[`../arithmetic-fault/`](../arithmetic-fault/): a specific register the
+interrupt handler fails to preserve, not a hardware erratum.
+
+### What this means
+
+**For Return Infinity.** The bug report narrows: the unpreserved register is in
+the general-purpose file, and the interrupt path evidently does not disturb
+XMM state. That is consistent with an ISR that never touches SSE, and it should
+help pin the exact register against the `__umodti3` disassembly.
+
+**For running compute on BareMetal today.** Floating-point work is not exposed
+to this defect. That is what makes the ant-colony workload viable here, and it
+is the measurement the rest of that study rests on.
+
+The `cli` control was not run. It exists to make a fault *vanish*, and there
+was no fault to remove.
 
 ## Reproducing
 
