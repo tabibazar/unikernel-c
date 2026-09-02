@@ -169,6 +169,23 @@ static void test_two_opt_is_a_fixed_point(void) {
 }
 #endif
 
+
+#if ACO_MIGRATE
+static void test_b64_roundtrip_full_tour(void) {
+    /* The payload is a whole tour, so the round trip must be exercised at that
+       size -- a short fixture would not have caught the buffer being sized
+       from the city count instead of the byte count. */
+    static unsigned char raw[2 * ACO_N], back[2 * ACO_N];
+    for (int i = 0; i < ACO_N; i++) { raw[2*i] = (unsigned char)(i & 0xFF); raw[2*i+1] = (unsigned char)(i >> 8); }
+    char b64[4 * ((2 * ACO_N + 2) / 3) + 8];
+    size_t n = b64_encode(raw, sizeof raw, b64);
+    CHECK(n == 4 * ((sizeof raw + 2) / 3), "encoded length must be 4 per 3 bytes");
+    size_t m = b64_decode(b64, back, sizeof back);
+    CHECK(m == sizeof raw, "decode must return the original byte count");
+    CHECK(memcmp(raw, back, sizeof raw) == 0, "base64 round trip must be exact");
+}
+#endif
+
 int main(void) {
     test_sqrt_matches_libm();
     test_rng_is_reproducible();
@@ -184,6 +201,9 @@ int main(void) {
     test_every_constructed_tour_is_valid();
     test_best_length_never_increases();
     test_same_seed_same_result();
+#if ACO_MIGRATE
+    test_b64_roundtrip_full_tour();
+#endif
 #if ACO_LOCAL_SEARCH
     test_two_opt_only_improves_and_keeps_validity();
     test_two_opt_is_a_fixed_point();

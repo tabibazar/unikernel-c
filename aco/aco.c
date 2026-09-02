@@ -76,6 +76,20 @@
 #define ACO_WORKER_ID 0
 #endif
 
+/* Island migration through a shared register. Off by default: R2 is the
+   control arm and coordinates through nothing at all. When on, the register is
+   an S3 bucket addressed by presigned URLs compiled in from
+   build/register_urls.h -- the URL carries its own credential, so the guest
+   does a plain HTTPS PUT or GET and needs no signing code.
+   The interval is counted in ITERATIONS, not seconds: clock() does not advance
+   on BareMetal, so a time-based interval cannot exist there. */
+#ifndef ACO_MIGRATE
+#define ACO_MIGRATE 0
+#endif
+#ifndef ACO_MIGRATE_EVERY
+#define ACO_MIGRATE_EVERY 200
+#endif
+
 /* ---- xoshiro256++, seeded by splitmix64 ----
    Not RDRAND: that costs hundreds of cycles per draw and cannot be replayed.
    RDSEED mints the seed on BareMetal; the seed is logged so a run can be
@@ -396,6 +410,169 @@ int32_t mmas_iterate(void) {
     return iter_best;
 }
 
+
+#if ACO_MIGRATE
+#include <curl/curl.h>
+#include "register_urls.h"
+
+/* base64 of the tour as uint16 city indices, little endian. Plain text so the
+   payload parses with sscanf and no JSON library is linked into the image. */
+static const char B64[] =
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+
+static size_t b64_encode(const unsigned char *in, size_t n, char *out) {
+    size_t o = 0;
+    for (size_t i = 0; i < n; i += 3) {
+        unsigned v = in[i] << 16;
+        if (i + 1 < n) v |= in[i+1] << 8;
+        if (i + 2 < n) v |= in[i+2];
+        out[o++] = B64[(v >> 18) & 63];
+        out[o++] = B64[(v >> 12) & 63];
+        out[o++] = (i + 1 < n) ? B64[(v >> 6) & 63] : '=';
+        out[o++] = (i + 2 < n) ? B64[v & 63]        : '=';
+    }
+    out[o] = 0;
+    return o;
+}
+
+static int b64_val(char c) {
+    const char *p = strchr(B64, c);
+    return (p && c) ? (int)(p - B64) : -1;
+}
+
+static size_t b64_decode(const char *in, unsigned char *out, size_t cap) {
+    size_t o = 0; int q[4]; int k = 0;
+    for (const char *p = in; *p && *p != '\n'; p++) {
+        if (*p == '=' ) break;
+        int v = b64_val(*p);
+        if (v < 0) continue;
+        q[k++] = v;
+        if (k == 4) {
+            unsigned x = (q[0]<<18)|(q[1]<<12)|(q[2]<<6)|q[3];
+            if (o < cap) out[o++] = (x >> 16) & 0xFF;
+            if (o < cap) out[o++] = (x >> 8) & 0xFF;
+            if (o < cap) out[o++] = x & 0xFF;
+            k = 0;
+        }
+    }
+    if (k == 3) {
+        unsigned x = (q[0]<<18)|(q[1]<<12)|(q[2]<<6);
+        if (o < cap) out[o++] = (x >> 16) & 0xFF;
+        if (o < cap) out[o++] = (x >> 8) & 0xFF;
+    } else if (k == 2) {
+        unsigned x = (q[0]<<18)|(q[1]<<12);
+        if (o < cap) out[o++] = (x >> 16) & 0xFF;
+    }
+    return o;
+}
+
+static size_t discard_reg_cb(void *p, size_t sz, size_t nm, void *u) {
+    (void)p; (void)u; return sz * nm;
+}
+
+struct membuf { char *p; size_t n, cap; };
+static size_t collect_cb(void *data, size_t sz, size_t nm, void *u) {
+    struct membuf *m = (struct membuf *)u;
+    size_t add = sz * nm;
+    if (m->n + add < m->cap) { memcpy(m->p + m->n, data, add); m->n += add; m->p[m->n] = 0; }
+    return add;
+}
+
+/* Weak symbols, as prime_hunter.c does: the CA bundle is either a file on the
+   host or a blob linked in by the BareMetal port. */
+__attribute__((weak)) const unsigned char cacert_pem[1];
+__attribute__((weak)) const unsigned int  cacert_pem_len;
+
+static void reg_ca(CURL *h) {
+    FILE *f = fopen("/etc/ssl/certs/ca-certificates.crt", "r");
+    if (f) { fclose(f); curl_easy_setopt(h, CURLOPT_CAINFO, "/etc/ssl/certs/ca-certificates.crt"); return; }
+    f = fopen("/etc/ssl/cacert.pem", "r");
+    if (f) { fclose(f); curl_easy_setopt(h, CURLOPT_CAINFO, "/etc/ssl/cacert.pem"); return; }
+    if (cacert_pem_len > 0) {
+        struct curl_blob blob = { (void *)cacert_pem, cacert_pem_len, CURL_BLOB_NOCOPY };
+        curl_easy_setopt(h, CURLOPT_CAINFO_BLOB, &blob);
+    }
+}
+
+static char reg_payload[8 + 4 * ACO_N + 64];
+static char reg_recv[8 + 4 * ACO_N + 64];
+
+/* Publish this island's best tour to its own key. No other worker writes it,
+   so there is no race and no compare-and-swap. */
+static int reg_publish(void) {
+    static unsigned char raw[2 * ACO_N];
+    for (int i = 0; i < ACO_N; i++) {
+        raw[2*i]   = (unsigned char)(best_tour[i] & 0xFF);
+        raw[2*i+1] = (unsigned char)((best_tour[i] >> 8) & 0xFF);
+    }
+    /* base64 of 2*ACO_N BYTES, not of ACO_N cities: 4 chars per 3 bytes,
+       rounded up, plus the terminator. Sizing this from the city count
+       overflows the buffer by roughly 2x and aborts on the first publish. */
+    char b64[4 * ((2 * ACO_N + 2) / 3) + 8];
+    b64_encode(raw, sizeof raw, b64);
+    int n = snprintf(reg_payload, sizeof reg_payload, "len=%d tour=%s\n", best_len, b64);
+    if (n < 0 || (size_t)n >= sizeof reg_payload) return 0;
+
+    CURL *h = curl_easy_init();
+    if (!h) return 0;
+    curl_easy_setopt(h, CURLOPT_URL, REG_PUT_URL[ACO_WORKER_ID]);
+    curl_easy_setopt(h, CURLOPT_CUSTOMREQUEST, "PUT");
+    curl_easy_setopt(h, CURLOPT_POSTFIELDS, reg_payload);
+    curl_easy_setopt(h, CURLOPT_POSTFIELDSIZE, (long)n);
+    curl_easy_setopt(h, CURLOPT_WRITEFUNCTION, discard_reg_cb);
+    curl_easy_setopt(h, CURLOPT_TIMEOUT, 30L);
+    curl_easy_setopt(h, CURLOPT_USERAGENT, "BareMetal-ACO/1.0");
+    reg_ca(h);
+    CURLcode rc = curl_easy_perform(h);
+    long status = 0;
+    curl_easy_getinfo(h, CURLINFO_RESPONSE_CODE, &status);
+    curl_easy_cleanup(h);
+    return (rc == CURLE_OK && status == 200);
+}
+
+/* Read the peers and adopt the best tour better than ours. A 404 means that
+   peer has published nothing yet, which is normal early on and not an error. */
+static int reg_fetch(int *out_tour, int32_t *out_len) {
+    int found = 0;
+    for (int w = 0; w < REG_WORKERS; w++) {
+        if (w == ACO_WORKER_ID) continue;
+        struct membuf m = { reg_recv, 0, sizeof reg_recv };
+        reg_recv[0] = 0;
+        CURL *h = curl_easy_init();
+        if (!h) continue;
+        curl_easy_setopt(h, CURLOPT_URL, REG_GET_URL[w]);
+        curl_easy_setopt(h, CURLOPT_WRITEFUNCTION, collect_cb);
+        curl_easy_setopt(h, CURLOPT_WRITEDATA, &m);
+        curl_easy_setopt(h, CURLOPT_TIMEOUT, 30L);
+        curl_easy_setopt(h, CURLOPT_USERAGENT, "BareMetal-ACO/1.0");
+        reg_ca(h);
+        CURLcode rc = curl_easy_perform(h);
+        long status = 0;
+        curl_easy_getinfo(h, CURLINFO_RESPONSE_CODE, &status);
+        curl_easy_cleanup(h);
+        if (rc != CURLE_OK || status != 200) continue;   /* 404 = nothing yet */
+
+        int plen = 0;
+        char *tp = strstr(reg_recv, "tour=");
+        if (sscanf(reg_recv, "len=%d", &plen) != 1 || !tp) continue;
+        if (plen <= 0 || plen >= *out_len) continue;     /* not an improvement */
+
+        static unsigned char raw[2 * ACO_N];
+        size_t got = b64_decode(tp + 5, raw, sizeof raw);
+        if (got != sizeof raw) continue;
+        static int cand_tour[ACO_N];
+        for (int i = 0; i < ACO_N; i++)
+            cand_tour[i] = (int)(raw[2*i] | (raw[2*i+1] << 8));
+        if (!tour_is_valid(cand_tour)) continue;         /* never trust the wire */
+        if (tour_length(cand_tour) != plen) continue;    /* claimed length must be real */
+        memcpy(out_tour, cand_tour, sizeof cand_tour);
+        *out_len = plen;
+        found = 1;
+    }
+    return found;
+}
+#endif /* ACO_MIGRATE */
+
 #ifndef ACO_NO_MAIN
 /* Static footprint, printed so the 16 MiB budget is evidenced rather than
    assumed -- the same idea as agent/agent_static.c's high-water mark. */
@@ -420,6 +597,9 @@ int main(int argc, char **argv) {
            ACO_WORKER_ID, ACO_NAME, ACO_N, ACO_OPTIMUM, ACO_BETA, ACO_ANTS, ACO_DIST_CACHE,
            ACO_LOCAL_SEARCH, (unsigned long long)seed, static_bytes());
 
+#if ACO_MIGRATE
+    curl_global_init(CURL_GLOBAL_DEFAULT);
+#endif
     rng_seed(seed); mmas_init();
     clock_t t0 = clock(); long it = 0;
     /* If clock() never advances (BareMetal), a seconds-based run cannot
@@ -435,6 +615,23 @@ int main(int argc, char **argv) {
     }
     for (;;) {
         mmas_iterate(); it++;
+#if ACO_MIGRATE
+        if (it % (ACO_MIGRATE_EVERY) == 0) {
+            int32_t peer_len = best_len;
+            static int peer_tour[ACO_N];
+            if (reg_fetch(peer_tour, &peer_len) && peer_len < best_len) {
+                /* Adopt the peer's tour and let evaporation carry it into the
+                   pheromone the usual way, rather than special-casing it. */
+                memcpy(best_tour, peer_tour, sizeof best_tour);
+                best_len = peer_len;
+                printf("ACO_MIGRATE_IN worker=%d iters=%ld adopted=%d\n",
+                       ACO_WORKER_ID, it, best_len);
+            }
+            if (reg_publish())
+                printf("ACO_MIGRATE_OUT worker=%d iters=%ld published=%d\n",
+                       ACO_WORKER_ID, it, best_len);
+        }
+#endif
 #if ACO_PROGRESS_EVERY > 0
         if (it % (ACO_PROGRESS_EVERY) == 0) {
             long g = (long)(10000.0 * (double)(best_len - ACO_OPTIMUM) / (double)ACO_OPTIMUM);

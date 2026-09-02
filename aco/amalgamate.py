@@ -21,6 +21,16 @@ def main():
     hdr = re.sub(r"\n#endif\s*$", "\n", hdr)
     spliced = src.replace("#include ACO_INSTANCE_HEADER",
                           "/* --- instance spliced in by amalgamate.py --- */\n" + hdr)
+    # The migration register's presigned URLs, likewise: BareMetal builds are a
+    # single file with no include path. Only spliced when the header exists, so
+    # a non-migrating build stays free of it.
+    reg = here / "build" / "register_urls.h"
+    if reg.exists() and '#include "register_urls.h"' in spliced:
+        rh = reg.read_text()
+        rh = re.sub(r"^#ifndef ACO_REGISTER_URLS_H\n#define ACO_REGISTER_URLS_H\n", "", rh, flags=re.M)
+        rh = re.sub(r"\n#endif\s*$", "\n", rh)
+        spliced = spliced.replace('#include "register_urls.h"',
+                                  "/* --- register URLs spliced in (SECRET) --- */\n" + rh)
     if spliced == src:
         sys.exit("error: could not find '#include ACO_INSTANCE_HEADER' in aco.c")
     if "ACO_INSTANCE_HEADER" in spliced.replace("#ifndef ACO_INSTANCE_HEADER", "")\
