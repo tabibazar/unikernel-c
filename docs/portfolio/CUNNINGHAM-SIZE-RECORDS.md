@@ -124,9 +124,64 @@ while deeper sieving cuts the PRP count geometrically, so the equilibrium sits
 near depth 1e13 for these sizes, and beyond k=9 the 64-bit sieve becomes the
 bottleneck rather than the PRP.
 
-## Substrate verdict: run it on Linux
+## MEASURED, 2026-09-03: the PRP prior was 3x optimistic
 
-*(low confidence -- the required benchmark evidence did not survive verification)*
+The shortlist above used an unbenchmarked prior of ~2.5 ms per PRP test at 1,000
+digits. Measured on this repo's development Mac (Apple arm64, GMP 6 with
+assembly, `-O2`, modulus built in the real record form `m*p#*2^j - 1`):
+
+| p# | digits | one Fermat PRP | 7.3e9 tests |
+|---|---:|---:|---:|
+| 2339# (record size) | 1,000 | **7.63 ms** | 15,480 core-hours |
+| 2357# | 1,014 | **8.61 ms** | 17,462 core-hours |
+| 2400# | 1,038 | **8.96 ms** | 18,177 core-hours |
+
+So the k=6 job is **15,000-18,000 native core-hours, not 6,000-15,000** -- the
+shortlist was optimistic by roughly 2-3x. Everything downstream scales linearly
+in this number.
+
+Second measurement, same session: CPython's big-int `pow` (pure C, 30-bit limbs,
+Karatsuba) costs **116 ms** at 1,000 digits. That is a **15x penalty for an
+unoptimised bignum** against GMP with assembly, and it brackets the pessimistic
+end of any freestanding port.
+
+### The acceptance test this creates
+
+A $500 cap at the measured BareMetal Cloud rate of $0.00501056/hr buys 99,789
+core-hours. Against 7.3e9 PRP tests:
+
+- **under 49 ms per PRP** on the substrate -> the hunt fits at 1x expectation
+- **under 16 ms per PRP** -> 3x expectation, ~95% chance of a find
+
+That converts the entire substrate question into one number, measurable in an
+afternoon on a metal host.
+
+### Which changes the port decision
+
+`--disable-assembly` is the wrong reflex. GMP's `mpn` assembly is pure
+computation -- `mulx`/`adcx` chains that need no OS, no syscalls and no libm.
+What actually blocks a freestanding GMP build is **libc**: `malloc`, `memcpy`,
+`abort`, and a little stdio. Those are shimmable.
+
+| port | est. per PRP on substrate | vs 49 ms bar |
+|---|---:|---|
+| full GMP **with** x86-64 assembly, libc shimmed, x 3.7 platform | ~32 ms | **fits** (~$325, 1.5x coverage) |
+| GMP `--disable-assembly` (2-4x) x 3.7 | 63-127 ms | fails |
+| mini-gmp (schoolbook) x 3.7 | ~130 ms+ | fails |
+| CPython-class x 3.7 | ~429 ms | fails by 9x |
+
+**Keep the assembly and shim libc.** That single decision is the difference
+between a ~$325 hunt and one that cannot fit the cap at all.
+
+Caveats on the measurement: it is arm64, not the x86-64 target, so the absolute
+figure will move; and the 3.7x platform penalty was measured on 64-bit modular
+arithmetic, not on bignum, so its applicability here is assumed rather than
+shown. The third leg -- BareMetal's actual penalty on GMP -- still needs a metal
+host.
+
+## Substrate verdict: Linux is cheaper, the unikernel is affordable
+
+*(revised 2026-09-03 by the measurements above; the original pass had no benchmark evidence)*
 
 **Not because of gwnum.** gwnum's FFT advantage is concentrated above ~10,000
 digits, i.e. k<=4 targets. At 500-1,100 digits GMP `mpz_powm` is near parity, so
