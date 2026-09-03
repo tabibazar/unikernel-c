@@ -55,12 +55,21 @@ gcc $CFLAGS -o "$OUT_DIR/thread_shim.o"   "$PORT/thread_shim.c"
 gcc $CFLAGS -o "$OUT_DIR/libBareMetal.o"  "$PORT/libBareMetal.c"
 gcc $CFLAGS -I "$PORT" -o "$OUT_DIR/min_stubs.o" "$GMP_PORT/min_stubs.c"
 
-echo "=== compiling app ==="
+# The app's parameters are compile-time because BareMetal passes no argv,
+# so CPPFLAGS is the only channel a caller has to configure the guest. It
+# is honoured here deliberately: run-metal.sh builds a Linux control and
+# this guest from the same source, and if the -D flags reached only one of
+# them the two would silently benchmark different workloads and the ratio
+# between them -- the entire point of that comparison -- would be wrong
+# without anything looking wrong.
+CPPFLAGS="${CPPFLAGS:-}"
+
+echo "=== compiling app (CPPFLAGS: ${CPPFLAGS:-none}) ==="
 APP_OBJS=""
 APP_NAME="$(basename "$1" .c).app"
 for src in "$@"; do
 	obj="$OUT_DIR/$(basename "$src" .c).o"
-	gcc $CFLAGS -I "$GMP_INC" -o "$obj" "$src"
+	gcc $CFLAGS $CPPFLAGS -I "$GMP_INC" -o "$obj" "$src"
 	APP_OBJS="$APP_OBJS $obj"
 done
 

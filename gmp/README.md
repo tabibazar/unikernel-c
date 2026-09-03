@@ -161,5 +161,26 @@ substrate verdict in
 stays an estimate, and the 3.7x penalty stays an assumption carried over from a
 64-bit-modular-arithmetic benchmark that is not this workload.
 
-To run it: build `baremetal.elf` around `prp_bench.app` with
-BareMetal-Firecracker's `build.sh`, boot it, and read the `PRP_DONE` line.
+`scripts/run-metal.sh` is that session, written so it is a copy-and-run
+rather than a debug loop. On an x86-64 metal host with a built BareMetal-App
+checkout:
+
+    ./gmp/scripts/run-metal.sh
+
+It builds `libgmp.a`, re-runs the known-answer selftest on that machine's own
+compiler, builds a **Linux control** from the same source against the same
+`libgmp.a`, links and boots the unikernel, and prints the ratio between them
+with the costing document's 49 ms / 16 ms bars alongside.
+
+Both halves matter. The 3.7x penalty this repo carries was measured on 64-bit
+modular arithmetic, not big-integer work, and applying it to GMP has been an
+assumption since the costing document was written. One machine, one source, one
+library, so the only variable left is the absence of an operating system.
+
+Three things it handles that would otherwise cost a metal session each: it
+refuses up front if `/dev/kvm` is missing or unreadable rather than failing
+obscurely later; it pre-creates Firecracker's log file, because `baremetal.sh`
+deletes that path and then passes it as `--log-path`, and Firecracker opens it
+without creating it (reported upstream from this repo already); and it bounds
+the boot with a timeout and captures the console either way, since a hung guest
+cannot be asked whether it is finished.
