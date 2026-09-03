@@ -1,0 +1,203 @@
+<title>Most of Ant Colony Memory Isn't Memory</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800&family=Space+Mono:wght@400;700&family=Spectral:ital,wght@0,400;0,600;1,400&display=swap">
+
+<style>
+:root{
+  --ground:#F4F4F1; --raise:#FFFFFF; --sunk:#EAEAE5;
+  --ink:#171814; --ink-mid:#4E5148; --ink-soft:#7E8177; --rule:#DCDCD5;
+  --pher:#C67A16;      /* pheromone: concentration */
+  --mem:#2E7D6B;       /* remembered structure */
+  --ctrl:#8C8F84;      /* control arm */
+  --warn:#A6371F;
+  --f-disp:"Archivo",system-ui,sans-serif;
+  --f-body:"Spectral",Georgia,serif;
+  --f-mono:"Space Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --ground:#111310; --raise:#1A1D19; --sunk:#0C0E0B; --ink:#EDEEE9;
+  --ink-mid:#B0B3A9; --ink-soft:#82867A; --rule:#2B2F28;
+  --pher:#E7A33F; --mem:#4FBBA1; --ctrl:#9BA093; --warn:#E2765A;
+}}
+:root[data-theme="dark"]{
+  --ground:#111310; --raise:#1A1D19; --sunk:#0C0E0B; --ink:#EDEEE9;
+  --ink-mid:#B0B3A9; --ink-soft:#82867A; --rule:#2B2F28;
+  --pher:#E7A33F; --mem:#4FBBA1; --ctrl:#9BA093; --warn:#E2765A;
+}
+*{box-sizing:border-box}
+body{background:var(--ground);color:var(--ink);font-family:var(--f-body);
+ font-size:17.5px;line-height:1.62;margin:0;padding:0 20px 96px;-webkit-font-smoothing:antialiased}
+.wrap{max-width:800px;margin:0 auto}
+.narrow{max-width:64ch}
+
+header{padding:70px 0 30px;border-bottom:3px solid var(--ink);margin-bottom:44px}
+.kick{font-family:var(--f-mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;
+ color:var(--pher);margin:0 0 18px}
+h1{font-family:var(--f-disp);font-weight:800;font-size:clamp(38px,7.2vw,66px);line-height:1.02;
+ letter-spacing:-.025em;margin:0 0 18px;text-wrap:balance}
+.dek{font-size:20px;line-height:1.5;color:var(--ink-mid);margin:0;max-width:58ch;text-wrap:pretty}
+
+h2{font-family:var(--f-disp);font-weight:700;font-size:29px;line-height:1.15;
+ letter-spacing:-.015em;margin:0 0 12px;text-wrap:balance}
+section{margin:0 0 56px}
+p{margin:0 0 16px;text-wrap:pretty}
+strong{font-weight:600}
+em{font-style:italic}
+code{font-family:var(--f-mono);font-size:.84em;background:var(--sunk);padding:1px 5px;border-radius:3px}
+
+.arms{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin:26px 0}
+.arm{background:var(--raise);border:1px solid var(--rule);border-radius:4px;padding:14px 16px}
+.arm h4{font-family:var(--f-mono);font-size:12px;font-weight:700;margin:0 0 6px;letter-spacing:.02em}
+.arm p{font-size:14.5px;line-height:1.5;margin:0;color:var(--ink-mid)}
+.arm.key{border-color:var(--mem);border-width:2px}
+.arm.key h4{color:var(--mem)}
+
+table{width:100%;border-collapse:collapse;font-family:var(--f-mono);font-size:13px;
+ font-variant-numeric:tabular-nums;margin:16px 0}
+th{text-align:left;font-size:10.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--ink-soft);
+ border-bottom:2px solid var(--rule);padding:8px 12px 8px 0;font-weight:700}
+td{padding:9px 12px 9px 0;border-bottom:1px solid var(--rule);color:var(--ink-mid)}
+td:first-child{color:var(--ink)}
+.num{text-align:right;padding-right:0}
+tr.flag td{background:var(--sunk);color:var(--ink)}
+.win{color:var(--mem);font-weight:700}
+
+.alarm{border:2px solid var(--warn);border-radius:4px;padding:22px 24px;margin:30px 0;background:var(--raise)}
+.alarm h3{font-family:var(--f-disp);font-weight:700;font-size:21px;margin:0 0 10px;color:var(--warn);
+ letter-spacing:-.01em}
+.alarm p{margin:0 0 12px}
+.alarm p:last-child{margin:0}
+
+.figbox{background:var(--raise);border:1px solid var(--rule);border-radius:4px;padding:24px 24px 16px;margin:26px 0}
+.figbox h4{font-family:var(--f-mono);font-size:11px;letter-spacing:.07em;text-transform:uppercase;
+ color:var(--ink-soft);margin:0 0 22px;font-weight:700}
+svg{display:block;width:100%;height:auto;overflow:visible}
+.figcap{font-size:14px;color:var(--ink-soft);margin:14px 0 0;max-width:70ch;font-family:var(--f-body)}
+
+.verdict{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:28px 0}
+.vcard{border-radius:4px;padding:18px 20px}
+.vcard.yes{background:var(--raise);border:1px solid var(--mem);border-left-width:4px}
+.vcard.no{background:var(--raise);border:1px solid var(--rule);border-left:4px solid var(--ctrl)}
+.vcard h4{font-family:var(--f-disp);font-size:15px;font-weight:700;margin:0 0 8px;letter-spacing:.01em}
+.vcard.yes h4{color:var(--mem)}
+.vcard p{font-size:15px;line-height:1.5;margin:0;color:var(--ink-mid)}
+
+footer{border-top:1px solid var(--rule);padding-top:22px;font-family:var(--f-mono);font-size:11.5px;
+ color:var(--ink-soft);line-height:1.75}
+footer p{max-width:72ch}
+
+@media (max-width:640px){.verdict{grid-template-columns:1fr}body{font-size:16.5px}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+
+<div class="wrap">
+
+<header>
+  <p class="kick">Ant colony optimization · dynamic problems</p>
+  <h1>Most of ant colony memory isn't memory</h1>
+  <p class="dek">Move the map under a running solver and its pheromone trails become lies. Keeping them still beats starting over — but a control arm shows three quarters of that advantage has nothing to do with remembering anything.</p>
+</header>
+
+<section class="narrow">
+  <h2>The claim being tested</h2>
+  <p>Ant Colony Optimization is supposed to excel at problems that change while you're solving them. Pheromone evaporates, so the colony forgets what is no longer true and adapts instead of restarting. It's the standard reason to reach for ACO on dynamic problems.</p>
+  <p>We had a second reason to care. If evaporation reliably erases trails that point somewhere wrong, then it also erases a <em>corrupted</em> pheromone value — which is what made this algorithm a candidate for a platform that occasionally computes incorrectly. Stale pheromone from a changed world and corrupted pheromone are structurally the same object.</p>
+  <p>So: solve a 400-city tour for 600 iterations, then <strong>relocate</strong> a fraction of the cities. They stay in the problem and still get chosen between — but their stored trails now point at where they used to be. Run 300 more iterations. Four arms, all forked from one bit-identical starting state.</p>
+
+  <div class="arms">
+    <div class="arm"><h4>RESTART</h4><p>Throw the pheromone away. The control.</p></div>
+    <div class="arm"><h4>RETAIN</h4><p>Keep everything, lies included.</p></div>
+    <div class="arm"><h4>RETAIN_CLEAN</h4><p>Keep it, but reset the trails that now lie.</p></div>
+    <div class="arm key"><h4>SHUFFLE</h4><p>Keep the values, destroy what they refer to. Added later — and it changed the answer.</p></div>
+  </div>
+</section>
+
+<section class="narrow">
+  <h2>What the first pass said</h2>
+  <p>Retaining beat restarting at every change fraction, five trials each. And wiping the lying trails made things <em>worse</em> — a tidy confirmation that evaporation handles them better than a reset does.</p>
+
+  <table>
+    <thead><tr><th>Relocated</th><th class="num">Retain vs restart</th><th class="num">Clean vs retain</th><th class="num">Retain wins</th></tr></thead>
+    <tbody>
+      <tr><td>5%</td><td class="num win">−2.01%</td><td class="num">+0.60%</td><td class="num">5/5</td></tr>
+      <tr><td>10%</td><td class="num win">−1.55%</td><td class="num">+0.64%</td><td class="num">4/5</td></tr>
+      <tr><td>20%</td><td class="num win">−1.18%</td><td class="num">+1.03%</td><td class="num">5/5</td></tr>
+      <tr><td>40%</td><td class="num win">−0.79%</td><td class="num">+0.72%</td><td class="num">5/5</td></tr>
+      <tr><td>60%</td><td class="num win">−1.29%</td><td class="num">+1.10%</td><td class="num">5/5</td></tr>
+      <tr><td>80%</td><td class="num win">−1.32%</td><td class="num">+1.77%</td><td class="num">5/5</td></tr>
+      <tr class="flag"><td>100%</td><td class="num win">−1.67%</td><td class="num">+1.70%</td><td class="num">5/5</td></tr>
+    </tbody>
+  </table>
+
+  <div class="alarm">
+    <h3>The last row is impossible</h3>
+    <p>At 100% relocation <em>every</em> city has moved. There is no old map left to remember — and memory still "won" by 1.67%.</p>
+    <p>Whatever produced that number, it cannot be memory. Which means the whole table was measuring something else, and the neat story about ghost trails needed checking rather than publishing.</p>
+  </div>
+</section>
+
+<section class="narrow">
+  <h2>The confound</h2>
+  <p>A converged pheromone matrix differs from a fresh one in <strong>two</strong> ways at once. It remembers which edges turned out to be good — and it is <em>concentrated</em>, most of its weight on a few edges, rather than spread flat. A restart installs a uniform value everywhere.</p>
+  <p>So "retain beats restart" confounds remembered structure with low entropy. Separating them needs an arm that keeps one and destroys the other.</p>
+  <p><strong>SHUFFLE</strong> permutes the pheromone matrix through a random relabelling of the cities. Every value survives — the concentration is untouched, bit for bit — but the correspondence between a value and the edge that earned it is gone.</p>
+</section>
+
+<section>
+  <div class="figbox">
+    <h4>Where the advantage actually comes from</h4>
+    <svg viewBox="0 0 700 250" role="img" aria-label="Stacked bars showing concentration accounts for most of the advantage at 5 percent relocation and all of it at 100 percent">
+      <!-- 5% -->
+      <text x="0" y="34" font-family="Space Mono,monospace" font-size="13" font-weight="700" fill="currentColor">5% relocated</text>
+      <text x="0" y="52" font-family="Space Mono,monospace" font-size="11" fill="#82867A">memory should matter most</text>
+      <rect x="0" y="66" width="486" height="34" fill="#C67A16" opacity=".88"/>
+      <rect x="486" y="66" width="133" height="34" fill="#2E7D6B"/>
+      <text x="14" y="88" font-family="Space Mono,monospace" font-size="12.5" font-weight="700" fill="#fff">concentration · 1.58 pts</text>
+      <text x="500" y="88" font-family="Space Mono,monospace" font-size="12.5" font-weight="700" fill="#fff">memory · 0.43</text>
+      <text x="632" y="88" font-family="Space Mono,monospace" font-size="12" fill="currentColor">= 2.01%</text>
+
+      <!-- 100% -->
+      <text x="0" y="152" font-family="Space Mono,monospace" font-size="13" font-weight="700" fill="currentColor">100% relocated</text>
+      <text x="0" y="170" font-family="Space Mono,monospace" font-size="11" fill="#82867A">nothing left to remember</text>
+      <rect x="0" y="184" width="556" height="34" fill="#C67A16" opacity=".88"/>
+      <text x="14" y="206" font-family="Space Mono,monospace" font-size="12.5" font-weight="700" fill="#fff">concentration · 1.81 pts</text>
+      <line x1="556" y1="178" x2="556" y2="224" stroke="#2E7D6B" stroke-width="2.5"/>
+      <text x="566" y="200" font-family="Space Mono,monospace" font-size="12" fill="#2E7D6B">memory</text>
+      <text x="566" y="215" font-family="Space Mono,monospace" font-size="12" fill="#2E7D6B">−0.14</text>
+    </svg>
+    <p class="figcap">The advantage retention has over restarting, split by the shuffle control. At 5% relocation remembered structure contributes a sliver. At 100% it contributes nothing at all — which is exactly what a real memory effect has to do when the world is fully replaced.</p>
+  </div>
+</section>
+
+<section class="narrow">
+  <h2>The result</h2>
+  <p>Of the 2.01% advantage retention holds at 5% relocation, <strong>concentration accounts for about 1.58 points and remembered structure for about 0.43</strong>. Roughly three quarters of ACO's apparent memory advantage is not memory — it's that a low-entropy pheromone distribution exploits faster than a flat one over a short horizon.</p>
+  <p>And the control behaves correctly at the far end. At 100% relocation SHUFFLE matches RETAIN — marginally ahead, in fact — because there is nothing left to remember. Memory's contribution falls from +0.43 to zero as the world is replaced, which is the signature a genuine memory effect must show. That decay is why the split is believable rather than a story fitted to one number.</p>
+
+  <div class="verdict">
+    <div class="vcard yes">
+      <h4>Holds up</h4>
+      <p>Wrong pheromone doesn't hurt. RETAIN is never behind RETAIN_CLEAN at any change fraction, so evaporation absorbs stale trails and paying to scrub them is a net loss.</p>
+    </div>
+    <div class="vcard no">
+      <h4>Doesn't</h4>
+      <p>That ACO's edge on changing problems is mostly about remembering the old world. Mostly it's about not discarding a converged distribution — memory is the minority term.</p>
+    </div>
+  </div>
+
+  <p>The half that survives is the half we needed. "Evaporation is error correction" now has direct evidence, on hardware that computes correctly, with no fault injection involved. The naive retain-versus-restart comparison simply overstates the memory part by about fourfold.</p>
+</section>
+
+<section class="narrow">
+  <h2>Two things that nearly became findings</h2>
+  <p><strong>Final tour quality was the wrong metric.</strong> With 2-opt running on every ant, all arms converge to the same local optimum, and the first comparison reported a dead-heat tie for reasons unrelated to pheromone. The measurement is now a checkpointed recovery curve — if memory is worth anything, it's worth it early. An improvement counter prints alongside, because a run where no ant ever beats the seeded incumbent hasn't tested the pheromone at all.</p>
+  <p><strong>Deleting cities made the key comparison meaningless.</strong> The first version removed cities rather than moving them. But a deleted city leaves the candidate lists and construction entirely, so nothing ever reads its pheromone — zeroing it cannot change a single decision. RETAIN and RETAIN_CLEAN came out bit-identical for a purely tautological reason. Relocation is the honest form of the question: the city is still there, still chosen between, and its trail is simply wrong.</p>
+</section>
+
+<footer>
+  <p>400-city uniform Euclidean instances, MMAS with 2-opt, 25 ants, rho = 0.02, integer TSPLIB-rounded distances so no comparison turns on a floating-point tie. 600 iterations before the change, 300 after, 5 independent trials per point. All four arms fork from one snapshot with one RNG state, so anything that differs afterwards is the arm.</p>
+  <p>Two plumbing checks passed, and are stated because they are what separate a result from an artefact. At 100% relocation RETAIN_CLEAN resets every row, making it the same computation as RESTART — and the two came out bit-identical at every checkpoint. And RETAIN_CLEAN's cost relative to RETAIN rises monotonically with the fraction moved, as it must.</p>
+</footer>
+
+</div>
