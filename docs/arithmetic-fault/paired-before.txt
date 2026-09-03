@@ -1,0 +1,39 @@
+PAIRED_RUN label=before date=2026-09-03T17:35:41+00:00
+host: Linux 7.0.0-1011-aws x86_64 (AWS c5.metal, terminated after the run)
+cpu:  Intel(R) Xeon(R) Platinum 8275CL CPU @ 3.00GHz
+firecracker: Firecracker v1.7.0
+baremetal-app: fresh clone, 2026-09-03
+
+=== selfcheck on BareMetal -- two independent boots ===
+SELFCHECK_START iters=20000000 expected=1725478354784765408
+SELFCHECK_DONE  iters=20000000 mismatches=679 rate=3.395e-05 first_bad=1374985782301139114 at_iter=62929
+SELFCHECK_START iters=20000000 expected=1725478354784765408
+SELFCHECK_DONE  iters=20000000 mismatches=651 rate=3.255e-05 first_bad=5831112050361398827 at_iter=1414
+
+Two boots of the same binary on the same host: 679 and 651 mismatches out of
+20,000,000, i.e. 3.40e-05 and 3.26e-05 per iteration. The counts differ, and the
+first bad iteration differs by a factor of 44 (62,929 vs 1,414) -- which is the
+signature of an interrupt-timing fault rather than a deterministic miscomputation.
+
+NOT directly comparable to the 6.35e-07 in ../arithmetic-fault/results.txt.
+That figure counts bad MODULO OPERATIONS; this one counts bad ITERATIONS, and
+one iteration is a full modular exponentiation, i.e. on the order of a hundred
+mulmods. Divided through, the two are the same order of magnitude. The paired
+after-run must use the same probe to be meaningful.
+
+=== not captured ===
+faultscope (the direct per-operation rate) and bench (the 3.7x timing workload)
+were still running when the instance was terminated to cap spend. The GMP
+big-integer leg was not reached.
+
+=== incidental confirmation ===
+The upstream baremetal.sh bug reported from this repo is STILL PRESENT in a
+fresh clone today: `rm -f "$FCLOG"` followed by `--log-path "$FCLOG"`, and
+Firecracker opens without creating. It fails as:
+
+  Could not initialize logger: Failed to open target file: No such file or
+  directory (os error 2)
+  Error: LoggerInitialization(...)
+
+Fix confirmed working on the host: add `touch "$FCLOG"` after the rm at
+baremetal.sh:47.
