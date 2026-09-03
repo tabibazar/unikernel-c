@@ -1,0 +1,595 @@
+<title>Prime Chains on BareMetal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+Condensed:wght@500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap">
+
+<style>
+:root {
+  /* Datasheet palette: cool neutrals biased toward the signal blue,
+     with semantic ink for verified / rejected reserved for verdicts. */
+  --ground:      #EDF0F5;
+  --surface:     #FFFFFF;
+  --surface-alt: #F5F7FA;
+  --ink:         #111826;
+  --ink-mid:     #48546A;
+  --ink-soft:    #6E7A8F;
+  --rule:        #D2D9E4;
+  --rule-strong: #A9B4C6;
+  --signal:      #2438A8;
+  --signal-soft: #E3E7F7;
+  --reject:      #A32617;
+  --reject-soft: #F8E5E2;
+  --verify:      #14624A;
+  --verify-soft: #DFEFE8;
+
+  --f-display: "IBM Plex Sans Condensed", "Helvetica Neue", Arial, sans-serif;
+  --f-body:    "Source Serif 4", Georgia, "Times New Roman", serif;
+  --f-mono:    "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --ground:      #0D131E;
+    --surface:     #141C2A;
+    --surface-alt: #1A2434;
+    --ink:         #E6EBF3;
+    --ink-mid:     #A6B2C6;
+    --ink-soft:    #7C8AA1;
+    --rule:        #2A3546;
+    --rule-strong: #45536B;
+    --signal:      #8FA3F5;
+    --signal-soft: #1D2743;
+    --reject:      #F0917F;
+    --reject-soft: #331C19;
+    --verify:      #6FCBA8;
+    --verify-soft: #102A23;
+  }
+}
+:root[data-theme="dark"] {
+  --ground:      #0D131E;
+  --surface:     #141C2A;
+  --surface-alt: #1A2434;
+  --ink:         #E6EBF3;
+  --ink-mid:     #A6B2C6;
+  --ink-soft:    #7C8AA1;
+  --rule:        #2A3546;
+  --rule-strong: #45536B;
+  --signal:      #8FA3F5;
+  --signal-soft: #1D2743;
+  --reject:      #F0917F;
+  --reject-soft: #331C19;
+  --verify:      #6FCBA8;
+  --verify-soft: #102A23;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  background: var(--ground);
+  color: var(--ink);
+  font-family: var(--f-body);
+  font-size: 17px;
+  line-height: 1.62;
+  margin: 0;
+  padding: 0 20px 96px;
+  -webkit-font-smoothing: antialiased;
+}
+
+.wrap { max-width: 780px; margin: 0 auto; }
+
+/* ---------------------------------------------------------- masthead */
+
+header.masthead {
+  border-bottom: 2px solid var(--ink);
+  padding: 56px 0 22px;
+  margin-bottom: 40px;
+}
+.eyebrow {
+  font-family: var(--f-mono);
+  font-size: 11.5px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--signal);
+  margin: 0 0 18px;
+}
+h1 {
+  font-family: var(--f-display);
+  font-weight: 700;
+  font-size: clamp(38px, 7vw, 60px);
+  line-height: 1.02;
+  letter-spacing: -0.015em;
+  margin: 0 0 18px;
+  text-wrap: balance;
+}
+.standfirst {
+  font-size: 20px;
+  line-height: 1.5;
+  color: var(--ink-mid);
+  margin: 0 0 26px;
+  max-width: 62ch;
+  text-wrap: pretty;
+}
+.colophon {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 22px;
+  font-family: var(--f-mono);
+  font-size: 12px;
+  color: var(--ink-soft);
+}
+.colophon b { color: var(--ink-mid); font-weight: 500; }
+
+/* ---------------------------------------------------------- sections */
+
+section { margin: 0 0 52px; }
+
+h2 {
+  font-family: var(--f-display);
+  font-weight: 700;
+  font-size: 27px;
+  letter-spacing: -0.01em;
+  line-height: 1.15;
+  margin: 0 0 6px;
+  text-wrap: balance;
+}
+.rung {
+  font-family: var(--f-mono);
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  display: block;
+  margin-bottom: 10px;
+}
+h3 {
+  font-family: var(--f-display);
+  font-weight: 600;
+  font-size: 18px;
+  letter-spacing: 0.005em;
+  margin: 32px 0 4px;
+}
+p { margin: 0 0 16px; max-width: 68ch; text-wrap: pretty; }
+a { color: var(--signal); text-decoration-thickness: 1px; text-underline-offset: 2px; }
+strong { font-weight: 600; }
+code, .n {
+  font-family: var(--f-mono);
+  font-size: 0.87em;
+  font-variant-numeric: tabular-nums;
+}
+code { color: var(--ink); background: var(--surface-alt); padding: 1px 5px; border-radius: 3px; }
+
+/* ------------------------------------------------------- pull / fault */
+
+.fault {
+  background: var(--surface);
+  border-left: 3px solid var(--reject);
+  padding: 20px 24px;
+  margin: 0 0 24px;
+}
+.fault p { margin: 0; }
+.fault .big {
+  font-family: var(--f-mono);
+  font-size: 26px;
+  font-weight: 600;
+  color: var(--reject);
+  display: block;
+  margin-bottom: 6px;
+  font-variant-numeric: tabular-nums;
+}
+
+.claim {
+  font-family: var(--f-display);
+  font-weight: 600;
+  font-size: 22px;
+  line-height: 1.32;
+  color: var(--ink);
+  border-top: 1px solid var(--rule-strong);
+  border-bottom: 1px solid var(--rule-strong);
+  padding: 20px 0;
+  margin: 28px 0;
+  max-width: 60ch;
+  text-wrap: balance;
+}
+
+/* ------------------------------------------------------------- tables */
+
+.scroll { overflow-x: auto; margin: 0 0 20px; }
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--f-mono);
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+  min-width: 460px;
+}
+caption {
+  caption-side: top;
+  text-align: left;
+  font-family: var(--f-display);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  padding-bottom: 8px;
+}
+th {
+  text-align: left;
+  font-weight: 600;
+  color: var(--ink-mid);
+  border-bottom: 1.5px solid var(--rule-strong);
+  padding: 7px 12px 7px 0;
+  font-size: 11.5px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+td {
+  padding: 9px 12px 9px 0;
+  border-bottom: 1px solid var(--rule);
+  color: var(--ink-mid);
+  vertical-align: top;
+}
+td:first-child { color: var(--ink); }
+.num { text-align: right; padding-right: 0; }
+tr.hit td { background: var(--verify-soft); color: var(--ink); }
+tr.hit td:first-child { font-weight: 600; }
+
+.tag {
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  padding: 2px 7px;
+  border-radius: 2px;
+  white-space: nowrap;
+}
+.tag.out { background: var(--reject-soft); color: var(--reject); }
+.tag.in  { background: var(--verify-soft); color: var(--verify); }
+.tag.pend { background: var(--signal-soft); color: var(--signal); }
+
+/* -------------------------------------------------------------- chart */
+
+.chart {
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  padding: 22px 24px 16px;
+  margin: 0 0 20px;
+}
+.chart h4 {
+  font-family: var(--f-display);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin: 0 0 20px;
+}
+.bars { display: flex; flex-direction: column; gap: 13px; position: relative; }
+.barrow { display: grid; grid-template-columns: 116px 1fr; gap: 12px; align-items: center; }
+.barlab {
+  font-family: var(--f-mono);
+  font-size: 11.5px;
+  color: var(--ink-mid);
+  text-align: right;
+  line-height: 1.25;
+}
+.bartrack { position: relative; height: 22px; }
+.bar {
+  height: 22px;
+  background: var(--signal);
+  opacity: 0.28;
+  border-right: 2px solid var(--signal);
+}
+.barrow.far .bar { background: var(--reject); border-right-color: var(--reject); opacity: 0.22; }
+.barrow.target .bar { opacity: 0.85; }
+.barval {
+  position: absolute;
+  top: 2px;
+  font-family: var(--f-mono);
+  font-size: 11px;
+  color: var(--ink-mid);
+  white-space: nowrap;
+  padding-left: 8px;
+  font-variant-numeric: tabular-nums;
+}
+/* The budget marker spans the bar stack, anchored to the same origin the
+   bar tracks use: the label column plus the grid gap. */
+.budgetline {
+  position: absolute;
+  top: -8px;
+  bottom: -4px;
+  left: calc(128px + (100% - 128px) * 0.211);
+  width: 0;
+  border-left: 2px dashed var(--ink);
+  opacity: 0.5;
+}
+.axis {
+  display: grid;
+  grid-template-columns: 116px 1fr;
+  gap: 12px;
+  margin-top: 12px;
+  border-top: 1px solid var(--rule);
+  padding-top: 6px;
+}
+.ticks { position: relative; height: 14px; }
+.tick {
+  position: absolute;
+  font-family: var(--f-mono);
+  font-size: 10px;
+  color: var(--ink-soft);
+  transform: translateX(-50%);
+  white-space: nowrap;
+}
+.chartnote {
+  font-family: var(--f-mono);
+  font-size: 11px;
+  color: var(--ink-soft);
+  margin: 14px 0 0;
+  line-height: 1.5;
+  max-width: none;
+}
+
+/* -------------------------------------------------------------- lists */
+
+ul.plain { margin: 0 0 18px; padding-left: 0; list-style: none; }
+ul.plain li {
+  padding: 0 0 12px 18px;
+  position: relative;
+  max-width: 66ch;
+}
+ul.plain li::before {
+  content: "";
+  position: absolute;
+  left: 0; top: 11px;
+  width: 7px; height: 1.5px;
+  background: var(--rule-strong);
+}
+
+/* ------------------------------------------------------------- footer */
+
+footer {
+  border-top: 2px solid var(--ink);
+  padding-top: 20px;
+  margin-top: 8px;
+  font-family: var(--f-mono);
+  font-size: 12px;
+  color: var(--ink-soft);
+  line-height: 1.7;
+}
+footer p { max-width: 68ch; }
+
+@media (max-width: 560px) {
+  body { font-size: 16px; }
+  .barrow, .axis { grid-template-columns: 88px 1fr; }
+  .barlab { font-size: 10.5px; }
+  .budgetline { left: calc(100px + (100% - 100px) * 0.211); }
+  .barval { font-size: 10px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; }
+}
+</style>
+
+<div class="wrap">
+
+<header class="masthead">
+  <p class="eyebrow">unikernel-c · working note</p>
+  <h1>Prime Chains on BareMetal</h1>
+  <p class="standfirst">A machine that computes incorrectly once in every 1.6&nbsp;million operations should not be trusted with arithmetic. This is the argument that it can be — and the record we intend to take with it.</p>
+  <div class="colophon">
+    <span><b>Target</b> Cunningham chain, length 6, first kind</span>
+    <span><b>Substrate</b> BareMetal + Firecracker, 16 MiB</span>
+    <span><b>Budget</b> $500</span>
+  </div>
+</header>
+
+<section>
+  <h2>The question</h2>
+  <p>This repository has established that BareMetal runs real compute inside 16 MiB with no operating system — Monte Carlo, MCMC, primality, TLS. It has also established, by controlled experiment, that the platform gets the answer wrong.</p>
+
+  <div class="fault">
+    <span class="big">127 wrong in 200,000,000</span>
+    <p>An interrupt landing inside a multi-instruction sequence corrupts a live register. Zero errors with interrupts disabled; zero with an atomic <code>divq</code>. A register-preservation bug in the interrupt path, proven by controlled comparison rather than inferred — and unpatched.</p>
+  </div>
+
+  <p>Every project here has treated that as a liability to work around. The prime-search swarm has to caveat its own coverage because of it. The question this note answers is the inverse one:</p>
+
+  <p class="claim">Is there a class of workload for which that defect does not matter — and can this platform run it correctly today, unpatched?</p>
+
+  <p>The answer turns out to have a precise shape. Not "work that tolerates errors", which is vague and unfalsifiable, but <strong>work whose output is cheap to verify by someone else</strong>. If a result proves itself in milliseconds on trusted hardware, then a corrupted worker cannot inject a wrong answer into the world. It can only waste its own time.</p>
+</section>
+
+<section>
+  <span class="rung">Rungs R1–R3 · shelved</span>
+  <h2>The first attempt, and why it stopped</h2>
+  <p>Ant Colony Optimization was the initial candidate. The argument was structural: a corrupted pheromone write perturbs one selection probability, and evaporation erases it within a few iterations — the algorithm's forgetting mechanism doubling as error correction.</p>
+  <p>The engine was built and validated against published TSPLIB optima, and it worked. On identical hardware it also proved something useful: the same seed produced bit-identical tours on Linux and on BareMetal, five times out of five. The platform's known defect reaches general-purpose registers, not SSE, and that workload is floating point end to end — so the fault had no purchase on it.</p>
+
+  <div class="scroll">
+  <table>
+    <caption>R2 vs R3 — pcb442, three islands, 50,000 iterations each</caption>
+    <thead><tr><th>Arm</th><th class="num">Island 1</th><th class="num">Island 2</th><th class="num">Island 3</th><th class="num">Best</th></tr></thead>
+    <tbody>
+      <tr><td>Independent</td><td class="num">1.41%</td><td class="num">1.31%</td><td class="num">0.99%</td><td class="num">0.99%</td></tr>
+      <tr><td>Migrating</td><td class="num">1.37%</td><td class="num">1.37%</td><td class="num">1.37%</td><td class="num">1.37%</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <p>Sharing lost on both metrics. All three migrating islands finished on the identical tour — they had synchronised by iteration 8,000 and then published the same number for 42,000 more rounds. Migration worked exactly as designed; there was simply nothing left to learn from each other.</p>
+  <p>That is a genuine result about diversity collapse, and it is also why the line was shelved. A tour is verifiable, but improving one is not a <em>record</em> anybody is keeping score of. The verification property was there; the scoreboard was not.</p>
+</section>
+
+<section>
+  <h2>The rejection ledger</h2>
+  <p>Six candidate targets were costed against a fixed budget. Five are out, and the reasons are worth stating plainly, because each is the one a reader proposes next.</p>
+
+  <div class="scroll">
+  <table>
+    <caption>Targets considered</caption>
+    <thead><tr><th>Target</th><th>Standing frontier</th><th>Verdict</th></tr></thead>
+    <tbody>
+      <tr>
+        <td>Collatz verification</td>
+        <td>2<sup>71.02</sup>, Jan 2025</td>
+        <td><span class="tag out">out</span> 12,395 CPU-years + 159 GPU-years of national supercomputer time. GPUs clear a work unit 52× faster than a Xeon thread. Wrong hardware, wrong order of magnitude.</td>
+      </tr>
+      <tr>
+        <td>Busy Beaver BB(6)</td>
+        <td>~1,003 holdouts</td>
+        <td><span class="tag out">out</span> Idea-limited, not compute-limited. Antihydra reduces it to an open Collatz-like question, already simulated past 2<sup>37</sup>. More cycles buy no probability mass.</td>
+      </tr>
+      <tr>
+        <td>Schur number S(5)</td>
+        <td>Settled at 160</td>
+        <td><span class="tag out">out</span> The one target whose cube-and-conquer decomposition genuinely suited ephemeral fan-out is a closed record.</td>
+      </tr>
+      <tr>
+        <td>QAP tai256c optimality</td>
+        <td>1.25% gap</td>
+        <td><span class="tag out">out</span> Authors estimate 6.7×10<sup>16</sup> subproblems. Eight orders past the budget.</td>
+      </tr>
+      <tr>
+        <td>MIPLIB open instances</td>
+        <td>~240 open</td>
+        <td><span class="tag out">out</span> Affordable, and genuinely live — but every record-setting engine is a single long serial trajectory, which is the one shape this substrate is worst at.</td>
+      </tr>
+      <tr class="hit">
+        <td>Cunningham chain, k=6</td>
+        <td>1,016 digits, Mar 2015</td>
+        <td><span class="tag in">in</span> Cheap certificates, a maintained scoreboard, no organised competitor, and a bar untouched for eleven years.</td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="chart">
+    <h4>Core-hours to move each frontier — log scale</h4>
+    <div class="bars">
+      <div class="budgetline"></div>
+      <div class="barrow target"><div class="barlab">Cunningham k=6</div><div class="bartrack"><div class="bar" style="width:12.8%"></div><div class="barval" style="left:12.8%">16,500 <span style="opacity:.7">measured</span></div></div></div>
+      <div class="barrow"><div class="barlab">Cunningham k=5</div><div class="bartrack"><div class="bar" style="width:16.8%"></div><div class="barval" style="left:16.8%">40,000</div></div></div>
+      <div class="barrow"><div class="barlab">Cunningham k=4</div><div class="bartrack"><div class="bar" style="width:20.3%"></div><div class="barval" style="left:20.3%">85,000</div></div></div>
+      <div class="barrow far"><div class="barlab">Collatz, next<br>doubling</div><div class="bartrack"><div class="bar" style="width:53.1%"></div><div class="barval" style="left:53.1%">1.1×10<sup>8</sup></div></div></div>
+      <div class="barrow far"><div class="barlab">QAP tai256c<br>optimality</div><div class="bartrack"><div class="bar" style="width:98.3%"></div><div class="barval" style="left:98.3%; padding-left:0; transform:translateX(-100%); padding-right:8px;">2.2×10<sup>12</sup></div></div></div>
+    </div>
+    <div class="axis">
+      <div></div>
+      <div class="ticks">
+        <span class="tick" style="left:0">10³</span>
+        <span class="tick" style="left:21.1%">10⁵</span>
+        <span class="tick" style="left:42.1%">10⁷</span>
+        <span class="tick" style="left:63.2%">10⁹</span>
+        <span class="tick" style="left:84.2%">10¹¹</span>
+      </div>
+    </div>
+    <p class="chartnote">Dashed line: 99,789 core-hours, what $500 buys at $0.00501056/hr. Bars past it are not "expensive" — they are four to eight orders of magnitude away, and no pricing assumption rescues them.</p>
+  </div>
+</section>
+
+<section>
+  <h2>Why this target, specifically</h2>
+  <p>A Cunningham chain of the first kind is a run of primes where each is <code>2p+1</code> of the last. The <em>size</em> records — largest known chain of a fixed short length — are tabulated in three mutually consistent public registries and accept submissions.</p>
+
+  <p>Three properties make it the right fit, and only the first is about ambition.</p>
+
+  <h3>A find proves itself</h3>
+  <p>The record form is <code>m · p# · 2<sup>j</sup> − 1</code>, and for that form the number either side is fully factored — so the primality test yields a deterministic Pocklington proof, not a probable-prime claim. Anyone can check it in milliseconds. <strong>This is what makes an untrustworthy machine usable:</strong> our platform's non-determinism means the search silently misses candidates, which costs efficiency but cannot manufacture a false positive. You only need to find one, and the finding carries its own proof.</p>
+
+  <h3>The table contains its own test for a stale record</h3>
+  <p>First- and second-kind chains have near-identical densities. So a mirror-kind record reached at the same size with ordinary public tools proves no hardness wall exists there. The k=6 first-kind record has stood since <strong>March 2015</strong> — while the second-kind record at essentially the same size was taken in <strong>January 2025</strong> using NewPGen and PFGW.</p>
+  <p>That is an unattended gap, not a hard one. The same test rejects the k=11–14 band, where both kinds are stuck and the bars were set by the Primecoin proof-of-work network — stale <em>and</em> genuinely hard. The tell is that the k=10 record is now larger than the k=11 record.</p>
+
+  <h3>Nobody is grinding it</h3>
+  <p>PrimeGrid runs no Cunningham subproject. But of the fourteen records at lengths 4 through 10, one person holds thirteen, and reset eight bars during 2026 alone. There is nothing to outspend — and a live incumbent who can retake a record in the time it takes to run the hunt.</p>
+</section>
+
+<section>
+  <h2>The economics, and the one number they turn on</h2>
+  <p>The whole substrate argument reduces to a single ratio. The unikernel is cheap per hour and slow per operation; it wins if and only if the price gap exceeds the speed gap.</p>
+
+  <div class="scroll">
+  <table>
+    <caption>What $500 buys — 99,789 core-hours at $0.00501056/hr</caption>
+    <thead><tr><th>Handicap vs native</th><th class="num">Native-equivalent</th><th class="num">Expectations covered</th><th class="num">P(find)</th></tr></thead>
+    <tbody>
+      <tr><td>2×</td><td class="num">49,900</td><td class="num">3.0×</td><td class="num">95%</td></tr>
+      <tr><td>3×</td><td class="num">33,300</td><td class="num">2.0×</td><td class="num">87%</td></tr>
+      <tr><td>5×</td><td class="num">20,000</td><td class="num">1.2×</td><td class="num">70%</td></tr>
+      <tr><td>10×</td><td class="num">10,000</td><td class="num">0.6×</td><td class="num">45%</td></tr>
+      <tr><td>15×</td><td class="num">6,650</td><td class="num">0.4×</td><td class="num">33%</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <p>At this price the handicap stops deciding feasibility. Even at the pessimistic end, $500 buys a real attempt at a record that has stood for eleven years. The comparison against ordinary Linux becomes a question of efficiency, not of possibility.</p>
+
+  <p>Which converts the engineering into a pass/fail criterion. One expected chain is roughly 7.3×10<sup>9</sup> primality tests, so:</p>
+
+  <p class="claim">A single PRP test must cost under 49 ms on the unikernel to fit the budget — under 16 ms to have a 95% chance of a find.</p>
+
+  <p>Measured native GMP with assembly is <strong>8.6 ms</strong> at this size. The entire port exists to find out how much of that survives.</p>
+</section>
+
+<section>
+  <h2>The engineering</h2>
+  <p>The premise turned out to be wrong in a useful way. There was no libc to write: BareMetal's application port already ships a patched musl, built with exactly the flags GMP needs, alongside ports of lwIP, mbedTLS, curl, SQLite and CPython. So this became a library port following that project's own conventions — which also makes it upstreamable rather than a private fork.</p>
+
+  <p>The result that decides the budget is a relocation census. GMP's hand-tuned assembly has to survive being linked at <code>0xFFFF800000000000</code>, an address no 32-bit field can hold.</p>
+
+  <div class="scroll">
+  <table>
+    <caption>Relocations across every built GMP object</caption>
+    <thead><tr><th>Relocation</th><th class="num">Count</th><th>Consequence</th></tr></thead>
+    <tbody>
+      <tr><td>R_X86_64_64</td><td class="num">4,759</td><td>64-bit absolute — fine at any address</td></tr>
+      <tr><td>R_X86_64_PC32</td><td class="num">73</td><td>RIP-relative — fine</td></tr>
+      <tr><td>R_X86_64_PLT32</td><td class="num">18</td><td>Direct calls in a static link — fine</td></tr>
+      <tr class="hit"><td>R_X86_64_32 / 32S</td><td class="num">0</td><td>None. The assembly can be kept.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <p>That zero is the finding. Falling back to portable C would have cost another 2–4× on top of the platform penalty and pushed the hunt outside any sane budget.</p>
+
+  <h3>Verified so far</h3>
+  <ul class="plain">
+    <li><strong>Links clean.</strong> A 347 KB <code>.app</code>, zero undefined symbols, no allocated orphan sections, everything mapped where the linker script says.</li>
+    <li><strong>Computes correctly.</strong> Five known-answer checks pass — including a Fermat test on a <em>composite</em> that must not return 1, so a stubbed implementation cannot sneak through. On a machine that miscomputes once in 1.6 million operations, a library that linked but computed wrong would be nearly impossible to attribute later.</li>
+    <li><strong>Four host facts kept out of the target build:</strong> glibc's obstack, <code>_FORTIFY_SOURCE</code> rewriting <code>memcpy</code> into a symbol musl lacks, GMP's default stack temporaries against a stack of unknown size with no guard page, and a configure step that would otherwise detect the emulated build host instead of the target.</li>
+    <li><strong>One trap recorded prominently</strong>, because it looks like the opposite of a bug: the assembly's absolute jumps are suppressed only because the host triplet contains <code>linux</code>. Building with <code>x86_64-elf</code> — which reads as the more correct choice for a freestanding target — breaks the link.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>What is not done</h2>
+  <p><strong>The port has never been run.</strong> The development machine has no nested virtualisation, so the unikernel can be built, linked and inspected but not booted. Everything above is a static property of the artifact plus a correctness run on ordinary hardware.</p>
+
+  <div class="scroll">
+  <table>
+    <caption>Status</caption>
+    <thead><tr><th>Step</th><th>State</th></tr></thead>
+    <tbody>
+      <tr><td>GMP builds freestanding, assembly intact</td><td><span class="tag in">done</span></td></tr>
+      <tr><td>Links into a bootable image</td><td><span class="tag in">done</span></td></tr>
+      <tr><td>Known-answer correctness</td><td><span class="tag in">done</span></td></tr>
+      <tr><td>Milliseconds per test on BareMetal</td><td><span class="tag pend">one metal session</span></td></tr>
+      <tr><td>Chain sieve for length ≥ 3</td><td><span class="tag pend">~300 lines, custom</span></td></tr>
+      <tr><td>The hunt</td><td><span class="tag pend">gated on the above</span></td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <p>The remaining measurement is a single script on a bare-metal host. It builds the library, re-runs the correctness checks against that machine's own compiler, builds a <strong>Linux control from the same source and the same library</strong>, boots the unikernel, and prints the ratio.</p>
+  <p>That control is not a nicety. The 3.7× penalty this repository carries was measured on 64-bit modular arithmetic, and every budget figure since has applied it to big-integer work by assumption. One machine, one source, one library leaves the absence of an operating system as the only variable — which is the number this whole line of work has been circling.</p>
+</section>
+
+<footer>
+  <p>Figures are drawn from measurements in this repository and from public record tables current to late August 2026. Cloud pricing beyond the operator's own rate is unverified. The density model behind the core-hour estimates was validated against three standing records to within a factor of three, and carries roughly one order of magnitude of uncertainty either way.</p>
+  <p>Record tables move: five of the length records cited were reset within the five months before writing.</p>
+</footer>
+
+</div>
