@@ -386,8 +386,37 @@ static int32_t snap_dist[DA_N][DA_N];
 static const int checkpoint[N_CHECK] = { 5, 15, 40, 100, DA_POST_ITERS };
 static int32_t out_curve[N_CHECK];
 
-enum { ARM_RESTART, ARM_RETAIN, ARM_RETAIN_CLEAN, N_ARMS };
-static const char *arm_name[N_ARMS] = { "RESTART", "RETAIN", "RETAIN_CLEAN" };
+enum { ARM_RESTART, ARM_RETAIN, ARM_RETAIN_CLEAN, ARM_SHUFFLE, N_ARMS };
+static const char *arm_name[N_ARMS] =
+	{ "RESTART", "RETAIN", "RETAIN_CLEAN", "SHUFFLE" };
+
+/* SHUFFLE is the control that decides what RETAIN's advantage actually is.
+ *
+ * A converged pheromone matrix differs from a fresh one in TWO ways at once:
+ * it remembers which edges were good, and it is concentrated rather than
+ * uniform. RESTART installs a flat tau_max everywhere, so any win by RETAIN
+ * could be memory or could just be that a low-entropy distribution exploits
+ * faster on a short horizon. The 100%-relocation row forces the question --
+ * there is no old map left to remember, and RETAIN still won.
+ *
+ * This arm permutes the pheromone matrix through a random relabelling of the
+ * cities. The multiset of values is preserved exactly, so concentration is
+ * untouched; the correspondence between a value and the edge it was earned on
+ * is destroyed. If SHUFFLE matches RETAIN, the advantage was never memory. If
+ * RETAIN beats SHUFFLE, the remembered structure is doing real work. */
+static void tau_shuffle(void)
+{
+	int perm[DA_N];
+	for (int i = 0; i < DA_N; i++) perm[i] = i;
+	for (int i = DA_N - 1; i > 0; i--) {
+		int j = (int)(nrand() % (uint64_t)(i + 1));
+		int t = perm[i]; perm[i] = perm[j]; perm[j] = t;
+	}
+	static float tmp[DA_N][DA_N];
+	memcpy(tmp, tau, sizeof tau);
+	for (int i = 0; i < DA_N; i++)
+		for (int j = 0; j < DA_N; j++) tau[i][j] = tmp[perm[i]][perm[j]];
+}
 
 static int32_t run_arm(int arm)
 {
@@ -415,6 +444,7 @@ static int32_t run_arm(int arm)
 
 	if (arm == ARM_RESTART)           tau_reset_all();
 	else if (arm == ARM_RETAIN_CLEAN) tau_clear_stale();
+	else if (arm == ARM_SHUFFLE)      tau_shuffle();
 	/* ARM_RETAIN: leave the ghosts exactly where they are. */
 
 	/* Checkpoints, because the endpoint is the wrong metric here. With 2-opt
@@ -516,8 +546,9 @@ int main(void)
 			if (r[a] == bestv) wins[a]++;
 		}
 
-		printf("DYN_TRIAL trial=%d pre=%d removed=%d restart=%d retain=%d retain_clean=%d\n",
-		       trial, pre_len, removed, r[ARM_RESTART], r[ARM_RETAIN], r[ARM_RETAIN_CLEAN]);
+			printf("DYN_TRIAL trial=%d pre=%d changed=%d restart=%d retain=%d clean=%d shuffle=%d\n",
+		       trial, pre_len, removed, r[ARM_RESTART], r[ARM_RETAIN],
+		       r[ARM_RETAIN_CLEAN], r[ARM_SHUFFLE]);
 		fflush(stdout);
 	}
 
@@ -544,6 +575,9 @@ int main(void)
 		for (int c = 0; c < N_CHECK; c++) printf("%12.1f", csum[a][c] / DA_TRIALS);
 		printf("\n");
 	}
+	printf("DYN_MEMORY shuffle_vs_retain=%+.3f%%   (>0 means remembered structure did real work)\n",
+	       100.0 * (csum[ARM_SHUFFLE][N_CHECK-1] - csum[ARM_RETAIN][N_CHECK-1])
+	             / csum[ARM_RETAIN][N_CHECK-1]);
 	printf("DYN_EARLY retain_vs_restart_at_iter%d=%+.3f%%\n", checkpoint[0],
 	       100.0 * (csum[ARM_RETAIN][0] - csum[ARM_RESTART][0]) / csum[ARM_RESTART][0]);
 	printf("DYN_GHOSTCOST clean_vs_retain_at_iter%d=%+.3f%%\n", checkpoint[0],

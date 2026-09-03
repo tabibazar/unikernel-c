@@ -1,0 +1,50 @@
+DYN_START n=400 remove_pct=5 ants=25 rho=0.020 pre=600 post=300 trials=5
+DYN_WINS restart=0 retain=5 retain_clean=0 of 5
+DYN_DELTA remove_pct=5 retain_vs_restart=-2.014% clean_vs_retain=+0.595%
+DYN_CURVE RESTART          16021.2     15950.0     15898.0     15813.8     15461.4
+DYN_CURVE RETAIN           15657.4     15521.6     15449.2     15367.0     15150.0
+DYN_CURVE RETAIN_CLEAN     15726.8     15638.0     15528.4     15485.2     15240.2
+--- 5 done
+DYN_START n=400 remove_pct=10 ants=25 rho=0.020 pre=600 post=300 trials=5
+DYN_WINS restart=0 retain=4 retain_clean=1 of 5
+DYN_DELTA remove_pct=10 retain_vs_restart=-1.550% clean_vs_retain=+0.641%
+DYN_CURVE RESTART          16023.6     15916.2     15878.0     15814.8     15470.6
+DYN_CURVE RETAIN           15757.4     15671.2     15552.2     15474.8     15230.8
+DYN_CURVE RETAIN_CLEAN     15850.6     15779.8     15677.0     15578.0     15328.4
+--- 10 done
+DYN_START n=400 remove_pct=20 ants=25 rho=0.020 pre=600 post=300 trials=5
+DYN_WINS restart=0 retain=5 retain_clean=0 of 5
+DYN_DELTA remove_pct=20 retain_vs_restart=-1.180% clean_vs_retain=+1.026%
+DYN_CURVE RESTART          15915.8     15871.8     15783.4     15726.2     15341.4
+DYN_CURVE RETAIN           15819.6     15552.4     15494.2     15397.4     15160.4
+DYN_CURVE RETAIN_CLEAN     15872.4     15754.8     15689.2     15616.8     15316.0
+--- 20 done
+DYN_START n=400 remove_pct=40 ants=25 rho=0.020 pre=600 post=300 trials=5
+DYN_WINS restart=0 retain=5 retain_clean=0 of 5
+DYN_DELTA remove_pct=40 retain_vs_restart=-0.793% clean_vs_retain=+0.723%
+DYN_CURVE RESTART          15769.2     15709.6     15588.0     15492.2     15137.2
+DYN_CURVE RETAIN           15710.2     15590.2     15413.8     15223.8     15017.2
+DYN_CURVE RETAIN_CLEAN     15669.4     15615.6     15577.2     15486.8     15125.8
+--- 40 done
+DYN_START n=400 remove_pct=60 ants=25 rho=0.020 pre=600 post=300 trials=5
+DYN_WINS restart=0 retain=5 retain_clean=0 of 5
+DYN_DELTA remove_pct=60 retain_vs_restart=-1.289% clean_vs_retain=+1.100%
+DYN_CURVE RESTART          15738.2     15734.0     15654.6     15603.4     15220.4
+DYN_CURVE RETAIN           15778.6     15583.2     15437.2     15307.4     15024.2
+DYN_CURVE RETAIN_CLEAN     15777.0     15734.4     15704.4     15593.0     15189.4
+--- 60 done
+DYN_START n=400 remove_pct=80 ants=25 rho=0.020 pre=600 post=300 trials=5
+DYN_WINS restart=0 retain=5 retain_clean=0 of 5
+DYN_DELTA remove_pct=80 retain_vs_restart=-1.317% clean_vs_retain=+1.767%
+DYN_CURVE RESTART          15994.6     15942.0     15906.2     15830.6     15404.2
+DYN_CURVE RETAIN           15883.8     15731.2     15589.2     15470.4     15201.4
+DYN_CURVE RETAIN_CLEAN     15976.6     15861.2     15861.2     15806.2     15470.0
+--- 80 done
+DYN_START n=400 remove_pct=100 ants=25 rho=0.020 pre=600 post=300 trials=5
+DYN_WINS restart=0 retain=5 retain_clean=0 of 5
+DYN_DELTA remove_pct=100 retain_vs_restart=-1.668% clean_vs_retain=+1.696%
+DYN_CURVE RESTART          16051.4     15980.6     15898.2     15726.8     15434.4
+DYN_CURVE RETAIN           15826.2     15706.8     15576.6     15418.8     15177.0
+DYN_CURVE RETAIN_CLEAN     16051.4     15980.6     15898.2     15726.8     15434.4
+--- 100 done
+SWEEPDONE

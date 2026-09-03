@@ -1,0 +1,39 @@
+DYN_START n=400 remove_pct=5 ants=25 rho=0.020 pre=600 post=300 trials=5
+DYN_ARM arm=RESTART      improvements= 14  at_iter 5:16114 15:15962 40:15962 100:15828 300:15566
+DYN_ARM arm=RETAIN       improvements= 22  at_iter 5:15664 15:15540 40:15484 100:15411 300:15178
+DYN_ARM arm=RETAIN_CLEAN improvements= 19  at_iter 5:15844 15:15729 40:15551 100:15448 300:15202
+DYN_ARM arm=SHUFFLE      improvements= 18  at_iter 5:15832 15:15711 40:15517 100:15274 300:15178
+DYN_TRIAL trial=0 pre=15124 changed=20 restart=15566 retain=15178 clean=15202 shuffle=15178
+DYN_ARM arm=RESTART      improvements= 10  at_iter 5:16054 15:15850 40:15850 100:15850 300:15543
+DYN_ARM arm=RETAIN       improvements= 22  at_iter 5:15703 15:15553 40:15392 100:15287 300:15065
+DYN_ARM arm=RETAIN_CLEAN improvements= 13  at_iter 5:15788 15:15746 40:15582 100:15469 300:15222
+DYN_ARM arm=SHUFFLE      improvements= 20  at_iter 5:15927 15:15736 40:15370 100:15370 300:15248
+DYN_TRIAL trial=1 pre=15151 changed=20 restart=15543 retain=15065 clean=15222 shuffle=15248
+DYN_ARM arm=RESTART      improvements= 16  at_iter 5:16211 15:16211 40:16154 100:16023 300:15708
+DYN_ARM arm=RETAIN       improvements= 18  at_iter 5:15993 15:15762 40:15762 100:15672 300:15427
+DYN_ARM arm=RETAIN_CLEAN improvements= 11  at_iter 5:15912 15:15701 40:15701 100:15701 300:15510
+DYN_ARM arm=SHUFFLE      improvements= 22  at_iter 5:16157 15:15976 40:15874 100:15706 300:15474
+DYN_TRIAL trial=2 pre=15399 changed=20 restart=15708 retain=15427 clean=15510 shuffle=15474
+DYN_ARM arm=RESTART      improvements= 10  at_iter 5:15807 15:15807 40:15697 100:15688 300:15184
+DYN_ARM arm=RETAIN       improvements= 21  at_iter 5:15446 15:15419 40:15354 100:15279 300:15100
+DYN_ARM arm=RETAIN_CLEAN improvements= 20  at_iter 5:15599 15:15560 40:15478 100:15478 300:15145
+DYN_ARM arm=SHUFFLE      improvements= 17  at_iter 5:15904 15:15367 40:15367 100:15291 300:15109
+DYN_TRIAL trial=3 pre=14957 changed=20 restart=15184 retain=15100 clean=15145 shuffle=15109
+DYN_ARM arm=RESTART      improvements= 13  at_iter 5:15920 15:15920 40:15827 100:15680 300:15306
+DYN_ARM arm=RETAIN       improvements= 22  at_iter 5:15481 15:15334 40:15254 100:15186 300:14980
+DYN_ARM arm=RETAIN_CLEAN improvements= 18  at_iter 5:15491 15:15454 40:15330 100:15330 300:15122
+DYN_ARM arm=SHUFFLE      improvements= 21  at_iter 5:15772 15:15675 40:15520 100:15394 300:15075
+DYN_TRIAL trial=4 pre=15083 changed=20 restart=15306 retain=14980 clean=15122 shuffle=15075
+DYN_MEAN remove_pct=5 restart=15461.4 retain=15150.0 retain_clean=15240.2
+DYN_WINS restart=0 retain=5 retain_clean=0 of 5
+DYN_DELTA remove_pct=5 retain_vs_restart=-2.014% clean_vs_retain=+0.595%
+
+checkpoint               5          15          40         100         300
+DYN_CURVE RESTART          16021.2     15950.0     15898.0     15813.8     15461.4
+DYN_CURVE RETAIN           15657.4     15521.6     15449.2     15367.0     15150.0
+DYN_CURVE RETAIN_CLEAN     15726.8     15638.0     15528.4     15485.2     15240.2
+DYN_CURVE SHUFFLE          15918.4     15693.0     15529.6     15407.0     15216.8
+DYN_MEMORY shuffle_vs_retain=+0.441%   (>0 means remembered structure did real work)
+DYN_EARLY retain_vs_restart_at_iter5=-2.271%
+DYN_GHOSTCOST clean_vs_retain_at_iter5=+0.443%
+DYN_DONE
