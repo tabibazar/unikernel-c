@@ -179,6 +179,40 @@ arithmetic, not on bignum, so its applicability here is assumed rather than
 shown. The third leg -- BareMetal's actual penalty on GMP -- still needs a metal
 host.
 
+## CORRECTED, 2026-09-03: sieving is not free
+
+The shortlist above prices the k=6 job at 6,000-15,000 core-hours from ~9e9 PRP
+tests, and the measured-PRP section revises that to 15,000-18,000. Both figures
+assume the sieve costs nothing. Writing it (`../../gmp/cc_sieve.c`) shows it
+does not.
+
+The sieve's per-prime setup is 8.0e-7 s, and it is paid once per prime **per
+segment**. Sieving deeper avoids PRP tests geometrically but costs primes
+linearly, so the two trade off and the total has a minimum:
+
+| depth | PRP tests | PRP hours | sieve hours | total |
+|---:|---:|---:|---:|---:|
+| 1e9 | 6.6e10 | 158,692 | 30 | 158,722 |
+| 1e10 | 3.5e10 | 84,336 | 269 | 84,605 |
+| **1e11** | 2.0e10 | 47,605 | 2,449 | **50,054** |
+| 1e12 | 1.2e10 | 28,244 | 22,450 | 50,693 |
+| 1e13 | 7.3e9 | 17,472 | 207,227 | 224,699 |
+
+The 7.3e9 figure this document has used throughout is the last row -- reachable
+only by sieving to 1e13, which costs an order of magnitude more than it saves.
+**The honest total is ~50,000 core-hours as implemented**, or ~23,000 with a
+Barrett reciprocal in the primorial reduction and an 8 GB bitmap. Roughly 1.5-3x
+what was quoted.
+
+At $0.00501056/hr that is $115-$250 against a $500 cap, so the verdict does not
+change -- but the margin is thinner than the earlier figures implied, and the
+sieve implementation is now a cost driver rather than a detail.
+
+One thing the sieve did confirm rather than correct: measured survival rates
+match the Mertens prediction `(ln p / ln P)^k` to within 1.3%, 0.1% and 0.1% at
+depths 1e6, 1e7 and 1e8. The density model underneath every estimate here is
+sound; it was the accounting around it that was incomplete.
+
 ## Substrate verdict: Linux is cheaper, the unikernel is affordable
 
 *(revised 2026-09-03 by the measurements above; the original pass had no benchmark evidence)*
