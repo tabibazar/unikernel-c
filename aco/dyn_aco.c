@@ -94,6 +94,9 @@
 #ifndef DA_LOCAL_SEARCH
 #define DA_LOCAL_SEARCH 1        /* 0 = construction only, pheromone-driven */
 #endif
+#ifndef DA_DUMP
+#define DA_DUMP 0                /* 1 = emit coords, tours, traces, trails */
+#endif
 #ifndef DA_TRACE
 #define DA_TRACE 0               /* 1 = print the post-change recovery curve */
 #endif
@@ -455,6 +458,21 @@ static int32_t run_arm(int arm)
 	   tour after the world moves. That is what these measure. */
 	for (int it = 0; it < DA_POST_ITERS; it++) {
 		iterate();
+#if DA_DUMP
+		printf("DUMP_TRACE %s %d %d\n", arm_name[arm], it, best_len);
+		/* The pheromone itself is the subject, so snapshot it early -- the
+		   difference between a converged matrix, a flat one and a shuffled
+		   one is visible directly, and is the whole argument. */
+		if (it == 4) {
+			for (int a2 = 0; a2 < n_live; a2++)
+				for (int b2 = a2 + 1; b2 < n_live; b2++) {
+					int i2 = live[a2], j2 = live[b2];
+					if (tau[i2][j2] > tau_min * 3.0f)
+						printf("DUMP_TAU %s %d %d %.6f\n",
+						       arm_name[arm], i2, j2, (double)tau[i2][j2]);
+				}
+		}
+#endif
 		for (int c = 0; c < N_CHECK; c++)
 			if (it + 1 == checkpoint[c]) out_curve[c] = best_len;
 #if DA_TRACE
@@ -466,6 +484,11 @@ static int32_t run_arm(int arm)
 	   pheromone at all -- every arm would report the same number for the same
 	   uninteresting reason. This repo has published one such zero before
 	   (docs/aco-r1/), so the count is printed rather than assumed. */
+#if DA_DUMP
+	printf("DUMP_TOUR %s", arm_name[arm]);
+	for (int i = 0; i < n_live; i++) printf(" %d", best_tour[i]);
+	printf("\n");
+#endif
 	printf("DYN_ARM arm=%-12s improvements=%3ld  at_iter", arm_name[arm], improvements);
 	for (int c = 0; c < N_CHECK; c++)
 		printf(" %d:%d", checkpoint[c], out_curve[c]);
@@ -533,6 +556,13 @@ int main(void)
 #endif
 		memcpy(snap_dist, dist, sizeof dist);
 
+#if DA_DUMP
+		for (int i = 0; i < DA_N; i++)
+			printf("DUMP_COORD %d %.2f %.2f %d\n", i, cx[i], cy[i], snap_stale[i]);
+		printf("DUMP_TOUR PRE");
+		for (int i = 0; i < n_live; i++) printf(" %d", snap_best[i]);
+		printf("\n");
+#endif
 		int32_t r[N_ARMS];
 		for (int a = 0; a < N_ARMS; a++) {
 			r[a] = run_arm(a);
