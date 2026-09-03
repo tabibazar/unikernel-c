@@ -1,0 +1,25 @@
+#!/bin/sh
+# Custom-runtime entry point. Lambda hands us invocations one at a time on the
+# runtime API; we run the benchmark and hand back whatever it printed.
+#
+# No JSON encoding: Lambda accepts an arbitrary response body, and the
+# benchmark's own PRP_START / PRP_DONE / PRP_PROJECT lines are the payload we
+# actually want. Parsing them client-side keeps the guest side trivial.
+set -eu
+
+API="http://${AWS_LAMBDA_RUNTIME_API}/2018-06-01/runtime"
+
+while true; do
+	HEADERS="$(mktemp)"
+	curl -sS -LD "$HEADERS" "$API/invocation/next" > /dev/null
+	REQ=$(grep -i '^Lambda-Runtime-Aws-Request-Id:' "$HEADERS" \
+	      | tr -d '\r' | awk '{print $2}')
+	rm -f "$HEADERS"
+
+	# PRP_PRIMORIAL / PRP_REPS come from the function's environment so a run
+	# can be retuned without rebuilding or redeploying the binary.
+	OUT=$(/var/task/prp_bench "${PRP_PRIMORIAL:-2357}" "${PRP_REPS:-10}" 2>&1 || echo "PRP_FAILED")
+
+	curl -sS -X POST "$API/invocation/$REQ/response" \
+	     --data-binary "$OUT" > /dev/null
+done
