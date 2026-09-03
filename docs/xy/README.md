@@ -66,11 +66,15 @@ summary of it:
 The exact +/- balance at every temperature is forced by topology on a periodic
 lattice, and is the check that the counter is right.
 
-The crossing sits **above** 0.8929 and drifts down as the lattice grows. That is
-the expected behaviour and not an error to be tuned away: convergence to the
-infinite-lattice value is only *logarithmic* in L, which is why this transition
-is notoriously awkward to pin down numerically and why three sizes show the
-direction of the drift rather than extrapolating to the answer.
+All three crossings sit **above** 0.8929, which is the expected behaviour and
+not an error to be tuned away: finite lattices always cross high, and
+convergence to the infinite-lattice value is only *logarithmic* in L. That
+slowness is why this transition is notoriously awkward to pin down numerically.
+
+The drift downward is visible from 16 to 32 and then stops, because the 64
+point is under-sampled rather than because the drift does. Three sizes here
+show the direction of the effect; they do not extrapolate to the answer, and
+with one of the three unresolved they should not be read as if they did.
 
 Two other signatures come out of the same runs, and both are the mechanism
 rather than a summary of it:
