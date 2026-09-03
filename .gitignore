@@ -23,3 +23,7 @@ aco/build/
 __pycache__/
 aco/build/
 aco/**/register_urls.h
+
+# Local tool state, not project files
+.claude/
+.playwright-mcp/
