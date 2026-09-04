@@ -1,0 +1,3882 @@
+[
+ {
+  "a": "A013579",
+  "age": 17.2,
+  "nterms": 10,
+  "ratio": 7.9,
+  "hw": false,
+  "membound": false,
+  "name": "Number of inequivalent Mendelsohn triple systems (MTS(n,1)) of order n and index 1.",
+  "score": 50.4
+ },
+ {
+  "a": "A027567",
+  "age": 23.5,
+  "nterms": 6,
+  "ratio": null,
+  "hw": false,
+  "membound": false,
+  "name": "Number of distinct (modulo rotation and reflection) n X n panmagic = pandiagonal = diabolic = Na",
+  "score": 50.0
+ },
+ {
+  "a": "A000103",
+  "age": 19.3,
+  "nterms": 24,
+  "ratio": 6.1,
+  "hw": false,
+  "membound": false,
+  "name": "Number of n-node triangulations of sphere in which every node has degree >= 4.",
+  "score": 48.7
+ },
+ {
+  "a": "A076017",
+  "age": 21.3,
+  "nterms": 11,
+  "ratio": 477.9,
+  "hw": false,
+  "membound": false,
+  "name": "Number of nonisomorphic systems with n elements with one binary operation satisfying the equatio",
+  "score": 47.0
+ },
+ {
+  "a": "A001426",
+  "age": 20.2,
+  "nterms": 11,
+  "ratio": 304.8,
+  "hw": false,
+  "membound": false,
+  "name": "Number of commutative semigroups of order n.",
+  "score": 47.0
+ },
+ {
+  "a": "A031436",
+  "age": 24.8,
+  "nterms": 19,
+  "ratio": 14.9,
+  "hw": false,
+  "membound": false,
+  "name": "Number of proper linear spaces of order n.",
+  "score": 46.0
+ },
+ {
+  "a": "A000112",
+  "age": 20.7,
+  "nterms": 17,
+  "ratio": 65.7,
+  "hw": false,
+  "membound": false,
+  "name": "Number of partially ordered sets (\"posets\") with n unlabeled elements.",
+  "score": 46.0
+ },
+ {
+  "a": "A000944",
+  "age": 20.3,
+  "nterms": 18,
+  "ratio": 16.8,
+  "hw": false,
+  "membound": false,
+  "name": "Number of polyhedra (or 3-connected simple planar graphs) with n nodes.",
+  "score": 46.0
+ },
+ {
+  "a": "A001930",
+  "age": 20.7,
+  "nterms": 17,
+  "ratio": 62.7,
+  "hw": false,
+  "membound": false,
+  "name": "Number of topologies, or transitive digraphs with n unlabeled nodes.",
+  "score": 46.0
+ },
+ {
+  "a": "A201127",
+  "age": 14.3,
+  "nterms": 7,
+  "ratio": 1.7,
+  "hw": false,
+  "membound": false,
+  "name": "Maximum water retention of a semi-magic square of order n.",
+  "score": 44.6
+ },
+ {
+  "a": "A007705",
+  "age": 21.3,
+  "nterms": 17,
+  "ratio": null,
+  "hw": false,
+  "membound": false,
+  "name": "Number of ways of arranging 2n+1 nonattacking queens on a 2n+1 X 2n+1 toroidal board.",
+  "score": 44.0
+ },
+ {
+  "a": "A081263",
+  "age": 18.3,
+  "nterms": 7,
+  "ratio": null,
+  "hw": false,
+  "membound": false,
+  "name": "Number of distinct (modulo rotation and reflection) n X n associative panmagic squares.",
+  "score": 42.6
+ },
+ {
+  "a": "A163056",
+  "age": 17.1,
+  "nterms": 4,
+  "ratio": 127.0,
+  "hw": false,
+  "membound": false,
+  "name": "Number of 4 X 4 X 4 magic cubes composed of nonnegative integers with the magic sum n.",
+  "score": 41.2
+ },
+ {
+  "a": "A006204",
+  "age": 17.3,
+  "nterms": 17,
+  "ratio": 12.5,
+  "hw": false,
+  "membound": false,
+  "name": "Number of starters in cyclic group of order 2n+1.",
+  "score": 40.7
+ },
+ {
+  "a": "A027623",
+  "age": 18.4,
+  "nterms": 32,
+  "ratio": 0.2,
+  "hw": false,
+  "membound": false,
+  "name": "a(0) = 1; for n > 0, a(n) = number of rings with n elements.",
+  "score": 40.7
+ },
+ {
+  "a": "A006924",
+  "age": 16.7,
+  "nterms": 17,
+  "ratio": 22.7,
+  "hw": false,
+  "membound": false,
+  "name": "Number of connected trivalent graphs with 2n nodes and girth exactly 4.",
+  "score": 39.5
+ },
+ {
+  "a": "A006925",
+  "age": 16.7,
+  "nterms": 17,
+  "ratio": 23.6,
+  "hw": false,
+  "membound": false,
+  "name": "Number of connected trivalent graphs with 2n nodes and girth exactly 5.",
+  "score": 39.5
+ },
+ {
+  "a": "A006926",
+  "age": 16.7,
+  "nterms": 18,
+  "ratio": 28.2,
+  "hw": false,
+  "membound": false,
+  "name": "Number of connected trivalent graphs with 2n nodes and girth exactly 6.",
+  "score": 39.5
+ },
+ {
+  "a": "A160365",
+  "age": 16.1,
+  "nterms": 10,
+  "ratio": 695.1,
+  "hw": false,
+  "membound": false,
+  "name": "Number of (row,column)-paratopism classes of self-orthogonal Latin squares of order n.",
+  "score": 39.1
+ },
+ {
+  "a": "A221279",
+  "age": 13.6,
+  "nterms": 6,
+  "ratio": 26.0,
+  "hw": false,
+  "membound": false,
+  "name": "Smallest tau-value of a special set (in the sense of Heath-Brown) with n elements.",
+  "score": 39.1
+ },
+ {
+  "a": "A014376",
+  "age": 16.3,
+  "nterms": 24,
+  "ratio": 78.1,
+  "hw": false,
+  "membound": false,
+  "name": "Number of trivalent connected simple graphs with 2n nodes and girth at least 8.",
+  "score": 38.6
+ },
+ {
+  "a": "A058275",
+  "age": 15.6,
+  "nterms": 12,
+  "ratio": 3389.8,
+  "hw": false,
+  "membound": false,
+  "name": "Number of connected 5-regular simple graphs on 2*n vertices with girth at least 4.",
+  "score": 38.2
+ },
+ {
+  "a": "A005855",
+  "age": 17.0,
+  "nterms": 16,
+  "ratio": 1.2,
+  "hw": false,
+  "membound": false,
+  "name": "The coding-theoretic function A(n,10,7).",
+  "score": 37.9
+ },
+ {
+  "a": "A000066",
+  "age": 13.7,
+  "nterms": 10,
+  "ratio": 1.1,
+  "hw": false,
+  "membound": false,
+  "name": "Smallest number of vertices in trivalent graph with girth (shortest cycle) = n.",
+  "score": 37.4
+ },
+ {
+  "a": "A014371",
+  "age": 15.6,
+  "nterms": 17,
+  "ratio": 22.7,
+  "hw": false,
+  "membound": false,
+  "name": "Number of trivalent connected simple graphs with 2*n nodes and girth at least 4.",
+  "score": 37.1
+ },
+ {
+  "a": "A270878",
+  "age": 10.3,
+  "nterms": 11,
+  "ratio": 2.1,
+  "hw": false,
+  "membound": false,
+  "name": "Record differences between record prime gaps, that is, terms of A053695 that set a record.",
+  "score": 36.6
+ },
+ {
+  "a": "A000983",
+  "age": 10.0,
+  "nterms": 9,
+  "ratio": 1.9,
+  "hw": false,
+  "membound": false,
+  "name": "Size of minimal binary covering code of length n and covering radius 1.",
+  "score": 36.0
+ },
+ {
+  "a": "A259544",
+  "age": 9.8,
+  "nterms": 9,
+  "ratio": 2.3,
+  "hw": false,
+  "membound": false,
+  "name": "Minimum greatest integer in a set of n positive integers whose nonempty subsets all have distinc",
+  "score": 35.7
+ },
+ {
+  "a": "A033886",
+  "age": 14.8,
+  "nterms": 24,
+  "ratio": 15.8,
+  "hw": false,
+  "membound": false,
+  "name": "Number of connected 4-regular simple graphs on n vertices with girth at least 4.",
+  "score": 35.7
+ },
+ {
+  "a": "A006923",
+  "age": 14.8,
+  "nterms": 17,
+  "ratio": 22.3,
+  "hw": false,
+  "membound": false,
+  "name": "Number of connected trivalent graphs with 2n nodes and with girth exactly 3.",
+  "score": 35.6
+ },
+ {
+  "a": "A005470",
+  "age": 11.7,
+  "nterms": 13,
+  "ratio": 17.8,
+  "hw": false,
+  "membound": false,
+  "name": "Number of unlabeled planar simple graphs with n nodes.",
+  "score": 35.5
+ },
+ {
+  "a": "A073615",
+  "age": 12.6,
+  "nterms": 13,
+  "ratio": 0.4,
+  "hw": false,
+  "membound": false,
+  "name": "Let p(k) denote the k-th prime; a(n) = smallest p(m) > p(n) such that the n-1 differences betwee",
+  "score": 35.1
+ },
+ {
+  "a": "A283438",
+  "age": 9.5,
+  "nterms": 5,
+  "ratio": 2.6,
+  "hw": false,
+  "membound": false,
+  "name": "The largest possible size of a set in F_3^n, free of three-term arithmetic progressions with the",
+  "score": 35.0
+ },
+ {
+  "a": "A068870",
+  "age": 11.5,
+  "nterms": 12,
+  "ratio": 10.7,
+  "hw": false,
+  "membound": false,
+  "name": "Number of polyhypercubes or 4-dimensional polyominoes with n cells (regarding mirror-images as i",
+  "score": 35.0
+ },
+ {
+  "a": "A122059",
+  "age": 14.0,
+  "nterms": 9,
+  "ratio": null,
+  "hw": false,
+  "membound": false,
+  "name": "Number of different polygonal knots with n straight line segments.",
+  "score": 34.0
+ },
+ {
+  "a": "A002966",
+  "age": 13.1,
+  "nterms": 8,
+  "ratio": 541.4,
+  "hw": false,
+  "membound": false,
+  "name": "Egyptian fractions: number of solutions of 1 = 1/x_1 + ... + 1/x_n where 0 < x_1 <= ... <= x_n.",
+  "score": 33.3
+ },
+ {
+  "a": "A185214",
+  "age": 13.7,
+  "nterms": 32,
+  "ratio": 15.6,
+  "hw": false,
+  "membound": false,
+  "name": "Number of disconnected regular simple graphs on n vertices with girth at least 4.",
+  "score": 33.3
+ },
+ {
+  "a": "A185244",
+  "age": 13.7,
+  "nterms": 32,
+  "ratio": 15.8,
+  "hw": false,
+  "membound": false,
+  "name": "Number of disconnected 4-regular simple graphs on n vertices with girth at least 4.",
+  "score": 33.3
+ },
+ {
+  "a": "A087725",
+  "age": 8.6,
+  "nterms": 4,
+  "ratio": 2.6,
+  "hw": false,
+  "membound": false,
+  "name": "Maximal number of moves required for the n X n generalization of the sliding block 15-puzzle (or",
+  "score": 33.3
+ },
+ {
+  "a": "A001441",
+  "age": 14.2,
+  "nterms": 29,
+  "ratio": 0.3,
+  "hw": false,
+  "membound": false,
+  "name": "Number of inequivalent Costas arrays of order n under dihedral group.",
+  "score": 32.5
+ },
+ {
+  "a": "A008404",
+  "age": 14.3,
+  "nterms": 29,
+  "ratio": 0.2,
+  "hw": false,
+  "membound": false,
+  "name": "Number of Costas arrays of order n, counting rotations and flips as distinct.",
+  "score": 32.5
+ },
+ {
+  "a": "A224239",
+  "age": 12.8,
+  "nterms": 12,
+  "ratio": 989.0,
+  "hw": false,
+  "membound": false,
+  "name": "Number of inequivalent ways to cut an n X n square into squares with integer sides.",
+  "score": 32.5
+ },
+ {
+  "a": "A005432",
+  "age": 13.2,
+  "nterms": 19,
+  "ratio": 60.4,
+  "hw": false,
+  "membound": false,
+  "name": "Number of permutation groups of degree n (or, number of distinct subgroups of symmetric group S_",
+  "score": 32.3
+ },
+ {
+  "a": "A000438",
+  "age": 19.0,
+  "nterms": 7,
+  "ratio": 391460402199.0,
+  "hw": false,
+  "membound": false,
+  "name": "Number of 1-factorizations of complete graph K_{2n}.",
+  "score": 31.9
+ },
+ {
+  "a": "A201126",
+  "age": 7.8,
+  "nterms": 7,
+  "ratio": 1.8,
+  "hw": false,
+  "membound": false,
+  "name": "Maximum water retention of a magic square of order n.",
+  "score": 31.5
+ },
+ {
+  "a": "A004067",
+  "age": 7.7,
+  "nterms": 9,
+  "ratio": 1.6,
+  "hw": false,
+  "membound": false,
+  "name": "The coding-theoretic function A(n,6,7).",
+  "score": 31.4
+ },
+ {
+  "a": "A000479",
+  "age": 18.5,
+  "nterms": 12,
+  "ratio": 7075761568.6,
+  "hw": false,
+  "membound": false,
+  "name": "Number of 1-factorizations of K_{n,n}.",
+  "score": 31.0
+ },
+ {
+  "a": "A089472",
+  "age": 7.5,
+  "nterms": 11,
+  "ratio": 2.6,
+  "hw": false,
+  "membound": false,
+  "name": "Number of different values taken by the determinant of a real (0,1)-matrix of order n.",
+  "score": 30.9
+ },
+ {
+  "a": "A227070",
+  "age": 13.1,
+  "nterms": 49,
+  "ratio": 1.2,
+  "hw": false,
+  "membound": false,
+  "name": "Powers n such that the set s(n) = {k > 0 such that k^n ends with k} does not occur for smaller n",
+  "score": 30.2
+ },
+ {
+  "a": "A308853",
+  "age": 7.0,
+  "nterms": 9,
+  "ratio": 2.8,
+  "hw": false,
+  "membound": false,
+  "name": "a(n) is the minimum absolute value of nonzero determinants of order n Latin squares.",
+  "score": 30.0
+ },
+ {
+  "a": "A068932",
+  "age": 14.4,
+  "nterms": 25,
+  "ratio": 116.3,
+  "hw": false,
+  "membound": false,
+  "name": "Number of disconnected regular graphs with n nodes.",
+  "score": 29.8
+ },
+ {
+  "a": "A328815",
+  "age": 6.8,
+  "nterms": 13,
+  "ratio": 1.8,
+  "hw": false,
+  "membound": false,
+  "name": "The smallest k such that one can form two sets of size n with distinct numbers from 1 to k with ",
+  "score": 29.6
+ },
+ {
+  "a": "A000509",
+  "age": 9.7,
+  "nterms": 12,
+  "ratio": 1.1,
+  "hw": false,
+  "membound": false,
+  "name": "Size of second largest n-arc in PG(2,q), where q runs through the primes and prime powers >= 7.",
+  "score": 29.3
+ },
+ {
+  "a": "A211400",
+  "age": 11.7,
+  "nterms": 31,
+  "ratio": 55.0,
+  "hw": false,
+  "membound": false,
+  "name": "Rectangular array, read by upward diagonals: T(n,m) is the number of Young tableaux that can be ",
+  "score": 29.3
+ },
+ {
+  "a": "A024607",
+  "age": 11.3,
+  "nterms": 17,
+  "ratio": 54.9,
+  "hw": false,
+  "membound": false,
+  "name": "Number of connected triangle-free graphs on n unlabeled nodes.",
+  "score": 28.7
+ },
+ {
+  "a": "A004043",
+  "age": 9.3,
+  "nterms": 10,
+  "ratio": 1.1,
+  "hw": false,
+  "membound": false,
+  "name": "The coding-theoretic function A(n,8,8).",
+  "score": 28.6
+ },
+ {
+  "a": "A010895",
+  "age": 9.0,
+  "nterms": 10,
+  "ratio": 1.3,
+  "hw": false,
+  "membound": false,
+  "name": "Minimal scope of a (2,n) difference triangle.",
+  "score": 28.1
+ },
+ {
+  "a": "A003090",
+  "age": 17.0,
+  "nterms": 11,
+  "ratio": 58477361.2,
+  "hw": false,
+  "membound": false,
+  "name": "Number of species (or \"main classes\" or \"paratopy classes\") of Latin squares of order n.",
+  "score": 27.9
+ },
+ {
+  "a": "A000528",
+  "age": 17.0,
+  "nterms": 11,
+  "ratio": 58477364.2,
+  "hw": false,
+  "membound": false,
+  "name": "Number of types of Latin squares of order n. Equivalently, number of nonisomorphic 1-factorizati",
+  "score": 27.9
+ },
+ {
+  "a": "A090741",
+  "age": 5.8,
+  "nterms": 9,
+  "ratio": 5.8,
+  "hw": false,
+  "membound": false,
+  "name": "Maximum number of transversals in a Latin square of order n.",
+  "score": 27.7
+ },
+ {
+  "a": "A229048",
+  "age": 7.8,
+  "nterms": 10,
+  "ratio": 26.3,
+  "hw": false,
+  "membound": false,
+  "name": "Number of different chromatic polynomials of a simple graph with n nodes.",
+  "score": 27.6
+ },
+ {
+  "a": "A001201",
+  "age": 16.4,
+  "nterms": 7,
+  "ratio": 22368481093520.7,
+  "hw": false,
+  "membound": false,
+  "name": "Number of Steiner triple systems (STS's) on 6n+1 or 6n+3 elements.",
+  "score": 26.8
+ },
+ {
+  "a": "A000474",
+  "age": 16.3,
+  "nterms": 7,
+  "ratio": 2149937065.1,
+  "hw": false,
+  "membound": false,
+  "name": "Number of nonisomorphic 1-factorizations of complete graph K_{2n}.",
+  "score": 26.6
+ },
+ {
+  "a": "A035359",
+  "age": 11.2,
+  "nterms": 17,
+  "ratio": 1.0,
+  "hw": false,
+  "membound": false,
+  "name": "Number of partitions-into-distinct-parts of n (A000009) is a prime.",
+  "score": 26.3
+ },
+ {
+  "a": "A160368",
+  "age": 16.1,
+  "nterms": 10,
+  "ratio": 127650.1,
+  "hw": false,
+  "membound": false,
+  "name": "Number of self-orthogonal Latin squares of order n.",
+  "score": 26.1
+ },
+ {
+  "a": "A160366",
+  "age": 16.1,
+  "nterms": 10,
+  "ratio": 12757.4,
+  "hw": false,
+  "membound": false,
+  "name": "Number of transpose-isomorphism classes of self-orthogonal Latin squares of order n.",
+  "score": 26.1
+ },
+ {
+  "a": "A160367",
+  "age": 16.1,
+  "nterms": 10,
+  "ratio": 12765.0,
+  "hw": false,
+  "membound": false,
+  "name": "Number of idempotent self-orthogonal Latin squares of order n.",
+  "score": 26.1
+ },
+ {
+  "a": "A303331",
+  "age": 7.8,
+  "nterms": 10,
+  "ratio": 1.3,
+  "hw": false,
+  "membound": false,
+  "name": "a(n) is the minimum size of a square integer grid allowing all triples of n points to form trian",
+  "score": 25.7
+ },
+ {
+  "a": "A309258",
+  "age": 6.8,
+  "nterms": 8,
+  "ratio": 43.3,
+  "hw": false,
+  "membound": false,
+  "name": "a(n) is the number of distinct absolute values of determinants of order n Latin squares.",
+  "score": 25.6
+ },
+ {
+  "a": "A004035",
+  "age": 7.7,
+  "nterms": 9,
+  "ratio": 1.2,
+  "hw": false,
+  "membound": false,
+  "name": "The coding-theoretic function A(n,4,5).",
+  "score": 25.5
+ },
+ {
+  "a": "A027851",
+  "age": 15.6,
+  "nterms": 10,
+  "ratio": 28766.9,
+  "hw": false,
+  "membound": false,
+  "name": "Number of nonisomorphic semigroups of order n.",
+  "score": 25.3
+ },
+ {
+  "a": "A226937",
+  "age": 10.6,
+  "nterms": 16,
+  "ratio": 1.1,
+  "hw": false,
+  "membound": false,
+  "name": "Number of different numbers of square parts in the set of partitions of an n X n square lattice ",
+  "score": 25.2
+ },
+ {
+  "a": "A179010",
+  "age": 12.5,
+  "nterms": 81,
+  "ratio": null,
+  "hw": false,
+  "membound": false,
+  "name": "The number of isomorphism classes of commutative quandles of order n.",
+  "score": 25.0
+ },
+ {
+  "a": "A000315",
+  "age": 15.5,
+  "nterms": 11,
+  "ratio": 707576156.9,
+  "hw": false,
+  "membound": false,
+  "name": "Number of reduced Latin squares of order n; also number of labeled loops (quasigroups with an id",
+  "score": 25.0
+ },
+ {
+  "a": "A329685",
+  "age": 6.4,
+  "nterms": 10,
+  "ratio": 64.9,
+  "hw": false,
+  "membound": false,
+  "name": "Number of main classes of self-orthogonal diagonal Latin squares of order n.",
+  "score": 24.7
+ },
+ {
+  "a": "A068843",
+  "age": 9.3,
+  "nterms": 15,
+  "ratio": 21.1,
+  "hw": false,
+  "membound": false,
+  "name": "Smallest prime in the first occurrence of a nondecreasing difference for a set of exactly n succ",
+  "score": 24.6
+ },
+ {
+  "a": "A014372",
+  "age": 9.3,
+  "nterms": 17,
+  "ratio": 23.7,
+  "hw": false,
+  "membound": false,
+  "name": "Number of trivalent connected simple graphs with 2n nodes and girth at least 5.",
+  "score": 24.6
+ },
+ {
+  "a": "A014374",
+  "age": 9.3,
+  "nterms": 19,
+  "ratio": 29.3,
+  "hw": false,
+  "membound": false,
+  "name": "Number of trivalent connected simple graphs with 2n nodes and girth at least 6.",
+  "score": 24.6
+ },
+ {
+  "a": "A061724",
+  "age": 7.1,
+  "nterms": 20,
+  "ratio": 7.4,
+  "hw": false,
+  "membound": false,
+  "name": "Smallest number which has more different digits than its n-th power, or -1 if no such number exi",
+  "score": 24.2
+ },
+ {
+  "a": "A308838",
+  "age": 7.1,
+  "nterms": 16,
+  "ratio": 3.6,
+  "hw": false,
+  "membound": false,
+  "name": "Orders of Parker finite fields of odd characteristic.",
+  "score": 24.1
+ },
+ {
+  "a": "A181771",
+  "age": 12.0,
+  "nterms": 47,
+  "ratio": null,
+  "hw": false,
+  "membound": false,
+  "name": "Number of isomorphism classes of connected quandles of order n.",
+  "score": 23.9
+ },
+ {
+  "a": "A112389",
+  "age": 8.4,
+  "nterms": 10,
+  "ratio": 100.5,
+  "hw": false,
+  "membound": false,
+  "name": "Number of ways, counted up to symmetry, to build a contiguous building with n LEGO blocks of siz",
+  "score": 23.8
+ },
+ {
+  "a": "A003075",
+  "age": 6.7,
+  "nterms": 12,
+  "ratio": 1.1,
+  "hw": false,
+  "membound": false,
+  "name": "Minimal number of comparisons needed for n-element sorting network.",
+  "score": 23.5
+ },
+ {
+  "a": "A124059",
+  "age": 8.2,
+  "nterms": 12,
+  "ratio": 179.7,
+  "hw": false,
+  "membound": false,
+  "name": "Number of connected asymmetric graphs with n nodes.",
+  "score": 23.5
+ },
+ {
+  "a": "A349199",
+  "age": 3.6,
+  "nterms": 9,
+  "ratio": 5.3,
+  "hw": false,
+  "membound": false,
+  "name": "a(n) is the number of distinct numbers of diagonal transversals that an orthogonal diagonal Lati",
+  "score": 23.2
+ },
+ {
+  "a": "A345761",
+  "age": 3.6,
+  "nterms": 9,
+  "ratio": 3.2,
+  "hw": false,
+  "membound": false,
+  "name": "a(n) is the number of distinct numbers of orthogonal diagonal mates that a diagonal Latin square",
+  "score": 23.2
+ },
+ {
+  "a": "A354068",
+  "age": 3.5,
+  "nterms": 9,
+  "ratio": 1.8,
+  "hw": false,
+  "membound": false,
+  "name": "Minimum number of diagonal transversals in an orthogonal diagonal Latin square of order n.",
+  "score": 23.0
+ },
+ {
+  "a": "A360220",
+  "age": 3.5,
+  "nterms": 9,
+  "ratio": 2.8,
+  "hw": false,
+  "membound": false,
+  "name": "Maximum number of diagonal transversals in an orthogonal diagonal Latin square of order n.",
+  "score": 23.0
+ },
+ {
+  "a": "A358515",
+  "age": 3.4,
+  "nterms": 7,
+  "ratio": 4.3,
+  "hw": false,
+  "membound": false,
+  "name": "Number of types of generalized symmetries in diagonal Latin squares of order n in parastrophic s",
+  "score": 22.9
+ },
+ {
+  "a": "A001438",
+  "age": 6.3,
+  "nterms": 8,
+  "ratio": 1.1,
+  "hw": false,
+  "membound": false,
+  "name": "Maximal number of mutually orthogonal Latin squares (or MOLS) of order n.",
+  "score": 22.6
+ },
+ {
+  "a": "A333366",
+  "age": 6.3,
+  "nterms": 10,
+  "ratio": null,
+  "hw": false,
+  "membound": false,
+  "name": "Number of main classes of doubly self-orthogonal diagonal Latin squares of order n.",
+  "score": 22.5
+ },
+ {
+  "a": "A333367",
+  "age": 6.2,
+  "nterms": 10,
+  "ratio": null,
+  "hw": false,
+  "membound": false,
+  "name": "Number of doubly self-orthogonal diagonal Latin squares of order n with the first row in ascendi",
+  "score": 22.5
+ },
+ {
+  "a": "A333671",
+  "age": 6.2,
+  "nterms": 10,
+  "ratio": null,
+  "hw": false,
+  "membound": false,
+  "name": "Number of doubly self-orthogonal diagonal Latin squares of order n.",
+  "score": 22.5
+ },
+ {
+  "a": "A007540",
+  "age": 5.1,
+  "nterms": 3,
+  "ratio": 43.3,
+  "hw": false,
+  "membound": false,
+  "name": "Wilson primes: primes p such that (p-1)! == -1 (mod p^2).",
+  "score": 22.2
+ },
+ {
+  "a": "A006983",
+  "age": 6.1,
+  "nterms": 37,
+  "ratio": 2.6,
+  "hw": false,
+  "membound": false,
+  "name": "Number of simple perfect squared squares of order n up to symmetry.",
+  "score": 22.2
+ },
+ {
+  "a": "A034295",
+  "age": 6.1,
+  "nterms": 28,
+  "ratio": 1.9,
+  "hw": false,
+  "membound": false,
+  "name": "Number of different ways to divide an n X n square into sub-squares, considering only the list o",
+  "score": 22.2
+ },
+ {
+  "a": "A255739",
+  "age": 3.1,
+  "nterms": 13,
+  "ratio": 7.7,
+  "hw": false,
+  "membound": false,
+  "name": "Indices of nontrivial zeros of Riemann zeta function whose imaginary part sets a record for the ",
+  "score": 22.1
+ },
+ {
+  "a": "A255742",
+  "age": 3.1,
+  "nterms": 13,
+  "ratio": 6.4,
+  "hw": false,
+  "membound": false,
+  "name": "Integers setting a record for the absolute minimal difference from the imaginary part of a nontr",
+  "score": 22.1
+ },
+ {
+  "a": "A001206",
+  "age": 14.0,
+  "nterms": 10,
+  "ratio": 1841935216.1,
+  "hw": false,
+  "membound": false,
+  "name": "Number of self-dual monotone Boolean functions of n variables.",
+  "score": 22.1
+ },
+ {
+  "a": "A174283",
+  "age": 5.8,
+  "nterms": 17,
+  "ratio": 2.7,
+  "hw": false,
+  "membound": false,
+  "name": "Number of distinct resistances that can be produced using n equal resistors in, series, parallel",
+  "score": 21.7
+ },
+ {
+  "a": "A217156",
+  "age": 5.9,
+  "nterms": 37,
+  "ratio": 2.6,
+  "hw": false,
+  "membound": false,
+  "name": "Number of perfect squared squares of order n up to symmetries of the square.",
+  "score": 21.7
+ },
+ {
+  "a": "A081262",
+  "age": 7.8,
+  "nterms": 7,
+  "ratio": null,
+  "hw": false,
+  "membound": false,
+  "name": "Number of distinct (modulo rotation and reflection) n X n associative magic squares.",
+  "score": 21.5
+ },
+ {
+  "a": "A003179",
+  "age": 7.8,
+  "nterms": 19,
+  "ratio": 21.5,
+  "hw": false,
+  "membound": false,
+  "name": "Number of self-dual binary codes of length 2n (up to column permutation equivalence).",
+  "score": 21.5
+ },
+ {
+  "a": "A014552",
+  "age": 10.5,
+  "nterms": 30,
+  "ratio": null,
+  "hw": false,
+  "membound": false,
+  "name": "Number of solutions to Langford (or Langford-Skolem) problem (up to reversal of the order).",
+  "score": 21.1
+ },
+ {
+  "a": "A090245",
+  "age": 2.5,
+  "nterms": 7,
+  "ratio": 2.5,
+  "hw": false,
+  "membound": false,
+  "name": "Maximum numbers of cards that would have no SET in an n-attribute version of the SET card game.",
+  "score": 21.0
+ },
+ {
+  "a": "A003216",
+  "age": 7.0,
+  "nterms": 13,
+  "ratio": 316.8,
+  "hw": false,
+  "membound": false,
+  "name": "Number of Hamiltonian graphs with n nodes.",
+  "score": 21.0
+ },
+ {
+  "a": "A348212",
+  "age": 4.5,
+  "nterms": 13,
+  "ratio": 91.9,
+  "hw": false,
+  "membound": false,
+  "name": "Number of transversals in a cyclic diagonal Latin square of order 2n+1.",
+  "score": 20.9
+ },
+ {
+  "a": "A119770",
+  "age": 13.4,
+  "nterms": 8,
+  "ratio": 485871.8,
+  "hw": false,
+  "membound": false,
+  "name": "Number of different antimatroids on n labeled items.",
+  "score": 20.8
+ },
+ {
+  "a": "A101877",
+  "age": 2.4,
+  "nterms": 8,
+  "ratio": 2.6,
+  "hw": false,
+  "membound": false,
+  "name": "a(n) = k implies that there exists a set S of positive integers such that Sum_{ s_i in S } 1/s_i",
+  "score": 20.7
+ },
+ {
+  "a": "A268856",
+  "age": 4.3,
+  "nterms": 8,
+  "ratio": 25.0,
+  "hw": false,
+  "membound": false,
+  "name": "a(n) = smallest magic sum of any 3 X 3 magic square which contains exactly n numbers that are tr",
+  "score": 20.6
+ },
+ {
+  "a": "A342306",
+  "age": 5.3,
+  "nterms": 8,
+  "ratio": null,
+  "hw": false,
+  "membound": false,
+  "name": "Number of pandiagonal Latin squares of order 2n+1.",
+  "score": 20.6
+ },
+ {
+  "a": "A181769",
+  "age": 4.2,
+  "nterms": 14,
+  "ratio": 22.2,
+  "hw": false,
+  "membound": false,
+  "name": "Number of isomorphism classes of quandles of order n.",
+  "score": 20.4
+ },
+ {
+  "a": "A287761",
+  "age": 6.4,
+  "nterms": 10,
+  "ratio": 1041.9,
+  "hw": false,
+  "membound": false,
+  "name": "Number of self-orthogonal diagonal Latin squares of order n with the first row in ascending orde",
+  "score": 19.7
+ },
+ {
+  "a": "A066225",
+  "age": 4.8,
+  "nterms": 11,
+  "ratio": 1.3,
+  "hw": false,
+  "membound": false,
+  "name": "Covering numbers C(n,n-4,n-5).",
+  "score": 19.7
+ },
+ {
+  "a": "A357514",
+  "age": 1.9,
+  "nterms": 9,
+  "ratio": 8.2,
+  "hw": false,
+  "membound": false,
+  "name": "Minimum number of transversals in an orthogonal diagonal Latin square of order n.",
+  "score": 19.7
+ },
+ {
+  "a": "A020754",
+  "age": 4.8,
+  "nterms": 18,
+  "ratio": 5.3,
+  "hw": false,
+  "membound": false,
+  "name": "Increasing gaps between squarefree numbers (lower end).",
+  "score": 19.7
+ },
+ {
+  "a": "A005853",
+  "age": 7.7,
+  "nterms": 17,
+  "ratio": 1.4,
+  "hw": false,
+  "membound": false,
+  "name": "The coding-theoretic function A(n,8,7).",
+  "score": 19.4
+ },
+ {
+  "a": "A309210",
+  "age": 1.6,
+  "nterms": 10,
+  "ratio": 1.8,
+  "hw": false,
+  "membound": false,
+  "name": "Number of main classes of extended self-orthogonal diagonal Latin squares of order n.",
+  "score": 19.2
+ },
+ {
+  "a": "A350585",
+  "age": 3.6,
+  "nterms": 9,
+  "ratio": 11.8,
+  "hw": false,
+  "membound": false,
+  "name": "a(n) is the number of distinct numbers of transversals that an orthogonal diagonal Latin square ",
+  "score": 19.2
+ },
+ {
+  "a": "A344105",
+  "age": 1.5,
+  "nterms": 9,
+  "ratio": 5.6,
+  "hw": false,
+  "membound": false,
+  "name": "a(n) is the number of distinct numbers of transversals of order n diagonal Latin squares.",
+  "score": 19.0
+ },
+ {
+  "a": "A299783",
+  "age": 1.4,
+  "nterms": 8,
+  "ratio": 3.0,
+  "hw": false,
+  "membound": false,
+  "name": "Minimum size of a main class for diagonal Latin squares of order n with the first row in ascendi",
+  "score": 18.8
+ },
+ {
+  "a": "A006074",
+  "age": 4.2,
+  "nterms": 22,
+  "ratio": 3.7,
+  "hw": false,
+  "membound": false,
+  "name": "Number of polyaboloes (or polytans): number of different shapes that can be formed with n congru",
+  "score": 18.5
+ },
+ {
+  "a": "A003094",
+  "age": 3.2,
+  "nterms": 14,
+  "ratio": 19.0,
+  "hw": false,
+  "membound": false,
+  "name": "Number of unlabeled connected planar simple graphs with n nodes.",
+  "score": 18.3
+ },
+ {
+  "a": "A052447",
+  "age": 5.6,
+  "nterms": 12,
+  "ratio": 123.9,
+  "hw": false,
+  "membound": false,
+  "name": "Number of simple unlabeled n-node graphs of edge-connectivity 2.",
+  "score": 18.3
+ },
+ {
+  "a": "A309344",
+  "age": 1.1,
+  "nterms": 8,
+  "ratio": 2.1,
+  "hw": false,
+  "membound": false,
+  "name": "a(n) is the number of distinct numbers of transversals of order n Latin squares.",
+  "score": 18.1
+ },
+ {
+  "a": "A385931",
+  "age": 1.0,
+  "nterms": 10,
+  "ratio": 1.6,
+  "hw": false,
+  "membound": false,
+  "name": "a(n) is the least integer such that there is an n-element set of integers between 0 and a(n) suc",
+  "score": 17.9
+ },
+ {
+  "a": "A309257",
+  "age": 6.9,
+  "nterms": 15,
+  "ratio": 0.2,
+  "hw": false,
+  "membound": false,
+  "name": "a(n) is the minimum positive value of the determinants of circulant order n Latin squares.",
+  "score": 17.8
+ },
+ {
+  "a": "A365654",
+  "age": 0.9,
+  "nterms": 12,
+  "ratio": 8.3,
+  "hw": false,
+  "membound": false,
+  "name": "Number of free n-polyominoids, allowing right-angled connections only (\"hard\" polyominoids).",
+  "score": 17.7
+ },
+ {
+  "a": "A345370",
+  "age": 0.8,
+  "nterms": 9,
+  "ratio": 3.9,
+  "hw": false,
+  "membound": false,
+  "name": "a(n) is the number of distinct numbers of diagonal transversals that a diagonal Latin square of ",
+  "score": 17.6
+ },
+ {
+  "a": "A340545",
+  "age": 5.3,
+  "nterms": 9,
+  "ratio": 1428.9,
+  "hw": false,
+  "membound": false,
+  "name": "Number of main classes of centrally symmetric diagonal Latin squares of order n.",
+  "score": 17.5
+ },
+ {
+  "a": "A357473",
+  "age": 3.6,
+  "nterms": 7,
+  "ratio": 1.0,
+  "hw": false,
+  "membound": false,
+  "name": "Number of types of generalized symmetries in diagonal Latin squares of order n.",
+  "score": 17.2
+ },
+ {
+  "a": "A011984",
+  "age": 0.6,
+  "nterms": 6,
+  "ratio": 1.6,
+  "hw": false,
+  "membound": false,
+  "name": "Covering numbers C(n,6,4).",
+  "score": 17.1
+ },
+ {
+  "a": "A027624",
+  "age": 11.5,
+  "nterms": 7,
+  "ratio": 77684.8,
+  "hw": false,
+  "membound": false,
+  "name": "Number of independent vertex sets in the n-hypercube graph Q_n.",
+  "score": 17.1
+ },
+ {
+  "a": "A337517",
+  "age": 3.3,
+  "nterms": 21,
+  "ratio": 3.2,
+  "hw": false,
+  "membound": false,
+  "name": "a(n) is the number of distinct resistances that can be produced from a circuit with exactly n un",
+  "score": 16.6
+ },
+ {
+  "a": "A180414",
+  "age": 3.3,
+  "nterms": 21,
+  "ratio": 3.2,
+  "hw": false,
+  "membound": false,
+  "name": "Number of different resistances that can be obtained by combining n one-ohm resistors.",
+  "score": 16.6
+ },
+ {
+  "a": "A338197",
+  "age": 3.3,
+  "nterms": 20,
+  "ratio": 3.2,
+  "hw": false,
+  "membound": false,
+  "name": "a(n) is the number of distinct resistances that can be obtained by a network of exactly n equal ",
+  "score": 16.6
+ },
+ {
+  "a": "A299784",
+  "age": 6.2,
+  "nterms": 15,
+  "ratio": 1.0,
+  "hw": false,
+  "membound": false,
+  "name": "Maximum size of a main class for diagonal Latin squares of order n with the first row in ascendi",
+  "score": 16.5
+ },
+ {
+  "a": "A076016",
+  "age": 4.7,
+  "nterms": 11,
+  "ratio": 5259.7,
+  "hw": false,
+  "membound": false,
+  "name": "Number of systems with n elements having one binary operation satisfying the equation B(AB)=A (s",
+  "score": 16.5
+ },
+ {
+  "a": "A089925",
+  "age": 4.7,
+  "nterms": 14,
+  "ratio": 3724.6,
+  "hw": false,
+  "membound": false,
+  "name": "Number of commutative loops (quasigroups with an identity element) of order n.",
+  "score": 16.5
+ },
+ {
+  "a": "A088532",
+  "age": 0.2,
+  "nterms": 13,
+  "ratio": 2.0,
+  "hw": false,
+  "membound": false,
+  "name": "\"Patterns of permutations\": Define the \"pattern\" formed by k positions in a permutation to be th",
+  "score": 16.5
+ },
+ {
+  "a": "A072842",
+  "age": 0.2,
+  "nterms": 4,
+  "ratio": 2.9,
+  "hw": false,
+  "membound": false,
+  "name": "Largest m such that we can partition the set {1,2,...,m} into n subsets with the property that w",
+  "score": 16.5
+ },
+ {
+  "a": "A019988",
+  "age": 3.3,
+  "nterms": 18,
+  "ratio": 4.9,
+  "hw": false,
+  "membound": false,
+  "name": "Number of ways of embedding a connected graph with n edges in the square lattice.",
+  "score": 16.5
+ },
+ {
+  "a": "A129732",
+  "age": 11.0,
+  "nterms": 7,
+  "ratio": 42423.3,
+  "hw": false,
+  "membound": false,
+  "name": "Number of main classes of Graeco-Latin squares of order n. That is, species of pairs of orthogon",
+  "score": 16.0
+ },
+ {
+  "a": "A010899",
+  "age": null,
+  "nterms": 4,
+  "ratio": 1.7,
+  "hw": false,
+  "membound": false,
+  "name": "Minimal scope of a (6,n) difference triangle.",
+  "score": 16.0
+ },
+ {
+  "a": "A004036",
+  "age": null,
+  "nterms": 7,
+  "ratio": 2.0,
+  "hw": false,
+  "membound": false,
+  "name": "The coding-theoretic function A(n,4,6).",
+  "score": 16.0
+ },
+ {
+  "a": "A004039",
+  "age": null,
+  "nterms": 11,
+  "ratio": 1.6,
+  "hw": false,
+  "membound": false,
+  "name": "The coding-theoretic function A(n,6,6).",
+  "score": 16.0
+ },
+ {
+  "a": "A004047",
+  "age": null,
+  "nterms": 11,
+  "ratio": 1.9,
+  "hw": false,
+  "membound": false,
+  "name": "The coding-theoretic function A(n,10,9).",
+  "score": 16.0
+ },
+ {
+  "a": "A076020",
+  "age": null,
+  "nterms": 9,
+  "ratio": 7.5,
+  "hw": false,
+  "membound": false,
+  "name": "Number of systems with n elements with one binary operation satisfying the equation B(AB)=A (sem",
+  "score": 16.0
+ },
+ {
+  "a": "A011983",
+  "age": null,
+  "nterms": 8,
+  "ratio": 1.7,
+  "hw": false,
+  "membound": false,
+  "name": "Covering numbers C(n,5,4).",
+  "score": 16.0
+ },
+ {
+  "a": "A066009",
+  "age": null,
+  "nterms": 5,
+  "ratio": 1.9,
+  "hw": false,
+  "membound": false,
+  "name": "Covering numbers C(n,7,6).",
+  "score": 16.0
+ },
+ {
+  "a": "A099999",
+  "age": null,
+  "nterms": 12,
+  "ratio": 7.4,
+  "hw": false,
+  "membound": false,
+  "name": "Number of geometrical configurations of type (n_3).",
+  "score": 16.0
+ },
+ {
+  "a": "A011987",
+  "age": null,
+  "nterms": 5,
+  "ratio": 1.7,
+  "hw": false,
+  "membound": false,
+  "name": "Covering numbers C(n,6,5).",
+  "score": 16.0
+ },
+ {
+  "a": "A066011",
+  "age": null,
+  "nterms": 5,
+  "ratio": 2.0,
+  "hw": false,
+  "membound": false,
+  "name": "Covering numbers C(n,8,7).",
+  "score": 16.0
+ },
+ {
+  "a": "A066137",
+  "age": null,
+  "nterms": 5,
+  "ratio": 2.2,
+  "hw": false,
+  "membound": false,
+  "name": "Covering numbers C(n,9,8).",
+  "score": 16.0
+ },
+ {
+  "a": "A309088",
+  "age": null,
+  "nterms": 7,
+  "ratio": 3.1,
+  "hw": false,
+  "membound": false,
+  "name": "a(n) is the number of isotopy classes of order n Latin squares that produce a unique determinant",
+  "score": 16.0
+ },
+ {
+  "a": "A011985",
+  "age": null,
+  "nterms": 5,
+  "ratio": 1.7,
+  "hw": false,
+  "membound": false,
+  "name": "Covering numbers C(n,7,4).",
+  "score": 16.0
+ },
+ {
+  "a": "A261750",
+  "age": null,
+  "nterms": 7,
+  "ratio": 9.7,
+  "hw": false,
+  "membound": false,
+  "name": "Number of conjugacy classes of two-element generating sets in the symmetric group S_n.",
+  "score": 16.0
+ },
+ {
+  "a": "A011988",
+  "age": null,
+  "nterms": 4,
+  "ratio": 2.2,
+  "hw": false,
+  "membound": false,
+  "name": "Covering numbers C(n,7,5).",
+  "score": 16.0
+ },
+ {
+  "a": "A011989",
+  "age": null,
+  "nterms": 5,
+  "ratio": 1.6,
+  "hw": false,
+  "membound": false,
+  "name": "Covering numbers C(n,8,5).",
+  "score": 16.0
+ },
+ {
+  "a": "A011990",
+  "age": null,
+  "nterms": 4,
+  "ratio": 1.7,
+  "hw": false,
+  "membound": false,
+  "name": "Covering numbers C(n,9,5).",
+  "score": 16.0
+ },
+ {
+  "a": "A336764",
+  "age": null,
+  "nterms": 7,
+  "ratio": 1.8,
+  "hw": false,
+  "membound": false,
+  "name": "Maximum number of order 3 subsquares in a Latin square of order n.",
+  "score": 16.0
+ },
+ {
+  "a": "A226897",
+  "age": null,
+  "nterms": 13,
+  "ratio": 2.3,
+  "hw": false,
+  "membound": false,
+  "name": "a(n) is the total number of parts in the set of partitions of an n X n square lattice into squar",
+  "score": 16.0
+ },
+ {
+  "a": "A259545",
+  "age": null,
+  "nterms": 8,
+  "ratio": 2.3,
+  "hw": false,
+  "membound": false,
+  "name": "Minimum number k such that, for every m >= k, there exists a set of n positive integers whose la",
+  "score": 16.0
+ },
+ {
+  "a": "A036500",
+  "age": null,
+  "nterms": 10,
+  "ratio": 2.0,
+  "hw": false,
+  "membound": false,
+  "name": "Number of inequivalent cyclic Hadamard difference sets with parameters (2^n-1, 2^(n-1)-1, 2^(n-2",
+  "score": 16.0
+ },
+ {
+  "a": "A383684",
+  "age": null,
+  "nterms": 10,
+  "ratio": 5.4,
+  "hw": false,
+  "membound": false,
+  "name": "Minimum number of transversals in an extended self-orthogonal diagonal Latin square of order n.",
+  "score": 16.0
+ },
+ {
+  "a": "A387236",
+  "age": null,
+  "nterms": 10,
+  "ratio": 5.0,
+  "hw": false,
+  "membound": false,
+  "name": "Minimum number of diagonal transversals in an extended self-orthogonal diagonal Latin square of ",
+  "score": 16.0
+ },
+ {
+  "a": "A076021",
+  "age": 4.7,
+  "nterms": 12,
+  "ratio": null,
+  "hw": false,
+  "membound": false,
+  "name": "Number of fully idempotent systems with n elements with one binary operation satisfying the equa",
+  "score": 15.5
+ },
+ {
+  "a": "A000679",
+  "age": 4.2,
+  "nterms": 11,
+  "ratio": 4715.7,
+  "hw": false,
+  "membound": false,
+  "name": "Number of groups of order 2^n.",
+  "score": 15.5
+ },
+ {
+  "a": "A309598",
+  "age": 1.6,
+  "nterms": 10,
+  "ratio": 20.9,
+  "hw": false,
+  "membound": false,
+  "name": "Number of extended self-orthogonal diagonal Latin squares of order n with the first row in ascen",
+  "score": 15.2
+ },
+ {
+  "a": "A004137",
+  "age": 5.5,
+  "nterms": 26,
+  "ratio": 1.1,
+  "hw": false,
+  "membound": false,
+  "name": "Maximal number of edges in a graceful graph on n nodes.",
+  "score": 15.1
+ },
+ {
+  "a": "A360223",
+  "age": 2.5,
+  "nterms": 9,
+  "ratio": 0.6,
+  "hw": false,
+  "membound": false,
+  "name": "Maximum number of intercalates in an orthogonal diagonal Latin square of order n.",
+  "score": 15.0
+ },
+ {
+  "a": "A000162",
+  "age": 2.5,
+  "nterms": 22,
+  "ratio": 7.8,
+  "hw": false,
+  "membound": false,
+  "name": "Number of 3-dimensional polyominoes (or polycubes) with n cells.",
+  "score": 14.9
+ },
+ {
+  "a": "A269231",
+  "age": 10.4,
+  "nterms": 9,
+  "ratio": 47374.9,
+  "hw": false,
+  "membound": false,
+  "name": "a(n) = smallest magic sum of any 3 X 3 semimagic square which contains exactly n cubes.",
+  "score": 14.8
+ },
+ {
+  "a": "A006075",
+  "age": 5.2,
+  "nterms": 21,
+  "ratio": 1.1,
+  "hw": false,
+  "membound": false,
+  "name": "Minimal number of knights needed to cover an n X n board.",
+  "score": 14.5
+ },
+ {
+  "a": "A250001",
+  "age": 1.2,
+  "nterms": 6,
+  "ratio": 98.0,
+  "hw": false,
+  "membound": false,
+  "name": "Number of arrangements of n circles in the affine plane.",
+  "score": 14.5
+ },
+ {
+  "a": "A384254",
+  "age": 1.2,
+  "nterms": 13,
+  "ratio": 12.5,
+  "hw": false,
+  "membound": false,
+  "name": "Number of connected components of n polyhedra in the rectified cubic honeycomb up to translation",
+  "score": 14.5
+ },
+ {
+  "a": "A038173",
+  "age": 1.2,
+  "nterms": 12,
+  "ratio": 12.3,
+  "hw": false,
+  "membound": false,
+  "name": "Number of \"connected animals\" formed from n rhombic dodecahedra (or edge-connected cubes) in the",
+  "score": 14.4
+ },
+ {
+  "a": "A002839",
+  "age": 2.1,
+  "nterms": 26,
+  "ratio": 3.6,
+  "hw": false,
+  "membound": false,
+  "name": "Number of simple perfect squared rectangles of order n up to symmetry.",
+  "score": 14.2
+ },
+ {
+  "a": "A006821",
+  "age": 6.5,
+  "nterms": 15,
+  "ratio": 4243.9,
+  "hw": false,
+  "membound": false,
+  "name": "Number of connected regular graphs of degree 5 (or quintic graphs) with 2n nodes.",
+  "score": 14.0
+ },
+ {
+  "a": "A051427",
+  "age": 5.0,
+  "nterms": 15,
+  "ratio": 1.0,
+  "hw": false,
+  "membound": false,
+  "name": "Number of strictly Deza graphs with n nodes.",
+  "score": 13.9
+ },
+ {
+  "a": "A091323",
+  "age": 0.9,
+  "nterms": 5,
+  "ratio": 22.7,
+  "hw": false,
+  "membound": false,
+  "name": "Minimum number of transversals in a Latin square of order 2n+1.",
+  "score": 13.9
+ },
+ {
+  "a": "A038119",
+  "age": 2.0,
+  "nterms": 22,
+  "ratio": 7.8,
+  "hw": false,
+  "membound": false,
+  "name": "Number of n-celled solid polyominoes (or free polycubes, allowing mirror-image identification).",
+  "score": 13.9
+ },
+ {
+  "a": "A389506",
+  "age": 0.9,
+  "nterms": 9,
+  "ratio": 29.0,
+  "hw": false,
+  "membound": false,
+  "name": "Smallest even number which cannot be written as the difference of two numbers which are less tha",
+  "score": 13.8
+ },
+ {
+  "a": "A365995",
+  "age": 0.9,
+  "nterms": 8,
+  "ratio": 15.3,
+  "hw": false,
+  "membound": false,
+  "name": "Number of free polyominoids with n cells, allowing flat corner-connections and right-angled edge",
+  "score": 13.7
+ },
+ {
+  "a": "A376587",
+  "age": 0.8,
+  "nterms": 7,
+  "ratio": 28.2,
+  "hw": false,
+  "membound": false,
+  "name": "Minimum number of diagonal transversals in the diagonal Latin squares of order 2n+1 defined in A",
+  "score": 13.5
+ },
+ {
+  "a": "A048211",
+  "age": 1.7,
+  "nterms": 30,
+  "ratio": 2.5,
+  "hw": false,
+  "membound": false,
+  "name": "Number of distinct resistances that can be produced from a circuit of n equal resistors using on",
+  "score": 13.5
+ },
+ {
+  "a": "A153588",
+  "age": 1.7,
+  "nterms": 30,
+  "ratio": 2.5,
+  "hw": false,
+  "membound": false,
+  "name": "Number of resistance values that can be constructed using up to n equal resistances by arranging",
+  "score": 13.5
+ },
+ {
+  "a": "A214368",
+  "age": 9.7,
+  "nterms": 6,
+  "ratio": 31588127.5,
+  "hw": false,
+  "membound": false,
+  "name": "Number of nontrivial partial Latin squares of order n; or labeled partial quasigroups.",
+  "score": 13.4
+ },
+ {
+  "a": "A006247",
+  "age": 3.2,
+  "nterms": 13,
+  "ratio": 530.0,
+  "hw": false,
+  "membound": false,
+  "name": "Number of simple arrangements of n pseudolines in the projective plane with a marked cell. Numbe",
+  "score": 13.4
+ },
+ {
+  "a": "A358394",
+  "age": 3.6,
+  "nterms": 7,
+  "ratio": null,
+  "hw": false,
+  "membound": false,
+  "name": "Number of types of generalized symmetries in orthogonal diagonal Latin squares of order n.",
+  "score": 13.2
+ },
+ {
+  "a": "A394773",
+  "age": 0.4,
+  "nterms": 12,
+  "ratio": 25.1,
+  "hw": false,
+  "membound": false,
+  "name": "Let k and k+1 be two consecutive integers. Let x be the even number and y the odd one, and compu",
+  "score": 12.9
+ },
+ {
+  "a": "A358891",
+  "age": 3.4,
+  "nterms": 7,
+  "ratio": null,
+  "hw": false,
+  "membound": false,
+  "name": "Number of types of generalized symmetries in orthogonal diagonal Latin squares of order n in par",
+  "score": 12.9
+ },
+ {
+  "a": "A340546",
+  "age": 2.9,
+  "nterms": 4,
+  "ratio": 4858.5,
+  "hw": false,
+  "membound": false,
+  "name": "Number of main classes of diagonal Latin squares of order 2n that contain a one-plane symmetric ",
+  "score": 12.7
+ },
+ {
+  "a": "A006609",
+  "age": 1.3,
+  "nterms": 19,
+  "ratio": 7.5,
+  "hw": false,
+  "membound": false,
+  "name": "Number of cyclic neofields of order n.",
+  "score": 12.6
+ },
+ {
+  "a": "A006455",
+  "age": 2.8,
+  "nterms": 13,
+  "ratio": 114.6,
+  "hw": false,
+  "membound": false,
+  "name": "Number of partial orders on {1,2,...,n} that are contained in the usual linear order (i.e., xRy ",
+  "score": 12.6
+ },
+ {
+  "a": "A343909",
+  "age": 1.2,
+  "nterms": 17,
+  "ratio": 7.3,
+  "hw": false,
+  "membound": false,
+  "name": "Number of generalized polyforms on the tetrahedral-octahedral honeycomb with n cells.",
+  "score": 12.5
+ },
+ {
+  "a": "A197459",
+  "age": 1.3,
+  "nterms": 25,
+  "ratio": 3.2,
+  "hw": false,
+  "membound": false,
+  "name": "Number of free poly-[3.6.3.6]-tiles (holes allowed) with n cells (division into rhombi is signif",
+  "score": 12.5
+ },
+ {
+  "a": "A197465",
+  "age": 1.3,
+  "nterms": 29,
+  "ratio": 2.7,
+  "hw": false,
+  "membound": false,
+  "name": "Number of free tetrakis polyaboloes (poly-[4.8^2]-tiles) with n cells, allowing holes, where div",
+  "score": 12.5
+ },
+ {
+  "a": "A197156",
+  "age": 1.3,
+  "nterms": 20,
+  "ratio": 4.3,
+  "hw": false,
+  "membound": false,
+  "name": "Number of free poly-[3^3.4^2]-tiles (polyhouses) (holes allowed) with n cells.",
+  "score": 12.5
+ },
+ {
+  "a": "A343398",
+  "age": 1.2,
+  "nterms": 21,
+  "ratio": 4.3,
+  "hw": false,
+  "membound": false,
+  "name": "Number of generalized polyforms on the trihexagonal tiling with n cells.",
+  "score": 12.5
+ },
+ {
+  "a": "A288760",
+  "age": 9.2,
+  "nterms": 7,
+  "ratio": 11958.7,
+  "hw": false,
+  "membound": false,
+  "name": "Number of distinct nonnegative rational numbers that can be obtained in n steps by applying addi",
+  "score": 12.4
+ },
+ {
+  "a": "A199006",
+  "age": 1.2,
+  "nterms": 7,
+  "ratio": 0.1,
+  "hw": false,
+  "membound": false,
+  "name": "Related to number of Hadamard matrices of order 4n.",
+  "score": 12.3
+ },
+ {
+  "a": "A141599",
+  "age": 0.1,
+  "nterms": 12,
+  "ratio": 71.1,
+  "hw": false,
+  "membound": false,
+  "name": "Number of difference sets for permutations of [2n] with distinct differences.",
+  "score": 12.2
+ },
+ {
+  "a": "A309985",
+  "age": 0.1,
+  "nterms": 10,
+  "ratio": 34.5,
+  "hw": false,
+  "membound": false,
+  "name": "Maximum determinant of an n X n Latin square.",
+  "score": 12.2
+ },
+ {
+  "a": "A102508",
+  "age": 1.1,
+  "nterms": 12,
+  "ratio": 1.4,
+  "hw": false,
+  "membound": false,
+  "name": "Suppose there are equally spaced chairs around a round table. Then a(n) is the maximal number of",
+  "score": 12.2
+ },
+ {
+  "a": "A288759",
+  "age": 9.1,
+  "nterms": 7,
+  "ratio": 12128.8,
+  "hw": false,
+  "membound": false,
+  "name": "Number of distinct rational numbers that can be obtained in n steps by applying addition, subtra",
+  "score": 12.2
+ },
+ {
+  "a": "A119291",
+  "age": 0.0,
+  "nterms": 14,
+  "ratio": 10.7,
+  "hw": false,
+  "membound": false,
+  "name": "Total number of zero digits in first 10^n primes.",
+  "score": 12.1
+ },
+ {
+  "a": "A119300",
+  "age": 0.0,
+  "nterms": 14,
+  "ratio": 10.6,
+  "hw": false,
+  "membound": false,
+  "name": "Total number of 9's digits in the first 10^n primes.",
+  "score": 12.1
+ },
+ {
+  "a": "A375475",
+  "age": null,
+  "nterms": 7,
+  "ratio": 36.2,
+  "hw": false,
+  "membound": false,
+  "name": "Number of main classes of diagonalized cyclic diagonal Latin squares of order 2n+1.",
+  "score": 12.0
+ },
+ {
+  "a": "A271450",
+  "age": null,
+  "nterms": 5,
+  "ratio": 21.0,
+  "hw": false,
+  "membound": false,
+  "name": "a(n) = smallest magic sum of any 3 X 3 magic square which contains exactly n cubes, or 0 if no s",
+  "score": 12.0
+ },
+ {
+  "a": "A076018",
+  "age": null,
+  "nterms": 9,
+  "ratio": 35.6,
+  "hw": false,
+  "membound": false,
+  "name": "Number of systems with n elements with one binary operation satisfying the equation B(AB)=A (sem",
+  "score": 12.0
+ },
+ {
+  "a": "A342998",
+  "age": null,
+  "nterms": 10,
+  "ratio": 55.0,
+  "hw": false,
+  "membound": false,
+  "name": "Minimum number of diagonal transversals in a cyclic diagonal Latin square of order 2n+1.",
+  "score": 12.0
+ },
+ {
+  "a": "A342997",
+  "age": null,
+  "nterms": 10,
+  "ratio": 54.9,
+  "hw": false,
+  "membound": false,
+  "name": "Maximum number of diagonal transversals in a cyclic diagonal Latin square of order 2n+1.",
+  "score": 12.0
+ },
+ {
+  "a": "A263803",
+  "age": null,
+  "nterms": 6,
+  "ratio": 39.9,
+  "hw": false,
+  "membound": false,
+  "name": "Number of conjugacy classes of independent sets of permutations of n points, i.e., subsets of th",
+  "score": 12.0
+ },
+ {
+  "a": "A391212",
+  "age": null,
+  "nterms": 7,
+  "ratio": 27.2,
+  "hw": false,
+  "membound": false,
+  "name": "Maximum number of diagonal transversals in the diagonal Latin squares of order 2n+1 defined in A",
+  "score": 12.0
+ },
+ {
+  "a": "A123762",
+  "age": null,
+  "nterms": 12,
+  "ratio": 14.6,
+  "hw": false,
+  "membound": false,
+  "name": "Number of ways, counted up to symmetry, to build a contiguous building with n LEGO blocks of siz",
+  "score": 12.0
+ },
+ {
+  "a": "A075679",
+  "age": null,
+  "nterms": 12,
+  "ratio": 13.2,
+  "hw": false,
+  "membound": false,
+  "name": "Number of free (rotations and reflections count as same shape) polyominoids (shapes made of face",
+  "score": 12.0
+ },
+ {
+  "a": "A241465",
+  "age": null,
+  "nterms": 10,
+  "ratio": 10.3,
+  "hw": false,
+  "membound": false,
+  "name": "Number of simple connected graphs g on n nodes with |Aut(g)| = 48.",
+  "score": 12.0
+ },
+ {
+  "a": "A338620",
+  "age": 0.9,
+  "nterms": 8,
+  "ratio": null,
+  "hw": false,
+  "membound": false,
+  "name": "Number of pandiagonal Latin squares of order 2n+1 with the first row in ascending order.",
+  "score": 11.8
+ },
+ {
+  "a": "A340550",
+  "age": 2.9,
+  "nterms": 11,
+  "ratio": null,
+  "hw": false,
+  "membound": false,
+  "name": "Number of main classes of diagonal Latin squares of order n that contain a doubly symmetric squa",
+  "score": 11.7
+ },
+ {
+  "a": "A345760",
+  "age": 0.8,
+  "nterms": 9,
+  "ratio": 1.0,
+  "hw": false,
+  "membound": false,
+  "name": "a(n) is the number of distinct numbers of intercalates of order n diagonal Latin squares.",
+  "score": 11.6
+ },
+ {
+  "a": "A131482",
+  "age": 0.8,
+  "nterms": 24,
+  "ratio": 3.6,
+  "hw": false,
+  "membound": false,
+  "name": "a(n) is the number of free n-celled tree-shaped polyominoes.",
+  "score": 11.6
+ },
+ {
+  "a": "A092237",
+  "age": 0.8,
+  "nterms": 9,
+  "ratio": 0.6,
+  "hw": false,
+  "membound": false,
+  "name": "Maximum number of intercalates in a Latin square of order n.",
+  "score": 11.5
+ },
+ {
+  "a": "A060655",
+  "age": 3.7,
+  "nterms": 17,
+  "ratio": 1.1,
+  "hw": false,
+  "membound": false,
+  "name": "Pack n integer-sided rectangles into the smallest possible square so that no sides of the rectan",
+  "score": 11.4
+ },
+ {
+  "a": "A368601",
+  "age": 2.1,
+  "nterms": 9,
+  "ratio": 4540.8,
+  "hw": false,
+  "membound": false,
+  "name": "Number of ways to choose a set of n nonempty subsets of {1..n} such that it is possible to choos",
+  "score": 11.2
+ },
+ {
+  "a": "A011986",
+  "age": 0.6,
+  "nterms": 5,
+  "ratio": 1.3,
+  "hw": false,
+  "membound": false,
+  "name": "Covering numbers C(n,8,4).",
+  "score": 11.2
+ },
+ {
+  "a": "A002863",
+  "age": 0.6,
+  "nterms": 20,
+  "ratio": 6.3,
+  "hw": false,
+  "membound": false,
+  "name": "Number of prime knots with n crossings.",
+  "score": 11.2
+ },
+ {
+  "a": "A011982",
+  "age": 0.6,
+  "nterms": 9,
+  "ratio": 1.0,
+  "hw": false,
+  "membound": false,
+  "name": "Covering numbers C(n,7,3).",
+  "score": 11.1
+ },
+ {
+  "a": "A374527",
+  "age": 0.5,
+  "nterms": 24,
+  "ratio": 1.5,
+  "hw": false,
+  "membound": false,
+  "name": "Odd numbers whose Collatz trajectory is a Sidon sequence.",
+  "score": 11.0
+ },
+ {
+  "a": "A268855",
+  "age": 2.0,
+  "nterms": 8,
+  "ratio": 1245.7,
+  "hw": false,
+  "membound": false,
+  "name": "a(n) = smallest magic sum of any 3 X 3 magic square which contains exactly n squares.",
+  "score": 11.0
+ },
+ {
+  "a": "A005677",
+  "age": 0.5,
+  "nterms": 9,
+  "ratio": 1.2,
+  "hw": false,
+  "membound": false,
+  "name": "Maximal size of equidistant permutation array R(n,1).",
+  "score": 11.0
+ },
+ {
+  "a": "A242520",
+  "age": 0.5,
+  "nterms": 20,
+  "ratio": 8.9,
+  "hw": false,
+  "membound": false,
+  "name": "Number of cyclic arrangements of S={1,2,...,2n} such that the difference between any two neighbo",
+  "score": 11.0
+ },
+ {
+  "a": "A266549",
+  "age": 0.5,
+  "nterms": 20,
+  "ratio": 6.1,
+  "hw": false,
+  "membound": false,
+  "name": "Number of 2n-step 2-dimensional closed self-avoiding paths on square lattice, reduced for symmet",
+  "score": 10.9
+ },
+ {
+  "a": "A000769",
+  "age": 0.3,
+  "nterms": 20,
+  "ratio": 3.6,
+  "hw": false,
+  "membound": false,
+  "name": "No-3-in-line problem: number of inequivalent ways of placing 2n points on an n X n grid so that ",
+  "score": 10.6
+ },
+ {
+  "a": "A309370",
+  "age": 0.2,
+  "nterms": 7,
+  "ratio": 1.2,
+  "hw": false,
+  "membound": false,
+  "name": "Maximum size of a Sidon subset of {0,1}^n.",
+  "score": 10.5
+ },
+ {
+  "a": "A000109",
+  "age": 0.2,
+  "nterms": 22,
+  "ratio": 8.0,
+  "hw": false,
+  "membound": false,
+  "name": "Number of simplicial polyhedra with n vertices; simple planar graphs with n vertices and 3n-6 ed",
+  "score": 10.4
+ },
+ {
+  "a": "A000638",
+  "age": 0.2,
+  "nterms": 21,
+  "ratio": 6.3,
+  "hw": false,
+  "membound": false,
+  "name": "Number of permutation groups of degree n; also number of conjugacy classes of subgroups of symme",
+  "score": 10.4
+ },
+ {
+  "a": "A006966",
+  "age": 2.1,
+  "nterms": 21,
+  "ratio": 12.1,
+  "hw": false,
+  "membound": false,
+  "name": "Number of lattices on n unlabeled nodes.",
+  "score": 10.3
+ },
+ {
+  "a": "A007508",
+  "age": 0.2,
+  "nterms": 19,
+  "ratio": 8.9,
+  "hw": false,
+  "membound": false,
+  "name": "Number of twin prime pairs below 10^n.",
+  "score": 10.3
+ },
+ {
+  "a": "A309599",
+  "age": 1.6,
+  "nterms": 10,
+  "ratio": 208.9,
+  "hw": false,
+  "membound": false,
+  "name": "Number of extended self-orthogonal diagonal Latin squares of order n.",
+  "score": 10.2
+ },
+ {
+  "a": "A286874",
+  "age": 0.1,
+  "nterms": 16,
+  "ratio": 1.5,
+  "hw": false,
+  "membound": false,
+  "name": "Maximum number of binary vectors of length n such that the union (or bitwise OR) of any 2 distin",
+  "score": 10.2
+ },
+ {
+  "a": "A030222",
+  "age": 0.1,
+  "nterms": 18,
+  "ratio": 6.7,
+  "hw": false,
+  "membound": false,
+  "name": "Number of n-polyplets (polyominoes connected at edges or corners); may contain holes.",
+  "score": 10.2
+ },
+ {
+  "a": "A051177",
+  "age": 0.1,
+  "nterms": 20,
+  "ratio": 3.3,
+  "hw": false,
+  "membound": false,
+  "name": "Perfectly partitioned numbers: numbers k that divide the number of partitions p(k).",
+  "score": 10.2
+ },
+ {
+  "a": "A397960",
+  "age": 0.0,
+  "nterms": 12,
+  "ratio": 1.2,
+  "hw": false,
+  "membound": false,
+  "name": "a(n) is the maximum number of distinct positive differences of an n-element subset of {0, 1, ...",
+  "score": 10.0
+ },
+ {
+  "a": "A394031",
+  "age": null,
+  "nterms": 10,
+  "ratio": 1.4,
+  "hw": false,
+  "membound": false,
+  "name": "Maximum size of a subset of GF(2)^n being a Sidon set.",
+  "score": 10.0
+ },
+ {
+  "a": "A396704",
+  "age": null,
+  "nterms": 7,
+  "ratio": 1.4,
+  "hw": false,
+  "membound": false,
+  "name": "Maximum size of a B_3 set in {0,1}^n, where vectors are added componentwise over the integers.",
+  "score": 10.0
+ },
+ {
+  "a": "A399136",
+  "age": null,
+  "nterms": 13,
+  "ratio": 1.1,
+  "hw": false,
+  "membound": false,
+  "name": "a(n) is the smallest number of cells in a polycube that has a cavity consisting of exactly n cel",
+  "score": 10.0
+ },
+ {
+  "a": "A013578",
+  "age": null,
+  "nterms": 7,
+  "ratio": 1.2,
+  "hw": false,
+  "membound": false,
+  "name": "Maximal size of equidistant permutation array R(n,2).",
+  "score": 10.0
+ },
+ {
+  "a": "A066140",
+  "age": null,
+  "nterms": 8,
+  "ratio": 1.3,
+  "hw": false,
+  "membound": false,
+  "name": "Covering numbers C(n,n-3,n-4).",
+  "score": 10.0
+ },
+ {
+  "a": "A004038",
+  "age": null,
+  "nterms": 12,
+  "ratio": 1.4,
+  "hw": false,
+  "membound": false,
+  "name": "The coding-theoretic function A(n,6,5).",
+  "score": 10.0
+ },
+ {
+  "a": "A366332",
+  "age": null,
+  "nterms": 11,
+  "ratio": null,
+  "hw": false,
+  "membound": false,
+  "name": "Minimum number of diagonal transversals in a semicyclic diagonal Latin square of order 2n+1.",
+  "score": 10.0
+ },
+ {
+  "a": "A001231",
+  "age": null,
+  "nterms": 9,
+  "ratio": null,
+  "hw": false,
+  "membound": false,
+  "name": "Number of nonisomorphic projective planes of order n.",
+  "score": 10.0
+ },
+ {
+  "a": "A005856",
+  "age": null,
+  "nterms": 14,
+  "ratio": 1.2,
+  "hw": false,
+  "membound": false,
+  "name": "The coding-theoretic function A(n,10,8).",
+  "score": 10.0
+ },
+ {
+  "a": "A011980",
+  "age": null,
+  "nterms": 7,
+  "ratio": 1.2,
+  "hw": false,
+  "membound": false,
+  "name": "Covering numbers C(n,5,3).",
+  "score": 10.0
+ },
+ {
+  "a": "A011981",
+  "age": null,
+  "nterms": 7,
+  "ratio": 1.4,
+  "hw": false,
+  "membound": false,
+  "name": "Covering numbers C(n,6,3).",
+  "score": 10.0
+ },
+ {
+  "a": "A158865",
+  "age": null,
+  "nterms": 8,
+  "ratio": 1.3,
+  "hw": false,
+  "membound": false,
+  "name": "Smallest maximal excess attained by an equivalence class of Hadamard matrices of order 4n.",
+  "score": 10.0
+ },
+ {
+  "a": "A386683",
+  "age": null,
+  "nterms": 10,
+  "ratio": 0.3,
+  "hw": false,
+  "membound": false,
+  "name": "Number of unique n-element sum-distinct sets with minimal largest element.",
+  "score": 10.0
+ },
+ {
+  "a": "A186724",
+  "age": null,
+  "nterms": 22,
+  "ratio": 4.2,
+  "hw": false,
+  "membound": false,
+  "name": "Number of connected regular graphs with n nodes and girth at least 4.",
+  "score": 10.0
+ },
+ {
+  "a": "A339641",
+  "age": 1.4,
+  "nterms": 5,
+  "ratio": 719.8,
+  "hw": false,
+  "membound": false,
+  "name": "Number of main classes of Brown's diagonal Latin squares of order 2n.",
+  "score": 9.9
+ },
+ {
+  "a": "A011978",
+  "age": 3.0,
+  "nterms": 17,
+  "ratio": 1.1,
+  "hw": false,
+  "membound": false,
+  "name": "Covering numbers C(n,6,2).",
+  "score": 9.9
+ },
+ {
+  "a": "A339305",
+  "age": 1.4,
+  "nterms": 5,
+  "ratio": 9766.1,
+  "hw": false,
+  "membound": false,
+  "name": "Number of Brown's diagonal Latin squares of order 2n with the first row in order.",
+  "score": 9.8
+ },
+ {
+  "a": "A011977",
+  "age": 2.7,
+  "nterms": 24,
+  "ratio": 1.1,
+  "hw": false,
+  "membound": false,
+  "name": "Covering numbers C(n,5,2).",
+  "score": 9.3
+ },
+ {
+  "a": "A370370",
+  "age": 2.5,
+  "nterms": 16,
+  "ratio": 0.4,
+  "hw": false,
+  "membound": false,
+  "name": "Number of squares such that any two consecutive digits of their base-n expansions differ by 1 af",
+  "score": 9.1
+ },
+ {
+  "a": "A005851",
+  "age": 2.5,
+  "nterms": 22,
+  "ratio": 1.0,
+  "hw": false,
+  "membound": false,
+  "name": "The coding-theoretic function A(n,8,5).",
+  "score": 9.0
+ },
+ {
+  "a": "A005854",
+  "age": 2.5,
+  "nterms": 27,
+  "ratio": 1.0,
+  "hw": false,
+  "membound": false,
+  "name": "The coding-theoretic function A(n,10,6).",
+  "score": 9.0
+ },
+ {
+  "a": "A338772",
+  "age": 0.8,
+  "nterms": 8,
+  "ratio": 431.5,
+  "hw": false,
+  "membound": false,
+  "name": "The number of different probabilities p for which a coin that lands heads with probability p can",
+  "score": 8.6
+ },
+ {
+  "a": "A006558",
+  "age": 0.8,
+  "nterms": 10,
+  "ratio": 1202.4,
+  "hw": false,
+  "membound": false,
+  "name": "Start of first run of n consecutive integers with same number of divisors.",
+  "score": 8.6
+ },
+ {
+  "a": "A123509",
+  "age": 2.2,
+  "nterms": 25,
+  "ratio": 1.1,
+  "hw": false,
+  "membound": false,
+  "name": "Rohrbach's problem: a(n) is the largest integer such that there exists a set of n integers that ",
+  "score": 8.3
+ },
+ {
+  "a": "A102895",
+  "age": 7.1,
+  "nterms": 8,
+  "ratio": 185448032.1,
+  "hw": false,
+  "membound": false,
+  "name": "Number of ACI algebras or semilattices on n generators with no identity element.",
+  "score": 8.2
+ },
+ {
+  "a": "A102897",
+  "age": 7.1,
+  "nterms": 8,
+  "ratio": 185427834.8,
+  "hw": false,
+  "membound": false,
+  "name": "Number of ACI algebras (or semilattices) on n generators.",
+  "score": 8.2
+ },
+ {
+  "a": "A193674",
+  "age": 7.1,
+  "nterms": 8,
+  "ratio": 25819671.8,
+  "hw": false,
+  "membound": false,
+  "name": "Number of nonisomorphic systems enumerated by A102896; that is, the number of inequivalent closu",
+  "score": 8.2
+ },
+ {
+  "a": "A000421",
+  "age": 0.9,
+  "nterms": 20,
+  "ratio": 28.3,
+  "hw": false,
+  "membound": false,
+  "name": "Number of isomorphism classes of connected 3-regular (trivalent, cubic) loopless multigraphs of ",
+  "score": 7.8
+ },
+ {
+  "a": "A328746",
+  "age": null,
+  "nterms": 9,
+  "ratio": 4373.8,
+  "hw": false,
+  "membound": false,
+  "name": "Number of loops of order n, considered to be equivalent when they are isomorphic or anti-isomorp",
+  "score": 7.0
+ },
+ {
+  "a": "A001200",
+  "age": null,
+  "nterms": 13,
+  "ratio": 124.0,
+  "hw": false,
+  "membound": false,
+  "name": "Number of linear geometries on n (unlabeled) points.",
+  "score": 7.0
+ },
+ {
+  "a": "A329980",
+  "age": null,
+  "nterms": 5,
+  "ratio": 379.9,
+  "hw": false,
+  "membound": false,
+  "name": "a(n) is the number of non-isomorphic generalized signotopes on n elements (cf. A328377) w.r.t. r",
+  "score": 7.0
+ },
+ {
+  "a": "A268854",
+  "age": null,
+  "nterms": 8,
+  "ratio": 358.4,
+  "hw": false,
+  "membound": false,
+  "name": "a(n) is the smallest magic sum of any 3 X 3 magic square which contains exactly n triangular num",
+  "score": 7.0
+ },
+ {
+  "a": "A375459",
+  "age": null,
+  "nterms": 7,
+  "ratio": 174.8,
+  "hw": false,
+  "membound": false,
+  "name": "a(n) = smallest magic sum of any 3 X 3 magic square which contains exactly n squared primes, or ",
+  "score": 7.0
+ },
+ {
+  "a": "A263802",
+  "age": null,
+  "nterms": 6,
+  "ratio": 269.3,
+  "hw": false,
+  "membound": false,
+  "name": "Number of independent sets of permutations of n points, i.e., subsets of the symmetric group of ",
+  "score": 7.0
+ },
+ {
+  "a": "A307246",
+  "age": null,
+  "nterms": 5,
+  "ratio": 1945.8,
+  "hw": false,
+  "membound": false,
+  "name": "Smallest k for which a set of n primes <= k exists so that the averages of all nonempty subsets ",
+  "score": 7.0
+ },
+ {
+  "a": "A396220",
+  "age": null,
+  "nterms": 7,
+  "ratio": 338.7,
+  "hw": false,
+  "membound": false,
+  "name": "Number of relations R on an n-element set such that the transitive closure of R has exactly eigh",
+  "score": 7.0
+ },
+ {
+  "a": "A396221",
+  "age": null,
+  "nterms": 7,
+  "ratio": 402.4,
+  "hw": false,
+  "membound": false,
+  "name": "Number of relations R on an n-element set such that the transitive closure of R has exactly nine",
+  "score": 7.0
+ },
+ {
+  "a": "A396411",
+  "age": null,
+  "nterms": 7,
+  "ratio": 508.5,
+  "hw": false,
+  "membound": false,
+  "name": "Number of relations R on an n-element set such that the transitive closure of R has exactly ten ",
+  "score": 7.0
+ },
+ {
+  "a": "A242533",
+  "age": 0.5,
+  "nterms": 18,
+  "ratio": 74.5,
+  "hw": false,
+  "membound": false,
+  "name": "Number of cyclic arrangements of S={1,2,...,2n} such that the difference of any two neighbors is",
+  "score": 7.0
+ },
+ {
+  "a": "A227050",
+  "age": 0.5,
+  "nterms": 21,
+  "ratio": 65.2,
+  "hw": false,
+  "membound": false,
+  "name": "Number of essentially different ways of arranging numbers 1 through 2n around a circle so that t",
+  "score": 7.0
+ },
+ {
+  "a": "A288554",
+  "age": null,
+  "nterms": 6,
+  "ratio": 113.4,
+  "hw": false,
+  "membound": false,
+  "name": "Number of arrangements of n circles in the affine plane with the property that every circle inte",
+  "score": 7.0
+ },
+ {
+  "a": "A374946",
+  "age": null,
+  "nterms": 6,
+  "ratio": 3018.2,
+  "hw": false,
+  "membound": false,
+  "name": "a(n) is the number of suitably connected Legendrian n-mosaics that form a Legendrian knot.",
+  "score": 7.0
+ },
+ {
+  "a": "A287762",
+  "age": 6.4,
+  "nterms": 10,
+  "ratio": 10419.1,
+  "hw": false,
+  "membound": false,
+  "name": "Number of self-orthogonal diagonal Latin squares of order n.",
+  "score": 6.7
+ },
+ {
+  "a": "A014384",
+  "age": 6.3,
+  "nterms": 13,
+  "ratio": 649118294.8,
+  "hw": false,
+  "membound": false,
+  "name": "Number of connected regular graphs of degree 11 with 2n nodes.",
+  "score": 6.6
+ },
+ {
+  "a": "A014377",
+  "age": 6.3,
+  "nterms": 13,
+  "ratio": 230492.9,
+  "hw": false,
+  "membound": false,
+  "name": "Number of connected regular graphs of degree 7 with 2n nodes.",
+  "score": 6.6
+ },
+ {
+  "a": "A014381",
+  "age": 6.3,
+  "nterms": 13,
+  "ratio": 13626451.0,
+  "hw": false,
+  "membound": false,
+  "name": "Number of connected regular graphs of degree 9 with 2n nodes.",
+  "score": 6.6
+ },
+ {
+  "a": "A394862",
+  "age": 0.3,
+  "nterms": 15,
+  "ratio": 14.7,
+  "hw": false,
+  "membound": false,
+  "name": "Number of oriented polyominoes with n octagonal cells of the hyperbolic regular tiling with Schl",
+  "score": 6.6
+ },
+ {
+  "a": "A002106",
+  "age": 1.3,
+  "nterms": 47,
+  "ratio": 0.1,
+  "hw": false,
+  "membound": false,
+  "name": "Number of transitive permutation groups of degree n.",
+  "score": 6.6
+ },
+ {
+  "a": "A048987",
+  "age": 0.3,
+  "nterms": 16,
+  "ratio": 32.6,
+  "hw": false,
+  "membound": false,
+  "name": "Number of possible chess games at the end of the n-th ply.",
+  "score": 6.5
+ },
+ {
+  "a": "A345731",
+  "age": 1.1,
+  "nterms": 15,
+  "ratio": 1.2,
+  "hw": false,
+  "membound": false,
+  "name": "Additive bases: a(n) is the least integer such that there is an n-element set of integers betwee",
+  "score": 6.2
+ },
+ {
+  "a": "A397413",
+  "age": 0.1,
+  "nterms": 15,
+  "ratio": 47.4,
+  "hw": false,
+  "membound": false,
+  "name": "a(n) is the number of circular arrangements of 1, 2, ..., 2n such that every pair of adjacent nu",
+  "score": 6.1
+ },
+ {
+  "a": "A381121",
+  "age": null,
+  "nterms": 17,
+  "ratio": 66.0,
+  "hw": false,
+  "membound": false,
+  "name": "Number of partially ordered sets (\"posets\") covering n unlabeled elements.",
+  "score": 6.0
+ },
+ {
+  "a": "A001403",
+  "age": null,
+  "nterms": 19,
+  "ratio": 14.4,
+  "hw": false,
+  "membound": false,
+  "name": "Number of combinatorial configurations of type (n_3).",
+  "score": 6.0
+ },
+ {
+  "a": "A002071",
+  "age": 1.0,
+  "nterms": 21,
+  "ratio": 1.2,
+  "hw": false,
+  "membound": false,
+  "name": "Number of pairs of consecutive integers x, x+1 such that all prime factors of both x and x+1 are",
+  "score": 6.0
+ },
+ {
+  "a": "A037271",
+  "age": null,
+  "nterms": 32,
+  "ratio": 15.0,
+  "hw": false,
+  "membound": false,
+  "name": "Number of steps to reach a prime under \"replace n with concatenation of its prime factors\" when ",
+  "score": 6.0
+ },
+ {
+  "a": "A011979",
+  "age": 0.5,
+  "nterms": 15,
+  "ratio": 1.1,
+  "hw": false,
+  "membound": false,
+  "name": "Covering numbers C(n,4,3).",
+  "score": 5.0
+ },
+ {
+  "a": "A395265",
+  "age": 0.4,
+  "nterms": 19,
+  "ratio": 1.1,
+  "hw": false,
+  "membound": false,
+  "name": "a(n) is the minimum diameter of an n-element set of integers for which no nonzero d has more tha",
+  "score": 4.7
+ },
+ {
+  "a": "A392517",
+  "age": 0.3,
+  "nterms": 23,
+  "ratio": 1.1,
+  "hw": false,
+  "membound": false,
+  "name": "a(n) is the minimum diameter of a n-element set of integers for which no nonzero d has more than",
+  "score": 4.7
+ },
+ {
+  "a": "A392461",
+  "age": 0.2,
+  "nterms": 19,
+  "ratio": 1.1,
+  "hw": false,
+  "membound": false,
+  "name": "a(n) is the minimum diameter of a n-element set of integers for which no nonzero d has more than",
+  "score": 4.4
+ },
+ {
+  "a": "A000952",
+  "age": 0.0,
+  "nterms": 16,
+  "ratio": 1.1,
+  "hw": false,
+  "membound": false,
+  "name": "Numbers k == 2 (mod 4) that are the orders of conference matrices.",
+  "score": 4.1
+ },
+ {
+  "a": "A342990",
+  "age": null,
+  "nterms": 17,
+  "ratio": null,
+  "hw": false,
+  "membound": false,
+  "name": "Number of horizontally or vertically semicyclic diagonal Latin squares of order 2n+1.",
+  "score": 4.0
+ },
+ {
+  "a": "A254434",
+  "age": null,
+  "nterms": 23,
+  "ratio": 0.2,
+  "hw": false,
+  "membound": false,
+  "name": "The number of isomorphism classes of Latin keis (involutory right distributive quasigroups) of o",
+  "score": 4.0
+ },
+ {
+  "a": "A005852",
+  "age": null,
+  "nterms": 17,
+  "ratio": 1.4,
+  "hw": false,
+  "membound": false,
+  "name": "The coding-theoretic function A(n,8,6).",
+  "score": 4.0
+ },
+ {
+  "a": "A001442",
+  "age": null,
+  "nterms": 23,
+  "ratio": null,
+  "hw": false,
+  "membound": false,
+  "name": "G-symmetric Costas arrays of order n that are inequivalent under dihedral group.",
+  "score": 4.0
+ },
+ {
+  "a": "A317254",
+  "age": null,
+  "nterms": 58,
+  "ratio": 1.0,
+  "hw": false,
+  "membound": false,
+  "name": "a(n) is the smallest integer such that for all s >= a(n), there are at least n-1 different parti",
+  "score": 4.0
+ },
+ {
+  "a": "A055165",
+  "age": 4.2,
+  "nterms": 9,
+  "ratio": 37583.2,
+  "hw": false,
+  "membound": false,
+  "name": "Number of invertible n X n matrices with entries equal to 0 or 1.",
+  "score": 2.4
+ },
+ {
+  "a": "A334254",
+  "age": 4.2,
+  "nterms": 7,
+  "ratio": 95314.7,
+  "hw": false,
+  "membound": false,
+  "name": "Number of closure operators on a set of n elements which satisfy the T_1 separation axiom.",
+  "score": 2.3
+ },
+ {
+  "a": "A102894",
+  "age": 4.1,
+  "nterms": 8,
+  "ratio": 185448032.1,
+  "hw": false,
+  "membound": false,
+  "name": "Number of ACI algebras or semilattices on n generators, with no identity or annihilator.",
+  "score": 2.2
+ },
+ {
+  "a": "A328377",
+  "age": 3.8,
+  "nterms": 6,
+  "ratio": 56031.8,
+  "hw": false,
+  "membound": false,
+  "name": "a(n) is the number of \"generalized signotopes\", i.e., mappings X:{{1..n} choose 3}->{+,-} such t",
+  "score": 1.7
+ },
+ {
+  "a": "A242530",
+  "age": 0.5,
+  "nterms": 23,
+  "ratio": null,
+  "hw": false,
+  "membound": false,
+  "name": "Number of cyclic arrangements of S={1,2,...,2n} such that the binary expansions of any two neigh",
+  "score": 1.0
+ },
+ {
+  "a": "A003182",
+  "age": 3.3,
+  "nterms": 10,
+  "ratio": 5.668777180556805e+17,
+  "hw": false,
+  "membound": false,
+  "name": "Dedekind numbers: inequivalent monotone Boolean functions of n or fewer variables, or antichains",
+  "score": 0.6
+ },
+ {
+  "a": "A006126",
+  "age": 3.3,
+  "nterms": 10,
+  "ratio": 5.102161891240168e+18,
+  "hw": false,
+  "membound": false,
+  "name": "Number of hierarchical models on n labeled factors or variables with linear terms forced. Also n",
+  "score": 0.6
+ },
+ {
+  "a": "A030129",
+  "age": null,
+  "nterms": 21,
+  "ratio": null,
+  "hw": false,
+  "membound": false,
+  "name": "Number of nonisomorphic Steiner triple systems (STS's) S(2,3,n) on n points.",
+  "score": 0.0
+ },
+ {
+  "a": "A248908",
+  "age": null,
+  "nterms": 47,
+  "ratio": null,
+  "hw": false,
+  "membound": false,
+  "name": "The number of isomorphism classes of Latin keis (involutory right distributive quasigroups) of o",
+  "score": 0.0
+ },
+ {
+  "a": "A008403",
+  "age": null,
+  "nterms": 23,
+  "ratio": null,
+  "hw": false,
+  "membound": false,
+  "name": "G-symmetric Costas arrays of order n that are inequivalent under dihedral group but are not give",
+  "score": 0.0
+ },
+ {
+  "a": "A030128",
+  "age": null,
+  "nterms": 19,
+  "ratio": null,
+  "hw": false,
+  "membound": false,
+  "name": "Number of Steiner triple systems (STS's) on n elements.",
+  "score": 0.0
+ },
+ {
+  "a": "A001440",
+  "age": null,
+  "nterms": 32,
+  "ratio": null,
+  "hw": false,
+  "membound": false,
+  "name": "Number of symmetric Costas arrays of order n that are inequivalent under dihedral group.",
+  "score": 0.0
+ },
+ {
+  "a": "A053555",
+  "age": null,
+  "nterms": 15,
+  "ratio": null,
+  "hw": false,
+  "membound": false,
+  "name": "Number of distinct parameter sets (v,k,lambda) for Abelian difference sets of order n = k-lambda",
+  "score": 0.0
+ },
+ {
+  "a": "A003001",
+  "age": 3.0,
+  "nterms": 12,
+  "ratio": 73507.8,
+  "hw": false,
+  "membound": false,
+  "name": "Smallest number of multiplicative persistence n.",
+  "score": -0.1
+ },
+ {
+  "a": "A261006",
+  "age": 2.8,
+  "nterms": 10,
+  "ratio": 5.668777184547302e+17,
+  "hw": false,
+  "membound": false,
+  "name": "Number of unlabeled connected simplicial complexes with n nodes.",
+  "score": -0.5
+ },
+ {
+  "a": "A369313",
+  "age": 2.6,
+  "nterms": 7,
+  "ratio": 207721.4,
+  "hw": false,
+  "membound": false,
+  "name": "Number of interval-closed sets in the boolean lattice of dimension n.",
+  "score": -0.8
+ },
+ {
+  "a": "A250404",
+  "age": 2.3,
+  "nterms": 7,
+  "ratio": 65537.0,
+  "hw": false,
+  "membound": false,
+  "name": "Numbers k such that the set of all distinct values of phi of all divisors of k equals the set of",
+  "score": -1.3
+ },
+ {
+  "a": "A006052",
+  "age": 2.3,
+  "nterms": 6,
+  "ratio": 64488021475.6,
+  "hw": false,
+  "membound": false,
+  "name": "Number of magic squares of order n composed of the numbers from 1 to n^2, counted up to rotation",
+  "score": -1.5
+ },
+ {
+  "a": "A266237",
+  "age": 2.3,
+  "nterms": 6,
+  "ratio": 10748003579.3,
+  "hw": false,
+  "membound": false,
+  "name": "Number of magic squares of order n composed of the numbers from 1 to n^2, counted up to rotation",
+  "score": -1.5
+ },
+ {
+  "a": "A266500",
+  "age": 1.7,
+  "nterms": 11,
+  "ratio": 185229.6,
+  "hw": false,
+  "membound": false,
+  "name": "Number of n X n (0,1)-matrices such that the row sums are all different from the column sums.",
+  "score": -2.6
+ },
+ {
+  "a": "A340186",
+  "age": 1.4,
+  "nterms": 5,
+  "ratio": 878953.4,
+  "hw": false,
+  "membound": false,
+  "name": "Number of Brown's diagonal Latin squares of order 2n.",
+  "score": -3.2
+ },
+ {
+  "a": "A102896",
+  "age": 1.2,
+  "nterms": 8,
+  "ratio": 185427834.8,
+  "hw": false,
+  "membound": false,
+  "name": "Number of ACI algebras (or semilattices) on n generators with no annihilator.",
+  "score": -3.7
+ },
+ {
+  "a": "A076019",
+  "age": 3.8,
+  "nterms": 16,
+  "ratio": 35541.3,
+  "hw": false,
+  "membound": false,
+  "name": "Number of nonisomorphic commutative systems with n elements with one binary operation satisfying",
+  "score": -4.5
+ },
+ {
+  "a": "A046747",
+  "age": 0.2,
+  "nterms": 9,
+  "ratio": 108928.9,
+  "hw": false,
+  "membound": false,
+  "name": "Number of n X n rational {0,1}-matrices of determinant 0.",
+  "score": -5.6
+ },
+ {
+  "a": "A175554",
+  "age": 0.1,
+  "nterms": 5,
+  "ratio": 22621073.4,
+  "hw": false,
+  "membound": false,
+  "name": "Number of Hamiltonian cycle decompositions of the complete graph on 2n+1 vertices.",
+  "score": -5.9
+ },
+ {
+  "a": "A007299",
+  "age": 0.1,
+  "nterms": 9,
+  "ratio": 28152.0,
+  "hw": false,
+  "membound": false,
+  "name": "Number of Hadamard matrices of order 4n.",
+  "score": -5.9
+ },
+ {
+  "a": "A282293",
+  "age": null,
+  "nterms": 12,
+  "ratio": 329066701.4,
+  "hw": false,
+  "membound": false,
+  "name": "Two-column array A(n, k) read by rows, where A(n, 1) and A(n, 2) respectively give values of q a",
+  "score": -6.0
+ },
+ {
+  "a": "A114629",
+  "age": null,
+  "nterms": 8,
+  "ratio": 1748778.8,
+  "hw": false,
+  "membound": false,
+  "name": "Number of odd Latin squares of order n.",
+  "score": -6.0
+ },
+ {
+  "a": "A296060",
+  "age": null,
+  "nterms": 4,
+  "ratio": 56352.0,
+  "hw": false,
+  "membound": false,
+  "name": "Number of one-plane symmetric diagonal Latin squares of order 2n with first row 0,1,...,2n-1.",
+  "score": -6.0
+ },
+ {
+  "a": "A296061",
+  "age": null,
+  "nterms": 4,
+  "ratio": 3155712.0,
+  "hw": false,
+  "membound": false,
+  "name": "Number of one-plane symmetric diagonal Latin squares of order 2n.",
+  "score": -6.0
+ },
+ {
+  "a": "A269904",
+  "age": null,
+  "nterms": 4,
+  "ratio": 161752.5,
+  "hw": false,
+  "membound": false,
+  "name": "Smallest magic sum for any n X n magic square filled with primes in an arithmetic progression, o",
+  "score": -6.0
+ },
+ {
+  "a": "A269905",
+  "age": null,
+  "nterms": 4,
+  "ratio": 267828.8,
+  "hw": false,
+  "membound": false,
+  "name": "Smallest of n^2 primes in an arithmetic progression that form an n X n magic square with the lea",
+  "score": -6.0
+ },
+ {
+  "a": "A391687",
+  "age": null,
+  "nterms": 6,
+  "ratio": 114048.0,
+  "hw": false,
+  "membound": false,
+  "name": "Number of bordered magic squares of order n composed of the numbers from 1 to n^2, counted up to",
+  "score": -6.0
+ },
+ {
+  "a": "A261816",
+  "age": null,
+  "nterms": 5,
+  "ratio": 337201.9,
+  "hw": false,
+  "membound": false,
+  "name": "Number of basic semimagic squares of order n that can be formed from the numbers 1, ..., n^2.",
+  "score": -6.0
+ },
+ {
+  "a": "A261815",
+  "age": null,
+  "nterms": 5,
+  "ratio": 8430046.8,
+  "hw": false,
+  "membound": false,
+  "name": "Total number of semimagic squares of order n that can be formed from the numbers 1, ..., n^2.",
+  "score": -6.0
+ },
+ {
+  "a": "A372922",
+  "age": null,
+  "nterms": 7,
+  "ratio": 71150.6,
+  "hw": false,
+  "membound": false,
+  "name": "Number of diagonal Latin squares of order 2n+1 that are isomorphic to cyclic Latin squares by ro",
+  "score": -6.0
+ },
+ {
+  "a": "A372923",
+  "age": null,
+  "nterms": 7,
+  "ratio": 39916800.0,
+  "hw": false,
+  "membound": false,
+  "name": "Number of diagonalized cyclic diagonal Latin squares of order 2n+1 with the first row in order.",
+  "score": -6.0
+ },
+ {
+  "a": "A355517",
+  "age": null,
+  "nterms": 7,
+  "ratio": 12795.9,
+  "hw": false,
+  "membound": false,
+  "name": "Number of nonisomorphic systems enumerated by A334254; that is, the number of inequivalent closu",
+  "score": -6.0
+ },
+ {
+  "a": "A309984",
+  "age": null,
+  "nterms": 8,
+  "ratio": 34701.1,
+  "hw": false,
+  "membound": false,
+  "name": "Number of n X n Latin squares with determinant 0, divided by 2.",
+  "score": -6.0
+ },
+ {
+  "a": "A124119",
+  "age": null,
+  "nterms": 4,
+  "ratio": 263540.8,
+  "hw": false,
+  "membound": false,
+  "name": "Number of nonisomorphic Steiner quadruple systems (SQS's) S(3,4,v) on v = 6n+2 or 6n+4 points.",
+  "score": -6.0
+ },
+ {
+  "a": "A389147",
+  "age": null,
+  "nterms": 4,
+  "ratio": 19432.4,
+  "hw": false,
+  "membound": false,
+  "name": "Minimum largest of a set of n nonnegative integers such that the difference of any pair is a squ",
+  "score": -6.0
+ },
+ {
+  "a": "A224913",
+  "age": null,
+  "nterms": 8,
+  "ratio": 64562.4,
+  "hw": false,
+  "membound": false,
+  "name": "Number of different nonisomorphic antimatroids on n labeled items.",
+  "score": -6.0
+ },
+ {
+  "a": "A339926",
+  "age": null,
+  "nterms": 9,
+  "ratio": 20820.0,
+  "hw": false,
+  "membound": false,
+  "name": "Number of pairs of orthogonal diagonal Latin squares of order n.",
+  "score": -6.0
+ },
+ {
+  "a": "A307167",
+  "age": 5.9,
+  "nterms": 8,
+  "ratio": 2.1,
+  "hw": true,
+  "membound": false,
+  "name": "Maximum number of loops in a diagonal Latin square of order n.",
+  "score": -12.2
+ },
+ {
+  "a": "A307839",
+  "age": 5.9,
+  "nterms": 8,
+  "ratio": 2.3,
+  "hw": true,
+  "membound": false,
+  "name": "Minimum number of Latin subrectangles in a diagonal Latin square of order n.",
+  "score": -12.2
+ },
+ {
+  "a": "A307840",
+  "age": 5.9,
+  "nterms": 8,
+  "ratio": 2.6,
+  "hw": true,
+  "membound": false,
+  "name": "Maximum number of Latin subrectangles in a diagonal Latin square of order n.",
+  "score": -12.2
+ },
+ {
+  "a": "A307842",
+  "age": 5.9,
+  "nterms": 8,
+  "ratio": 6.1,
+  "hw": true,
+  "membound": false,
+  "name": "Maximum number of nontrivial Latin subrectangles in a diagonal Latin square of order n.",
+  "score": -12.2
+ },
+ {
+  "a": "A307171",
+  "age": 5.9,
+  "nterms": 8,
+  "ratio": 2.1,
+  "hw": true,
+  "membound": false,
+  "name": "Maximum number of partial loops in a diagonal Latin square of order n.",
+  "score": -12.2
+ },
+ {
+  "a": "A307166",
+  "age": 5.9,
+  "nterms": 8,
+  "ratio": 1.9,
+  "hw": true,
+  "membound": false,
+  "name": "Minimum number of loops in a diagonal Latin square of order n.",
+  "score": -12.3
+ },
+ {
+  "a": "A330391",
+  "age": 5.7,
+  "nterms": 9,
+  "ratio": 68.2,
+  "hw": true,
+  "membound": false,
+  "name": "Number of main classes of diagonal Latin squares of order n with at least one orthogonal diagona",
+  "score": -16.5
+ },
+ {
+  "a": "A287644",
+  "age": 3.5,
+  "nterms": 9,
+  "ratio": 5.8,
+  "hw": true,
+  "membound": false,
+  "name": "Maximum number of transversals in a diagonal Latin square of order n.",
+  "score": -17.0
+ },
+ {
+  "a": "A299785",
+  "age": 5.3,
+  "nterms": 8,
+  "ratio": 24.0,
+  "hw": true,
+  "membound": false,
+  "name": "Minimum size of a main class for diagonal Latin squares of order n.",
+  "score": -17.5
+ },
+ {
+  "a": "A328873",
+  "age": 5.3,
+  "nterms": 9,
+  "ratio": 1.0,
+  "hw": true,
+  "membound": false,
+  "name": "Maximal size of a set of pairwise mutually orthogonal diagonal Latin squares of order n.",
+  "score": -19.5
+ },
+ {
+  "a": "A287648",
+  "age": 1.5,
+  "nterms": 9,
+  "ratio": 2.8,
+  "hw": true,
+  "membound": false,
+  "name": "Maximum number of diagonal transversals in a diagonal Latin square of order n.",
+  "score": -21.0
+ },
+ {
+  "a": "A287695",
+  "age": 4.4,
+  "nterms": 9,
+  "ratio": 0.7,
+  "hw": true,
+  "membound": false,
+  "name": "Maximum number of diagonal Latin squares with the first row in ascending order that can be ortho",
+  "score": -21.1
+ },
+ {
+  "a": "A305570",
+  "age": 5.7,
+  "nterms": 9,
+  "ratio": 150.3,
+  "hw": true,
+  "membound": false,
+  "name": "Number of diagonal Latin squares of order n with the first row in order and at least one orthogo",
+  "score": -21.6
+ },
+ {
+  "a": "A305571",
+  "age": 5.7,
+  "nterms": 9,
+  "ratio": 1353.1,
+  "hw": true,
+  "membound": false,
+  "name": "Number of diagonal Latin squares of order n with at least one orthogonal diagonal mate.",
+  "score": -21.6
+ },
+ {
+  "a": "A307841",
+  "age": 5.9,
+  "nterms": 8,
+  "ratio": null,
+  "hw": true,
+  "membound": false,
+  "name": "Minimum number of nontrivial Latin subrectangles in a diagonal Latin square of order n.",
+  "score": -22.2
+ },
+ {
+  "a": "A293777",
+  "age": 5.3,
+  "nterms": 9,
+  "ratio": 2421.1,
+  "hw": true,
+  "membound": false,
+  "name": "Number of centrally symmetric diagonal Latin squares of order n with the first row in ascending ",
+  "score": -22.3
+ },
+ {
+  "a": "A307170",
+  "age": 5.9,
+  "nterms": 8,
+  "ratio": null,
+  "hw": true,
+  "membound": false,
+  "name": "Minimum number of partial loops in a diagonal Latin square of order n.",
+  "score": -22.3
+ },
+ {
+  "a": "A287645",
+  "age": 0.8,
+  "nterms": 9,
+  "ratio": 8.5,
+  "hw": true,
+  "membound": false,
+  "name": "Minimum number of transversals in a diagonal Latin square of order n.",
+  "score": -22.5
+ },
+ {
+  "a": "A309283",
+  "age": 3.4,
+  "nterms": 14,
+  "ratio": 1.0,
+  "hw": true,
+  "membound": false,
+  "name": "Number of equivalence classes of X-based filling of diagonals in a diagonal Latin square of orde",
+  "score": -23.1
+ },
+ {
+  "a": "A292516",
+  "age": 8.9,
+  "nterms": 5,
+  "ratio": 2061038027.8,
+  "hw": true,
+  "membound": false,
+  "name": "Number of horizontally symmetric diagonal Latin squares of order 2n.",
+  "score": -28.2
+ },
+ {
+  "a": "A307164",
+  "age": 0.9,
+  "nterms": 9,
+  "ratio": 0.6,
+  "hw": true,
+  "membound": false,
+  "name": "Maximum number of intercalates in a diagonal Latin square of order n.",
+  "score": -28.2
+ },
+ {
+  "a": "A287649",
+  "age": 8.9,
+  "nterms": 5,
+  "ratio": 22900422.5,
+  "hw": true,
+  "membound": false,
+  "name": "Number of horizontally symmetric diagonal Latin squares of order 2n with the first row in ascend",
+  "score": -28.2
+ },
+ {
+  "a": "A003022",
+  "age": 3.6,
+  "nterms": 27,
+  "ratio": 1.1,
+  "hw": true,
+  "membound": false,
+  "name": "Length of shortest (or optimal) Golomb ruler with n marks.",
+  "score": -28.8
+ },
+ {
+  "a": "A001423",
+  "age": 7.8,
+  "nterms": 11,
+  "ratio": 234348.8,
+  "hw": true,
+  "membound": false,
+  "name": "Number of semigroups of order n, considered to be equivalent when they are isomorphic or anti-is",
+  "score": -30.4
+ },
+ {
+  "a": "A287647",
+  "age": 1.6,
+  "nterms": 9,
+  "ratio": null,
+  "hw": true,
+  "membound": false,
+  "name": "Minimum number of diagonal transversals in a diagonal Latin square of order n.",
+  "score": -30.8
+ },
+ {
+  "a": "A002981",
+  "age": 2.2,
+  "nterms": 25,
+  "ratio": 1.4,
+  "hw": true,
+  "membound": false,
+  "name": "Numbers k such that k! + 1 is prime.",
+  "score": -31.6
+ },
+ {
+  "a": "A287764",
+  "age": 7.2,
+  "nterms": 9,
+  "ratio": 675612.8,
+  "hw": true,
+  "membound": false,
+  "name": "Number of main classes of diagonal Latin squares of order n.",
+  "score": -31.7
+ },
+ {
+  "a": "A274171",
+  "age": 5.9,
+  "nterms": 9,
+  "ratio": 679011.1,
+  "hw": true,
+  "membound": false,
+  "name": "Number of diagonal Latin squares of order n with the first row in order.",
+  "score": -34.1
+ },
+ {
+  "a": "A274806",
+  "age": 5.9,
+  "nterms": 9,
+  "ratio": 6111099.7,
+  "hw": true,
+  "membound": false,
+  "name": "Number of diagonal Latin squares of order n.",
+  "score": -34.2
+ },
+ {
+  "a": "A305568",
+  "age": 5.7,
+  "nterms": 9,
+  "ratio": 679068.7,
+  "hw": true,
+  "membound": false,
+  "name": "Number of bachelor diagonal Latin squares of order n with the first row in ascending order.",
+  "score": -34.6
+ },
+ {
+  "a": "A305569",
+  "age": 5.7,
+  "nterms": 9,
+  "ratio": 6111618.3,
+  "hw": true,
+  "membound": false,
+  "name": "Number of bachelor diagonal Latin squares of order n.",
+  "score": -34.6
+ },
+ {
+  "a": "A293778",
+  "age": 5.3,
+  "nterms": 9,
+  "ratio": 21789.8,
+  "hw": true,
+  "membound": false,
+  "name": "Number of centrally symmetric diagonal Latin squares of order n.",
+  "score": -35.4
+ },
+ {
+  "a": "A287650",
+  "age": 5.3,
+  "nterms": 4,
+  "ratio": 7.512223982156691e+16,
+  "hw": true,
+  "membound": false,
+  "name": "Number of doubly symmetric diagonal Latin squares of order 4n with the first row in ascending or",
+  "score": -35.5
+ },
+ {
+  "a": "A292517",
+  "age": 5.3,
+  "nterms": 4,
+  "ratio": 3.2813394354060426e+21,
+  "hw": true,
+  "membound": false,
+  "name": "Number of doubly symmetric diagonal Latin squares of order 4n.",
+  "score": -35.5
+ },
+ {
+  "a": "A307163",
+  "age": 0.9,
+  "nterms": 15,
+  "ratio": null,
+  "hw": true,
+  "membound": false,
+  "name": "Minimum number of intercalates in a diagonal Latin square of order n.",
+  "score": -38.2
+ },
+ {
+  "a": "A000372",
+  "age": 3.4,
+  "nterms": 10,
+  "ratio": 5.102161889484264e+18,
+  "hw": true,
+  "membound": false,
+  "name": "Dedekind numbers or Dedekind's problem: number of monotone Boolean functions of n variables, num",
+  "score": -39.2
+ }
+]
