@@ -193,6 +193,43 @@ BareMetal first would confound the finding with the 3.7x.
 **Gate:** the pre-registered falsification above. If long trajectories win, the
 study reports that and ends. Nothing further is worth spending.
 
+#### P1 RESULT, 2026-09-04 -- partially run, and the gate is not cleanly passed
+
+Run on **one** instance of the three (`pcb442`), 200,000 ant constructions per
+arm, eight granularities, five replicates, combined by `min`. Full write-up and
+data: [`../portfolio-curve/`](../portfolio-curve/).
+
+The curve is a plateau and then a cliff. Everything from 1 to 200 workers is
+statistically indistinguishable from a single long run -- the 40-worker arm is
+nominally ahead -- and beyond that it degrades sharply: 400 workers 2.0 sigma
+worse, 1,000 workers 5.9, 10,000 workers 10.5 and 1.65% off. The cliff is a
+floor on task granularity, between 500 and 1,000 iterations, not a limit on
+worker count.
+
+**But read the falsification above as written.** It refuses the thesis if a
+single long trajectory *"matches or beats"* the best portfolio granularity. It
+matched -- 0.37 sigma apart. On the letter of the criterion, that is the
+refusing condition, not the passing one.
+
+Two things follow, and they should not be blurred together.
+
+The criterion is **not satisfied on evidence**, because it requires two of
+three instances and only one was run. P1 is incomplete. `kroA100` and `rat783`
+are cheap and should be run before anything is concluded either way.
+
+The criterion also looks **mis-specified in hindsight**, and that is recorded
+as an observation rather than used as a rescue. "Matches" was written as a
+failure because the proposal was thinking about search quality. But equal
+quality at equal compute is exactly what makes a cheaper substrate worth having
+-- the gain was never supposed to be better tours, it was supposed to be the
+same tours bought on hardware that costs 20x less. A criterion that treats a
+tie as a loss cannot see that.
+
+The rule here is the one the proposal already states: a criterion adopted after
+seeing results is not a criterion. So the original stands, the result is
+recorded against it as ambiguous-tending-to-refused, and the fix is to finish
+P1 on the other two instances rather than to rewrite the test.
+
 ### P2 -- price the substrate
 
 Only if P1 puts the minimum at short restarts. Run the winning granularity three
