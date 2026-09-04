@@ -1,0 +1,96 @@
+<title>Three Issues in BareMetal-AppPort</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap">
+<style>
+:root{--ink:#15181C;--ink2:#4A5058;--ink3:#767C86;--bg:#FBFBF9;--panel:#FFF;--rule:#E2E3DF;
+ --accent:#9A3412;--code:#F2F2EF;--f:"IBM Plex Sans",system-ui,sans-serif;--m:"IBM Plex Mono",monospace}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--ink:#E9EBEE;--ink2:#AEB4BC;
+ --ink3:#7E858F;--bg:#101215;--panel:#171A1E;--rule:#282C31;--accent:#F0906A;--code:#1B1F23}}
+:root[data-theme="dark"]{--ink:#E9EBEE;--ink2:#AEB4BC;--ink3:#7E858F;--bg:#101215;--panel:#171A1E;
+ --rule:#282C31;--accent:#F0906A;--code:#1B1F23}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f);font-size:16.5px;line-height:1.62;
+ margin:0;padding:0 20px 90px;-webkit-font-smoothing:antialiased}
+.w{max-width:760px;margin:0 auto}
+h1{font-size:clamp(30px,5.5vw,44px);font-weight:700;letter-spacing:-.022em;line-height:1.1;
+ margin:64px 0 10px;text-wrap:balance}
+h2{font-size:23px;font-weight:600;letter-spacing:-.012em;margin:44px 0 10px;text-wrap:balance}
+h3{font-size:17px;font-weight:600;margin:26px 0 6px}
+p{margin:0 0 14px;max-width:68ch;text-wrap:pretty}
+ul{margin:0 0 16px;padding-left:20px;max-width:68ch}li{margin-bottom:8px}
+hr{border:none;border-top:1px solid var(--rule);margin:38px 0}
+blockquote{margin:16px 0;padding:10px 0 10px 18px;border-left:3px solid var(--accent);
+ color:var(--ink2);font-style:italic;max-width:66ch}
+code{font-family:var(--m);font-size:.86em;background:var(--code);padding:1px 5px;border-radius:3px}
+pre{background:var(--code);border:1px solid var(--rule);border-radius:5px;padding:13px 15px;
+ overflow-x:auto;margin:14px 0;font-size:12.5px;line-height:1.55}
+pre code{background:none;padding:0;font-size:1em}
+.sc{overflow-x:auto;margin:14px 0}
+table{border-collapse:collapse;width:100%;font-family:var(--m);font-size:12.5px;min-width:420px}
+th{text-align:left;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink3);
+ border-bottom:2px solid var(--rule);padding:7px 12px 7px 0;font-weight:600;font-family:var(--f)}
+td{padding:8px 12px 8px 0;border-bottom:1px solid var(--rule);color:var(--ink2)}
+td:first-child{color:var(--ink)}
+strong{font-weight:600}
+</style>
+<div class="w"><h1>Three issues in BareMetal-App / BareMetal-AppPort</h1>
+<p>Found while building the CPython port to measure what fraction of Python works on the platform. All three are reproducible from a clean clone; none is speculative. Ordered by how much time each is likely to cost someone.</p>
+<p><strong>Environment.</strong> Fresh <code>git clone</code> of <code>ReturnInfinity/BareMetal-App</code> on 2026-09-04, built on Ubuntu 24.04 x86-64 and separately in a Debian bookworm container. Firecracker 1.7.0.</p>
+<hr>
+<h2>1. No fetch script validates its download (9 scripts)</h2>
+<p><strong>Severity: this is the one that wasted our time.</strong> It cost us a build locally and contributed to a lost session on a rented bare-metal instance.</p>
+<p>Every <code>scripts/get-*.sh</code> fetches with the same pattern:</p>
+<pre><code>curl -s -L -o &quot;${TARBALL}&quot; &quot;${URL}&quot;</code></pre>
+<p>No <code>--fail</code>, no checksum, no content check. <code>curl</code> without <code>--fail</code> writes the HTTP error body to the output file and exits 0, so <strong>any upstream 4xx or 5xx is saved as the artifact and the script proceeds happily.</strong></p>
+<p>Confirmed across all nine: <code>get-musl.sh</code>, <code>get-lwip.sh</code>, <code>get-mbedtls.sh</code>,</p>
+<p><code>get-cacert.sh</code>, <code>get-curl.sh</code>, <code>get-sqlite.sh</code>, <code>get-libsodium.sh</code>,</p>
+<p><code>get-lwext4.sh</code>, <code>get-python.sh</code>. None performs a checksum; none passes <code>-f</code>.</p>
+<h3>What we actually hit</h3>
+<p><code>download.savannah.nongnu.org</code> returned <strong>HTTP 502</strong> during a build.</p>
+<p><code>get-lwip.sh</code> saved the 166-byte error page as <code>build/lwip-2.2.0.zip</code>:</p>
+<pre><code>$ head -c 80 build/lwip-2.2.0.zip
+&lt;html&gt;
+&lt;head&gt;&lt;title&gt;502 Bad Gateway&lt;/title&gt;&lt;/head&gt;</code></pre>
+<p><code>setup.sh</code> then ran for several more minutes before failing here:</p>
+<pre><code>  End-of-central-directory signature not found.  Either this file is not
+  a zipfile, or it constitutes one disk of a multi-part archive. ...
+unzip:  cannot find zipfile directory in one of lwip-2.2.0.zip or
+        lwip-2.2.0.zip.zip, and cannot find lwip-2.2.0.zip.ZIP, period.</code></pre>
+<p>Nothing in that message mentions the network, names the URL, or suggests deleting the file — and because <code>get-lwip.sh</code> skips the download when the file already exists, <strong>re-running <code>setup.sh</code> fails identically forever</strong> until someone works out to remove it by hand. The failure is also far from its cause in both time and text.</p>
+<h3>Suggested fix</h3>
+<p>Two lines per script. <code>--fail</code> makes curl exit non-zero on an HTTP error, and removing the partial output stops the poisoned-cache behaviour:</p>
+<pre><code>curl -sSfL -o &quot;${TARBALL}&quot; &quot;${URL}&quot; || { rm -f &quot;${TARBALL}&quot;; exit 1; }</code></pre>
+<p>A pinned checksum would be stronger still, and these are already version-pinned, so the digest is a constant:</p>
+<pre><code>echo &quot;${SHA256}  ${TARBALL}&quot; | sha256sum -c - || { rm -f &quot;${TARBALL}&quot;; exit 1; }</code></pre>
+<p>Worth having on a build that runs unattended: a corrupted dependency should fail at the point of download, naming the URL.</p>
+<hr>
+<h2>2. <code>PYTHON.md</code> documents 3.12.8; everything builds 3.14.7</h2>
+<p>The port builds <strong>CPython 3.14.7</strong>:</p>
+<div class='sc'><table><thead><tr><th>location</th><th>version</th></tr></thead><tbody><tr><td><code>scripts/get-python.sh:15</code></td><td><code>VERSION=&quot;3.14.7&quot;</code></td></tr><tr><td><code>setup.sh:56</code></td><td><code>PYTHON_DIR=&quot;$BUILD_DIR/Python-3.14.7&quot;</code></td></tr><tr><td><code>build-app.sh:57</code></td><td><code>PYTHON_DIR=&quot;$BUILD_DIR/Python-3.14.7&quot;</code></td></tr><tr><td><code>port/python_port/install-stdlib.sh:34</code></td><td><code>LIB=&quot;.../Python-3.14.7/Lib&quot;</code></td></tr></tbody></table></div>
+<p><code>PYTHON.md</code> says 3.12.8, in four places — lines 3, 8, 57 and 132.</p>
+<p>This is more than a stale version string. Line 57 opens a section headed:</p>
+<blockquote>&quot;What&#x27;s confirmed, from reading CPython <strong>3.12.8</strong>&#x27;s actual source (not …&quot;</blockquote>
+<p>So the document&#x27;s analysis — which macros matter, what the bootstrap module set contains, what <code>Modules/Setup.bootstrap.in</code> looks like — was validated against a CPython the tree no longer builds. <code>get-python.sh</code>&#x27;s own comment says the port is &quot;written against this exact release&#x27;s <code>Modules/Setup.bootstrap.in</code> layout, pyconfig.h.in macro list, and <code>Python/thread_pthread.h</code> contents&quot;, which makes the version genuinely load-bearing rather than incidental.</p>
+<p>Either the doc needs updating to 3.14.7, or — if the analysis really was only ever done against 3.12.8 — that is worth saying explicitly, because a reader currently cannot tell which release the reasoning applies to.</p>
+<hr>
+<h2>3. <code>baremetal.sh</code> still cannot start Firecracker (previously reported)</h2>
+<p>This was reported from our side earlier and is <strong>still present in a clone taken today</strong>, so flagging it again rather than assuming it is in flight.</p>
+<p><code>baremetal.sh</code> removes the Firecracker log file and then passes that same path as <code>--log-path</code>:</p>
+<pre><code>46:		rm -f &quot;$SOCKET&quot;
+47:		rm -f &quot;$FCLOG&quot;
+...
+71:			firecracker --api-sock &quot;$SOCKET&quot; --log-path &quot;$FCLOG&quot;</code></pre>
+<p>Firecracker opens <code>--log-path</code> but does not create it, so it exits immediately and the VM never boots:</p>
+<pre><code>Could not initialize logger: Failed to open target file: No such file or
+directory (os error 2)
+Error: LoggerInitialization(LoggerUpdateError(Os { code: 2, kind: NotFound,
+message: &quot;No such file or directory&quot; }))
+Firecracker exiting with error. exit_code=1</code></pre>
+<p>One line after the <code>rm</code> fixes it, confirmed working on our host:</p>
+<pre><code>rm -f &quot;$FCLOG&quot;
+touch &quot;$FCLOG&quot;</code></pre>
+<hr>
+<h2>Why we were in here</h2>
+<p>We are measuring what fraction of Python actually works on the platform — a capability inventory across the language core, stdlib, filesystem, concurrency, process model and network, run on BareMetal and on Linux from the same source and diffed. Short-lived Python sandboxes are the workload the CPython port is best placed to serve, and no published number exists for it.</p>
+<p>Two things we noticed that are <strong>not</strong> bugs, but which we would have liked stated near the top of <code>PYTHON.md</code>, since both change how the port is pitched:</p>
+<ul><li><strong><code>python.app</code> is 9,621,136 bytes</strong>, and <code>baremetal.sh</code> sets <code>MEMSIZE=32</code> with the comment that Python needed at least 28 MiB. The 16 MiB figure that appears in a lot of BareMetal material does not hold for a Python guest.</li><li><strong>The stdlib is curated</strong> — roughly forty modules deployed by <code>install-stdlib.sh</code>. That is a sensible choice, but &quot;CPython runs here&quot; and &quot;the Python standard library is available here&quot; are different claims, and users will assume the second.</li></ul>
+<p>Happy to send raw logs, the exact 502 capture, or the probe harness.</p></div>
