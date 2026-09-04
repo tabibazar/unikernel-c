@@ -1,0 +1,1557 @@
+host: Linux 7.0.0-1011-aws x86_64
+cpu:  Intel(R) Xeon(R) Platinum 8275CL CPU @ 3.00GHz
+date: 2026-09-04T22:27:08+00:00
+
+[1m==> building libgmp.a for the target[0m
+- Downloading https://gmplib.org/download/gmp/gmp-6.3.0.tar.xz
+- Verifying checksum
+- Extracting gmp-6.3.0.tar.xz
+=== configure (hosted, port codegen; asm=1 fat=1) ===
+#define HAVE_HOST_CPU_FAMILY_x86_64 1
+#define WANT_FAT_BINARY 1
+=== make (musl headers substituted) ===
+=== built .libs/libgmp.a ===
+-rw-rw-r-- 1 ubuntu ubuntu 1578544 Sep  4 22:27 .libs/libgmp.a
+    171	      0	      0	    171	     ab	randmui.o (ex .libs/libgmp.a)
+=== undefined symbols in libgmp.a (the libc surface it needs) ===
+2fac_ui.o:
+__gmp_allocate_func
+__gmp_asprintf_final
+__gmp_asprintf_memory
+__gmp_asprintf_reps
+__gmp_assert_fail
+__gmp_binvert_limb_table
+__gmp_default_allocate
+__gmp_default_fp_limb_precision
+__gmp_default_free
+__gmp_default_reallocate
+__gmp_digit_value_tab
+__gmp_divide_by_zero
+__gmp_doprnt
+__gmp_doprnt_integer
+__gmp_doprnt_mpf2
+__gmp_doscan
+__gmp_errno
+__gmp_extract_double
+__gmp_fac2cnt_table
+__gmp_fib_table
+__gmp_fprintf_funs
+__gmp_free_func
+__gmp_fscanf_funs
+__gmp_init_primesieve
+__gmp_invalid_operation
+__gmp_jacobi_table
+__gmp_limbroots_table
+__gmp_mt_recalc_buffer
+__gmp_nextprime
+__gmp_odd2fac_table
+__gmp_oddfac_table
+__gmp_overflow_in_mpz
+__gmp_primesieve
+__gmp_randclear
+__gmp_randclear_mt
+__gmp_randget_mt
+__gmp_randinit_default
+__gmp_randinit_lc_2exp
+__gmp_randinit_lc_2exp_size
+__gmp_randinit_mt
+__gmp_randinit_mt_noseed
+__gmp_randiset_mt
+__gmp_rands
+__gmp_rands_initialized
+__gmp_randseed
+__gmp_reallocate_func
+__gmp_snprintf_funs
+__gmp_sprintf_funs
+__gmp_sqrt_of_negative
+__gmp_sscanf_funs
+__gmp_tmp_reentrant_alloc
+__gmp_tmp_reentrant_free
+__gmp_vasprintf
+__gmpf_add
+__gmpf_clear
+__gmpf_cmp
+__gmpf_div
+__gmpf_div_2exp
+__gmpf_get_prec
+__gmpf_get_str
+__gmpf_init
+__gmpf_init2
+__gmpf_mul
+__gmpf_mul_2exp
+__gmpf_neg
+__gmpf_set
+__gmpf_set_d
+__gmpf_set_si
+__gmpf_set_str
+__gmpf_set_ui
+__gmpf_sub
+__gmpf_sub_ui
+__gmpn_add_err1_n
+__gmpn_add_err2_n
+__gmpn_add_n
+__gmpn_add_n_atom
+__gmpn_add_n_bd1
+__gmpn_add_n_bt1
+__gmpn_add_n_core2
+__gmpn_add_n_coreihwl
+__gmpn_add_n_coreisbr
+__gmpn_add_n_goldmont
+__gmpn_add_n_init
+__gmpn_add_n_pentium4
+__gmpn_add_n_silvermont
+__gmpn_add_n_x86_64
+__gmpn_addlsh1_n_atom
+__gmpn_addlsh1_n_bd1
+__gmpn_addlsh1_n_core2
+__gmpn_addlsh1_n_coreisbr
+__gmpn_addlsh1_n_init
+__gmpn_addlsh1_n_pentium4
+__gmpn_addlsh1_n_silvermont
+__gmpn_addlsh1_n_x86_64
+__gmpn_addlsh1_n_zen
+__gmpn_addlsh2_n_atom
+__gmpn_addlsh2_n_core2
+__gmpn_addlsh2_n_coreisbr
+__gmpn_addlsh2_n_init
+__gmpn_addlsh2_n_pentium4
+__gmpn_addlsh2_n_silvermont
+__gmpn_addlsh2_n_x86_64
+__gmpn_addlsh_n
+__gmpn_addmul_1_atom
+__gmpn_addmul_1_bd1
+__gmpn_addmul_1_bt1
+__gmpn_addmul_1_core2
+__gmpn_addmul_1_coreibwl
+__gmpn_addmul_1_coreihwl
+__gmpn_addmul_1_coreinhm
+__gmpn_addmul_1_coreisbr
+__gmpn_addmul_1_goldmont
+__gmpn_addmul_1_init
+__gmpn_addmul_1_pentium4
+__gmpn_addmul_1_silvermont
+__gmpn_addmul_1_x86_64
+__gmpn_addmul_1_zen
+__gmpn_addmul_2_atom
+__gmpn_addmul_2_bd1
+__gmpn_addmul_2_coreihwl
+__gmpn_addmul_2_coreisbr
+__gmpn_addmul_2_fat
+__gmpn_addmul_2_init
+__gmpn_addmul_2_k8
+__gmpn_addmul_2_pentium4
+__gmpn_and_n
+__gmpn_andn_n
+__gmpn_bases
+__gmpn_bdiv_dbm1c_init
+__gmpn_bdiv_dbm1c_x86_64
+__gmpn_bdiv_q
+__gmpn_bdiv_q_itch
+__gmpn_bdiv_qr
+__gmpn_bdiv_qr_itch
+__gmpn_binvert
+__gmpn_binvert_itch
+__gmpn_brootinv
+__gmpn_bsqrtinv
+__gmpn_cnd_add_n_atom
+__gmpn_cnd_add_n_coreisbr
+__gmpn_cnd_add_n_init
+__gmpn_cnd_add_n_x86_64
+__gmpn_cnd_sub_n_atom
+__gmpn_cnd_sub_n_coreisbr
+__gmpn_cnd_sub_n_init
+__gmpn_cnd_sub_n_x86_64
+__gmpn_cnd_swap
+__gmpn_com
+__gmpn_com_atom
+__gmpn_com_bd1
+__gmpn_com_bt2
+__gmpn_com_core2
+__gmpn_com_init
+__gmpn_com_x86_64
+__gmpn_com_zen
+__gmpn_compute_powtab
+__gmpn_copyd_atom
+__gmpn_copyd_bd1
+__gmpn_copyd_bt1
+__gmpn_copyd_bt2
+__gmpn_copyd_core2
+__gmpn_copyd_init
+__gmpn_copyd_nano
+__gmpn_copyd_x86_64
+__gmpn_copyd_zen
+__gmpn_copyi_atom
+__gmpn_copyi_bd1
+__gmpn_copyi_bt1
+__gmpn_copyi_bt2
+__gmpn_copyi_core2
+__gmpn_copyi_init
+__gmpn_copyi_nano
+__gmpn_copyi_x86_64
+__gmpn_copyi_zen
+__gmpn_cpuid
+__gmpn_cpuvec
+__gmpn_cpuvec_init
+__gmpn_cpuvec_initialized
+__gmpn_dcpi1_bdiv_q
+__gmpn_dcpi1_bdiv_qr
+__gmpn_dcpi1_bdiv_qr_n
+__gmpn_dcpi1_div_q
+__gmpn_dcpi1_div_qr
+__gmpn_dcpi1_div_qr_n
+__gmpn_dcpi1_divappr_q
+__gmpn_div_q
+__gmpn_div_qr_1n_pi1
+__gmpn_div_qr_2n_pi1
+__gmpn_div_qr_2u_pi1
+__gmpn_divexact
+__gmpn_divexact_1_atom
+__gmpn_divexact_1_init
+__gmpn_divexact_1_nano
+__gmpn_divexact_1_x86_64
+__gmpn_divisible_p
+__gmpn_divrem
+__gmpn_divrem_1_core2
+__gmpn_divrem_1_coreisbr
+__gmpn_divrem_1_init
+__gmpn_divrem_1_x86_64
+__gmpn_divrem_2
+__gmpn_fft_best_k
+__gmpn_fft_next_size
+__gmpn_fib2_ui
+__gmpn_fib2m
+__gmpn_gcd
+__gmpn_gcd_1
+__gmpn_gcd_11
+__gmpn_gcd_11_bd1
+__gmpn_gcd_11_bt1
+__gmpn_gcd_11_bt2
+__gmpn_gcd_11_core2
+__gmpn_gcd_11_coreisbr
+__gmpn_gcd_11_init
+__gmpn_gcd_11_k10
+__gmpn_gcd_11_nano
+__gmpn_gcd_11_x86_64
+__gmpn_gcd_11_zen
+__gmpn_gcd_22
+__gmpn_gcd_subdiv_step
+__gmpn_gcdext
+__gmpn_gcdext_1
+__gmpn_gcdext_hook
+__gmpn_gcdext_lehmer_n
+__gmpn_get_d
+__gmpn_get_str
+__gmpn_hamdist
+__gmpn_hgcd
+__gmpn_hgcd2
+__gmpn_hgcd2_jacobi
+__gmpn_hgcd_appr
+__gmpn_hgcd_itch
+__gmpn_hgcd_jacobi
+__gmpn_hgcd_matrix_adjust
+__gmpn_hgcd_matrix_init
+__gmpn_hgcd_matrix_mul
+__gmpn_hgcd_matrix_mul_1
+__gmpn_hgcd_matrix_update_q
+__gmpn_hgcd_mul_matrix1_vector
+__gmpn_hgcd_reduce
+__gmpn_hgcd_step
+__gmpn_invert_limb
+__gmpn_invert_limb_table
+__gmpn_invertappr
+__gmpn_ior_n
+__gmpn_jacobi_2
+__gmpn_jacobi_base
+__gmpn_jacobi_n
+__gmpn_lshift_atom
+__gmpn_lshift_core2
+__gmpn_lshift_coreisbr
+__gmpn_lshift_init
+__gmpn_lshift_k10
+__gmpn_lshift_pentium4
+__gmpn_lshift_silvermont
+__gmpn_lshift_x86_64
+__gmpn_lshift_zen
+__gmpn_lshiftc_atom
+__gmpn_lshiftc_core2
+__gmpn_lshiftc_coreisbr
+__gmpn_lshiftc_init
+__gmpn_lshiftc_k10
+__gmpn_lshiftc_pentium4
+__gmpn_lshiftc_silvermont
+__gmpn_lshiftc_x86_64
+__gmpn_lshiftc_zen
+__gmpn_matrix22_mul
+__gmpn_matrix22_mul1_inverse_vector
+__gmpn_mod_1_1p_cps_init
+__gmpn_mod_1_1p_cps_x86_64
+__gmpn_mod_1_1p_init
+__gmpn_mod_1_1p_x86_64
+__gmpn_mod_1_fat
+__gmpn_mod_1_init
+__gmpn_mod_1s_2p_cps_init
+__gmpn_mod_1s_2p_cps_x86_64
+__gmpn_mod_1s_2p_init
+__gmpn_mod_1s_2p_x86_64
+__gmpn_mod_1s_4p_cps_init
+__gmpn_mod_1s_4p_cps_x86_64
+__gmpn_mod_1s_4p_init
+__gmpn_mod_1s_4p_x86_64
+__gmpn_mod_34lsub1_init
+__gmpn_mod_34lsub1_pentium4
+__gmpn_mod_34lsub1_x86_64
+__gmpn_modexact_1c_odd_init
+__gmpn_modexact_1c_odd_x86_64
+__gmpn_mu_bdiv_q
+__gmpn_mu_bdiv_q_itch
+__gmpn_mu_bdiv_qr
+__gmpn_mu_bdiv_qr_itch
+__gmpn_mu_div_q
+__gmpn_mu_div_q_itch
+__gmpn_mu_div_qr
+__gmpn_mu_div_qr_itch
+__gmpn_mu_divappr_q
+__gmpn_mu_divappr_q_itch
+__gmpn_mul
+__gmpn_mul_1_atom
+__gmpn_mul_1_bd1
+__gmpn_mul_1_bt1
+__gmpn_mul_1_coreibwl
+__gmpn_mul_1_coreihwl
+__gmpn_mul_1_coreisbr
+__gmpn_mul_1_goldmont
+__gmpn_mul_1_init
+__gmpn_mul_1_pentium4
+__gmpn_mul_1_silvermont
+__gmpn_mul_1_x86_64
+__gmpn_mul_1_zen
+__gmpn_mul_2
+__gmpn_mul_basecase_bd1
+__gmpn_mul_basecase_bt1
+__gmpn_mul_basecase_core2
+__gmpn_mul_basecase_coreibwl
+__gmpn_mul_basecase_coreihwl
+__gmpn_mul_basecase_coreisbr
+__gmpn_mul_basecase_fat
+__gmpn_mul_basecase_init
+__gmpn_mul_basecase_k8
+__gmpn_mul_basecase_pentium4
+__gmpn_mul_basecase_silvermont
+__gmpn_mul_basecase_zen
+__gmpn_mul_fft
+__gmpn_mul_n
+__gmpn_mullo_basecase_core2
+__gmpn_mullo_basecase_coreibwl
+__gmpn_mullo_basecase_coreihwl
+__gmpn_mullo_basecase_coreisbr
+__gmpn_mullo_basecase_fat
+__gmpn_mullo_basecase_init
+__gmpn_mullo_basecase_k8
+__gmpn_mullo_basecase_pentium4
+__gmpn_mullo_basecase_silvermont
+__gmpn_mullo_basecase_zen
+__gmpn_mullo_n
+__gmpn_mulmid_basecase
+__gmpn_mulmod_bknp1
+__gmpn_mulmod_bnm1
+__gmpn_mulmod_bnm1_next_size
+__gmpn_ni_invertappr
+__gmpn_nussbaumer_mul
+__gmpn_perfect_power_p
+__gmpn_perfect_square_p
+__gmpn_pi1_bdiv_q_1
+__gmpn_popcount
+__gmpn_pow_1
+__gmpn_powlo
+__gmpn_powm
+__gmpn_preinv_divrem_1_core2
+__gmpn_preinv_divrem_1_init
+__gmpn_preinv_divrem_1_x86_64
+__gmpn_preinv_mod_1_init
+__gmpn_random2
+__gmpn_redc_1_atom
+__gmpn_redc_1_bt1
+__gmpn_redc_1_core2
+__gmpn_redc_1_coreihwl
+__gmpn_redc_1_coreinhm
+__gmpn_redc_1_coreisbr
+__gmpn_redc_1_fat
+__gmpn_redc_1_goldmont
+__gmpn_redc_1_init
+__gmpn_redc_1_k8
+__gmpn_redc_1_pentium4
+__gmpn_redc_2_fat
+__gmpn_redc_2_init
+__gmpn_redc_n
+__gmpn_remove
+__gmpn_rootrem
+__gmpn_rsblsh1_n
+__gmpn_rsblsh2_n
+__gmpn_rsh1add_n
+__gmpn_rsh1add_nc
+__gmpn_rsh1sub_n
+__gmpn_rshift_atom
+__gmpn_rshift_core2
+__gmpn_rshift_coreisbr
+__gmpn_rshift_init
+__gmpn_rshift_k10
+__gmpn_rshift_pentium4
+__gmpn_rshift_silvermont
+__gmpn_rshift_x86_64
+__gmpn_rshift_zen
+__gmpn_sbpi1_bdiv_q
+__gmpn_sbpi1_bdiv_qr
+__gmpn_sbpi1_div_q
+__gmpn_sbpi1_div_qr
+__gmpn_sbpi1_divappr_q
+__gmpn_scan0
+__gmpn_scan1
+__gmpn_sec_add_1
+__gmpn_sec_div_r
+__gmpn_sec_pi1_div_qr
+__gmpn_sec_pi1_div_r
+__gmpn_sec_powm
+__gmpn_sec_powm_itch
+__gmpn_sec_tabselect
+__gmpn_set_str
+__gmpn_sqr
+__gmpn_sqr_basecase_bt1
+__gmpn_sqr_basecase_core2
+__gmpn_sqr_basecase_coreibwl
+__gmpn_sqr_basecase_coreihwl
+__gmpn_sqr_basecase_coreisbr
+__gmpn_sqr_basecase_fat
+__gmpn_sqr_basecase_init
+__gmpn_sqr_basecase_k8
+__gmpn_sqr_basecase_pentium4
+__gmpn_sqr_basecase_silvermont
+__gmpn_sqr_basecase_zen
+__gmpn_sqrlo
+__gmpn_sqrlo_basecase
+__gmpn_sqrmod_bknp1
+__gmpn_sqrmod_bnm1
+__gmpn_sqrmod_bnm1_next_size
+__gmpn_sqrtrem
+__gmpn_strongfibo
+__gmpn_sub_err2_n
+__gmpn_sub_n
+__gmpn_sub_n_atom
+__gmpn_sub_n_bd1
+__gmpn_sub_n_bt1
+__gmpn_sub_n_core2
+__gmpn_sub_n_coreihwl
+__gmpn_sub_n_coreisbr
+__gmpn_sub_n_goldmont
+__gmpn_sub_n_init
+__gmpn_sub_n_pentium4
+__gmpn_sub_n_silvermont
+__gmpn_sub_n_x86_64
+__gmpn_sublsh1_n_atom
+__gmpn_sublsh1_n_bd1
+__gmpn_sublsh1_n_core2
+__gmpn_sublsh1_n_init
+__gmpn_sublsh1_n_pentium4
+__gmpn_sublsh1_n_x86_64
+__gmpn_sublsh1_n_zen
+__gmpn_submul_1_atom
+__gmpn_submul_1_bd1
+__gmpn_submul_1_bt1
+__gmpn_submul_1_core2
+__gmpn_submul_1_coreihwl
+__gmpn_submul_1_coreinhm
+__gmpn_submul_1_coreisbr
+__gmpn_submul_1_goldmont
+__gmpn_submul_1_init
+__gmpn_submul_1_pentium4
+__gmpn_submul_1_silvermont
+__gmpn_submul_1_x86_64
+__gmpn_submul_1_zen
+__gmpn_tdiv_qr
+__gmpn_toom22_mul
+__gmpn_toom2_sqr
+__gmpn_toom32_mul
+__gmpn_toom33_mul
+__gmpn_toom3_sqr
+__gmpn_toom42_mul
+__gmpn_toom42_mulmid
+__gmpn_toom43_mul
+__gmpn_toom44_mul
+__gmpn_toom53_mul
+__gmpn_toom63_mul
+__gmpn_toom6_sqr
+__gmpn_toom6h_mul
+__gmpn_toom8_sqr
+__gmpn_toom8h_mul
+__gmpn_toom_couple_handling
+__gmpn_toom_eval_dgr3_pm1
+__gmpn_toom_eval_dgr3_pm2
+__gmpn_toom_eval_pm1
+__gmpn_toom_eval_pm2
+__gmpn_toom_eval_pm2exp
+__gmpn_toom_eval_pm2rexp
+__gmpn_toom_interpolate_12pts
+__gmpn_toom_interpolate_16pts
+__gmpn_toom_interpolate_5pts
+__gmpn_toom_interpolate_6pts
+__gmpn_toom_interpolate_7pts
+__gmpn_toom_interpolate_8pts
+__gmpn_trialdiv
+__gmpn_xor_n
+__gmpn_zero
+__gmpq_cmp_ui
+__gmpq_get_str
+__gmpq_init
+__gmpq_mul
+__gmpq_set_si
+__gmpq_set_str
+__gmpq_set_ui
+__gmpz_2fac_ui
+__gmpz_add
+__gmpz_add_ui
+__gmpz_addmul_ui
+__gmpz_aorsmul_1
+__gmpz_cdiv_ui
+__gmpz_clear
+__gmpz_clrbit
+__gmpz_cmp
+__gmpz_cmp_ui
+__gmpz_cmpabs_ui
+__gmpz_divexact
+__gmpz_divexact_gcd
+__gmpz_export
+__gmpz_fac_ui
+__gmpz_fdiv_q_2exp
+__gmpz_fdiv_r_2exp
+__gmpz_gcd
+__gmpz_gcdext
+__gmpz_get_str
+__gmpz_init
+__gmpz_init2
+__gmpz_init_set
+__gmpz_init_set_str
+__gmpz_init_set_ui
+__gmpz_inp_str
+__gmpz_inp_str_nowhite
+__gmpz_invert
+__gmpz_jacobi
+__gmpz_lucas_mod
+__gmpz_millerrabin
+__gmpz_mod
+__gmpz_mul
+__gmpz_mul_2exp
+__gmpz_mul_si
+__gmpz_mul_ui
+__gmpz_n_pow_ui
+__gmpz_oddfac_1
+__gmpz_out_str
+__gmpz_powm
+__gmpz_powm_ui
+__gmpz_prodlimbs
+__gmpz_realloc
+__gmpz_roinit_n
+__gmpz_scan0
+__gmpz_scan1
+__gmpz_set
+__gmpz_set_d
+__gmpz_set_si
+__gmpz_set_str
+__gmpz_set_ui
+__gmpz_setbit
+__gmpz_sizeinbase
+__gmpz_sqrt
+__gmpz_stronglucas
+__gmpz_sub
+__gmpz_sub_ui
+__gmpz_submul_ui
+__gmpz_swap
+__gmpz_tdiv_q
+__gmpz_tdiv_q_2exp
+__gmpz_tdiv_q_ui
+__gmpz_tdiv_qr
+__gmpz_tdiv_r
+__gmpz_tdiv_r_2exp
+__gmpz_tdiv_ui
+__gmpz_tstbit
+__gmpz_ui_pow_ui
+__gmpz_urandomb
+__gmpz_urandomm
+abort
+abs.o:
+add.o:
+add_1.o:
+add_err1_n.o:
+add_err2_n.o:
+add_err3_n.o:
+add_n_sub_n.o:
+add_ui.o:
+addlsh_n.o:
+and.o:
+and_n.o:
+andn_n.o:
+aors.o:
+aorsmul.o:
+aorsmul_i.o:
+array_init.o:
+asprintf.o:
+asprntffuns.o:
+assert.o:
+atom_add_n.o:
+atom_addlsh1_n.o:
+atom_addlsh2_n.o:
+atom_addmul_1.o:
+atom_addmul_2.o:
+atom_cnd_add_n.o:
+atom_cnd_sub_n.o:
+atom_com.o:
+atom_copyd.o:
+atom_copyi.o:
+atom_dive_1.o:
+atom_lshift.o:
+atom_lshiftc.o:
+atom_mul_1.o:
+atom_redc_1.o:
+atom_rshift.o:
+atom_sub_n.o:
+atom_sublsh1_n.o:
+atom_submul_1.o:
+bd1_add_n.o:
+bd1_addlsh1_n.o:
+bd1_addmul_1.o:
+bd1_addmul_2.o:
+bd1_com.o:
+bd1_copyd.o:
+bd1_copyi.o:
+bd1_gcd_11.o:
+bd1_mul_1.o:
+bd1_mul_basecase.o:
+bd1_sub_n.o:
+bd1_sublsh1_n.o:
+bd1_submul_1.o:
+bdiv_q.o:
+bdiv_q_1.o:
+bdiv_qr.o:
+bin_ui.o:
+bin_uiui.o:
+binvert.o:
+broot.o:
+brootinv.o:
+bsqrt.o:
+bsqrtinv.o:
+bt1_add_n.o:
+bt1_addmul_1.o:
+bt1_copyd.o:
+bt1_copyi.o:
+bt1_gcd_11.o:
+bt1_mul_1.o:
+bt1_mul_basecase.o:
+bt1_redc_1.o:
+bt1_sqr_basecase.o:
+bt1_sub_n.o:
+bt1_submul_1.o:
+bt2_com.o:
+bt2_copyd.o:
+bt2_copyi.o:
+bt2_gcd_11.o:
+canonicalize.o:
+cdiv_q.o:
+cdiv_q_ui.o:
+cdiv_qr.o:
+cdiv_qr_ui.o:
+cdiv_r.o:
+cdiv_r_ui.o:
+cdiv_ui.o:
+ceilfloor.o:
+cfdiv_q_2exp.o:
+cfdiv_r_2exp.o:
+clear.o:
+clears.o:
+clrbit.o:
+cmp.o:
+cmp_d.o:
+cmp_si.o:
+cmp_ui.o:
+cmp_z.o:
+cmpabs.o:
+cmpabs_d.o:
+cmpabs_ui.o:
+cnd_swap.o:
+com.o:
+comb_tables.o:
+combit.o:
+compat.o:
+compute_powtab.o:
+cong.o:
+cong_2exp.o:
+cong_ui.o:
+core2_add_n.o:
+core2_addlsh1_n.o:
+core2_addlsh2_n.o:
+core2_addmul_1.o:
+core2_com.o:
+core2_copyd.o:
+core2_copyi.o:
+core2_divrem_1.o:
+core2_gcd_11.o:
+core2_lshift.o:
+core2_lshiftc.o:
+core2_mul_basecase.o:
+core2_mullo_basecase.o:
+core2_redc_1.o:
+core2_rshift.o:
+core2_sqr_basecase.o:
+core2_sub_n.o:
+core2_sublsh1_n.o:
+core2_submul_1.o:
+coreibwl_addmul_1.o:
+coreibwl_mul_1.o:
+coreibwl_mul_basecase.o:
+coreibwl_mullo_basecase.o:
+coreibwl_sqr_basecase.o:
+coreihwl_add_n.o:
+coreihwl_addmul_1.o:
+coreihwl_addmul_2.o:
+coreihwl_mul_1.o:
+coreihwl_mul_basecase.o:
+coreihwl_mullo_basecase.o:
+coreihwl_redc_1.o:
+coreihwl_sqr_basecase.o:
+coreihwl_sub_n.o:
+coreihwl_submul_1.o:
+coreinhm_addmul_1.o:
+coreinhm_redc_1.o:
+coreinhm_submul_1.o:
+coreisbr_add_n.o:
+coreisbr_addlsh1_n.o:
+coreisbr_addlsh2_n.o:
+coreisbr_addmul_1.o:
+coreisbr_addmul_2.o:
+coreisbr_cnd_add_n.o:
+coreisbr_cnd_sub_n.o:
+coreisbr_divrem_1.o:
+coreisbr_gcd_11.o:
+coreisbr_lshift.o:
+coreisbr_lshiftc.o:
+coreisbr_mul_1.o:
+coreisbr_mul_basecase.o:
+coreisbr_mullo_basecase.o:
+coreisbr_redc_1.o:
+coreisbr_rshift.o:
+coreisbr_sqr_basecase.o:
+coreisbr_sub_n.o:
+coreisbr_submul_1.o:
+dcpi1_bdiv_q.o:
+dcpi1_bdiv_qr.o:
+dcpi1_div_q.o:
+dcpi1_div_qr.o:
+dcpi1_divappr_q.o:
+div.o:
+div_2exp.o:
+div_q.o:
+div_qr_1.o:
+div_qr_1n_pi1.o:
+div_qr_2.o:
+div_qr_2n_pi1.o:
+div_qr_2u_pi1.o:
+div_ui.o:
+dive_ui.o:
+diveby3.o:
+divegcd.o:
+divexact.o:
+divis.o:
+divis_2exp.o:
+divis_ui.o:
+divrem.o:
+divrem_2.o:
+doprnt.o:
+doprntf.o:
+doprnti.o:
+doscan.o:
+dump.o:
+eq.o:
+equal.o:
+errno.o:
+export.o:
+extract-dbl.o:
+fac_ui.o:
+fat.o:
+fat_addmul_2.o:
+fat_entry.o:
+fat_mod_1.o:
+fat_mul_basecase.o:
+fat_mullo_basecase.o:
+fat_redc_1.o:
+fat_redc_2.o:
+fat_sqr_basecase.o:
+fdiv_q.o:
+fdiv_q_ui.o:
+fdiv_qr.o:
+fdiv_qr_ui.o:
+fdiv_r.o:
+fdiv_r_ui.o:
+fdiv_ui.o:
+ferror
+fgetc
+fib2_ui.o:
+fib2m.o:
+fib_table.o:
+fib_ui.o:
+fits_sint.o:
+fits_slong.o:
+fits_sshort.o:
+fits_uint.o:
+fits_ulong.o:
+fits_ushort.o:
+fprintf
+fprintf.o:
+fputc
+fread
+free
+fscanf
+fscanf.o:
+fscanffuns.o:
+fwrite
+gcd.o:
+gcd_1.o:
+gcd_22.o:
+gcd_subdiv_step.o:
+gcd_ui.o:
+gcdext.o:
+gcdext_1.o:
+gcdext_lehmer.o:
+get_d.o:
+get_d_2exp.o:
+get_den.o:
+get_dfl_prec.o:
+get_num.o:
+get_prc.o:
+get_si.o:
+get_str.o:
+get_ui.o:
+getc
+getlimbn.o:
+goldmont_add_n.o:
+goldmont_addmul_1.o:
+goldmont_mul_1.o:
+goldmont_redc_1.o:
+goldmont_sub_n.o:
+goldmont_submul_1.o:
+hamdist.o:
+hgcd.o:
+hgcd2.o:
+hgcd2_jacobi.o:
+hgcd_appr.o:
+hgcd_jacobi.o:
+hgcd_matrix.o:
+hgcd_reduce.o:
+hgcd_step.o:
+import.o:
+init.o:
+init2.o:
+inits.o:
+inp_raw.o:
+inp_str.o:
+int_p.o:
+inv.o:
+invalid.o:
+invert.o:
+invert_limb.o:
+invert_limb_table.o:
+invertappr.o:
+ior.o:
+ior_n.o:
+iorn_n.o:
+iset.o:
+iset_d.o:
+iset_si.o:
+iset_str.o:
+iset_ui.o:
+isxdigit
+jacbase.o:
+jacobi.o:
+jacobi_2.o:
+k10_gcd_11.o:
+k10_lshift.o:
+k10_lshiftc.o:
+k10_rshift.o:
+k8_addmul_2.o:
+k8_mul_basecase.o:
+k8_mullo_basecase.o:
+k8_redc_1.o:
+k8_sqr_basecase.o:
+kronsz.o:
+kronuz.o:
+kronzs.o:
+kronzu.o:
+lcm.o:
+lcm_ui.o:
+limbs_finish.o:
+limbs_modify.o:
+limbs_read.o:
+limbs_write.o:
+lt1-abs.o:
+lt10-dump.o:
+lt100-get_d.o:
+lt101-invert.o:
+lt102-divexact.o:
+lt103-powm.o:
+lt104-remove.o:
+lt11-fits_sint.o:
+lt12-fits_slong.o:
+lt13-fits_sshort.o:
+lt14-fits_uint.o:
+lt15-fits_ulong.o:
+lt16-fits_ushort.o:
+lt17-get_d.o:
+lt18-get_d_2exp.o:
+lt19-get_si.o:
+lt2-add.o:
+lt20-get_str.o:
+lt21-get_ui.o:
+lt22-init.o:
+lt23-init2.o:
+lt24-inits.o:
+lt25-inp_str.o:
+lt26-iset.o:
+lt27-iset_d.o:
+lt28-iset_si.o:
+lt29-iset_str.o:
+lt3-add_ui.o:
+lt30-iset_ui.o:
+lt31-mul.o:
+lt32-mul_2exp.o:
+lt33-mul_ui.o:
+lt34-neg.o:
+lt35-nextprime.o:
+lt36-out_str.o:
+lt37-pow_ui.o:
+lt38-random2.o:
+lt39-set.o:
+lt4-clear.o:
+lt40-set_d.o:
+lt41-set_q.o:
+lt42-set_si.o:
+lt43-set_str.o:
+lt44-set_ui.o:
+lt45-size.o:
+lt46-sqrt.o:
+lt47-sub.o:
+lt48-sub_ui.o:
+lt49-swap.o:
+lt5-clears.o:
+lt50-ui_sub.o:
+lt51-urandomb.o:
+lt52-abs.o:
+lt53-clear.o:
+lt54-clears.o:
+lt55-cmp.o:
+lt56-cmp_si.o:
+lt57-cmp_ui.o:
+lt58-div.o:
+lt59-get_d.o:
+lt6-cmp.o:
+lt60-get_str.o:
+lt61-init.o:
+lt62-inits.o:
+lt63-inp_str.o:
+lt64-mul.o:
+lt65-neg.o:
+lt66-out_str.o:
+lt67-set.o:
+lt68-set_si.o:
+lt69-set_str.o:
+lt7-cmp_d.o:
+lt70-set_ui.o:
+lt71-set_z.o:
+lt72-set_d.o:
+lt73-set_f.o:
+lt74-swap.o:
+lt75-add.o:
+lt76-sub.o:
+lt77-neg.o:
+lt78-divis.o:
+lt79-fib2_ui.o:
+lt8-cmp_si.o:
+lt80-dump.o:
+lt81-mul.o:
+lt82-random.o:
+lt83-random2.o:
+lt84-rootrem.o:
+lt85-sqrtrem.o:
+lt86-sizeinbase.o:
+lt87-get_str.o:
+lt88-set_str.o:
+lt89-scan0.o:
+lt9-cmp_ui.o:
+lt90-scan1.o:
+lt91-popcount.o:
+lt92-hamdist.o:
+lt93-cmp.o:
+lt94-perfsqr.o:
+lt95-perfpow.o:
+lt96-gcd.o:
+lt97-gcdext.o:
+lt98-tdiv_qr.o:
+lt99-jacobi.o:
+lucmod.o:
+lucnum2_ui.o:
+lucnum_ui.o:
+malloc
+matrix22_mul.o:
+matrix22_mul1_inverse_vector.o:
+md_2exp.o:
+memcpy
+memory.o:
+memset
+mfac_uiui.o:
+millerrabin.o:
+mod.o:
+mod_1_3.o:
+mp_bases.o:
+mp_bpl.o:
+mp_clz_tab.o:
+mp_dv_tab.o:
+mp_get_fns.o:
+mp_minv_tab.o:
+mp_set_fns.o:
+mu_bdiv_q.o:
+mu_bdiv_qr.o:
+mu_div_q.o:
+mu_div_qr.o:
+mu_divappr_q.o:
+mul.o:
+mul_2.o:
+mul_2exp.o:
+mul_fft.o:
+mul_n.o:
+mul_si.o:
+mul_ui.o:
+mullo_n.o:
+mulmid.o:
+mulmid_basecase.o:
+mulmid_n.o:
+mulmod_bknp1.o:
+mulmod_bnm1.o:
+n_pow_ui.o:
+nand_n.o:
+nano_copyd.o:
+nano_copyi.o:
+nano_dive_1.o:
+nano_gcd_11.o:
+neg.o:
+nextprime.o:
+nior_n.o:
+nl_langinfo
+nussbaumer_mul.o:
+obprintf.o:
+obprntffuns.o:
+obvprintf.o:
+oddfac_1.o:
+out_raw.o:
+out_str.o:
+p4_add_n.o:
+p4_addlsh1_n.o:
+p4_addlsh2_n.o:
+p4_addmul_1.o:
+p4_addmul_2.o:
+p4_lshift.o:
+p4_lshiftc.o:
+p4_mod_34lsub1.o:
+p4_mul_1.o:
+p4_mul_basecase.o:
+p4_mullo_basecase.o:
+p4_redc_1.o:
+p4_rshift.o:
+p4_sqr_basecase.o:
+p4_sub_n.o:
+p4_sublsh1_n.o:
+p4_submul_1.o:
+perfpow.o:
+perfsqr.o:
+popcount.o:
+pow_1.o:
+pow_ui.o:
+powlo.o:
+powm.o:
+powm_sec.o:
+powm_ui.o:
+pprime_p.o:
+primesieve.o:
+primorial_ui.o:
+printf
+printf.o:
+printffuns.o:
+prodlimbs.o:
+putc
+raise
+rand.o:
+randbui.o:
+randclr.o:
+randdef.o:
+randiset.o:
+randlc2s.o:
+randlc2x.o:
+randmt.o:
+randmts.o:
+randmui.o:
+random.o:
+random2.o:
+rands.o:
+randsd.o:
+randsdui.o:
+realloc
+realloc.o:
+realloc2.o:
+redc_n.o:
+reldiff.o:
+remove.o:
+repl-vsnprintf.o:
+roinit_n.o:
+root.o:
+rootrem.o:
+rrandomb.o:
+rsblsh1_n.o:
+rsblsh2_n.o:
+rsblsh_n.o:
+rsh1add_n.o:
+rsh1sub_n.o:
+sbpi1_bdiv_q.o:
+sbpi1_bdiv_qr.o:
+sbpi1_bdiv_r.o:
+sbpi1_div_q.o:
+sbpi1_div_qr.o:
+sbpi1_divappr_q.o:
+scan0.o:
+scan1.o:
+scanf.o:
+sec_add_1.o:
+sec_div_qr.o:
+sec_div_r.o:
+sec_invert.o:
+sec_mul.o:
+sec_pi1_div_qr.o:
+sec_pi1_div_r.o:
+sec_powm.o:
+sec_sqr.o:
+sec_sub_1.o:
+sec_tabselect.o:
+set.o:
+set_d.o:
+set_den.o:
+set_dfl_prec.o:
+set_f.o:
+set_num.o:
+set_prc.o:
+set_prc_raw.o:
+set_q.o:
+set_si.o:
+set_str.o:
+set_ui.o:
+set_z.o:
+setbit.o:
+silvermont_add_n.o:
+silvermont_addlsh1_n.o:
+silvermont_addlsh2_n.o:
+silvermont_addmul_1.o:
+silvermont_lshift.o:
+silvermont_lshiftc.o:
+silvermont_mul_1.o:
+silvermont_mul_basecase.o:
+silvermont_mullo_basecase.o:
+silvermont_rshift.o:
+silvermont_sqr_basecase.o:
+silvermont_sub_n.o:
+silvermont_submul_1.o:
+size.o:
+sizeinbase.o:
+snprintf
+snprintf.o:
+snprntffuns.o:
+sprintf.o:
+sprintffuns.o:
+sqr.o:
+sqr_diag_addlsh1.o:
+sqrlo.o:
+sqrlo_basecase.o:
+sqrmod_bnm1.o:
+sqrt.o:
+sqrt_ui.o:
+sqrtrem.o:
+sscanf
+sscanf.o:
+sscanffuns.o:
+stderr
+stdin
+stdout
+strchr
+strcmp
+strlen
+strongfibo.o:
+stronglucas.o:
+strstr
+strtol
+sub.o:
+sub_1.o:
+sub_err1_n.o:
+sub_err2_n.o:
+sub_err3_n.o:
+sub_ui.o:
+swap.o:
+tal-reent.o:
+tdiv_q.o:
+tdiv_q_2exp.o:
+tdiv_q_ui.o:
+tdiv_qr.o:
+tdiv_qr_ui.o:
+tdiv_r.o:
+tdiv_r_2exp.o:
+tdiv_r_ui.o:
+tdiv_ui.o:
+toom22_mul.o:
+toom2_sqr.o:
+toom32_mul.o:
+toom33_mul.o:
+toom3_sqr.o:
+toom42_mul.o:
+toom42_mulmid.o:
+toom43_mul.o:
+toom44_mul.o:
+toom4_sqr.o:
+toom52_mul.o:
+toom53_mul.o:
+toom54_mul.o:
+toom62_mul.o:
+toom63_mul.o:
+toom6_sqr.o:
+toom6h_mul.o:
+toom8_sqr.o:
+toom8h_mul.o:
+toom_couple_handling.o:
+toom_eval_dgr3_pm1.o:
+toom_eval_dgr3_pm2.o:
+toom_eval_pm1.o:
+toom_eval_pm2.o:
+toom_eval_pm2exp.o:
+toom_eval_pm2rexp.o:
+toom_interpolate_12pts.o:
+toom_interpolate_16pts.o:
+toom_interpolate_5pts.o:
+toom_interpolate_6pts.o:
+toom_interpolate_7pts.o:
+toom_interpolate_8pts.o:
+trialdiv.o:
+trunc.o:
+tstbit.o:
+ui_div.o:
+ui_pow_ui.o:
+ui_sub.o:
+ungetc
+urandomb.o:
+urandomm.o:
+vasprintf.o:
+version.o:
+vfprintf
+vfprintf.o:
+vfscanf.o:
+vprintf.o:
+vscanf.o:
+vsnprintf
+vsnprintf.o:
+vsprintf
+vsprintf.o:
+vsscanf.o:
+x86_64_add_n.o:
+x86_64_addlsh1_n.o:
+x86_64_addlsh2_n.o:
+x86_64_addmul_1.o:
+x86_64_bdiv_dbm1c.o:
+x86_64_cnd_add_n.o:
+x86_64_cnd_sub_n.o:
+x86_64_com.o:
+x86_64_copyd.o:
+x86_64_copyi.o:
+x86_64_dive_1.o:
+x86_64_divrem_1.o:
+x86_64_gcd_11.o:
+x86_64_lshift.o:
+x86_64_lshiftc.o:
+x86_64_mod_1_1.o:
+x86_64_mod_1_2.o:
+x86_64_mod_1_4.o:
+x86_64_mod_34lsub1.o:
+x86_64_mode1o.o:
+x86_64_mul_1.o:
+x86_64_rshift.o:
+x86_64_sub_n.o:
+x86_64_sublsh1_n.o:
+x86_64_submul_1.o:
+xnor_n.o:
+xor.o:
+xor_n.o:
+zen_addlsh1_n.o:
+zen_addmul_1.o:
+zen_com.o:
+zen_copyd.o:
+zen_copyi.o:
+zen_gcd_11.o:
+zen_lshift.o:
+zen_lshiftc.o:
+zen_mul_1.o:
+zen_mul_basecase.o:
+zen_mullo_basecase.o:
+zen_rshift.o:
+zen_sqr_basecase.o:
+zen_sublsh1_n.o:
+zen_submul_1.o:
+zero.o:
+zero_p.o:
+[1m==> known-answer selftest (hosted, this machine)[0m
+/usr/bin/ld: /home/ubuntu/gmp-metal/build/gmp-6.3.0/.libs/libgmp.a(lt24-inits.o): warning: relocation in read-only section `.text.__gmpz_inits'
+/usr/bin/ld: warning: creating DT_TEXTREL in a PIE
+fermat 3^(M521-1) mod M521 == 1    ok
+fermat on composite 2^520-1 != 1   ok
+(2^4096-1)^2 closed form           ok
+tdiv_qr round-trip at 3400 bits    ok
+gcd(M607, M521) == 1               ok
+
+SELFTEST PASSED (0 failures)
+
+[1m==> Linux control[0m
+/usr/bin/ld: /home/ubuntu/gmp-metal/build/gmp-6.3.0/.libs/libgmp.a(lt24-inits.o): warning: relocation in read-only section `.text.__gmpz_inits'
+/usr/bin/ld: warning: creating DT_TEXTREL in a PIE
+--- Linux control ---
+PRP_START primorial=2357 digits=1014 bits=3366 reps=20
+PRP_DONE unit=cycles ticks_per_test=31491866 ms_per_test=10.497 prp_is_one=0
+PRP_PROJECT tests=7.3e9 core_hours=21286
+
+[1m==> linking prp_bench.app[0m
+ld: warning: orphan section `.comment' from `/home/ubuntu/gmp-metal/applink/crt0.o' being placed in section `.comment'
+ld: warning: orphan section `.rela.got' from `/home/ubuntu/gmp-metal/applink/crt0.o' being placed in section `.rela.dyn'
+ld: warning: orphan section `.got' from `/home/ubuntu/gmp-metal/applink/crt0.o' being placed in section `.got'
+ld: warning: orphan section `.got.plt' from `/home/ubuntu/gmp-metal/applink/crt0.o' being placed in section `.got.plt'
+ld: warning: orphan section `.iplt' from `/home/ubuntu/gmp-metal/applink/crt0.o' being placed in section `.iplt'
+ld: warning: orphan section `.rela.iplt' from `/home/ubuntu/gmp-metal/applink/crt0.o' being placed in section `.rela.dyn'
+ld: warning: orphan section `.igot.plt' from `/home/ubuntu/gmp-metal/applink/crt0.o' being placed in section `.igot.plt'
+ld: warning: orphan section `.rela.text.image_fits_in_ram' from `/home/ubuntu/gmp-metal/applink/crt0.o' being placed in section `.rela.dyn'
+ld: warning: orphan section `.rela.text.zero_bss' from `/home/ubuntu/gmp-metal/applink/crt0.o' being placed in section `.rela.dyn'
+ld: warning: orphan section `.rela.text.heap_init' from `/home/ubuntu/gmp-metal/applink/crt0.o' being placed in section `.rela.dyn'
+ld: warning: orphan section `.rela.text.__gmp_default_allocate' from `/home/ubuntu/gmp-metal/applink/crt0.o' being placed in section `.rela.dyn'
+ld: warning: orphan section `.rela.text.__init_libc' from `/home/ubuntu/gmp-metal/applink/crt0.o' being placed in section `.rela.dyn'
+ld: warning: orphan section `.rela.text.libc_start_init' from `/home/ubuntu/gmp-metal/applink/crt0.o' being placed in section `.rela.dyn'
+ld: warning: orphan section `.rela.text.libc_start_main_stage2' from `/home/ubuntu/gmp-metal/applink/crt0.o' being placed in section `.rela.dyn'
+ld: warning: orphan section `.rela.text.libc_exit_fini' from `/home/ubuntu/gmp-metal/applink/crt0.o' being placed in section `.rela.dyn'
+ld: warning: orphan section `.rela.text.exit' from `/home/ubuntu/gmp-metal/applink/crt0.o' being placed in section `.rela.dyn'
+ld: warning: orphan section `.rela.text.__libc_free' from `/home/ubuntu/gmp-metal/applink/crt0.o' being placed in section `.rela.dyn'
+ld: warning: orphan section `.rela.text.__malloc_alloc_meta' from `/home/ubuntu/gmp-metal/applink/crt0.o' being placed in section `.rela.dyn'
+ld: warning: orphan section `.rela.text.__libc_malloc_impl' from `/home/ubuntu/gmp-metal/applink/crt0.o' being placed in section `.rela.dyn'
+ld: warning: orphan section `.rela.text.__mmap' from `/home/ubuntu/gmp-metal/applink/crt0.o' being placed in section `.rela.dyn'
+ld: warning: orphan section `.rela.text.__munmap' from `/home/ubuntu/gmp-metal/applink/crt0.o' being placed in section `.rela.dyn'
+ld: warning: orphan section `.rela.text.printf_core' from `/home/ubuntu/gmp-metal/applink/crt0.o' being placed in section `.rela.dyn'
+ld: warning: orphan section `.rela.text.static_init_tls' from `/home/ubuntu/gmp-metal/applink/crt0.o' being placed in section `.rela.dyn'
+ld: warning: orphan section `.rela.text.__intscan' from `/home/ubuntu/gmp-metal/applink/crt0.o' being placed in section `.rela.dyn'
+ld: warning: orphan section `.rela.text.__syscall_ret' from `/home/ubuntu/gmp-metal/applink/crt0.o' being placed in section `.rela.dyn'
+ld: warning: orphan section `.rela.text.__lctrans' from `/home/ubuntu/gmp-metal/applink/crt0.o' being placed in section `.rela.dyn'
+ld: warning: orphan section `.rela.text.__libc_realloc' from `/home/ubuntu/gmp-metal/applink/crt0.o' being placed in section `.rela.dyn'
+ld: warning: orphan section `.rela.text.__mremap' from `/home/ubuntu/gmp-metal/applink/crt0.o' being placed in section `.rela.dyn'
+ld: warning: orphan section `.rela.text.__stdio_close' from `/home/ubuntu/gmp-metal/applink/crt0.o' being placed in section `.rela.dyn'
+ld: warning: orphan section `.rela.text.wcrtomb' from `/home/ubuntu/gmp-metal/applink/crt0.o' being placed in section `.rela.dyn'
+ld: warning: orphan section `.rela.text.__stdio_exit' from `/home/ubuntu/gmp-metal/applink/crt0.o' being placed in section `.rela.dyn'
+ld: warning: orphan section `.comment' from `/home/ubuntu/gmp-metal/applink/posix_shim.o' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/gmp-metal/applink/thread_shim.o' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/gmp-metal/applink/libBareMetal.o' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/gmp-metal/applink/min_stubs.o' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/gmp-metal/applink/prp_bench.o' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/gmp-metal/build/gmp-6.3.0/.libs/libgmp.a(lt5-clears.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/gmp-metal/build/gmp-6.3.0/.libs/libgmp.a(lt9-cmp_ui.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/gmp-metal/build/gmp-6.3.0/.libs/libgmp.a(lt24-inits.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/gmp-metal/build/gmp-6.3.0/.libs/libgmp.a(lt32-mul_2exp.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/gmp-metal/build/gmp-6.3.0/.libs/libgmp.a(lt33-mul_ui.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/gmp-metal/build/gmp-6.3.0/.libs/libgmp.a(powm.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/gmp-metal/build/gmp-6.3.0/.libs/libgmp.a(realloc.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/gmp-metal/build/gmp-6.3.0/.libs/libgmp.a(lt44-set_ui.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/gmp-metal/build/gmp-6.3.0/.libs/libgmp.a(sizeinbase.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/gmp-metal/build/gmp-6.3.0/.libs/libgmp.a(lt48-sub_ui.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/gmp-metal/build/gmp-6.3.0/.libs/libgmp.a(mp_bases.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/gmp-metal/build/gmp-6.3.0/.libs/libgmp.a(fat.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/gmp-metal/build/gmp-6.3.0/.libs/libgmp.a(lt81-mul.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/gmp-metal/build/gmp-6.3.0/.libs/libgmp.a(mul_n.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/gmp-metal/build/gmp-6.3.0/.libs/libgmp.a(nussbaumer_mul.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/gmp-metal/build/gmp-6.3.0/.libs/libgmp.a(lt98-tdiv_qr.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/gmp-metal/build/gmp-6.3.0/.libs/libgmp.a(mullo_n.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/gmp-metal/build/gmp-6.3.0/.libs/libgmp.a(toom22_mul.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/gmp-metal/build/gmp-6.3.0/.libs/libgmp.a(toom32_mul.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/gmp-metal/build/gmp-6.3.0/.libs/libgmp.a(toom42_mul.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/gmp-metal/build/gmp-6.3.0/.libs/libgmp.a(toom33_mul.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/gmp-metal/build/gmp-6.3.0/.libs/libgmp.a(toom43_mul.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/gmp-metal/build/gmp-6.3.0/.libs/libgmp.a(toom53_mul.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/gmp-metal/build/gmp-6.3.0/.libs/libgmp.a(toom63_mul.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/gmp-metal/build/gmp-6.3.0/.libs/libgmp.a(toom44_mul.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/gmp-metal/build/gmp-6.3.0/.libs/libgmp.a(toom6h_mul.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/gmp-metal/build/gmp-6.3.0/.libs/libgmp.a(toom8h_mul.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/gmp-metal/build/gmp-6.3.0/.libs/libgmp.a(toom_couple_handling.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/gmp-metal/build/gmp-6.3.0/.libs/libgmp.a(toom_eval_dgr3_pm1.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/gmp-metal/build/gmp-6.3.0/.libs/libgmp.a(toom_eval_dgr3_pm2.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/gmp-metal/build/gmp-6.3.0/.libs/libgmp.a(toom_eval_pm1.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/gmp-metal/build/gmp-6.3.0/.libs/libgmp.a(toom_eval_pm2.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/gmp-metal/build/gmp-6.3.0/.libs/libgmp.a(toom_eval_pm2exp.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/gmp-metal/build/gmp-6.3.0/.libs/libgmp.a(toom_eval_pm2rexp.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/gmp-metal/build/gmp-6.3.0/.libs/libgmp.a(toom_interpolate_5pts.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/gmp-metal/build/gmp-6.3.0/.libs/libgmp.a(toom_interpolate_6pts.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/gmp-metal/build/gmp-6.3.0/.libs/libgmp.a(toom_interpolate_7pts.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/gmp-metal/build/gmp-6.3.0/.libs/libgmp.a(toom_interpolate_8pts.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/gmp-metal/build/gmp-6.3.0/.libs/libgmp.a(toom_interpolate_12pts.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/gmp-metal/build/gmp-6.3.0/.libs/libgmp.a(toom_interpolate_16pts.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/gmp-metal/build/gmp-6.3.0/.libs/libgmp.a(binvert.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/gmp-metal/build/gmp-6.3.0/.libs/libgmp.a(mulmod_bnm1.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/gmp-metal/build/gmp-6.3.0/.libs/libgmp.a(sqrmod_bnm1.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/gmp-metal/build/gmp-6.3.0/.libs/libgmp.a(mulmod_bknp1.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/gmp-metal/build/gmp-6.3.0/.libs/libgmp.a(sbpi1_div_qr.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/gmp-metal/build/gmp-6.3.0/.libs/libgmp.a(dcpi1_div_qr.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/gmp-metal/build/gmp-6.3.0/.libs/libgmp.a(mu_div_qr.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/gmp-metal/build/gmp-6.3.0/.libs/libgmp.a(sbpi1_bdiv_q.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/gmp-metal/build/gmp-6.3.0/.libs/libgmp.a(dcpi1_bdiv_q.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/gmp-metal/build/gmp-6.3.0/.libs/libgmp.a(dcpi1_bdiv_qr.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/gmp-metal/build/gmp-6.3.0/.libs/libgmp.a(lt103-powm.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/gmp-metal/build/gmp-6.3.0/.libs/libgmp.a(powlo.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/gmp-metal/build/gmp-6.3.0/.libs/libgmp.a(assert.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/gmp-metal/build/gmp-6.3.0/.libs/libgmp.a(errno.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/gmp-metal/build/gmp-6.3.0/.libs/libgmp.a(memory.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/gmp-metal/build/gmp-6.3.0/.libs/libgmp.a(mp_minv_tab.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/gmp-metal/build/gmp-6.3.0/.libs/libgmp.a(tal-reent.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/gmp-metal/build/gmp-6.3.0/.libs/libgmp.a(invert.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/gmp-metal/build/gmp-6.3.0/.libs/libgmp.a(lt39-set.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/gmp-metal/build/gmp-6.3.0/.libs/libgmp.a(lt47-sub.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/gmp-metal/build/gmp-6.3.0/.libs/libgmp.a(fat_mod_1.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/gmp-metal/build/gmp-6.3.0/.libs/libgmp.a(fat_mul_basecase.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/gmp-metal/build/gmp-6.3.0/.libs/libgmp.a(fat_mullo_basecase.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/gmp-metal/build/gmp-6.3.0/.libs/libgmp.a(fat_redc_1.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/gmp-metal/build/gmp-6.3.0/.libs/libgmp.a(fat_redc_2.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/gmp-metal/build/gmp-6.3.0/.libs/libgmp.a(fat_sqr_basecase.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/gmp-metal/build/gmp-6.3.0/.libs/libgmp.a(fat_addmul_2.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/gmp-metal/build/gmp-6.3.0/.libs/libgmp.a(mul_fft.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/gmp-metal/build/gmp-6.3.0/.libs/libgmp.a(sqr.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/gmp-metal/build/gmp-6.3.0/.libs/libgmp.a(sqrlo.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/gmp-metal/build/gmp-6.3.0/.libs/libgmp.a(sqrlo_basecase.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/gmp-metal/build/gmp-6.3.0/.libs/libgmp.a(toom6_sqr.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/gmp-metal/build/gmp-6.3.0/.libs/libgmp.a(toom8_sqr.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/gmp-metal/build/gmp-6.3.0/.libs/libgmp.a(toom2_sqr.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/gmp-metal/build/gmp-6.3.0/.libs/libgmp.a(toom3_sqr.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/gmp-metal/build/gmp-6.3.0/.libs/libgmp.a(invertappr.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/gmp-metal/build/gmp-6.3.0/.libs/libgmp.a(sbpi1_divappr_q.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/gmp-metal/build/gmp-6.3.0/.libs/libgmp.a(sbpi1_bdiv_qr.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/gmp-metal/build/gmp-6.3.0/.libs/libgmp.a(redc_n.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/gmp-metal/build/gmp-6.3.0/.libs/libgmp.a(lt2-add.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/gmp-metal/build/gmp-6.3.0/.libs/libgmp.a(gcdext.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/gmp-metal/build/gmp-6.3.0/.libs/libgmp.a(lt31-mul.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/gmp-metal/build/gmp-6.3.0/.libs/libgmp.a(lt97-gcdext.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/gmp-metal/build/gmp-6.3.0/.libs/libgmp.a(gcd_subdiv_step.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/gmp-metal/build/gmp-6.3.0/.libs/libgmp.a(gcdext_lehmer.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/gmp-metal/build/gmp-6.3.0/.libs/libgmp.a(matrix22_mul1_inverse_vector.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/gmp-metal/build/gmp-6.3.0/.libs/libgmp.a(hgcd_matrix.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/gmp-metal/build/gmp-6.3.0/.libs/libgmp.a(hgcd2.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/gmp-metal/build/gmp-6.3.0/.libs/libgmp.a(hgcd.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/gmp-metal/build/gmp-6.3.0/.libs/libgmp.a(lt102-divexact.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/gmp-metal/build/gmp-6.3.0/.libs/libgmp.a(divexact.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/gmp-metal/build/gmp-6.3.0/.libs/libgmp.a(gcdext_1.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/gmp-metal/build/gmp-6.3.0/.libs/libgmp.a(matrix22_mul.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/gmp-metal/build/gmp-6.3.0/.libs/libgmp.a(hgcd_step.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/gmp-metal/build/gmp-6.3.0/.libs/libgmp.a(hgcd_reduce.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/gmp-metal/build/gmp-6.3.0/.libs/libgmp.a(hgcd_appr.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/gmp-metal/build/gmp-6.3.0/.libs/libgmp.a(bdiv_q.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/gmp-metal/build/gmp-6.3.0/.libs/libgmp.a(mu_bdiv_q.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/BareMetal-App/BareMetal-AppPort/build/musl-1.2.6/lib/libc.a(__libc_start_main.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/BareMetal-App/BareMetal-AppPort/build/musl-1.2.6/lib/libc.a(abort.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/BareMetal-App/BareMetal-AppPort/build/musl-1.2.6/lib/libc.a(abort_lock.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/BareMetal-App/BareMetal-AppPort/build/musl-1.2.6/lib/libc.a(exit.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/BareMetal-App/BareMetal-AppPort/build/musl-1.2.6/lib/libc.a(defsysinfo.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/BareMetal-App/BareMetal-AppPort/build/musl-1.2.6/lib/libc.a(libc.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/BareMetal-App/BareMetal-AppPort/build/musl-1.2.6/lib/libc.a(free.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/BareMetal-App/BareMetal-AppPort/build/musl-1.2.6/lib/libc.a(lite_malloc.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/BareMetal-App/BareMetal-AppPort/build/musl-1.2.6/lib/libc.a(free.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/BareMetal-App/BareMetal-AppPort/build/musl-1.2.6/lib/libc.a(malloc.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/BareMetal-App/BareMetal-AppPort/build/musl-1.2.6/lib/libc.a(realloc.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/BareMetal-App/BareMetal-AppPort/build/musl-1.2.6/lib/libc.a(mmap.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/BareMetal-App/BareMetal-AppPort/build/musl-1.2.6/lib/libc.a(mprotect.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/BareMetal-App/BareMetal-AppPort/build/musl-1.2.6/lib/libc.a(munmap.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/BareMetal-App/BareMetal-AppPort/build/musl-1.2.6/lib/libc.a(block.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/BareMetal-App/BareMetal-AppPort/build/musl-1.2.6/lib/libc.a(raise.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/BareMetal-App/BareMetal-AppPort/build/musl-1.2.6/lib/libc.a(fprintf.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/BareMetal-App/BareMetal-AppPort/build/musl-1.2.6/lib/libc.a(printf.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/BareMetal-App/BareMetal-AppPort/build/musl-1.2.6/lib/libc.a(stderr.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/BareMetal-App/BareMetal-AppPort/build/musl-1.2.6/lib/libc.a(stdout.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/BareMetal-App/BareMetal-AppPort/build/musl-1.2.6/lib/libc.a(vfprintf.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/BareMetal-App/BareMetal-AppPort/build/musl-1.2.6/lib/libc.a(atoi.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/BareMetal-App/BareMetal-AppPort/build/musl-1.2.6/lib/libc.a(strtol.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/BareMetal-App/BareMetal-AppPort/build/musl-1.2.6/lib/libc.a(strcmp.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/BareMetal-App/BareMetal-AppPort/build/musl-1.2.6/lib/libc.a(strcpy.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/BareMetal-App/BareMetal-AppPort/build/musl-1.2.6/lib/libc.a(strnlen.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/BareMetal-App/BareMetal-AppPort/build/musl-1.2.6/lib/libc.a(strstr.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/BareMetal-App/BareMetal-AppPort/build/musl-1.2.6/lib/libc.a(__lock.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/BareMetal-App/BareMetal-AppPort/build/musl-1.2.6/lib/libc.a(__environ.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/BareMetal-App/BareMetal-AppPort/build/musl-1.2.6/lib/libc.a(__init_tls.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/BareMetal-App/BareMetal-AppPort/build/musl-1.2.6/lib/libc.a(__errno_location.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/BareMetal-App/BareMetal-AppPort/build/musl-1.2.6/lib/libc.a(strerror.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/BareMetal-App/BareMetal-AppPort/build/musl-1.2.6/lib/libc.a(_Exit.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/BareMetal-App/BareMetal-AppPort/build/musl-1.2.6/lib/libc.a(intscan.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/BareMetal-App/BareMetal-AppPort/build/musl-1.2.6/lib/libc.a(shgetc.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/BareMetal-App/BareMetal-AppPort/build/musl-1.2.6/lib/libc.a(syscall_ret.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/BareMetal-App/BareMetal-AppPort/build/musl-1.2.6/lib/libc.a(__lctrans.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/BareMetal-App/BareMetal-AppPort/build/musl-1.2.6/lib/libc.a(realloc.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/BareMetal-App/BareMetal-AppPort/build/musl-1.2.6/lib/libc.a(__fpclassifyl.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/BareMetal-App/BareMetal-AppPort/build/musl-1.2.6/lib/libc.a(__signbitl.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/BareMetal-App/BareMetal-AppPort/build/musl-1.2.6/lib/libc.a(frexpl.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/BareMetal-App/BareMetal-AppPort/build/musl-1.2.6/lib/libc.a(scalbn.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/BareMetal-App/BareMetal-AppPort/build/musl-1.2.6/lib/libc.a(mremap.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/BareMetal-App/BareMetal-AppPort/build/musl-1.2.6/lib/libc.a(wctomb.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/BareMetal-App/BareMetal-AppPort/build/musl-1.2.6/lib/libc.a(__lockfile.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/BareMetal-App/BareMetal-AppPort/build/musl-1.2.6/lib/libc.a(__stdio_close.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/BareMetal-App/BareMetal-AppPort/build/musl-1.2.6/lib/libc.a(__stdio_seek.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/BareMetal-App/BareMetal-AppPort/build/musl-1.2.6/lib/libc.a(__stdio_write.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/BareMetal-App/BareMetal-AppPort/build/musl-1.2.6/lib/libc.a(__stdout_write.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/BareMetal-App/BareMetal-AppPort/build/musl-1.2.6/lib/libc.a(__towrite.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/BareMetal-App/BareMetal-AppPort/build/musl-1.2.6/lib/libc.a(__uflow.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/BareMetal-App/BareMetal-AppPort/build/musl-1.2.6/lib/libc.a(fwrite.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/BareMetal-App/BareMetal-AppPort/build/musl-1.2.6/lib/libc.a(memchr.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/BareMetal-App/BareMetal-AppPort/build/musl-1.2.6/lib/libc.a(memcmp.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/BareMetal-App/BareMetal-AppPort/build/musl-1.2.6/lib/libc.a(stpcpy.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/BareMetal-App/BareMetal-AppPort/build/musl-1.2.6/lib/libc.a(strchr.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/BareMetal-App/BareMetal-AppPort/build/musl-1.2.6/lib/libc.a(strchrnul.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/BareMetal-App/BareMetal-AppPort/build/musl-1.2.6/lib/libc.a(strlen.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/BareMetal-App/BareMetal-AppPort/build/musl-1.2.6/lib/libc.a(default_attr.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/BareMetal-App/BareMetal-AppPort/build/musl-1.2.6/lib/libc.a(lseek.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/BareMetal-App/BareMetal-AppPort/build/musl-1.2.6/lib/libc.a(wcrtomb.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/BareMetal-App/BareMetal-AppPort/build/musl-1.2.6/lib/libc.a(__stdio_exit.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/BareMetal-App/BareMetal-AppPort/build/musl-1.2.6/lib/libc.a(__toread.o)' being placed in section `.comment'
+ld: warning: orphan section `.comment' from `/home/ubuntu/BareMetal-App/BareMetal-AppPort/build/musl-1.2.6/lib/libc.a(ofl.o)' being placed in section `.comment'
+=== compiling port objects ===
+=== compiling app (CPPFLAGS: -DPRP_PRIMORIAL=2357 -DPRP_REPS=20) ===
+=== linking ===
+=== result ===
+-rwxrwxr-x 1 ubuntu ubuntu 350732 Sep  4 22:27 /home/ubuntu/gmp-metal/applink/prp_bench.app
+--- undefined symbols (must be empty):
+--- assembly actually linked in (not a C fallback):
+ffff8000000089d8 T __gmpn_addmul_1
+ffff8000000368b0 T __gmpn_addmul_1_atom
+ffff800000025000 T __gmpn_addmul_1_bd1
+ffff800000026840 T __gmpn_addmul_1_bt1
+ffff80000002d290 T __gmpn_addmul_1_core2
+--- sections:
+.text                    0005028d @ ffff800000000000
+.rodata                  00004ec0 @ ffff8000000502c0
+.data                    0000088c @ ffff800000055180
+.bss                     00006130 @ ffff800000055a20
+.comment                 0000002d @ 0000000000000000
+[1m==> wrapping into baremetal.elf[0m
+Unikernel mode enabled
+[1m==> booting[0m
+--- BareMetal ---
+NO PRP_DONE LINE -- guest did not reach the end. Console follows:
+Creating 512M disk image at /home/ubuntu/bench/gmp/disk.img
+
+Check first: does the app image fit? crt0 prints
+  'crt0: app image needs ~X MiB ... only has Y MiB'
+when the VM's RAM is smaller than the linked image.
+
+[1m==> verdict[0m
+could not extract both figures -- see /home/ubuntu/gmp-metal/console.txt
+
+full results: /home/ubuntu/gmp-metal/results.txt

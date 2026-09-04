@@ -1,0 +1,56 @@
+========================================
+BareMetal Firecracker - Starting Payload
+========================================
+PROBE_START python=3.14.7 platform=unknown
+PROBE_IMPL cpython
+PROBE ABSENT    inventory              stdlib_inventory not in the curated stdlib: importlib
+PROBE PASS      language               closures_generators ok
+PROBE PASS      language               comprehensions_slices ok
+PROBE PASS      language               classes_properties ok
+PROBE ABSENT    language               exceptions_traceback not in the curated stdlib: traceback
+PROBE PASS      language               fstrings_walrus_match 3.8/3.10 syntax ok
+PROBE PASS      language               recursion_limit depth 200 ok, limit reports 1000
+PROBE PASS      language               gc_refcount  gc.collect() reclaimed 15
+PROBE PASS      language               unicode_encodings utf-8, latin-1 round-trip
+PROBE PASS      stdlib-data            json         round-trip
+PROBE PASS      stdlib-data            re           match, groups, sub
+PROBE ABSENT    stdlib-data            collections_itertools_functools not in the curated stdlib: heapq
+PROBE ABSENT    stdlib-data            decimal_fractions_math not in the curated stdlib: decimal
+PROBE PASS      stdlib-data            datetime     2026-09-04T12:30:00
+PROBE PASS      stdlib-data            struct_base64_binascii little-endian pack, b64
+PROBE ABSENT    stdlib-data            hashlib_hmac not in the curated stdlib: hashlib
+PROBE ABSENT    stdlib-data            textwrap_difflib_pprint not in the curated stdlib: textwrap
+PROBE PASS      runtime                sys_platform_info machine=? system=? maxsize=9223372036854775807
+PROBE PASS      runtime                time_clocks  perf_counter advanced 0.000606s; time()=1788561884
+PROBE PASS      runtime                random_urandom seeded repeatable; os.urandom returns entropy
+PROBE PASS      runtime                memory_pressure allocated and freed 10 MiB
+PROBE ABSENT    runtime                sqlite3      not in the curated stdlib: sqlite3
+PROBE ABSENT    runtime                importlib_dynamic not in the curated stdlib: importlib
+PROBE ABSENT    runtime                ctypes_dlopen not in the curated stdlib: ctypes
+PROBE PASS      filesystem             file_io      write, read, remove at probe_test.txt
+PROBE PASS      filesystem             os_stat_listdir 3 entries in cwd, mode=755
+PROBE ABSENT    filesystem             pathlib      not in the curated stdlib: pathlib
+PROBE ABSENT    filesystem             tempfile     not in the curated stdlib: tempfile
+PROBE PASS      concurrency            threading_basic 4 threads, lock, join
+PROBE ABSENT    concurrency            threading_queue not in the curated stdlib: queue
+PROBE ABSENT    concurrency            thread_pool  not in the curated stdlib: concurrent
+PROBE ABSENT    concurrency            asyncio      not in the curated stdlib: asyncio
+PROBE ABSENT    process-model          subprocess   not in the curated stdlib: subprocess
+PROBE XFAIL     process-model          os_fork      AttributeError: os.fork absent
+PROBE ABSENT    process-model          multiprocessing not in the curated stdlib: multiprocessing
+PROBE ABSENT    process-model          signal_alarm not in the curated stdlib: signal
+PROBE ABSENT    process-model          signal_handler_raise not in the curated stdlib: signal
+net: fc cmdline @ 0x5a00: "ip=172.19.0.59::172.19.0.1:255.255.255.0::eth0:off root=/dev/vda rw virtio_mmio.device=4K@0xd0000000:5 virtio_mmio.device=4K@0xd0001000:6"
+net: fc ip param fields: client-ip="172.19.0.59" server-ip="" gw-ip="172.19.0.1" netmask="255.255.255.0"
+net: using fc static address ip=172.19.0.59 gw=172.19.0.1 mask=255.255.255.0
+net: no DNS server provided by fc/DHCP, falling back to 8.8.8.8
+net: no DNS server provided by fc/DHCP, falling back to 1.1.1.1
+net: ready ip=172.19.0.59 mask=255.255.255.0 gw=172.19.0.1
+PROBE PASS      network                socket_create AF_INET/SOCK_STREAM created and closed
+PROBE ABSENT    network                ssl_module   not in the curated stdlib: ssl
+PROBE FAIL      network                dns_and_http gaierror: [Errno -2] Name does not resolve
+PROBE_TOTAL pass=19 fail=1 xfail=1 absent=19 skip=0
+PROBE_DONE
+========================================
+BareMetal Firecracker - Finished Payload
+========================================

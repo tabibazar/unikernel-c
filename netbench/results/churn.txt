@@ -1,0 +1,1 @@
+CHURN_RESULT attempted=1200 ok=1198 failed=2 first_fail_at=816

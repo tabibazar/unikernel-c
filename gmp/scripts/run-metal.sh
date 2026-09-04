@@ -113,18 +113,40 @@ cp "$BMAPP/BareMetal-Firecracker/sys/baremetal.elf" "$WORK/"
 # exits immediately with LoggerInitialization ... No such file or directory
 # and the VM never runs. Reported upstream from this repo already
 # (docs/aco-r1/BAREMETAL.md); pre-creating the file here so a stale
-# checkout does not silently waste a metal session.
-FCLOG="${FCLOG:-/tmp/firecracker.log}"
+# checkout does not silently waste a metal session. Read the real path out
+# of baremetal.sh rather than assuming it -- it is /tmp/fc.log, not
+# /tmp/firecracker.log, and touching the wrong file fixes nothing.
+FCLOG=$(grep -E '^FCLOG=' "$BMAPP/baremetal.sh" | head -1 | cut -d= -f2 | tr -d '"'"'"'')
+FCLOG="${FCLOG:-/tmp/fc.log}"
 touch "$FCLOG"
+
+# The guest console does NOT come back on baremetal.sh's stdout: Firecracker
+# is started detached inside a screen session that logs to $VMLOG. An earlier
+# revision captured stdout, got a single "VM started" line, and reported the
+# guest as having produced nothing -- on a run that had in fact succeeded.
+VMLOG=$(grep -E '^VMLOG=' "$BMAPP/baremetal.sh" | head -1 | cut -d= -f2 | tr -d '"'"'"'')
+VMLOG="${VMLOG:-/tmp/fc-vm.log}"
 
 say "booting"
 record "--- BareMetal ---"
 
+# baremetal.sh resolves the kernel as "$PWD/baremetal.elf", so it must be
+# invoked from the directory holding it. Called from anywhere else,
+# Firecracker returns 400 "kernel file cannot be opened" and the VM silently
+# never boots.
+cp "$BMAPP/BareMetal-Firecracker/sys/baremetal.elf" "$WORK/" 2>/dev/null || true
+: > "$VMLOG" 2>/dev/null || true
+( cd "$WORK" && "$BMAPP/baremetal.sh" start >/dev/null 2>&1 ) || true
+
 # BareMetal cannot be asked when it is done, and a hung guest must not hang
-# the harness: the run is bounded and the console captured either way.
+# the harness: poll for the end marker, bounded, then capture either way.
 CONSOLE="$WORK/console.txt"
-timeout "${BOOT_TIMEOUT:-300}" \
-	"$BMAPP/baremetal.sh" start > "$CONSOLE" 2>&1 || true
+for _i in $(seq 1 "$(( ${BOOT_TIMEOUT:-300} / 5 ))"); do
+	sleep 5
+	grep -q PRP_DONE "$VMLOG" 2>/dev/null && break
+done
+tr -d '\r' < "$VMLOG" > "$CONSOLE" 2>/dev/null || true
+( cd "$WORK" && "$BMAPP/baremetal.sh" stop >/dev/null 2>&1 ) || true
 
 if grep -q PRP_DONE "$CONSOLE"; then
 	grep -E 'PRP_START|PRP_DONE|PRP_PROJECT' "$CONSOLE" | tee -a "$RESULTS"

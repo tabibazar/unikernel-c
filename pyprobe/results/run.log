@@ -1,0 +1,85 @@
+=== host ===
+Linux 7.0.0-1011-aws x86_64
+ Intel(R) Xeon(R) Platinum 8275CL CPU @ 3.00GHz
+control interpreter: /home/ubuntu/bench/pyprobe/results/cpython-linux/bin/python3 (Python 3.14.7)
+=== Linux control run ===
+PROBE_START python=3.14.7 platform=linux
+PROBE_IMPL cpython
+PROBE_INVENTORY_PRESENT abc argparse array ast asyncio base64 binascii bisect calendar cmath codecs collections colorsys concurrent contextlib copy csv ctypes dataclasses datetime decimal difflib dis email enum errno fnmatch fractions ftplib functools gc getpass gettext glob gzip hashlib heapq hmac html http imaplib importlib inspect io ipaddress itertools json keyword linecache locale logging lzma mailbox marshal math mimetypes mmap multiprocessing numbers operator os pathlib pickle pkgutil platform plistlib poplib pprint queue quopri random re reprlib secrets select selectors shlex shutil signal site smtplib socket socketserver sqlite3 ssl stat statistics string stringprep struct subprocess sys sysconfig tarfile tempfile textwrap threading time timeit tokenize traceback types typing unicodedata unittest urllib uuid warnings wave weakref webbrowser xml zipfile zlib
+PROBE_INVENTORY_MISSING 
+PROBE PASS      inventory              stdlib_inventory 114 of 114 importable
+PROBE PASS      language               closures_generators ok
+PROBE PASS      language               comprehensions_slices ok
+PROBE PASS      language               classes_properties ok
+PROBE PASS      language               exceptions_traceback traceback formatting intact
+PROBE PASS      language               fstrings_walrus_match 3.8/3.10 syntax ok
+PROBE PASS      language               recursion_limit depth 200 ok, limit reports 1000
+PROBE PASS      language               gc_refcount  gc.collect() reclaimed 15
+PROBE PASS      language               unicode_encodings utf-8, latin-1 round-trip
+PROBE PASS      stdlib-data            json         round-trip
+PROBE PASS      stdlib-data            re           match, groups, sub
+PROBE PASS      stdlib-data            collections_itertools_functools Counter, combinations, reduce
+PROBE PASS      stdlib-data            decimal_fractions_math exact decimal, rationals, libm-free sqrt
+PROBE PASS      stdlib-data            datetime     2026-09-04T12:30:00
+PROBE PASS      stdlib-data            struct_base64_binascii little-endian pack, b64
+PROBE PASS      stdlib-data            hashlib_hmac sha256 vector ok, hmac len 64
+PROBE PASS      stdlib-data            textwrap_difflib_pprint wrap 3 lines, ratio 0.75
+PROBE PASS      runtime                sys_platform_info machine=x86_64 system=Linux maxsize=9223372036854775807
+PROBE PASS      runtime                time_clocks  perf_counter advanced 0.000299s; time()=1788561882
+PROBE PASS      runtime                random_urandom seeded repeatable; os.urandom returns entropy
+PROBE PASS      runtime                memory_pressure allocated and freed 10 MiB
+PROBE PASS      runtime                sqlite3      in-memory database ok
+PROBE PASS      runtime                importlib_dynamic imported base64 dynamically
+PROBE PASS      runtime                ctypes_dlopen ctypes loaded; CDLL(None) -> <CDLL 'None', handle 7c065cdf72e0 at 0x7c065af82270>
+PROBE PASS      filesystem             file_io      write, read, remove at /tmp/probe_test.txt
+PROBE PASS      filesystem             os_stat_listdir 3 entries in cwd, mode=755
+PROBE PASS      filesystem             pathlib      pure path manipulation ok
+PROBE PASS      filesystem             tempfile     NamedTemporaryFile round-trip
+PROBE PASS      concurrency            threading_basic 4 threads, lock, join
+PROBE PASS      concurrency            threading_queue producer/consumer over Queue
+PROBE PASS      concurrency            thread_pool  ThreadPoolExecutor.map
+PROBE PASS      concurrency            asyncio      event loop returned 42
+PROBE PASS      process-model          subprocess   [predicted-fail-on-baremetal] returned b'1\n'
+PROBE PASS      process-model          os_fork      [predicted-fail-on-baremetal] forked and reaped pid 101886
+PROBE PASS      process-model          multiprocessing [predicted-fail-on-baremetal] pool returned [1, 2]
+PROBE PASS      process-model          signal_alarm [predicted-fail-on-baremetal] alarm delivered
+PROBE PASS      process-model          signal_handler_raise raise_signal delivered to handler
+PROBE PASS      network                socket_create AF_INET/SOCK_STREAM created and closed
+PROBE PASS      network                ssl_module   OpenSSL/mbedTLS context: OpenSSL 3.0.13 30 Jan 2024
+PROBE PASS      network                dns_and_http 104.20.23.154 -> b'HTTP/1.1 200 OK\r'
+PROBE_TOTAL pass=40 fail=0 xfail=0 absent=0 skip=0
+PROBE_DONE
+=== building the unikernel around probe.py ===
+Deploying Python stdlib and probe.py to disk.img (log: /tmp/install-python-deploy.log) ...
+Unikernel mode enabled
+=== booting ===
+COLD_START_TO_FIRST_PYTHON_LINE 1.007 s
+
+=== what differs ===
+probe                             linux   baremetal  note
+asyncio                           PASS    ABSENT     not in the curated stdlib: asyncio
+collections_itertools_functools   PASS    ABSENT     not in the curated stdlib: heapq
+ctypes_dlopen                     PASS    ABSENT     not in the curated stdlib: ctypes
+decimal_fractions_math            PASS    ABSENT     not in the curated stdlib: decimal
+dns_and_http                      PASS    FAIL       gaierror: [Errno -2] Name does not resolve
+exceptions_traceback              PASS    ABSENT     not in the curated stdlib: traceback
+hashlib_hmac                      PASS    ABSENT     not in the curated stdlib: hashlib
+importlib_dynamic                 PASS    ABSENT     not in the curated stdlib: importlib
+multiprocessing                   PASS    ABSENT     not in the curated stdlib: multiprocessing
+os_fork                           PASS    XFAIL      AttributeError: os.fork absent
+pathlib                           PASS    ABSENT     not in the curated stdlib: pathlib
+signal_alarm                      PASS    ABSENT     not in the curated stdlib: signal
+signal_handler_raise              PASS    ABSENT     not in the curated stdlib: signal
+sqlite3                           PASS    ABSENT     not in the curated stdlib: sqlite3
+ssl_module                        PASS    ABSENT     not in the curated stdlib: ssl
+stdlib_inventory                  PASS    ABSENT     not in the curated stdlib: importlib
+subprocess                        PASS    ABSENT     not in the curated stdlib: subprocess
+tempfile                          PASS    ABSENT     not in the curated stdlib: tempfile
+textwrap_difflib_pprint           PASS    ABSENT     not in the curated stdlib: textwrap
+thread_pool                       PASS    ABSENT     not in the curated stdlib: concurrent
+threading_queue                   PASS    ABSENT     not in the curated stdlib: queue
+
+probes passing on Linux but not on BareMetal: 20 (of which 19 never ran)
+XFAIL on BareMetal = failed exactly as the port's docs predict.
+
+results in /home/ubuntu/bench/pyprobe/results

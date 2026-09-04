@@ -294,3 +294,47 @@ maintained, last release 2026-07-23) ships `sgsieve`, which covers only k=2 firs
 kind. **A sieve for chains of length k>=3 is custom work** -- against a
 maintained framework whose author documents how to add one, so the honest framing
 is "custom work", not "impossible".
+
+## MEASURED, 2026-09-04: the third leg, on real metal
+
+The caveat above closes with *"the third leg -- BareMetal's actual penalty on
+GMP -- still needs a metal host."* It has now been run, on an AWS c5.metal
+(Xeon Platinum 8275CL @ 3.00GHz), against BareMetal-AppPort `292e4ae` (the
+"ring3" build, `-O2`). One machine, one source, one `libgmp.a`, RDTSC on both
+sides; full detail in `gmp/results/prp-ring3-2026-09-04.txt`.
+
+Operand: primorial 2357, **1014 digits / 3366 bits**, 20 reps.
+
+| | ticks/test | ms/test |
+|---|---:|---:|
+| Linux control | 31,491,866 | **10.497** |
+| BareMetal | 31,551,470 | **10.517** |
+
+**BareMetal/Linux = 1.0019.** There is no penalty, and there is no speedup. The
+two are the same to within 0.2%.
+
+Two things follow, and they point in opposite directions.
+
+**The good news: the bar is cleared with room to spare.** The estimate above put
+full-assembly GMP at ~32 ms against a 49 ms bar, on an arm64 extrapolation the
+document itself flagged as provisional. Measured on the actual x86-64 target it
+is **10.5 ms** -- roughly 4.7x inside the bar rather than 1.5x. The
+"keep the assembly and shim libc" decision is vindicated more strongly than the
+estimate suggested.
+
+**The bad news: the unikernel contributes nothing to the arithmetic.** Every
+"x 3.7 platform" row in the table above is doing work that the hardware does not
+do. That multiplier came from `docs/nanos-vs-baremetal/`, measured on 64-bit
+modular arithmetic -- small, register-resident operations where syscall and
+scheduler overhead dominate and removing the OS genuinely helps. At 3366 bits
+the work is ALU- and memory-bound inside `mpn`, with essentially no OS
+interaction per unit of work. **There is no overhead left to remove.**
+
+So the core-hour projection should be taken as **21,326 core-hours** at this
+operand size, from the measured 10.5 ms, with **no unikernel discount applied**.
+The case for running this on BareMetal rests on what the platform costs to rent
+and how cheaply it fans out -- not on it being faster at multiplying big
+integers, because it is not.
+
+Correctness was checked in the same run: five known-answer tests including a
+composite that must *not* report prime. `SELFTEST PASSED (0 failures)`.

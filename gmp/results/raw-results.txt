@@ -1,0 +1,28 @@
+host: Linux 7.0.0-1011-aws x86_64
+cpu:  Intel(R) Xeon(R) Platinum 8275CL CPU @ 3.00GHz
+date: 2026-09-04T22:27:08+00:00
+
+fermat 3^(M521-1) mod M521 == 1    ok
+fermat on composite 2^520-1 != 1   ok
+(2^4096-1)^2 closed form           ok
+tdiv_qr round-trip at 3400 bits    ok
+gcd(M607, M521) == 1               ok
+
+SELFTEST PASSED (0 failures)
+
+--- Linux control ---
+PRP_START primorial=2357 digits=1014 bits=3366 reps=20
+PRP_DONE unit=cycles ticks_per_test=31491866 ms_per_test=10.497 prp_is_one=0
+PRP_PROJECT tests=7.3e9 core_hours=21286
+
+--- BareMetal ---
+NO PRP_DONE LINE -- guest did not reach the end. Console follows:
+Creating 512M disk image at /home/ubuntu/bench/gmp/disk.img
+
+Check first: does the app image fit? crt0 prints
+  'crt0: app image needs ~X MiB ... only has Y MiB'
+when the VM's RAM is smaller than the linked image.
+
+could not extract both figures -- see /home/ubuntu/gmp-metal/console.txt
+
+full results: /home/ubuntu/gmp-metal/results.txt

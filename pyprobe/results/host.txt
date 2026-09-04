@@ -1,0 +1,2 @@
+Linux 7.0.0-1011-aws x86_64
+ Intel(R) Xeon(R) Platinum 8275CL CPU @ 3.00GHz

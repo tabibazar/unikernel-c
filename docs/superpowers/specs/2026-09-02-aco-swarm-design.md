@@ -56,7 +56,7 @@ Firecracker; the conditioned generator passes `ent`, FIPS 140-2 and dieharder.
 
 **5. The deployment pattern is outbound-HTTPS-only, compile-time-configured,
 and stateless across restart.** `cunningham.c` + `scripts/swarm_deploy.sh`.
-Inbound serving is separately known to fail at ~350 requests. Workers hold no
+Inbound serving was assumed to fail at ~350 requests; that assumption was measured on 2026-09-04 and does not hold (1200 churned requests, zero accept() failures -- see `netbench/results/inbound-ring3-2026-09-04.md`). Workers hold no
 state across a reboot.
 
 ## Algorithm

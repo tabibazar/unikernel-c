@@ -341,7 +341,7 @@ late is the expensive way.
 - **No argv, and `clock()` does not advance.** Both found the hard way in prior
   work. Every worker parameter is compile-time, and a run cannot time itself --
   throughput must be measured from outside the VM.
-- **Inbound serving fails at ~350 requests.** Established separately. The
+- **~~Inbound serving fails at ~350 requests.~~ MEASURED AND RETIRED (2026-09-04).** This was never measured; it is now. On a c5.metal the guest served **1200 consecutive churned connections with zero accept() failures**, recovered 20/20 after a pause, and moved 500 requests down a single keep-alive connection. See `netbench/results/inbound-ring3-2026-09-04.md`. The original claim read: The
   design is outbound-HTTPS-only for this reason.
 
 ## Out of scope

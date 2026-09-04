@@ -1,0 +1,41 @@
+Fermat PRP timing, BareMetal vs Linux, same machine / same source / same libgmp.a
+================================================================================
+host      AWS c5.metal, Intel Xeon Platinum 8275CL @ 3.00GHz, 96 cores, 188 GiB
+kernel    Linux 7.0.0-1011-aws x86_64
+date      2026-09-04T22:27Z
+build     BareMetal-App 82ad9a7 / BareMetal-AppPort 292e4ae  ("ring3", -O2)
+gmp       6.3.0, --enable-fat, built once and linked into both halves
+workload  m*p#*2^j-1 style operand: primorial 2357, 1014 digits, 3366 bits, 20 reps
+timing    RDTSC on both sides, so the two compare as cycles
+
+correctness (guest)
+-------------------
+fermat 3^(M521-1) mod M521 == 1    ok
+fermat on composite 2^520-1 != 1   ok
+(2^4096-1)^2 closed form           ok
+tdiv_qr round-trip at 3400 bits    ok
+gcd(M607, M521) == 1               ok
+SELFTEST PASSED (0 failures)
+
+result
+------
+                  ticks_per_test     ms_per_test    projected core_hours (7.3e9 tests)
+Linux control        31,491,866         10.497              21,286
+BareMetal            31,551,470         10.517              21,326
+
+ratio BareMetal/Linux = 1.0019   -- BareMetal 0.2% SLOWER, i.e. parity
+
+what this overturns
+-------------------
+docs/portfolio/CUNNINGHAM-SIZE-RECORDS.md carried a 3.7x BareMetal speedup and
+applied it to the chain-hunt cost. That 3.7x was measured in
+docs/nanos-vs-baremetal/ on 64-bit modular arithmetic -- small, register-resident
+work where syscall and scheduler overhead dominate and removing the OS helps.
+
+It does not transfer. On GMP big-integer arithmetic the two are the same speed
+to within 0.2%. At 3366 bits the work is memory- and ALU-bound inside libgmp
+with essentially no OS interaction per unit of work, so there is no OS overhead
+left to remove. The absence of an operating system buys nothing here.
+
+The chain-hunt core-hour figure should be taken from the measured 21,326, with
+no unikernel discount applied.
