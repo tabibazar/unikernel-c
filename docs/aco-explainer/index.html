@@ -1,0 +1,543 @@
+<title>How Ant Colonies Solve Hard Problems</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap">
+<style>
+:root{
+  --ink:#141A1F; --ink-2:#41505E; --ink-3:#6E7D8C;
+  --paper:#FAF9F7; --panel:#FFFFFF; --rule:#DFE3E8; --rule-2:#EDEFF2;
+  --accent:#0F766E; --accent-soft:#E9F5F3;
+  --warm:#C2410C; --warm-soft:#FDF0E9;
+  --good:#15803D; --bad:#B91C1C;
+  --code-bg:#F1F3F5; --grid:#E4E8EC;
+  --a:#0F766E; --b:#C2410C; --c:#6D28D9;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --ink:#E8ECEF; --ink-2:#AEBAC5; --ink-3:#7D8B99;
+  --paper:#0D1114; --paper-2:#12181D; --panel:#161D23; --rule:#2A343D; --rule-2:#1D252C;
+  --accent:#5EEAD4; --accent-soft:#0F2622;
+  --warm:#FB923C; --warm-soft:#2A1810;
+  --good:#4ADE80; --bad:#F87171;
+  --code-bg:#171F26; --grid:#232C34;
+  --a:#5EEAD4; --b:#FB923C; --c:#C4B5FD;
+}}
+:root[data-theme="dark"]{
+  --ink:#E8ECEF; --ink-2:#AEBAC5; --ink-3:#7D8B99;
+  --paper:#0D1114; --panel:#161D23; --rule:#2A343D; --rule-2:#1D252C;
+  --accent:#5EEAD4; --accent-soft:#0F2622;
+  --warm:#FB923C; --warm-soft:#2A1810;
+  --good:#4ADE80; --bad:#F87171;
+  --code-bg:#171F26; --grid:#232C34;
+  --a:#5EEAD4; --b:#FB923C; --c:#C4B5FD;
+}
+*{box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);
+  font-family:"Newsreader",Georgia,serif;font-size:19px;line-height:1.65;margin:0}
+.wrap{max-width:1080px;margin:0 auto;padding:0 clamp(1rem,4vw,2rem) 6rem}
+.col{max-width:66ch}
+h1,h2,h3,.label,.kicker,th,figcaption,svg text,.legend,.pill,.masthead,.step-n{font-family:"IBM Plex Sans",system-ui,sans-serif}
+code,pre,.mono{font-family:"IBM Plex Mono",ui-monospace,monospace}
+
+header{padding:4rem 0 2rem;border-bottom:1px solid var(--rule);margin-bottom:2.5rem}
+.kicker{font-size:.75rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin:0 0 1rem}
+h1{font-size:clamp(2.2rem,5.4vw,3.5rem);font-weight:500;line-height:1.05;margin:0 0 1rem;letter-spacing:-.02em;text-wrap:balance}
+.standfirst{font-size:1.25rem;color:var(--ink-2);max-width:56ch;margin:0 0 1.8rem}
+.masthead{font-size:.85rem;color:var(--ink-3);line-height:1.7}
+.masthead strong{color:var(--ink-2);font-weight:600}
+
+h2{font-size:1.7rem;font-weight:500;letter-spacing:-.014em;margin:3.6rem 0 .5rem;text-wrap:balance}
+h3{font-size:1.12rem;font-weight:600;font-family:"IBM Plex Sans",sans-serif;margin:2.2rem 0 .5rem}
+p{margin:0 0 1.1rem;text-wrap:pretty}
+a{color:var(--accent)}
+strong{font-weight:600}
+.lede{font-size:1.1rem;color:var(--ink-2)}
+
+figure{margin:2.2rem 0}
+figure svg{display:block;width:100%;height:auto;background:var(--panel);border:1px solid var(--rule);border-radius:8px}
+figcaption{font-size:.87rem;color:var(--ink-3);margin-top:.8rem;line-height:1.6;max-width:66ch}
+figcaption strong{color:var(--ink-2)}
+svg text{fill:var(--ink-2)}
+.t-title{font-size:13px;font-weight:600;fill:var(--ink)}
+.t-lbl{font-size:11px}
+.t-mono{font-family:"IBM Plex Mono",monospace;font-size:11px}
+.t-tiny{font-size:10px;fill:var(--ink-3)}
+
+.callout{background:var(--panel);border:1px solid var(--rule);border-left:3px solid var(--accent);
+  border-radius:0 7px 7px 0;padding:1.3rem 1.5rem;margin:1.8rem 0}
+.callout .label{display:block;font-size:.7rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--accent);margin-bottom:.5rem}
+.callout p:last-child{margin-bottom:0}
+.callout.surprise{border-left-color:var(--warm)}
+.callout.surprise .label{color:var(--warm)}
+
+.steps{counter-reset:s;margin:1.8rem 0;padding:0;list-style:none}
+.steps li{counter-increment:s;position:relative;padding-left:3rem;margin-bottom:1.3rem}
+.steps li::before{content:counter(s);position:absolute;left:0;top:.1rem;width:2rem;height:2rem;
+  border-radius:50%;background:var(--accent-soft);color:var(--accent);
+  font-family:"IBM Plex Sans",sans-serif;font-size:.85rem;font-weight:700;
+  display:flex;align-items:center;justify-content:center}
+
+.tablewrap{overflow-x:auto;margin:1.6rem 0;border:1px solid var(--rule);border-radius:7px;background:var(--panel)}
+table{border-collapse:collapse;width:100%;font-size:.93rem}
+th{font-size:.72rem;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--ink-3);
+  text-align:left;padding:.8rem 1rem;border-bottom:1px solid var(--rule);white-space:nowrap}
+td{padding:.72rem 1rem;border-bottom:1px solid var(--rule-2);vertical-align:top}
+tr:last-child td{border-bottom:none}
+td.num,th.num{text-align:right;font-variant-numeric:tabular-nums;font-family:"IBM Plex Mono",monospace;font-size:.88rem}
+.good{color:var(--good);font-weight:600}
+.bad{color:var(--bad);font-weight:600}
+
+pre{background:var(--code-bg);border:1px solid var(--rule-2);border-radius:6px;padding:1rem 1.15rem;
+  overflow-x:auto;font-size:.81rem;line-height:1.62;margin:1.3rem 0}
+code{background:var(--code-bg);padding:.12em .38em;border-radius:3px;font-size:.85em}
+pre code{background:none;padding:0;font-size:1em}
+
+.formula{background:var(--accent-soft);border:1px solid var(--accent);border-radius:7px;
+  padding:1.4rem 1.6rem;margin:1.8rem 0;text-align:center}
+.formula .big{font-family:"IBM Plex Mono",monospace;font-size:1.25rem;color:var(--ink);margin:0 0 .7rem;font-weight:500}
+.formula .gloss{font-size:.85rem;color:var(--ink-2);margin:0;font-family:"IBM Plex Sans",sans-serif}
+
+.legend{display:flex;flex-wrap:wrap;gap:1.2rem;font-size:.8rem;color:var(--ink-2);margin:.7rem 0 0}
+.legend span{display:flex;align-items:center;gap:.45rem}
+.swatch{width:15px;height:3px;border-radius:2px;display:inline-block}
+
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.5rem;margin:1.8rem 0}
+.card{background:var(--panel);border:1px solid var(--rule);border-radius:7px;padding:1.2rem 1.35rem}
+.card h4{font-family:"IBM Plex Sans",sans-serif;font-size:.95rem;font-weight:600;margin:0 0 .5rem}
+.card p{font-size:.92rem;margin:0;color:var(--ink-2)}
+
+footer{margin-top:4.5rem;padding-top:1.5rem;border-top:1px solid var(--rule);
+  font-family:"IBM Plex Sans",sans-serif;font-size:.85rem;color:var(--ink-3)}
+</style>
+
+<div class="wrap">
+<header><div class="col">
+  <p class="kicker">A working introduction · Avriz Engineering</p>
+  <h1>How ant colonies solve hard problems</h1>
+  <p class="standfirst">A guide to Ant Colony Optimization for people who have never met it — built entirely around a system we actually ran, and the three things that surprised us.</p>
+  <div class="masthead">
+    <strong>Reza Tabibazar, Avriz Engineering</strong><br>
+    Claude (Anthropic), implementation and analysis<br>
+    2 September 2026
+  </div>
+</div></header>
+
+<div class="col">
+<p class="lede">Every number in this document came off a real run. Where something is counterintuitive, we say so and show the measurement that changed our minds — including the one where our clever idea made things worse.</p>
+
+<h2>The problem: a salesman and 52 cities</h2>
+<p>You have 52 cities and need the shortest route visiting each exactly once, returning home. It sounds like the kind of thing a computer should just <em>solve</em>.</p>
+<p>It is not. With 52 cities there are 51!/2 possible tours — a number with 66 digits. If every atom in the observable Earth were a computer checking a billion tours a second, since the Big Bang, you would not be close. This is the travelling salesman problem, and it is the canonical example of combinatorial explosion.</p>
+</div>
+
+<figure>
+<svg viewBox="0 0 900 210" role="img" aria-label="Chart showing factorial growth of possible tours">
+  <text class="t-title" x="24" y="30">Possible tours, by number of cities</text>
+  <text class="t-tiny" x="24" y="48">each bar is 10<tspan font-size="7" dy="-3">x</tspan><tspan dy="3"> wider than it looks — the scale is the number of digits</tspan></text>
+  <g>
+    <text class="t-lbl" x="24" y="80">5 cities</text><rect x="120" y="68" width="12" height="16" rx="2" fill="var(--accent)"/><text class="t-mono" x="142" y="80">12 tours</text>
+    <text class="t-lbl" x="24" y="106">10 cities</text><rect x="120" y="94" width="34" height="16" rx="2" fill="var(--accent)"/><text class="t-mono" x="164" y="106">181,440</text>
+    <text class="t-lbl" x="24" y="132">20 cities</text><rect x="120" y="120" width="110" height="16" rx="2" fill="var(--accent)"/><text class="t-mono" x="240" y="132">60,822,550,204,416,000</text>
+    <text class="t-lbl" x="24" y="158">52 cities</text><rect x="120" y="146" width="500" height="16" rx="2" fill="var(--warm)"/><text class="t-mono" x="630" y="158" fill="var(--warm)">a 66-digit number</text>
+    <text class="t-lbl" x="24" y="184">442 cities</text><rect x="120" y="172" width="756" height="16" rx="2" fill="var(--bad)"/><text class="t-tiny" x="130" y="184" fill="#fff">a 975-digit number — the one we actually solved</text>
+  </g>
+</svg>
+<figcaption>Brute force stops being an option somewhere around ten cities. Everything past that is a search for a <em>good</em> answer rather than a proof of the best one — which is exactly the situation most real optimisation problems are in.</figcaption>
+</figure>
+
+<div class="col">
+<p>Here is what a 52-city problem actually looks like, and why the naive approach disappoints. The obvious algorithm — "always drive to the nearest city you have not visited yet" — is called nearest-neighbour, and it is what most people invent in the first thirty seconds.</p>
+</div>
+
+<figure>
+<svg viewBox="0 0 820 340" role="img" aria-label="Two maps of the same 52 cities showing a greedy tour with crossings and the optimal tour">
+  <text class="t-title" x="24" y="28">The same 52 cities, two routes</text>
+  <g transform="translate(10,34)">
+    <polyline points="126.3,153.4 117.3,151.1 134.3,142.1 128.3,133.1 150.4,145.5 150.4,148.9 153.4,152.3 157.4,139.8 165.4,136.5 172.4,137.6 167.4,145.5 179.5,145.5 180.5,142.1 182.5,135.3 182.5,129.7 189.5,134.2 202.5,128.6 208.6,152.3 179.5,173.7 153.4,170.3 158.4,199.6 132.3,201.9 125.3,200.8 109.3,189.5 97.2,157.9 96.2,139.8 82.2,113.9 115.3,85.7 124.3,99.2 108.3,66.5 118.3,57.5 143.4,28.2 129.3,18.0 188.5,75.5 243.7,21.4 281.8,119.5 257.7,152.3 263.7,192.9 277.8,212.1 256.7,227.8 247.7,268.5 306.8,238.0 319.9,282.0 362.0,227.8 334.9,143.2 145.4,242.5 95.2,226.7 73.2,178.2 42.1,133.1 32.0,224.5 18.0,231.2 18.0,241.4" fill="none" stroke="var(--warm)" stroke-width="1.4" stroke-linejoin="round" opacity="0.95"/>
+    <circle cx="126.3" cy="153.4" r="2.2" fill="var(--ink-3)"/><circle cx="18.0" cy="241.4" r="2.2" fill="var(--ink-3)"/><circle cx="82.2" cy="113.9" r="2.2" fill="var(--ink-3)"/><circle cx="202.5" cy="128.6" r="2.2" fill="var(--ink-3)"/><circle cx="182.5" cy="135.3" r="2.2" fill="var(--ink-3)"/><circle cx="189.5" cy="134.2" r="2.2" fill="var(--ink-3)"/><circle cx="18.0" cy="231.2" r="2.2" fill="var(--ink-3)"/><circle cx="118.3" cy="57.5" r="2.2" fill="var(--ink-3)"/><circle cx="129.3" cy="18.0" r="2.2" fill="var(--ink-3)"/><circle cx="143.4" cy="28.2" r="2.2" fill="var(--ink-3)"/><circle cx="334.9" cy="143.2" r="2.2" fill="var(--ink-3)"/><circle cx="257.7" cy="152.3" r="2.2" fill="var(--ink-3)"/><circle cx="306.8" cy="238.0" r="2.2" fill="var(--ink-3)"/><circle cx="319.9" cy="282.0" r="2.2" fill="var(--ink-3)"/><circle cx="182.5" cy="129.7" r="2.2" fill="var(--ink-3)"/><circle cx="158.4" cy="199.6" r="2.2" fill="var(--ink-3)"/><circle cx="42.1" cy="133.1" r="2.2" fill="var(--ink-3)"/><circle cx="96.2" cy="139.8" r="2.2" fill="var(--ink-3)"/><circle cx="115.3" cy="85.7" r="2.2" fill="var(--ink-3)"/><circle cx="125.3" cy="200.8" r="2.2" fill="var(--ink-3)"/><circle cx="73.2" cy="178.2" r="2.2" fill="var(--ink-3)"/><circle cx="117.3" cy="151.1" r="2.2" fill="var(--ink-3)"/><circle cx="109.3" cy="189.5" r="2.2" fill="var(--ink-3)"/><circle cx="180.5" cy="142.1" r="2.2" fill="var(--ink-3)"/><circle cx="208.6" cy="152.3" r="2.2" fill="var(--ink-3)"/><circle cx="256.7" cy="227.8" r="2.2" fill="var(--ink-3)"/><circle cx="277.8" cy="212.1" r="2.2" fill="var(--ink-3)"/><circle cx="263.7" cy="192.9" r="2.2" fill="var(--ink-3)"/><circle cx="145.4" cy="242.5" r="2.2" fill="var(--ink-3)"/><circle cx="95.2" cy="226.7" r="2.2" fill="var(--ink-3)"/><circle cx="97.2" cy="157.9" r="2.2" fill="var(--ink-3)"/><circle cx="128.3" cy="133.1" r="2.2" fill="var(--ink-3)"/><circle cx="243.7" cy="21.4" r="2.2" fill="var(--ink-3)"/><circle cx="153.4" cy="152.3" r="2.2" fill="var(--ink-3)"/><circle cx="150.4" cy="148.9" r="2.2" fill="var(--ink-3)"/><circle cx="150.4" cy="145.5" r="2.2" fill="var(--ink-3)"/><circle cx="167.4" cy="145.5" r="2.2" fill="var(--ink-3)"/><circle cx="172.4" cy="137.6" r="2.2" fill="var(--ink-3)"/><circle cx="157.4" cy="139.8" r="2.2" fill="var(--ink-3)"/><circle cx="165.4" cy="136.5" r="2.2" fill="var(--ink-3)"/><circle cx="108.3" cy="66.5" r="2.2" fill="var(--ink-3)"/><circle cx="32.0" cy="224.5" r="2.2" fill="var(--ink-3)"/><circle cx="188.5" cy="75.5" r="2.2" fill="var(--ink-3)"/><circle cx="153.4" cy="170.3" r="2.2" fill="var(--ink-3)"/><circle cx="124.3" cy="99.2" r="2.2" fill="var(--ink-3)"/><circle cx="179.5" cy="173.7" r="2.2" fill="var(--ink-3)"/><circle cx="247.7" cy="268.5" r="2.2" fill="var(--ink-3)"/><circle cx="179.5" cy="145.5" r="2.2" fill="var(--ink-3)"/><circle cx="134.3" cy="142.1" r="2.2" fill="var(--ink-3)"/><circle cx="132.3" cy="201.9" r="2.2" fill="var(--ink-3)"/><circle cx="281.8" cy="119.5" r="2.2" fill="var(--ink-3)"/><circle cx="362.0" cy="227.8" r="2.2" fill="var(--ink-3)"/>
+    <text class="t-lbl" x="18" y="16" style="font-weight:600" fill="var(--warm)">nearest neighbour</text>
+    <text class="t-mono" x="18" y="32" fill="var(--warm)">8,980 — 19% too long</text>
+  </g>
+  <g transform="translate(420,34)">
+    <polyline points="263.7,192.9 277.8,212.1 256.7,227.8 247.7,268.5 306.8,238.0 319.9,282.0 362.0,227.8 334.9,143.2 281.8,119.5 243.7,21.4 188.5,75.5 143.4,28.2 129.3,18.0 118.3,57.5 108.3,66.5 115.3,85.7 124.3,99.2 128.3,133.1 134.3,142.1 126.3,153.4 117.3,151.1 97.2,157.9 96.2,139.8 82.2,113.9 42.1,133.1 73.2,178.2 32.0,224.5 18.0,231.2 18.0,241.4 95.2,226.7 109.3,189.5 125.3,200.8 132.3,201.9 145.4,242.5 158.4,199.6 179.5,173.7 153.4,170.3 153.4,152.3 150.4,148.9 150.4,145.5 157.4,139.8 165.4,136.5 167.4,145.5 172.4,137.6 179.5,145.5 180.5,142.1 182.5,135.3 182.5,129.7 189.5,134.2 202.5,128.6 208.6,152.3 257.7,152.3" fill="none" stroke="var(--accent)" stroke-width="1.4" stroke-linejoin="round"/>
+    <circle cx="126.3" cy="153.4" r="2.2" fill="var(--ink-3)"/><circle cx="18.0" cy="241.4" r="2.2" fill="var(--ink-3)"/><circle cx="82.2" cy="113.9" r="2.2" fill="var(--ink-3)"/><circle cx="202.5" cy="128.6" r="2.2" fill="var(--ink-3)"/><circle cx="182.5" cy="135.3" r="2.2" fill="var(--ink-3)"/><circle cx="189.5" cy="134.2" r="2.2" fill="var(--ink-3)"/><circle cx="18.0" cy="231.2" r="2.2" fill="var(--ink-3)"/><circle cx="118.3" cy="57.5" r="2.2" fill="var(--ink-3)"/><circle cx="129.3" cy="18.0" r="2.2" fill="var(--ink-3)"/><circle cx="143.4" cy="28.2" r="2.2" fill="var(--ink-3)"/><circle cx="334.9" cy="143.2" r="2.2" fill="var(--ink-3)"/><circle cx="257.7" cy="152.3" r="2.2" fill="var(--ink-3)"/><circle cx="306.8" cy="238.0" r="2.2" fill="var(--ink-3)"/><circle cx="319.9" cy="282.0" r="2.2" fill="var(--ink-3)"/><circle cx="182.5" cy="129.7" r="2.2" fill="var(--ink-3)"/><circle cx="158.4" cy="199.6" r="2.2" fill="var(--ink-3)"/><circle cx="42.1" cy="133.1" r="2.2" fill="var(--ink-3)"/><circle cx="96.2" cy="139.8" r="2.2" fill="var(--ink-3)"/><circle cx="115.3" cy="85.7" r="2.2" fill="var(--ink-3)"/><circle cx="125.3" cy="200.8" r="2.2" fill="var(--ink-3)"/><circle cx="73.2" cy="178.2" r="2.2" fill="var(--ink-3)"/><circle cx="117.3" cy="151.1" r="2.2" fill="var(--ink-3)"/><circle cx="109.3" cy="189.5" r="2.2" fill="var(--ink-3)"/><circle cx="180.5" cy="142.1" r="2.2" fill="var(--ink-3)"/><circle cx="208.6" cy="152.3" r="2.2" fill="var(--ink-3)"/><circle cx="256.7" cy="227.8" r="2.2" fill="var(--ink-3)"/><circle cx="277.8" cy="212.1" r="2.2" fill="var(--ink-3)"/><circle cx="263.7" cy="192.9" r="2.2" fill="var(--ink-3)"/><circle cx="145.4" cy="242.5" r="2.2" fill="var(--ink-3)"/><circle cx="95.2" cy="226.7" r="2.2" fill="var(--ink-3)"/><circle cx="97.2" cy="157.9" r="2.2" fill="var(--ink-3)"/><circle cx="128.3" cy="133.1" r="2.2" fill="var(--ink-3)"/><circle cx="243.7" cy="21.4" r="2.2" fill="var(--ink-3)"/><circle cx="153.4" cy="152.3" r="2.2" fill="var(--ink-3)"/><circle cx="150.4" cy="148.9" r="2.2" fill="var(--ink-3)"/><circle cx="150.4" cy="145.5" r="2.2" fill="var(--ink-3)"/><circle cx="167.4" cy="145.5" r="2.2" fill="var(--ink-3)"/><circle cx="172.4" cy="137.6" r="2.2" fill="var(--ink-3)"/><circle cx="157.4" cy="139.8" r="2.2" fill="var(--ink-3)"/><circle cx="165.4" cy="136.5" r="2.2" fill="var(--ink-3)"/><circle cx="108.3" cy="66.5" r="2.2" fill="var(--ink-3)"/><circle cx="32.0" cy="224.5" r="2.2" fill="var(--ink-3)"/><circle cx="188.5" cy="75.5" r="2.2" fill="var(--ink-3)"/><circle cx="153.4" cy="170.3" r="2.2" fill="var(--ink-3)"/><circle cx="124.3" cy="99.2" r="2.2" fill="var(--ink-3)"/><circle cx="179.5" cy="173.7" r="2.2" fill="var(--ink-3)"/><circle cx="247.7" cy="268.5" r="2.2" fill="var(--ink-3)"/><circle cx="179.5" cy="145.5" r="2.2" fill="var(--ink-3)"/><circle cx="134.3" cy="142.1" r="2.2" fill="var(--ink-3)"/><circle cx="132.3" cy="201.9" r="2.2" fill="var(--ink-3)"/><circle cx="281.8" cy="119.5" r="2.2" fill="var(--ink-3)"/><circle cx="362.0" cy="227.8" r="2.2" fill="var(--ink-3)"/>
+    <text class="t-lbl" x="18" y="16" style="font-weight:600" fill="var(--accent)">what our ants found</text>
+    <text class="t-mono" x="18" y="32" fill="var(--accent)">7,542 — the proven optimum</text>
+  </g>
+</svg>
+<figcaption><strong>Look for the crossings on the left.</strong> Greedy routing paints itself into corners: it takes every cheap step early and is left making long desperate jumps at the end. Any time a route crosses itself you can always shorten it by uncrossing — which turns out to be the single most useful fact in this whole document. The right-hand tour is the proven optimum for this map, and our colony finds it in about a second.</figcaption>
+</figure>
+
+<div class="col">
+<h2>The idea: borrow it from actual ants</h2>
+<p>Real ants find short paths to food without any ant knowing the route, seeing the map, or being told what to do. The mechanism was pinned down in a famous 1989 experiment where a nest was connected to food by two bridges of different lengths.</p>
+</div>
+
+<figure>
+<svg viewBox="0 0 900 260" role="img" aria-label="The double bridge experiment showing how ants converge on the shorter path">
+  <text class="t-title" x="24" y="28">Why the short path wins, with nobody deciding</text>
+  <g transform="translate(30,50)">
+    <circle cx="40" cy="80" r="26" fill="var(--panel)" stroke="var(--ink-3)"/><text class="t-lbl" x="40" y="84" text-anchor="middle">nest</text>
+    <circle cx="300" cy="80" r="26" fill="var(--panel)" stroke="var(--ink-3)"/><text class="t-lbl" x="300" y="84" text-anchor="middle">food</text>
+    <path d="M 64 68 Q 170 -10 276 68" fill="none" stroke="var(--ink-3)" stroke-width="2" stroke-dasharray="4 3"/>
+    <text class="t-tiny" x="170" y="14" text-anchor="middle">long way</text>
+    <path d="M 64 92 Q 170 130 276 92" fill="none" stroke="var(--accent)" stroke-width="3"/>
+    <text class="t-tiny" x="170" y="150" text-anchor="middle" fill="var(--accent)">short way</text>
+    <text class="t-tiny" x="0" y="185">Ants start out choosing at random, half each way.</text>
+  </g>
+  <g transform="translate(400,50)">
+    <text class="t-lbl" x="0" y="0" style="font-weight:600">The whole trick, in three lines</text>
+    <text class="t-tiny" x="0" y="26">1 · An ant taking the short path gets back sooner.</text>
+    <text class="t-tiny" x="0" y="46">2 · It lays scent on the way out AND the way back,</text>
+    <text class="t-tiny" x="14" y="62">so the short path gets scented twice as fast.</text>
+    <text class="t-tiny" x="0" y="82">3 · Later ants prefer stronger scent — so more of</text>
+    <text class="t-tiny" x="14" y="98">them take the short path, which strengthens it more.</text>
+    <rect x="0" y="116" width="440" height="52" rx="5" fill="var(--accent-soft)" stroke="var(--accent)"/>
+    <text class="t-tiny" x="14" y="138" fill="var(--accent)">No ant compares the two paths. No ant knows there ARE two paths.</text>
+    <text class="t-tiny" x="14" y="156" fill="var(--accent)">The colony computes something no individual ant represents.</text>
+  </g>
+</svg>
+<figcaption>Biologists call this <strong>stigmergy</strong> — coordination through traces left in the environment rather than through messages. It matters to us for a practical reason: there is no central coordinator to become a bottleneck, and no ant that can fail in a way that breaks the others. That property survives into the software.</figcaption>
+</figure>
+
+<div class="col">
+<h2>Turning that into an algorithm</h2>
+<p>Marco Dorigo made this into an optimisation method in 1992. Replace the map with a graph, the ants with simulated ants, and the scent with a number on every edge. Then run four steps, over and over.</p>
+
+<ol class="steps">
+  <li><strong>Each ant builds a complete tour.</strong> Starting from a random city, it repeatedly picks the next one — not greedily, but at random, weighted so that attractive edges are more likely. Twenty-five ants build twenty-five different tours.</li>
+  <li><strong>Score them.</strong> Measure each tour. Keep the shortest.</li>
+  <li><strong>Evaporate.</strong> Every edge on the map loses a fixed percentage of its pheromone. Ours loses 2% per round. This is not housekeeping — it is the most important step, and we will come back to it.</li>
+  <li><strong>Deposit.</strong> Add pheromone to the edges of the best tour, so the next round's ants are more likely to reuse them.</li>
+</ol>
+
+<p>That is the entire algorithm. The interesting part is what the two knobs in step 1 do.</p>
+
+<div class="formula">
+  <p class="big">P(go to city <em>j</em>) &nbsp;∝&nbsp; τ<sub>ij</sub> &nbsp;×&nbsp; (1 / d<sub>ij</sub>)<sup>β</sup></p>
+  <p class="gloss"><strong>τ</strong> — pheromone: what the colony has learned &nbsp;·&nbsp; <strong>1/d</strong> — nearness: what is obvious right now &nbsp;·&nbsp; <strong>β</strong> — how much to trust the obvious</p>
+</div>
+
+<p>Those two terms are a balance between experience and instinct, and the balance is the whole design:</p>
+
+<div class="grid2">
+  <div class="card"><h4>Pheromone only (β = 0)</h4><p>The colony has no sense of distance and reinforces whatever it stumbled into first. It locks onto a bad answer almost immediately.</p></div>
+  <div class="card"><h4>Nearness only (no τ)</h4><p>Every ant is a nearest-neighbour tour with dice. You get the crossing-riddled route from the map above, forever. Nothing is learned.</p></div>
+</div>
+
+<p>Used together, the colony starts out mostly guided by distance and gradually becomes guided by what has actually worked. We fixed β at 2 before any measurement and never touched it — a discipline that matters more than it sounds, and one we will return to.</p>
+
+<h2>Why evaporation is the clever part</h2>
+<p>Depositing pheromone is the obvious half. Forgetting it is the half that makes the method work, for two separate reasons.</p>
+</div>
+
+<figure>
+<svg viewBox="0 0 900 230" role="img" aria-label="Diagram showing what evaporation does over successive rounds">
+  <text class="t-title" x="24" y="28">What a 2% loss per round buys you</text>
+  <g transform="translate(24,48)">
+    <text class="t-lbl" x="0" y="0" style="font-weight:600">Without forgetting</text>
+    <rect x="0" y="12" width="380" height="58" rx="5" fill="var(--warm-soft)" stroke="var(--warm)"/>
+    <text class="t-tiny" x="14" y="34" fill="var(--warm)">Whatever the colony found first keeps its lead forever.</text>
+    <text class="t-tiny" x="14" y="52" fill="var(--warm)">Early luck becomes permanent. The search stops searching.</text>
+  </g>
+  <g transform="translate(470,48)">
+    <text class="t-lbl" x="0" y="0" style="font-weight:600">With forgetting</text>
+    <rect x="0" y="12" width="400" height="58" rx="5" fill="var(--accent-soft)" stroke="var(--accent)"/>
+    <text class="t-tiny" x="14" y="34" fill="var(--accent)">An edge keeps its pheromone only while ants keep choosing it.</text>
+    <text class="t-tiny" x="14" y="52" fill="var(--accent)">Evidence must be continuously re-earned to survive.</text>
+  </g>
+  <line x1="24" y1="132" x2="876" y2="132" stroke="var(--rule)"/>
+  <text class="t-lbl" x="24" y="158" style="font-weight:600">The second reason, which is why we chose this algorithm for a faulty machine</text>
+  <g transform="translate(24,170)">
+    <rect x="0" y="0" width="250" height="40" rx="4" fill="var(--panel)" stroke="var(--rule)"/>
+    <text class="t-tiny" x="12" y="17">a hardware fault corrupts</text>
+    <text class="t-tiny" x="12" y="31">one pheromone value</text>
+    <polygon points="264,20 278,13 278,27" fill="var(--rule)"/>
+    <rect x="290" y="0" width="240" height="40" rx="4" fill="var(--panel)" stroke="var(--rule)"/>
+    <text class="t-tiny" x="302" y="17">one of 25 ants is slightly</text>
+    <text class="t-tiny" x="302" y="31">mis-weighted for one step</text>
+    <polygon points="544,20 558,13 558,27" fill="var(--rule)"/>
+    <rect x="570" y="0" width="282" height="40" rx="4" fill="var(--accent-soft)" stroke="var(--accent)"/>
+    <text class="t-tiny" x="582" y="17" fill="var(--accent)">evaporation erases it within a few rounds.</text>
+    <text class="t-tiny" x="582" y="31" fill="var(--accent)">The final answer is unchanged.</text>
+  </g>
+</svg>
+<figcaption><strong>The forgetting mechanism doubles as an error-correction mechanism.</strong> This is why we put this particular algorithm on this particular machine: the hardware has a known, rare arithmetic fault, and an algorithm whose state decays continuously simply does not care. A prime search on the same machine has no such luxury — one corrupted calculation silently loses a result forever.</figcaption>
+</figure>
+
+<div class="col">
+<h2>Five things that surprised us</h2>
+<p class="lede">Textbook descriptions stop about where we have stopped. Everything genuinely difficult is in what follows.</p>
+
+<h3>Surprise 1 — rewarding the all-time best is a trap</h3>
+<p>The natural instinct is to reinforce the best tour you have ever seen. We did exactly that. It failed, and it failed in a way that looked like success.</p>
+<p>On a 52-city map our colony reached the known optimum on <strong>3 runs out of 10</strong>, and the other seven froze — no improvement after 18,000 rounds. The colony had convinced itself. Every ant was walking the same route, reinforcing it, and no alternative could ever accumulate enough pheromone to compete.</p>
+<p>The fix is one line: reward the best tour <em>of this round</em>, not the best tour ever. The all-time best is still tracked and still reported — it just stops being the thing that gets fed.</p>
+
+<div class="callout surprise">
+  <span class="label">Measured, same code, one line changed</span>
+  <p><strong>Reinforcing the all-time best:</strong> 3 of 10 runs reached the optimum.<br>
+  <strong>Reinforcing the round's best:</strong> <span class="good">10 of 10.</span></p>
+</div>
+
+<p>The lesson generalises well beyond ants: a system that only ever reinforces its current champion stops being able to discover that the champion is mediocre.</p>
+
+<h3>Surprise 2 — the ants are not enough on their own</h3>
+<p>Remember that any self-crossing route can be shortened by uncrossing it. There is a classical method that does nothing but this, called <strong>2-opt</strong>: look for two edges that could be swapped for two shorter ones, swap them, repeat until no such pair exists.</p>
+</div>
+
+<figure>
+<svg viewBox="0 0 900 200" role="img" aria-label="Diagram of a 2-opt move removing a crossing">
+  <text class="t-title" x="24" y="28">A 2-opt move: cut two edges, reconnect the other way</text>
+  <g transform="translate(60,50)">
+    <text class="t-lbl" x="60" y="0" text-anchor="middle" fill="var(--warm)" style="font-weight:600">before</text>
+    <line x1="0" y1="30" x2="120" y2="110" stroke="var(--warm)" stroke-width="2"/>
+    <line x1="0" y1="110" x2="120" y2="30" stroke="var(--warm)" stroke-width="2"/>
+    <line x1="0" y1="30" x2="0" y2="110" stroke="var(--ink-3)" stroke-width="1.5" stroke-dasharray="3 3"/>
+    <line x1="120" y1="30" x2="120" y2="110" stroke="var(--ink-3)" stroke-width="1.5" stroke-dasharray="3 3"/>
+    <circle cx="0" cy="30" r="4" fill="var(--ink)"/><circle cx="120" cy="30" r="4" fill="var(--ink)"/>
+    <circle cx="0" cy="110" r="4" fill="var(--ink)"/><circle cx="120" cy="110" r="4" fill="var(--ink)"/>
+    <text class="t-tiny" x="60" y="140" text-anchor="middle">the two solid edges cross</text>
+  </g>
+  <polygon points="250,105 268,95 268,115" fill="var(--rule)"/>
+  <g transform="translate(300,50)">
+    <text class="t-lbl" x="60" y="0" text-anchor="middle" fill="var(--accent)" style="font-weight:600">after</text>
+    <line x1="0" y1="30" x2="120" y2="30" stroke="var(--accent)" stroke-width="2"/>
+    <line x1="0" y1="110" x2="120" y2="110" stroke="var(--accent)" stroke-width="2"/>
+    <line x1="0" y1="30" x2="0" y2="110" stroke="var(--ink-3)" stroke-width="1.5" stroke-dasharray="3 3"/>
+    <line x1="120" y1="30" x2="120" y2="110" stroke="var(--ink-3)" stroke-width="1.5" stroke-dasharray="3 3"/>
+    <circle cx="0" cy="30" r="4" fill="var(--ink)"/><circle cx="120" cy="30" r="4" fill="var(--ink)"/>
+    <circle cx="0" cy="110" r="4" fill="var(--ink)"/><circle cx="120" cy="110" r="4" fill="var(--ink)"/>
+    <text class="t-tiny" x="60" y="140" text-anchor="middle">strictly shorter, always</text>
+  </g>
+  <g transform="translate(560,60)">
+    <text class="t-tiny" x="0" y="0">Reversing the segment between the two cut points</text>
+    <text class="t-tiny" x="0" y="18">is what reconnects them the other way round.</text>
+    <text class="t-tiny" x="0" y="44">Every ant now runs this on its tour before the</text>
+    <text class="t-tiny" x="0" y="62">tour is scored. The ants propose; 2-opt tidies.</text>
+  </g>
+</svg>
+<figcaption>Published descriptions of MAX–MIN Ant System take this for granted; the original papers all use a local search. We left it out at first because our specification never named it — and the gap that opened up scaled alarmingly with problem size.</figcaption>
+</figure>
+
+<div class="col">
+<div class="tablewrap">
+<table>
+<thead><tr><th>Cities</th><th class="num">Ants alone</th><th class="num">Ants + 2-opt</th><th>Effect</th></tr></thead>
+<tbody>
+<tr><td>52</td><td class="num">optimum</td><td class="num">optimum</td><td>no visible difference</td></tr>
+<tr><td>100</td><td class="num">0.45%</td><td class="num good">optimum, 10/10 runs</td><td>0 of 10 → 10 of 10</td></tr>
+<tr><td>442</td><td class="num bad">14.10%</td><td class="num good">1.50%</td><td><strong>9× better</strong></td></tr>
+<tr><td>783</td><td class="num bad">11.31%</td><td class="num good">3.79%</td><td>3× better</td></tr>
+</tbody>
+</table>
+</div>
+<p>On the smallest problem the omission was invisible. That is the uncomfortable part: our test suite passed, every tour was valid, and the algorithm was "working" — it was simply much worse than it should have been, in a way only a bigger problem could reveal.</p>
+
+<div class="callout">
+  <span class="label">The discipline that made this legible</span>
+  <p>We wrote down the quality we would accept <em>before</em> running anything, and when the 442-city result came in at 14% we reported it as a failure rather than adjusting the target. Adding 2-opt afterwards is defensible because it is a missing standard component. Quietly loosening the threshold would not have been — and from the inside, the two feel almost identical.</p>
+</div>
+
+<h3>Surprise 3 — sharing results made the swarm worse</h3>
+<p>With the algorithm working, we ran it on three separate machines. Two ways to use three machines:</p>
+<div class="grid2">
+  <div class="card"><h4>Independent</h4><p>Three colonies, three different random seeds, no communication at all. Take the best answer at the end.</p></div>
+  <div class="card"><h4>Sharing</h4><p>Same three colonies, but every 500 rounds each publishes its best tour and adopts any better one it finds.</p></div>
+</div>
+<div class="tablewrap">
+<table>
+<thead><tr><th>Three machines, 50,000 rounds each</th><th class="num">island results</th><th class="num">best of the three</th></tr></thead>
+<tbody>
+<tr><td>Independent — no communication</td><td class="num">1.41% · 1.31% · 0.99%</td><td class="num good">0.99%</td></tr>
+<tr><td>Sharing — every 500 rounds</td><td class="num">1.37% · 1.37% · 1.37%</td><td class="num bad">1.37%</td></tr>
+</tbody>
+</table>
+</div>
+<p>Sharing is obviously better. Three heads, pooled discoveries, no wasted effort. We expected a clear win.</p>
+</div>
+
+<figure>
+<svg viewBox="0 0 760 340" role="img" aria-label="Convergence chart: three independent colonies versus three sharing colonies">
+  <text class="t-title" x="24" y="26">Distance above the optimum, 442 cities, three machines</text>
+  <text class="t-tiny" x="24" y="44">lower is better · measured on BareMetal Cloud</text>
+  <line x1="62" y1="268" x2="700" y2="268" stroke="var(--grid)"/>
+  <line x1="62" y1="212" x2="700" y2="212" stroke="var(--grid)"/>
+  <line x1="62" y1="156" x2="700" y2="156" stroke="var(--grid)"/>
+  <line x1="62" y1="100" x2="700" y2="100" stroke="var(--grid)"/>
+  <line x1="62" y1="44"  x2="700" y2="44"  stroke="var(--grid)"/>
+  <text class="t-tiny" x="54" y="272" text-anchor="end">0%</text>
+  <text class="t-tiny" x="54" y="216" text-anchor="end">0.6%</text>
+  <text class="t-tiny" x="54" y="160" text-anchor="end">1.2%</text>
+  <text class="t-tiny" x="54" y="104" text-anchor="end">1.8%</text>
+  <text class="t-tiny" x="54" y="48"  text-anchor="end">2.4%</text>
+  <text class="t-tiny" x="62" y="288" text-anchor="middle">0</text>
+  <text class="t-tiny" x="189.6" y="288" text-anchor="middle">10k</text>
+  <text class="t-tiny" x="317.2" y="288" text-anchor="middle">20k</text>
+  <text class="t-tiny" x="444.8" y="288" text-anchor="middle">30k</text>
+  <text class="t-tiny" x="572.4" y="288" text-anchor="middle">40k</text>
+  <text class="t-tiny" x="700" y="288" text-anchor="middle">50k</text>
+  <text class="t-tiny" x="381" y="308" text-anchor="middle">rounds</text>
+
+  <path d="M 87.5 88.8 L 164.1 88.8 L 164.1 108.4 L 189.6 108.4 L 189.6 136.4 L 700 136.4" fill="none" stroke="var(--a)" stroke-width="1.8" opacity="0.85"/>
+  <path d="M 87.5 87.9 L 113 87.9 L 113 114 L 189.6 114 L 189.6 119.6 L 546.9 119.6 L 546.9 145.7 L 700 145.7" fill="none" stroke="var(--a)" stroke-width="1.8" opacity="0.85"/>
+  <path d="M 87.5 55.2 L 113 55.2 L 113 72 L 164.1 72 L 164.1 102.8 L 419.3 102.8 L 419.3 134.5 L 470.3 134.5 L 470.3 175.6 L 700 175.6" fill="none" stroke="var(--a)" stroke-width="1.8" opacity="0.85"/>
+  <path d="M 87.5 88.8 L 113 88.8 L 113 114 L 138.6 114 L 138.6 140.1 L 700 140.1" fill="none" stroke="var(--b)" stroke-width="3" stroke-dasharray="7 4"/>
+
+  <circle cx="470.3" cy="175.6" r="4.5" fill="var(--a)"/>
+  <text class="t-tiny" x="484" y="196" fill="var(--a)" style="font-weight:600">an independent colony breaks through at 32k</text>
+  <text class="t-tiny" x="484" y="212" fill="var(--a)">0.99% — the best result of the study</text>
+  <text class="t-tiny" x="480" y="132" fill="var(--b)" style="font-weight:600">all three sharing colonies, identical from 8k onward → 1.37%</text>
+</svg>
+<div class="legend">
+  <span><i class="swatch" style="background:var(--a)"></i>three independent colonies</span>
+  <span><i class="swatch" style="background:var(--b)"></i>three sharing colonies (lines overlap exactly)</span>
+</div>
+<figcaption><strong>Sharing won the first 20,000 rounds and lost the race.</strong> Both arms are now complete. The three sharing colonies found the same good tour quickly and then became identical — one search running on three machines, all finishing on the very same route at 1.37%. The independent colonies stayed stubbornly different, and one wandered into a better region at round 32,000 that the others were nowhere near, ending at 0.99%. A synchronised swarm could not have found it: by then all three would have been standing in the same place.</figcaption>
+</figure>
+
+<div class="col">
+<div class="callout surprise">
+  <span class="label">The general lesson</span>
+  <p>Three machines exploring different ideas are worth more than three machines agreeing quickly. Sharing information is not free — <strong>it is paid for in diversity</strong>, and diversity is the only reason to have run three of them.</p>
+  <p style="margin-top:.7rem">Note how total the collapse was: all three sharing colonies returned <em>the identical route</em>, so their average and their best are the same number. There was no "best of three" left to take.</p>
+  <p style="margin-top:.7rem">This is a real trade-off with a real knob: we shared every 500 rounds, which is aggressive. Sharing every 5,000 would likely keep most of the benefit and much of the diversity. The point is not that sharing is bad — it is that "obviously we should pool results" was a hypothesis, and it lost.</p>
+</div>
+
+
+<h3>Surprise 4 — we moved the cities underneath it, and the stale trails did no harm</h3>
+<p>Everything above about forgetting-as-error-correction was an <em>argument</em>. We later turned it into a measurement, and we did not need a faulty machine to do it: solve a map, then <strong>pick up a fifth of the cities and drop them somewhere else</strong>, mid-run, leaving their pheromone exactly where it was. Those trails now point at where the cities used to be. They are lies, and nothing deletes them.</p>
+<p>Stale pheromone from a changed map and pheromone corrupted by a hardware fault are the same object: trail strength that no longer earns its keep. Three arms, all forked from one identical state.</p>
+
+<div class="tablewrap">
+<table>
+<thead><tr><th>After moving a fifth of the cities</th><th class="num">tour found</th><th>vs restarting</th></tr></thead>
+<tbody>
+<tr><td>Throw the pheromone away and start over</td><td class="num">15,461</td><td>—</td></tr>
+<tr><td><strong>Keep everything, lies included</strong></td><td class="num good">15,150</td><td class="good">2.01% better</td></tr>
+<tr><td>Keep it, but scrub the trails that now lie</td><td class="num">15,240</td><td>1.43% better</td></tr>
+</tbody>
+</table>
+</div>
+<p>Keeping the pheromone beat starting over — and here is the odd part: <strong>deliberately scrubbing the false trails made things worse.</strong> Leaving the lies in place was better than cleaning them up.</p>
+
+<div class="callout surprise">
+  <span class="label">The row that stopped us publishing this</span>
+  <p>We swept the change from 5% of the cities up to <strong>100%</strong>. Keeping the pheromone won at every single setting — including when <em>every</em> city had moved and there was no old map left to remember anything about.</p>
+  <p style="margin-top:.7rem">Whatever was producing that number, it could not be memory. So the tidy story was measuring something else, and needed a control rather than a write-up.</p>
+</div>
+
+<p>A pheromone matrix that has been running for a while differs from a fresh one in <em>two</em> ways at once. It remembers which edges were good — and it is <strong>concentrated</strong>, nearly all its weight on a few edges, where a restart spreads everything flat. "Keep versus restart" confounds the two.</p>
+<p>So we added a fourth arm that keeps one and destroys the other: <strong>shuffle</strong> the matrix through a random relabelling of the cities. Every value survives, so the concentration is untouched. Which edge holds which value is scrambled, so the memory is gone.</p>
+
+<figure>
+<svg viewBox="0 0 900 210" role="img" aria-label="Bar chart splitting the advantage into concentration and memory">
+  <text class="t-title" x="24" y="28">Where the advantage actually comes from</text>
+  <g transform="translate(24,52)">
+    <text class="t-lbl" x="0" y="0" style="font-weight:600">a fifth of the cities moved</text>
+    <text class="t-tiny" x="0" y="16">memory should matter most here</text>
+    <rect x="0" y="26" width="606" height="34" rx="3" fill="var(--b)" opacity="0.85"/>
+    <rect x="606" y="26" width="166" height="34" rx="3" fill="var(--a)"/>
+    <text class="t-mono" x="14" y="48" fill="#fff">concentration · 1.58 points</text>
+    <text class="t-mono" x="618" y="48" fill="#fff">memory · 0.43</text>
+    <text class="t-mono" x="784" y="48">= 2.01%</text>
+  </g>
+  <g transform="translate(24,132)">
+    <text class="t-lbl" x="0" y="0" style="font-weight:600">every city moved</text>
+    <text class="t-tiny" x="0" y="16">nothing left to remember</text>
+    <rect x="0" y="26" width="694" height="34" rx="3" fill="var(--b)" opacity="0.85"/>
+    <text class="t-mono" x="14" y="48" fill="#fff">concentration · 1.81 points</text>
+    <line x1="694" y1="20" x2="694" y2="66" stroke="var(--a)" stroke-width="2.5"/>
+    <text class="t-mono" x="706" y="42" fill="var(--a)">memory</text>
+    <text class="t-mono" x="706" y="58" fill="var(--a)">−0.14</text>
+  </g>
+</svg>
+<figcaption>The shuffled matrix keeps almost all of the benefit. <strong>Roughly three quarters of what looked like memory is not memory</strong> — it is that a concentrated set of preferences gets to work faster than a flat one. And when every city moves, the memory term goes to zero, which is exactly what a real memory effect has to do. That decay is why we believe the split rather than suspecting it.</figcaption>
+</figure>
+
+<div class="callout">
+  <span class="label">What survived and what didn't</span>
+  <p><strong>Survived:</strong> keeping the lies is never worse than scrubbing them, at any amount of change. Wrong pheromone genuinely does not hurt — evaporation absorbs it, and paying to clean it up is a net loss. That is the error-correction claim, now measured rather than argued.</p>
+  <p style="margin-top:.7rem"><strong>Did not survive:</strong> the vaguer version, that this algorithm's edge on changing problems is mostly about remembering the old map. Mostly it is about not throwing away a set of preferences that took a while to sharpen.</p>
+</div>
+
+<h3>Surprise 5 — a search splits two hundred ways for free, then falls off a cliff</h3>
+<p>If a colony can be run on three machines, why not three hundred? We fixed a compute budget and spent it every way we could: one long run, then ten shorter, then a hundred, up to ten thousand runs of twenty rounds each. Same total work every time, combined by taking the best tour anyone found — which needs no communication at all.</p>
+
+<figure>
+<svg viewBox="0 0 900 300" role="img" aria-label="Quality is flat to a few hundred workers then degrades sharply">
+  <text class="t-title" x="24" y="26">How much worse than one long run · same total compute</text>
+  <text class="t-tiny" x="24" y="44">two different maps, each measured against its own single-run result</text>
+  <rect x="70" y="188" width="800" height="34" fill="var(--accent-soft)"/>
+  <text class="t-tiny" x="862" y="182" text-anchor="end" fill="var(--accent)">indistinguishable from running once</text>
+  <line x1="70" y1="205" x2="870" y2="205" stroke="var(--ink-3)" stroke-width="1.2"/>
+  <text class="t-tiny" x="62" y="209" text-anchor="end">0%</text>
+  <text class="t-tiny" x="62" y="139" text-anchor="end">1%</text>
+  <text class="t-tiny" x="62" y="73" text-anchor="end">2%</text>
+  <line x1="70" y1="135" x2="870" y2="135" stroke="var(--grid)"/>
+  <line x1="70" y1="69" x2="870" y2="69" stroke="var(--grid)"/>
+  <text class="t-tiny" x="70" y="248" text-anchor="middle">1</text>
+  <text class="t-tiny" x="270" y="248" text-anchor="middle">10</text>
+  <text class="t-tiny" x="470" y="248" text-anchor="middle">100</text>
+  <text class="t-tiny" x="670" y="248" text-anchor="middle">1,000</text>
+  <text class="t-tiny" x="870" y="248" text-anchor="middle">10,000</text>
+  <text class="t-tiny" x="470" y="270" text-anchor="middle">workers the budget is split across</text>
+  <line x1="626" y1="52" x2="626" y2="228" stroke="var(--bad)" stroke-width="1.2" stroke-dasharray="4 4"/>
+  <text class="t-tiny" x="634" y="66" fill="var(--bad)" style="font-weight:600">the cliff</text>
+  <text class="t-tiny" x="634" y="82" fill="var(--bad)">workers drop under a second of work each</text>
+  <polyline points="70,205 270,204 390,206 470,198 530,202 626,189 670,148 870,96" fill="none" stroke="var(--a)" stroke-width="2.2"/>
+  <polyline points="70,205 270,211 390,212 470,210 530,201 626,193 670,131 870,66" fill="none" stroke="var(--b)" stroke-width="2.2"/>
+  <text class="t-mono" x="860" y="112" text-anchor="end" fill="var(--a)">442 cities</text>
+  <text class="t-mono" x="860" y="56" text-anchor="end" fill="var(--b)">783 cities</text>
+</svg>
+<figcaption>Below the line is <em>better</em> than one long run. Splitting the work across a few hundred workers costs nothing measurable — and then quality collapses. The two maps were measured independently and the cliff arrives in the same place on both.</figcaption>
+</figure>
+
+<p>The collapse is not caused by having too many workers. It is caused by each one becoming too <em>short</em>. A colony spends its first rounds building pheromone up from a crude starting route; a worker that dies before that happens hands back something barely better than where it began. Ten thousand of those are worth less than one run that got somewhere.</p>
+
+<div class="callout surprise">
+  <span class="label">The useful form of the answer</span>
+  <p><strong>Give every worker at least a couple of seconds of real work. Then have as many workers as you like.</strong></p>
+  <p style="margin-top:.7rem">That is a floor on <em>task size</em>, not a ceiling on <em>parallelism</em> — and it is the number that decides what kind of machine makes sense. Against a two-second task, a unikernel that boots in 31 ms costs 1.7% overhead; a serverless function at 45 ms costs 2.5%; booting a whole Linux guest at 950 ms costs 53%.</p>
+</div>
+
+<p>One caution we want on the record. The best split beat one long run by a whisker on both maps, but the margin is inside the noise. The claim we will defend is <strong>"splitting the work costs nothing"</strong>, not "splitting the work helps". That is still the claim that matters, because the payoff was never better answers — it was the same answers on hardware that costs a twentieth as much.</p>
+
+<h2>When should you reach for this?</h2>
+<p>Honest scoping, since this document has spent a while being enthusiastic.</p>
+<div class="grid2">
+  <div class="card"><h4>Good fit</h4><p>Routing and scheduling with awkward real-world constraints; problems that <em>change</em> while you are solving them &mdash; we tested this directly and the stale trails genuinely cost nothing, though see Surprise 4 for how much of that is really memory; anywhere you need a good answer continuously rather than a perfect one once.</p></div>
+  <div class="card"><h4>Poor fit</h4><p>Static, pure TSP — specialised solvers like Lin–Kernighan will beat this comfortably and it is not close. Anything with a known exact algorithm. Problems where a solution cannot be built one piece at a time.</p></div>
+</div>
+<p>The honest summary: ACO is rarely the best tool for a textbook problem, and often a very good tool for a messy one that changes underneath you. Its real advantage is that it never stops adapting, because it never stops forgetting.</p>
+
+<h2>What we built</h2>
+<p>Three colonies on three machines with 16 MB of memory each and no operating system — the program runs directly on the hardware. They coordinate through a single shared file in cloud storage: each writes its own best tour, and reads the others. No coordinator, no locks, nothing to fail centrally. The same stigmergy the ants use, one level up.</p>
+<div class="tablewrap">
+<table>
+<thead><tr><th>Component</th><th>Detail</th></tr></thead>
+<tbody>
+<tr><td>Algorithm</td><td>MAX–MIN Ant System, 25 ants, 2% evaporation, 2-opt local search</td></tr>
+<tr><td>Program</td><td>One C file, ~700 lines, no math library, no dependencies at run time</td></tr>
+<tr><td>Memory</td><td>1.14 MB of working set for a 442-city problem</td></tr>
+<tr><td>Machines</td><td>3 × (1 CPU, 16 MB), no operating system</td></tr>
+<tr><td>Best result</td><td><span class="good">0.99% above the proven optimum</span> on a 442-city problem</td></tr>
+</tbody>
+</table>
+</div>
+<p>The source, the raw logs and every number above are public: <a href="https://github.com/tabibazar/unikernel-c/tree/aco-swarm">github.com/tabibazar/unikernel-c</a>, branch <code>aco-swarm</code>.</p>
+
+<h2>If you remember five things</h2>
+<ol class="steps">
+  <li><strong>Simple local rules produce global intelligence.</strong> No ant knows the route. The colony still finds it.</li>
+  <li><strong>Forgetting is a feature.</strong> It prevents lock-in, and it happens to make the system shrug off hardware faults.</li>
+  <li><strong>Reinforcing only your current champion stops you discovering it was mediocre.</strong> 3 out of 10 became 10 out of 10 on that one insight.</li>
+  <li><strong>Consensus has a cost.</strong> Our sharing swarm agreed faster and finished worse.</li>
+  <li><strong>Check what your good result is actually made of.</strong> Keeping the pheromone through a change beat restarting every time &mdash; and a control arm showed three quarters of that was concentration, not memory.</li>
+</ol>
+
+<footer>
+  Avriz Engineering · 2 September 2026<br>
+  Every figure is from a measured run; the code and logs are linked above. Both arms are complete: three independent colonies reached 0.99%, three sharing colonies 1.37%.<br>
+  Updated 4 September 2026 with Surprises 4 and 5 &mdash; moving the cities mid-run, and how far a search can be split before it stops working.
+</footer>
+</div>
+</div>
