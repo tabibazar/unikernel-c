@@ -161,9 +161,40 @@ success.
 
 Three deliverables, all cheap, none requiring BareMetal.
 
-- **Pin the compute price.** The $0.005/core-hour rate below is **stipulated by
-  this proposal, not measured.** No verified 2026 pricing for BareMetal Cloud
-  or metal spot markets survived research. Pin it before spending.
+- **~~Pin the compute price.~~ DONE, 2026-09-04.** Both halves are now
+  verified rather than stipulated, and the answer changes the plan.
+
+  BareMetal Cloud, read straight off `GET /api/instances`
+  (`estimatedHourlyDisplay`): **$0.00501056/hr** per instance -- and since
+  `GET /api/limits` returns `maxVcpuPerInstance: 1`, that *is* the core-hour
+  rate. The $0.005 stipulation was right.
+
+  AWS metal spot, queried the same day: c5.metal at **$0.4719/hr** in
+  ap-south-1 and $0.5977 in us-east-2, against $4.08/hr on-demand in
+  us-east-1. At 96 vCPU that is **$0.004916/core-hour**.
+
+  | | $/core-hour |
+  |---|---:|
+  | BareMetal Cloud | 0.005011 |
+  | c5.metal spot | 0.004916 |
+  | c5.metal on-demand | 0.042500 |
+
+  **The two platforms are within 2% of each other per core-hour**, so the
+  substrate choice is not a cost decision. The 8.6x saving that actually
+  exists is spot versus on-demand, and it applies on AWS only.
+
+  The binding constraint turned out not to be price at all. `GET /api/limits`
+  returns `{"maxVcpuPerInstance":1,"maxRamMibPerInstance":16,
+  "maxInstancesPerUser":4}` -- **four cores in total**. At 21,326 measured
+  core-hours (see `gmp/results/prp-ring3-2026-09-04.txt`) the k=6 hunt costs
+  ~$107 on either platform, but takes **222 days** at a 4-instance cap versus
+  9 days on a single c5.metal. Raising that cap is therefore the single
+  highest-value thing to negotiate, and it costs Return Infinity capacity
+  rather than margin.
+
+  The 16 MiB per-instance cap also rules out CPython on BareMetal Cloud
+  entirely (`python.app` is 7.1 MB and `baremetal.sh` sets `MEMSIZE=32`).
+  GMP is unaffected -- `prp_bench.app` links to 350 KB.
 - **Select instances.** All six instances Local-ILP touched have since been
   beaten -- scpm1 to 537, sorrell7 to -198, scpn2 to 489, supportcase22 to 111,
   cdc7-4-3-2 to -307 (Jan 2026) -- several by industrial groups including Huawei

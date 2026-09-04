@@ -338,3 +338,29 @@ integers, because it is not.
 
 Correctness was checked in the same run: five known-answer tests including a
 composite that must *not* report prime. `SELFTEST PASSED (0 failures)`.
+
+### The acceptance test is passed -- and the constraint moves to capacity
+
+The test above asked for **under 49 ms per PRP** to fit at 1x expectation, and
+**under 16 ms** for 3x expectation and a ~95% chance of a find. The measured
+figure is **10.517 ms**. Both thresholds are cleared, the second one comfortably.
+
+The $500 cap at $0.00501056/hr buys 99,789 core-hours against a measured
+requirement of **21,326**, so the hunt fits roughly 4.7x inside the budget.
+Price is no longer the binding constraint on this project.
+
+Capacity is. `GET /api/limits` on BareMetal Cloud returns:
+
+```json
+{"maxVcpuPerInstance":1,"maxRamMibPerInstance":16,"maxInstancesPerUser":4}
+```
+
+Four cores. At 21,326 core-hours that is **222 days of wall time** for a job
+that costs $107 -- against 9 days on a single 96-vCPU host. The money was never
+the problem; the parallelism ceiling is. Raising `maxInstancesPerUser` is the
+one change that converts this from a nine-month background job into a
+nine-day run, and it costs capacity rather than revenue.
+
+The 16 MiB per-instance cap is not a problem for this workload: `prp_bench.app`
+links to 350 KB and the 3366-bit operands are kilobytes. It does rule out the
+CPython payload, which needs 32 MiB.
