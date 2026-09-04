@@ -1,0 +1,161 @@
+<title>How Far You Can Split a Search</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Fraunces:opsz,wght@9..144,400;9..144,600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{--ground:#F7F5F0;--raise:#FFF;--sunk:#EFEDE6;--ink:#16150F;--ink-mid:#514E43;
+ --ink-soft:#837F70;--rule:#E0DCD1;--ok:#2F6B4F;--bad:#B03A24;--accent:#1F5F8B;
+ --f-disp:"Fraunces",Georgia,serif;--f-body:"DM Sans",system-ui,sans-serif;--f-mono:"IBM Plex Mono",monospace}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+ --ground:#12120E;--raise:#1B1A15;--sunk:#0D0D0A;--ink:#F0EEE7;--ink-mid:#B4B0A3;
+ --ink-soft:#87836F;--rule:#2C2A22;--ok:#63BE92;--bad:#E58366;--accent:#6FB0DC}}
+:root[data-theme="dark"]{--ground:#12120E;--raise:#1B1A15;--sunk:#0D0D0A;--ink:#F0EEE7;
+ --ink-mid:#B4B0A3;--ink-soft:#87836F;--rule:#2C2A22;--ok:#63BE92;--bad:#E58366;--accent:#6FB0DC}
+*{box-sizing:border-box}
+body{background:var(--ground);color:var(--ink);font-family:var(--f-body);font-size:17px;
+ line-height:1.62;margin:0;padding:0 20px 90px;-webkit-font-smoothing:antialiased}
+.wrap{max-width:790px;margin:0 auto}.narrow{max-width:64ch}
+header{padding:66px 0 26px}
+.kick{font-family:var(--f-mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;
+ color:var(--accent);margin:0 0 16px}
+h1{font-family:var(--f-disp);font-weight:600;font-size:clamp(38px,7vw,64px);line-height:1.04;
+ letter-spacing:-.02em;margin:0 0 18px;text-wrap:balance}
+.dek{font-size:20px;line-height:1.5;color:var(--ink-mid);margin:0;max-width:56ch;text-wrap:pretty}
+h2{font-family:var(--f-disp);font-weight:600;font-size:30px;line-height:1.15;margin:0 0 12px;
+ letter-spacing:-.015em;text-wrap:balance}
+section{margin:0 0 54px}p{margin:0 0 16px;text-wrap:pretty}strong{font-weight:700}
+code{font-family:var(--f-mono);font-size:.85em;background:var(--sunk);padding:1px 5px;border-radius:3px}
+.figbox{background:var(--raise);border:1px solid var(--rule);border-radius:5px;padding:24px 24px 14px;margin:28px 0}
+.figbox h4{font-family:var(--f-mono);font-size:11px;letter-spacing:.07em;text-transform:uppercase;
+ color:var(--ink-soft);margin:0 0 20px;font-weight:500}
+svg{display:block;width:100%;height:auto;overflow:visible}
+.figcap{font-size:14px;color:var(--ink-soft);margin:14px 0 0;max-width:72ch}
+.scroll{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-family:var(--f-mono);font-size:12.5px;
+ font-variant-numeric:tabular-nums;margin:14px 0;min-width:520px}
+th{text-align:left;font-size:10px;letter-spacing:.07em;text-transform:uppercase;color:var(--ink-soft);
+ border-bottom:2px solid var(--rule);padding:8px 12px 8px 0;font-weight:500}
+td{padding:9px 12px 9px 0;border-bottom:1px solid var(--rule);color:var(--ink-mid)}
+td:first-child{color:var(--ink)}.num{text-align:right;padding-right:0}
+tr.plateau td{background:rgba(47,107,79,.09)}tr.cliff td{background:rgba(176,58,36,.09)}
+.tag{font-family:var(--f-mono);font-size:10px;font-weight:500;padding:2px 6px;border-radius:2px}
+.tag.same{background:rgba(47,107,79,.16);color:var(--ok)}
+.tag.worse{background:rgba(176,58,36,.16);color:var(--bad)}
+.rule{font-family:var(--f-disp);font-size:28px;line-height:1.3;border-top:1px solid var(--rule);
+ border-bottom:1px solid var(--rule);padding:24px 0;margin:32px 0;max-width:26ch;text-wrap:balance}
+.note{border-left:3px solid var(--accent);padding:2px 0 2px 18px;margin:24px 0;color:var(--ink-mid);max-width:64ch}
+.note b{color:var(--ink)}
+footer{border-top:1px solid var(--rule);padding-top:20px;font-family:var(--f-mono);font-size:11.5px;
+ color:var(--ink-soft);line-height:1.7}
+@media (max-width:600px){body{font-size:16px}.rule{font-size:22px;max-width:none}}
+</style>
+<div class="wrap">
+<header>
+  <p class="kick">Ant colony optimization · fixed compute budget</p>
+  <h1>How far you can split a search before it stops working</h1>
+  <p class="dek">Give a hundred workers a two-hundredth of the compute each and they match one long run exactly. Give a thousand workers a thousandth and the whole thing falls apart. The boundary is sharper than expected — and it isn't where you'd guess.</p>
+</header>
+
+<section class="narrow">
+  <h2>The question</h2>
+  <p>If you have a fixed amount of compute, is it better spent as one long search or many short independent ones? It sounds academic. It decides whether a swarm of tiny, cheap, short-lived machines is a sensible way to compute anything.</p>
+  <p>Every arm below spends <strong>exactly 200,000 ant constructions</strong> on the same 442-city routing problem. The only difference is how that budget is chopped up. Results are combined by taking the best tour any worker found — which needs no communication at all, and is the only reason a swarm of isolated machines could work in the first place.</p>
+</section>
+
+<section>
+  <div class="figbox">
+    <h4>Tour length against how finely the budget is split</h4>
+    <svg id="chart" viewBox="0 0 720 360" role="img" aria-label="Tour quality is flat from 1 to 200 workers then degrades sharply"></svg>
+    <p class="figcap">Each point is the mean of five replicates; the band is one standard deviation of the single-run baseline. Everything inside the band is indistinguishable from running once, for the same total compute.</p>
+  </div>
+</section>
+
+<section>
+  <div class="scroll">
+  <table>
+    <thead><tr><th>Workers</th><th class="num">Iterations each</th><th class="num">Seconds each</th><th class="num">Mean tour</th><th class="num">vs one long run</th><th class="num">σ apart</th><th></th></tr></thead>
+    <tbody>
+      <tr class="plateau"><td>1</td><td class="num">200,000</td><td class="num">359.7</td><td class="num">51,478</td><td class="num">—</td><td class="num">—</td><td><span class="tag same">baseline</span></td></tr>
+      <tr class="plateau"><td>10</td><td class="num">20,000</td><td class="num">36.0</td><td class="num">51,490</td><td class="num">+0.02%</td><td class="num">0.15</td><td><span class="tag same">same</span></td></tr>
+      <tr class="plateau"><td>40</td><td class="num">5,000</td><td class="num">9.0</td><td class="num">51,473</td><td class="num">−0.01%</td><td class="num">−0.07</td><td><span class="tag same">same</span></td></tr>
+      <tr class="plateau"><td>100</td><td class="num">2,000</td><td class="num">3.6</td><td class="num">51,536</td><td class="num">+0.11%</td><td class="num">0.78</td><td><span class="tag same">same</span></td></tr>
+      <tr class="plateau"><td><strong>200</strong></td><td class="num">1,000</td><td class="num">1.8</td><td class="num">51,504</td><td class="num">+0.05%</td><td class="num">0.37</td><td><span class="tag same">same</span></td></tr>
+      <tr class="cliff"><td>400</td><td class="num">500</td><td class="num">0.9</td><td class="num">51,600</td><td class="num">+0.24%</td><td class="num">2.01</td><td><span class="tag worse">worse</span></td></tr>
+      <tr class="cliff"><td>1,000</td><td class="num">200</td><td class="num">0.36</td><td class="num">51,921</td><td class="num">+0.86%</td><td class="num">5.89</td><td><span class="tag worse">worse</span></td></tr>
+      <tr class="cliff"><td>10,000</td><td class="num">20</td><td class="num">0.04</td><td class="num">52,330</td><td class="num">+1.65%</td><td class="num">10.49</td><td><span class="tag worse">worse</span></td></tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<section class="narrow">
+  <h2>The cliff isn't about worker count</h2>
+  <p>Nothing goes wrong because there are too many workers. It goes wrong because each one becomes too short to finish what it starts.</p>
+  <p>This algorithm spends its first iterations building up structure from a crude starting route. A worker that dies before that structure forms contributes almost nothing — barely better than where it began. Ten thousand of those are worth less than one run that actually got somewhere.</p>
+  <p class="rule">Give every worker a couple of seconds of real work. Then have as many as you like.</p>
+  <p>That is a floor on <em>task size</em>, not on <em>parallelism</em>, and it is the useful form of the answer. The knee sits between 500 and 1,000 iterations — here, between 0.9 and 1.8 seconds.</p>
+</section>
+
+<section class="narrow">
+  <h2>Why this matters for tiny machines</h2>
+  <p>A worker that must live for about two seconds anyway can afford a startup cost of a few tens of milliseconds. Measured against that floor:</p>
+  <div class="scroll">
+  <table>
+    <thead><tr><th>Startup</th><th class="num">Cost</th><th class="num">Overhead at a 1.8s task</th></tr></thead>
+    <tbody>
+      <tr><td>Unikernel, no OS</td><td class="num">31 ms</td><td class="num">1.7%</td></tr>
+      <tr><td>AWS Lambda (measured)</td><td class="num">45 ms</td><td class="num">2.5%</td></tr>
+      <tr><td>Linux guest under Firecracker</td><td class="num">950 ms</td><td class="num">53%</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p>So the ephemeral-swarm idea survives, with an actual number attached instead of a hope — and the number says the interesting comparison is not between a unikernel and a serverless function, but between either of those and booting a general-purpose operating system per task.</p>
+</section>
+
+<section class="narrow">
+  <h2>What it doesn't show</h2>
+  <div class="note">
+    <p><b>The prediction going in was wrong.</b> It was written down first: monotonic degradation, one long run winning outright. The truth is a plateau and then a cliff, and the plateau reaches far further than expected. Recorded because a prediction only counts if you keep it after it fails.</p>
+  </div>
+  <p><strong>It is one workload.</strong> This algorithm accumulates memory across iterations, which arguably makes it the <em>least</em> splittable search one could have picked. That the plateau still reaches 200 workers is encouraging, but it is evidence about this problem, not about search in general.</p>
+  <p><strong>The seconds are instance-specific.</strong> The 1.8-second floor is 1,000 iterations on this particular map. The number that transfers is the iteration count, not the clock.</p>
+</section>
+
+<footer>
+  <p>pcb442, published optimum 50,778. MAX–MIN Ant System with 2-opt, 25 ants, 200,000 ant constructions per arm, five replicates, independent seeds throughout. Portfolios combined by taking the minimum. About four core-hours in total, roughly twenty-five minutes on a ten-core laptop, no cloud spend. Significance is a pooled-σ distance from the single-run baseline, not a formal test — with five replicates per point it separates the plateau from the cliff and is not meant to do more.</p>
+</footer>
+</div>
+<script>
+const D=[[1,200000,51478.0,83.4],[10,20000,51490.2,79.6],[40,5000,51473.4,49.7],
+[100,2000,51536.0,65.1],[200,1000,51504.2,55.0],[400,500,51600.2,21.5],
+[1000,200,51921.2,66.0],[10000,20,52329.8,79.0]];
+(function(){
+ const CS=getComputedStyle(document.documentElement),C=n=>CS.getPropertyValue(n).trim();
+ const W=720,H=360,ml=68,mr=20,mt=16,mb=52;
+ const lx=v=>Math.log10(v), x0=0, x1=4;
+ const y0=51380,y1=52420;
+ const X=v=>ml+(lx(v)-x0)/(x1-x0)*(W-ml-mr);
+ const Y=v=>mt+(1-(v-y0)/(y1-y0))*(H-mt-mb);
+ let s="";
+ const base=D[0][2],sd=D[0][3];
+ s+=`<rect x="${ml}" y="${Y(base+sd)}" width="${W-ml-mr}" height="${Y(base-sd)-Y(base+sd)}" fill="${C('--ok')}" opacity=".12"/>`;
+ s+=`<line x1="${ml}" y1="${Y(base)}" x2="${W-mr}" y2="${Y(base)}" stroke="${C('--ok')}" stroke-dasharray="5 4" stroke-width="1.3"/>`;
+ s+=`<text x="${W-mr}" y="${Y(base)-8}" text-anchor="end" font-family="IBM Plex Mono,monospace" font-size="11" fill="${C('--ok')}">one long run, ±1σ</text>`;
+ for(let v=51400;v<=52400;v+=200){
+  s+=`<line x1="${ml}" y1="${Y(v)}" x2="${W-mr}" y2="${Y(v)}" stroke="${C('--ink-soft')}" stroke-opacity=".16"/>`;
+  s+=`<text x="${ml-10}" y="${Y(v)+4}" text-anchor="end" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="${C('--ink-soft')}">${v.toLocaleString()}</text>`;}
+ for(const t of [1,10,100,1000,10000])
+  s+=`<text x="${X(t)}" y="${H-mb+20}" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="${C('--ink-soft')}">${t.toLocaleString()}</text>`;
+ s+=`<text x="${(ml+W-mr)/2}" y="${H-14}" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="12.5" fill="${C('--ink-soft')}">workers the budget is split across</text>`;
+ s+=`<text x="16" y="${(mt+H-mb)/2}" transform="rotate(-90 16 ${(mt+H-mb)/2})" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="12.5" fill="${C('--ink-soft')}">tour length (lower is better)</text>`;
+ s+=`<polyline points="${D.map(d=>`${X(d[0])},${Y(d[2])}`).join(' ')}" fill="none" stroke="${C('--ink-mid')}" stroke-width="2"/>`;
+ for(const d of D){
+  const bad=Math.abs(d[2]-base)/(((d[3]**2+sd**2)/2)**.5)>2;
+  s+=`<line x1="${X(d[0])}" y1="${Y(d[2]-d[3])}" x2="${X(d[0])}" y2="${Y(d[2]+d[3])}" stroke="${bad?C('--bad'):C('--ok')}" stroke-width="1.6"/>`;
+  s+=`<circle cx="${X(d[0])}" cy="${Y(d[2])}" r="5" fill="${bad?C('--bad'):C('--ok')}"/>`;}
+ s+=`<line x1="${X(300)}" y1="${mt}" x2="${X(300)}" y2="${H-mb}" stroke="${C('--bad')}" stroke-width="1.2" stroke-dasharray="3 4" opacity=".8"/>`;
+ s+=`<text x="${X(300)+8}" y="${mt+16}" font-family="IBM Plex Mono,monospace" font-size="11" fill="${C('--bad')}">the cliff</text>`;
+ s+=`<text x="${X(300)+8}" y="${mt+31}" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="${C('--ink-soft')}">workers get under ~1s each</text>`;
+ document.getElementById("chart").innerHTML=s;
+})();
+</script>
