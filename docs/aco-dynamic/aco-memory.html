@@ -84,6 +84,29 @@ svg{display:block;width:100%;height:auto;overflow:visible}
 .vcard p{font-size:15px;line-height:1.5;margin:0;color:var(--ink-mid)}
 
 
+
+.sim{background:#0C0E0B;border-radius:5px;margin:32px 0 12px;overflow:hidden}
+.simgrid{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr)}
+.simcv{background:#080A07}
+.simcv canvas{display:block;width:100%;height:auto}
+.simside{padding:20px 22px;color:#C6CABF;display:flex;flex-direction:column;gap:14px}
+.simside h5{font-family:var(--f-disp);font-size:15px;font-weight:700;color:#fff;margin:0;letter-spacing:-.01em}
+.stat{display:flex;justify-content:space-between;font-family:var(--f-mono);font-size:12.5px;
+ border-bottom:1px solid rgba(255,255,255,.13);padding:6px 0}
+.stat b{color:#fff;font-weight:400}
+.stat b.hot{color:#E7A33F}
+.simbtns{display:flex;flex-direction:column;gap:7px}
+.simbtns button{font-family:var(--f-mono);font-size:11.5px;letter-spacing:.05em;text-transform:uppercase;
+ background:rgba(255,255,255,.09);color:#fff;border:1px solid rgba(255,255,255,.22);border-radius:3px;
+ padding:10px 8px;cursor:pointer;text-align:left}
+.simbtns button:hover{background:rgba(255,255,255,.19)}
+.simbtns button:focus-visible{outline:2px solid #E7A33F;outline-offset:2px}
+.simbtns button.primary{background:#C67A16;border-color:#C67A16}
+.simbtns button.primary:hover{background:#E7A33F}
+.simnote{font-family:var(--f-mono);font-size:11px;line-height:1.5;color:#9BA093;
+ background:rgba(255,255,255,.06);padding:8px 10px;border-radius:3px}
+@media (max-width:700px){.simgrid{grid-template-columns:1fr}}
+
 .maps{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 .mapcell{display:flex;flex-direction:column;gap:8px}
 .mapcell canvas{width:100%;height:auto;background:var(--sunk);border-radius:3px;display:block}
@@ -111,6 +134,29 @@ footer p{max-width:72ch}
   <p class="dek">Move the map under a running solver and its pheromone trails become lies. Keeping them still beats starting over — but a control arm shows three quarters of that advantage has nothing to do with remembering anything.</p>
 </header>
 
+
+<section>
+  <div class="sim">
+    <div class="simgrid">
+      <div class="simcv"><canvas id="acv" width="520" height="420"></canvas></div>
+      <div class="simside">
+        <h5>Move the cities yourself</h5>
+        <div class="simnote" id="anote">A colony is solving this map. Trails thicken on edges that keep turning up in good tours.</div>
+        <div>
+          <div class="stat"><span>best tour</span><b id="abest">—</b></div>
+          <div class="stat"><span>iteration</span><b id="ait">0</b></div>
+          <div class="stat"><span>live trail edges</span><b id="aedge" class="hot">&mdash;</b></div>
+        </div>
+        <div class="simbtns">
+          <button id="amove" class="primary" type="button">Move 20% of the cities</button>
+          <button id="areset" type="button">Wipe the pheromone</button>
+          <button id="anew" type="button">New map</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <p class="figcap"><strong>Running live in your browser.</strong> Press <em>move the cities</em> and watch what happens: the trails to the moved cities survive the move, so they are suddenly drawn as long wrong lines stretching across the map. Those are the lies. Nobody deletes them — evaporation eats them over the next few dozen iterations while the colony re-finds its route. <em>Live trail edges</em> counts how many of the 2,415 possible edges still carry real trail strength. Press <em>wipe the pheromone</em> and it jumps to all 2,415 &mdash; then collapses back to the tour within a couple of seconds. That collapse <em>is</em> evaporation, running at the speed it runs at, and it is the same mechanism that eats the lies after a move. The flat state a restart installs is exactly what the measured runs below show costs it.</p>
+</section>
 <section class="narrow">
   <h2>The claim being tested</h2>
   <p>Ant Colony Optimization is supposed to excel at problems that change while you're solving them. Pheromone evaporates, so the colony forgets what is no longer true and adapts instead of restarting. It's the standard reason to reach for ACO on dynamic problems.</p>
@@ -315,5 +361,100 @@ for (const [arm, sub] of ORDER) {
     s += `<text x="${W-mr+8}" y="${Y(t[t.length-1])+4}" font-family="Space Mono,monospace" font-size="10.5" font-weight="700" fill="${col}">${a}</text>`;
   }
   svg.innerHTML = s;
+})();
+</script>
+
+<script>
+(function(){
+  const NC=70,ANTS=12,RHO=0.02,W=520,H=420,PAD=26;
+  const cv=document.getElementById("acv"),g=cv.getContext("2d");
+  let X=[],Y=[],moved=[],D=[],tau=[],best=[],bestLen=1e9,iter=0,flash=0;
+
+  let seed=12345;
+  function rnd(){seed=(seed+0x6D2B79F5)|0;let t=seed;
+    t=Math.imul(t^(t>>>15),1|t);t=(t+Math.imul(t^(t>>>7),61|t))^t;
+    return ((t^(t>>>14))>>>0)/4294967296;}
+
+  function dists(){for(let i=0;i<NC;i++)for(let j=0;j<NC;j++){
+    const dx=X[i]-X[j],dy=Y[i]-Y[j];D[i*NC+j]=Math.sqrt(dx*dx+dy*dy)||1e-6;}}
+
+  function newMap(){
+    X=[];Y=[];moved=new Array(NC).fill(0);
+    for(let i=0;i<NC;i++){X.push(PAD+rnd()*(W-2*PAD));Y.push(PAD+rnd()*(H-2*PAD));}
+    D=new Float64Array(NC*NC);dists();
+    tau=new Float64Array(NC*NC).fill(1);
+    best=[];for(let i=0;i<NC;i++)best.push(i);
+    bestLen=len(best);iter=0;
+  }
+  function len(t){let s=0;for(let i=0;i<NC;i++)s+=D[t[i]*NC+t[(i+1)%NC]];return s;}
+
+  const vis=new Uint8Array(NC),cand=new Float64Array(NC),who=new Int32Array(NC);
+  function build(){
+    vis.fill(0);const t=[];let c=(rnd()*NC)|0;t.push(c);vis[c]=1;
+    for(let s=1;s<NC;s++){
+      let m=0,tot=0;
+      for(let j=0;j<NC;j++){if(vis[j])continue;
+        const e=1/D[c*NC+j];const v=tau[c*NC+j]*e*e;cand[m]=v;who[m]=j;tot+=v;m++;}
+      let nx=who[m-1];const r=rnd()*tot;let acc=0;
+      for(let k=0;k<m;k++){acc+=cand[k];if(r<=acc){nx=who[k];break;}}
+      t.push(nx);vis[nx]=1;c=nx;
+    }
+    return t;
+  }
+  function step(){
+    for(let a=0;a<ANTS;a++){const t=build(),l=len(t);
+      if(l<bestLen){bestLen=l;best=t;}}
+    for(let i=0;i<NC*NC;i++)tau[i]*=(1-RHO);
+    const dep=90/bestLen;
+    for(let i=0;i<NC;i++){const a=best[i],b=best[(i+1)%NC];
+      tau[a*NC+b]+=dep;tau[b*NC+a]+=dep;}
+    for(let i=0;i<NC*NC;i++){if(tau[i]<0.02)tau[i]=0.02;if(tau[i]>6)tau[i]=6;}
+    iter++;
+  }
+
+  function draw(){
+    g.fillStyle="#080A07";g.fillRect(0,0,W,H);
+    let live=0;
+    for(let i=0;i<NC;i++)for(let j=i+1;j<NC;j++){
+      const v=tau[i*NC+j];if(v<=0.12)continue;live++;
+      g.globalAlpha=Math.min(.85,v/3);
+      g.strokeStyle=(moved[i]||moved[j])?"#E7A33F":"#9A7A3A";
+      g.lineWidth=Math.min(2.2,.4+v/2.4);
+      g.beginPath();g.moveTo(X[i],Y[i]);g.lineTo(X[j],Y[j]);g.stroke();
+    }
+    g.globalAlpha=1;g.strokeStyle="#4FBBA1";g.lineWidth=1.5;g.beginPath();
+    for(let i=0;i<NC;i++){const a=best[i],b=best[(i+1)%NC];
+      g.moveTo(X[a],Y[a]);g.lineTo(X[b],Y[b]);}
+    g.stroke();
+    for(let i=0;i<NC;i++){g.beginPath();g.arc(X[i],Y[i],moved[i]?4:2.6,0,6.2832);
+      g.fillStyle=moved[i]?"#E7A33F":"#D6D9CE";g.fill();}
+    if(flash>0){g.globalAlpha=flash/40;g.fillStyle="#E7A33F";g.fillRect(0,0,W,H);g.globalAlpha=1;flash--;}
+    document.getElementById("abest").textContent=bestLen.toFixed(0);
+    document.getElementById("ait").textContent=iter;
+    document.getElementById("aedge").textContent=live+" / "+(NC*(NC-1)/2);
+  }
+
+  const note=document.getElementById("anote");
+  function frame(){step();draw();requestAnimationFrame(frame);}
+
+  document.getElementById("amove").addEventListener("click",()=>{
+    moved.fill(0);let n=0;
+    while(n<Math.round(NC*0.2)){const c=(rnd()*NC)|0;if(!moved[c]){moved[c]=1;
+      X[c]=PAD+rnd()*(W-2*PAD);Y[c]=PAD+rnd()*(H-2*PAD);n++;}}
+    dists();bestLen=len(best);flash=40;
+    note.textContent="Moved. The orange trails now point at nothing \u2014 nobody deleted them. Watch evaporation eat them while the tour re-forms.";
+  });
+  document.getElementById("areset").addEventListener("click",()=>{
+    tau.fill(1);bestLen=len(best);
+    note.textContent="Pheromone wiped. Every edge is equal again, so the colony has nothing to exploit and has to rediscover the route from scratch.";
+  });
+  document.getElementById("anew").addEventListener("click",()=>{
+    newMap();note.textContent="A colony is solving this map. Trails thicken on edges that keep turning up in good tours.";
+  });
+
+  newMap();
+  if(window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches){
+    for(let k=0;k<120;k++)step();draw();
+  } else frame();
 })();
 </script>
