@@ -230,6 +230,34 @@ seeing results is not a criterion. So the original stands, the result is
 recorded against it as ambiguous-tending-to-refused, and the fix is to finish
 P1 on the other two instances rather than to rewrite the test.
 
+#### P1 COMPLETE, 2026-09-04 -- the gate is not triggered
+
+`kroA100` and `rat783` run to the same protocol. The criterion refuses the
+thesis if a single long run matches or beats the best portfolio on **two of
+three** instances:
+
+| instance | single long run | best portfolio | matches or beats? |
+|---|---:|---:|---|
+| pcb442 | 51,478.0 | 51,473.4 | no |
+| rat783 | 9,103.4 | 9,093.8 | no |
+| kroA100 | 21,282.0 | 21,282.0 | yes, vacuously -- every arm hit the optimum |
+
+One of three, and that one is saturated and carries no information. **The
+pre-registered falsification is not triggered, and the thesis survives its own
+test.**
+
+It survives narrowly and should be quoted narrowly. The portfolio's wins on the
+two informative instances are 0.37 and 0.80 sigma -- inside the noise. The
+defensible claim is that **splitting the work across a few hundred workers
+costs nothing**, not that it helps. That is still the claim the substrate
+needs, since the gain was always meant to be cheaper hardware rather than
+better tours, but it is a weaker sentence than "portfolios win" and should not
+be rounded up to it.
+
+The granularity floor is the finding the data actually supports strongly, and
+it reproduces on both hard instances: free to a few hundred workers, collapsing
+below roughly 500 iterations each. P2 is therefore live.
+
 ### P2 -- price the substrate
 
 Only if P1 puts the minimum at short restarts. Run the winning granularity three

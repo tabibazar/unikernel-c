@@ -67,6 +67,73 @@ boot would be 50% overhead at the same granularity, and AWS Lambda's measured
 
 So the fan-out story survives, with a number attached to it rather than a hope.
 
+
+## All three instances, 2026-09-04
+
+`pcb442` above; `kroA100` and `rat783` added to complete the proposal's
+three-instance requirement. Same protocol throughout. Data in
+[`results-kroA100-rat783.tsv`](results-kroA100-rat783.tsv).
+
+### rat783 (optimum 8,806) -- the same shape, sharper
+
+| workers | iters each | mean | vs one long run | σ apart |
+|---:|---:|---:|---:|---:|
+| 1 | 200,000 | 9,103.4 | — | — |
+| 10 | 20,000 | 9,095.4 | −0.09% | −1.13 |
+| **40** | **5,000** | **9,093.8** | **−0.11%** | −0.80 |
+| 100 | 2,000 | 9,096.2 | −0.08% | −1.39 |
+| 200 | 1,000 | 9,109.2 | +0.06% | 1.22 |
+| 400 | 500 | 9,119.6 | +0.18% | 1.18 |
+| 1,000 | 200 | 9,205.0 | +1.12% | **14.72** |
+| 10,000 | 20 | 9,294.8 | +2.10% | **15.51** |
+
+The plateau and the cliff reproduce, and the cliff is in the same place: it
+arrives between 400 and 1,000 workers on both instances. On the larger problem
+the fall is steeper — 14.7σ rather than 5.9σ — which is what one would expect
+if the floor is about a worker finishing what it starts, since a bigger
+instance needs more iterations to get anywhere.
+
+Four arms are nominally *ahead* of the single long run here. None of them
+significantly so.
+
+### kroA100 (optimum 21,282) -- saturated, and therefore uninformative
+
+Every arm, at every granularity, found the published optimum exactly. Standard
+deviation zero, all the way down to ten thousand workers doing twenty
+iterations each.
+
+That is not a result about fan-out; it is a statement that this instance is too
+easy for the budget. It is reported rather than dropped because it counts
+toward the proposal's three-instance gate, and because a row of identical
+numbers is exactly the shape a broken harness also produces — the check is that
+the same binaries give a spread on the other two instances.
+
+## Reading the gate
+
+The proposal's pre-registered criterion refuses the fan-out thesis if a single
+long trajectory **matches or beats the best portfolio granularity on at least
+two of three instances**.
+
+| instance | single long run | best portfolio | single run matches or beats? |
+|---|---:|---:|---|
+| pcb442 | 51,478.0 | 51,473.4 (40 workers) | no |
+| rat783 | 9,103.4 | 9,093.8 (40 workers) | no |
+| kroA100 | 21,282.0 | 21,282.0 (tie at optimum) | yes, vacuously |
+
+One of three, and that one carries no information. **The pre-registered
+falsification is not triggered.**
+
+Two cautions on how much that is worth. The portfolio's nominal wins on pcb442
+and rat783 are inside the noise — 0.37σ and 0.80σ — so the honest claim is
+*"splitting the work does not cost anything"*, not *"splitting the work helps"*.
+And the criterion turned on a comparison of two means that differ by less than
+their own scatter, which is a thin edge on which to hang a thesis either way.
+
+What the three instances do support jointly, and much more strongly than the
+gate does, is the granularity floor: **fan-out is free up to a few hundred
+workers and collapses below roughly 500 iterations of work each**, on both
+instances where the problem was hard enough to measure it.
+
 ## What this does not show
 
 **It is one workload.** MMAS has an unusually long memory — pheromone
