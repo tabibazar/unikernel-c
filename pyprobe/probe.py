@@ -39,7 +39,7 @@
 
 import sys
 
-PASS, FAIL, SKIP, XFAIL = "PASS", "FAIL", "SKIP", "XFAIL"
+PASS, FAIL, SKIP, XFAIL, ABSENT = "PASS", "FAIL", "SKIP", "XFAIL", "ABSENT"
 results = []
 
 
@@ -55,7 +55,7 @@ def run_all():
     print("PROBE_START python=%s platform=%s" % (
         sys.version.split()[0], sys.platform))
     print("PROBE_IMPL %s" % sys.implementation.name)
-    counts = {PASS: 0, FAIL: 0, SKIP: 0, XFAIL: 0}
+    counts = {PASS: 0, FAIL: 0, SKIP: 0, XFAIL: 0, ABSENT: 0}
     for name, group, fn, expect_fail in results:
         try:
             detail = fn()
@@ -66,6 +66,13 @@ def run_all():
                 # a pointer; on BareMetal a pass here means the docs are
                 # stale or the probe is too weak, and either is a finding.
                 detail = "[predicted-fail-on-baremetal] " + str(detail)
+        except ModuleNotFoundError as e:
+            # The port ships a CURATED stdlib -- roughly forty modules -- so a
+            # missing module says nothing about whether the platform could run
+            # it. Separated from FAIL because conflating "not installed" with
+            # "installed and broken" would make the headline number meaningless
+            # and would send someone debugging a port that is working fine.
+            status, detail = ABSENT, "not in the curated stdlib: %s" % e.name
         except NotImplementedError as e:
             status, detail = SKIP, str(e)
         except Exception as e:
@@ -74,10 +81,48 @@ def run_all():
         counts[status] += 1
         print("PROBE %-9s %-22s %-12s %s" % (status, group, name, detail))
         sys.stdout.flush()
-    print("PROBE_TOTAL pass=%d fail=%d xfail=%d skip=%d" % (
-        counts[PASS], counts[FAIL], counts[XFAIL], counts[SKIP]))
+    print("PROBE_TOTAL pass=%d fail=%d xfail=%d absent=%d skip=%d" % (
+        counts[PASS], counts[FAIL], counts[XFAIL], counts[ABSENT], counts[SKIP]))
     print("PROBE_DONE")
     sys.stdout.flush()
+
+
+# ------------------------------------------------------------- inventory
+
+# Which modules exist at all. On a curated stdlib this is the headline
+# measurement, not a preliminary: every later probe is conditional on it, and
+# the difference between the two platforms here is a shipping decision rather
+# than a platform limitation.
+_INVENTORY = """
+abc argparse array ast asyncio base64 binascii bisect calendar cmath codecs
+collections colorsys concurrent contextlib copy csv ctypes dataclasses datetime
+decimal difflib dis email enum errno fnmatch fractions ftplib functools gc
+getpass gettext glob gzip hashlib heapq hmac html http imaplib importlib inspect
+io ipaddress itertools json keyword linecache locale logging lzma mailbox marshal
+math mimetypes mmap multiprocessing numbers operator os pathlib pickle pkgutil
+platform plistlib poplib pprint queue quopri random re reprlib secrets select
+selectors shlex shutil signal site smtplib socket socketserver sqlite3 ssl stat
+statistics string stringprep struct subprocess sys sysconfig tarfile tempfile
+textwrap threading time timeit tokenize traceback types typing unicodedata
+unittest urllib uuid warnings wave weakref webbrowser xml zipfile zlib
+""".split()
+
+
+@probe("stdlib_inventory", "inventory")
+def _():
+    import importlib
+    present, missing = [], []
+    for name in _INVENTORY:
+        try:
+            importlib.import_module(name)
+            present.append(name)
+        except Exception:
+            missing.append(name)
+    # Printed in full because the list itself is the deliverable: it is what
+    # someone deciding whether their code can run here actually needs.
+    print("PROBE_INVENTORY_PRESENT %s" % " ".join(present))
+    print("PROBE_INVENTORY_MISSING %s" % " ".join(missing))
+    return "%d of %d importable" % (len(present), len(_INVENTORY))
 
 
 # ----------------------------------------------------------- language core
