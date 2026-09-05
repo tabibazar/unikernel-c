@@ -8,3 +8,8 @@ HUNT_HIT m=904142141 len=3 confirmed=3 k=6
 HUNT_HIT m=947340989 len=3 confirmed=3 k=6
 HUNT_HIT m=949666864 len=3 confirmed=3 k=6
 HUNT_HIT m=1136807751 len=3 confirmed=3 k=6
+HUNT_HIT m=1407953028 len=3 confirmed=3 k=6
+HUNT_HIT m=1437987158 len=3 confirmed=3 k=6
+HUNT_HIT m=1497955276 len=3 confirmed=3 k=6
+HUNT_HIT m=1499202737 len=3 confirmed=3 k=6
+HUNT_HIT m=1565503339 len=3 confirmed=3 k=6
