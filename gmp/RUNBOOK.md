@@ -88,3 +88,33 @@ gmp/results/hunt-local/cc_hunt  --selftest   # classical chains, checkable by ey
 Expected shape at ~1000 digits, primorial 2357#, depth 1e9: survival about
 2.6e-3, and a chain-length histogram falling roughly 60-70x per term. A drift in
 either means something is wrong, not that the search got unlucky.
+
+## The cloud tender
+
+`gmp/scripts/cloud-tender.sh` keeps the workers fed. A slice is baked into its
+image, so a worker finishes in about two hours and stops; without something
+watching, three instances would work for two hours and idle for the rest of a
+three-day run.
+
+It polls every five minutes, and for any stopped `cc-w*` instance it harvests
+the console, writes it to `results/hunt-local/cloud/logs/`, deletes the
+instance, builds the next slice, and redeploys.
+
+Because it spends money unattended, it is deliberately timid:
+
+- it only ever touches instances named `cc-w*` — `bmagent` and anything a human
+  created are invisible to it
+- `MAX_DEPLOYS` (default 60) caps redeploys for the whole run; when reached it
+  exits rather than continuing quietly
+- `touch results/hunt-local/cloud/STOP` halts it at the next poll
+- the console log is written to disk *before* the instance that produced it is
+  deleted, because the console is the only copy of that work
+
+```sh
+./gmp/scripts/cloud-tender.sh --status     # ranges, budget used, hits
+touch gmp/results/hunt-local/cloud/STOP    # stop it
+```
+
+At three instances the burn is $0.015/hr, about $1.08 for three days against
+$23 of credit. `MAX_DEPLOYS` at 60 bounds the worst case to roughly 120
+instance-hours, or about $0.60 of compute, even if something loops.
