@@ -4,12 +4,20 @@ Nothing enforces disjointness -- two workers given the same range simply spend
 their time proving the same multipliers composite. So ranges are written down
 here, and this file is the authority.
 
-| owner | m from | m to | notes |
-|---|---:|---:|---|
-| local hunt (this Mac) | 1 | open-ended | advances ~2.0e9 per day, one core |
-| cloud w0 | 100,000,000,000 | 100,002,000,000 | |
-| cloud w1 | 100,002,000,000 | 100,004,000,000 | |
-| cloud w2 | 100,004,000,000 | 100,006,000,000 | |
+| owner | m from | m to | survivors | status |
+|---|---:|---:|---:|---|
+| local hunt (this Mac) | 1 | open-ended | -- | running, ~2.0e9/day, one core |
+| cloud w0 | 100,000,000,000 | 100,105,000,000 | 295,887 | deployed 2026-09-05T00:52Z |
+| cloud w1 | 100,105,000,000 | 100,210,000,000 | 295,909 | deployed 2026-09-05T00:54Z |
+| cloud w2 | 100,210,000,000 | 100,315,000,000 | 295,284 | deployed 2026-09-05T00:54Z |
+
+Instance ids: w0 `cmtno59v5009un1nbkj46erav`, w1 `cmtnocb3u00aln1nbpi8sc0pp`,
+w2 `cmtnoceeh00asn1nbjdt39733`. The fourth slot holds `bmagent`, which was
+already running and was deliberately left alone; the three stopped `aco-r3-*`
+instances were deleted to make room, and their images are retained so they can
+be recreated.
+
+**The next free range is 100,315,000,000.** Take from there when redeploying.
 
 ## Why the cloud slices start at 1e11 and not 1e9
 

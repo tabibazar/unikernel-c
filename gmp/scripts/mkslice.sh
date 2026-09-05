@@ -37,6 +37,19 @@ fi
 # wrong candidates, which is indistinguishable from bad luck.
 "$SIEVE" --selftest >/dev/null 2>&1 || { echo "cc_sieve selftest FAILED" >&2; exit 1; }
 
+# Sieving 1e8 multipliers takes minutes, and the result is deterministic given
+# the range and depth, so an existing header for exactly this range is reused.
+# The range is checked rather than assumed: a header left over from a different
+# slice would otherwise be silently baked into the wrong worker.
+if [ -f "$OUT" ] \
+   && grep -q "^#define SLICE_M_LO      ${M_START}ULL$" "$OUT" \
+   && grep -q "^#define SLICE_M_HI      $((M_START + M_COUNT))ULL$" "$OUT" \
+   && grep -q "^#define SLICE_K         $K$" "$OUT" \
+   && grep -q "^#define SLICE_PRIMORIAL $PRIMORIAL$" "$OUT"; then
+	echo "$OUT already covers m=[$M_START,$((M_START + M_COUNT))) -- reusing" >&2
+	exit 0
+fi
+
 echo "sieving $SLICE_ID: m=[$M_START,$((M_START + M_COUNT))) depth=$DEPTH" >&2
 TMP=$(mktemp)
 "$SIEVE" --k "$K" --primorial "$PRIMORIAL" --j "$J" \
