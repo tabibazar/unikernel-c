@@ -44,7 +44,12 @@ API="$REPO/scripts/vendor/bm-api.sh"
 SLICE_COUNT="${SLICE_COUNT:-105000000}"
 POLL_SECONDS="${POLL_SECONDS:-300}"
 MAX_DEPLOYS="${MAX_DEPLOYS:-60}"
-WORKERS="${WORKERS:-w0 w1 w2}"
+# One worker, not three. Ian Seyler confirmed on 2026-09-05 that in the alpha
+# all BareMetal Cloud instances share a single vCPU, so additional instances add
+# no compute for a CPU-bound job -- three workers divide one core three ways and
+# cost three times as much for the same throughput. Raise this only when the
+# platform scales out.
+WORKERS="${WORKERS:-w0}"
 
 mkdir -p "$LOGS"
 [ -f "$NEXT_RANGE" ]   || echo 100315000000 > "$NEXT_RANGE"   # see RANGES.md
@@ -100,6 +105,10 @@ while :; do
 
 		# Only now is it safe to destroy the instance: the console was the
 		# only copy of that work.
+		# The API refuses to delete a RUNNING instance ("must be in one of
+		# [PENDING, STOPPED, SUSPENDED, SNAPSHOTTED, ERROR]"). This path only
+		# ever sees STOPPED workers, but stopping first makes it safe to reuse.
+		"$API" instances stop "$id" >/dev/null 2>&1
 		"$API" instances rm "$id" >/dev/null 2>&1
 		# The image this instance was created from is tracked here rather than
 		# read back from `instances list`, which prints only id, name and
@@ -142,7 +151,10 @@ while :; do
 		if [ -z "$instid" ]; then say "  create failed for cc-$w"; continue; fi
 
 		echo "$imgid" > "$STATE/img-$w"
-		echo $((deploys + 1)) > "$DEPLOY_COUNT"
+		# Re-read rather than using the value from the top of the pass: with
+		# several workers redeployed in one pass they all wrote deploys+1, so
+		# the budget counted one instead of N and the cap would not have bound.
+		echo $(( $(cat "$DEPLOY_COUNT") + 1 )) > "$DEPLOY_COUNT"
 		say "  cc-$w redeployed as $instid on m=[$lo,$hi)  [$((deploys + 1))/$MAX_DEPLOYS]"
 	done
 
