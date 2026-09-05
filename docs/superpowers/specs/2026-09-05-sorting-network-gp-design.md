@@ -1,8 +1,22 @@
 # Evolving Minimal Sorting Networks — Study Design
 
-**Status: designed, not started.** Nothing here has been run. Execution is on
-hold until the Cunningham hunt reports, because both compete for the same four
-BareMetal Cloud instances.
+**Status: designed, approved, not started.** Nothing here has been run.
+Approved for build on 2026-09-05, to begin after the Cunningham hunt's
+three-day report (2026-09-07). Both would compete for the same four BareMetal
+Cloud instances, so the first phase is local only.
+
+Build order, and it is deliberate — the evaluator is proven against known-good
+networks *before* a search exists to be blamed for its mistakes:
+
+1. `sortnet/eval.c`, the bitwise evaluator. No search.
+2. Verify it: the optimal 5-comparator network for n=4 and a textbook n=8
+   network at 19 must both score a perfect 2^n, and a deliberately broken
+   network must not.
+3. `sortnet/gp.c`, the search.
+4. Gates G1 and G2 locally, medians of 10 seeds, then stop and report.
+
+Nothing is deployed to BareMetal Cloud until the hunt has released those
+instances.
 
 ## Purpose
 
