@@ -32,15 +32,36 @@ if [ -d "$GMP_DIR" ]; then
 	exit 0
 fi
 
+# A cached tarball is only worth reusing if it is actually the tarball. An
+# interrupted download leaves a short file that "already exists", and without
+# the check below every later run skips the download, fails the checksum and
+# dies -- the same poisoned-cache behaviour this repo reported upstream in
+# BareMetal-AppPort's get-*.sh scripts (docs/upstream-reports/). It cost an
+# hour here before the irony was noticed, so: verify the cache, and throw it
+# away when it is wrong rather than failing forever.
 if [ -f "$TARBALL" ]; then
-	echo "- $TARBALL already exists - skipping download."
-else
+	if echo "${SHA256}  ${TARBALL}" | sha256sum -c - > /dev/null 2>&1; then
+		echo "- $TARBALL already exists and matches its checksum - skipping download."
+	else
+		echo "- $TARBALL exists but is corrupt or truncated - refetching."
+		rm -f "$TARBALL"
+	fi
+fi
+
+if [ ! -f "$TARBALL" ]; then
 	echo "- Downloading ${URL}"
-	curl -s -L -o "${TARBALL}" "${URL}"
+	# --fail so an HTTP error is an error rather than an error page saved as
+	# the artifact; remove the partial file so a failure cannot poison the
+	# next run.
+	curl -sSfL -o "${TARBALL}" "${URL}" || { rm -f "${TARBALL}"; echo "download failed" >&2; exit 1; }
 fi
 
 echo "- Verifying checksum"
-echo "${SHA256}  ${TARBALL}" | sha256sum -c - > /dev/null
+if ! echo "${SHA256}  ${TARBALL}" | sha256sum -c - > /dev/null; then
+	rm -f "${TARBALL}"
+	echo "checksum mismatch after download -- removed ${TARBALL}" >&2
+	exit 1
+fi
 
 echo "- Extracting ${TARBALL}"
 tar -xf "${TARBALL}"

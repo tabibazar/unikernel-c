@@ -80,9 +80,19 @@ docker run --rm --platform linux/amd64 \
 	export APPPORT=/work/BareMetal-App/BareMetal-AppPort
 	export BMAPP=/work/BareMetal-App
 
-	if [ ! -f /work/gmp-target/lib/libgmp.a ]; then
-		echo "=== building GMP for the target ==="
-		WORK=/work/gmp-target bash /repo/gmp/scripts/build-gmp.sh
+	# /repo is mounted read-only, and both GMP scripts default BUILD_DIR to a
+	# path inside it, so it has to be pointed at the writable volume. MUSL_INC
+	# is the sysroot the port installs musl headers into -- the same path
+	# link-app.sh derives for itself.
+	export BUILD_DIR=/work/gmp-build
+	export MUSL_INC=$APPPORT/build/musl-1.2.6/sysroot/usr/local/musl/include
+	[ -d "$MUSL_INC" ] || { echo "musl sysroot missing at $MUSL_INC" >&2; exit 1; }
+
+	GMP_SRC=$BUILD_DIR/gmp-6.3.0
+	if [ ! -f "$GMP_SRC/.libs/libgmp.a" ] && [ ! -f "$GMP_SRC/libgmp.a" ]; then
+		echo "=== fetching and building GMP for the target ==="
+		bash /repo/gmp/scripts/get-gmp.sh
+		bash /repo/gmp/scripts/build-gmp.sh
 	else
 		echo "=== target libgmp.a already built, reusing ==="
 	fi
@@ -91,7 +101,7 @@ docker run --rm --platform linux/amd64 \
 	mkdir -p /work/applink
 	cp /out/cc_slice.h /work/applink/cc_slice.h
 	OUT_DIR=/work/applink \
-	GMP_BUILD=$(ls -d /work/gmp-target/build/gmp-* 2>/dev/null | head -1) \
+	GMP_BUILD="$GMP_SRC" \
 	CPPFLAGS="-I/work/applink" \
 		bash /repo/gmp/scripts/link-app.sh /repo/gmp/cc_worker.c
 
