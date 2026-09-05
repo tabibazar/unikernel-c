@@ -1,1 +1,10 @@
 HUNT_HIT m=25689089 len=3 confirmed=3 k=6
+HUNT_HIT m=170167553 len=3 confirmed=3 k=6
+HUNT_HIT m=208876333 len=3 confirmed=3 k=6
+HUNT_HIT m=354727096 len=3 confirmed=3 k=6
+HUNT_HIT m=729838597 len=3 confirmed=3 k=6
+HUNT_HIT m=856857671 len=3 confirmed=3 k=6
+HUNT_HIT m=904142141 len=3 confirmed=3 k=6
+HUNT_HIT m=947340989 len=3 confirmed=3 k=6
+HUNT_HIT m=949666864 len=3 confirmed=3 k=6
+HUNT_HIT m=1136807751 len=3 confirmed=3 k=6

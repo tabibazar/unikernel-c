@@ -118,17 +118,30 @@ while :; do
 		fi
 		echo "$hi" > "$NEXT_RANGE"
 
+		# Retire the previous image BEFORE uploading the replacement. There is
+		# an undocumented cap of 10 images per account -- /api/limits reports
+		# vcpu, ram and instance caps but says nothing about images -- and the
+		# safer-looking order (upload, then delete the old one) deadlocks
+		# against it: the upload fails because the quota is full, so the old
+		# image is never retired, so the next upload fails too. That is exactly
+		# how all three workers stayed down overnight.
+		#
+		# Deleting first is safe here because the instance using this image was
+		# already destroyed above, and the image is reproducible from the slice
+		# in any case.
+		if [ -n "$old_img" ]; then
+			"$API" images rm "$old_img" >/dev/null 2>&1 && say "  retired old image $old_img"
+		fi
+
 		imgid=$("$API" images upload "cc-$w" "$REPO/results/workers/$w/baremetal.elf" 2>/dev/null | awk -F': ' '/^id:/{print $2}')
-		if [ -z "$imgid" ]; then say "  upload failed for cc-$w"; continue; fi
+		if [ -z "$imgid" ]; then
+			say "  upload failed for cc-$w (image quota? run: $API images list)"
+			continue
+		fi
 		instid=$("$API" instances create "cc-$w" 1 16 "$imgid" 2>/dev/null | awk -F': ' '/^id:/{print $2}')
 		if [ -z "$instid" ]; then say "  create failed for cc-$w"; continue; fi
 
-		# Record the new image, then retire the previous one -- in that order,
-		# so a crash in between leaves a harmless extra image rather than a
-		# worker whose image has been deleted.
 		echo "$imgid" > "$STATE/img-$w"
-		[ -n "$old_img" ] && "$API" images rm "$old_img" >/dev/null 2>&1
-
 		echo $((deploys + 1)) > "$DEPLOY_COUNT"
 		say "  cc-$w redeployed as $instid on m=[$lo,$hi)  [$((deploys + 1))/$MAX_DEPLOYS]"
 	done
