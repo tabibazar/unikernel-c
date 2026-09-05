@@ -83,3 +83,29 @@ Putting the PRP stage on BareMetal Cloud does need one, because building a
 unikernel image requires the BareMetal-AppPort toolchain on Linux x86-64, and
 the c5.metal used for the ring3 measurements has been terminated. That build
 host is the only thing standing between this and the four cloud instances.
+
+## The search is now running
+
+`gmp/scripts/hunt-local.sh` runs the hunt in resumable chunks on an ordinary
+host. State is one integer -- the next multiplier -- so a chunk that is killed
+loses at most that chunk, which is the same contract the cloud workers will
+have. It refuses to start if either selftest fails, because a hunt that sieves
+wrongly looks exactly like a hunt that is merely unlucky, for as long as it runs.
+
+First chunk, on the development Mac:
+
+```
+m=[1,2000001)  survivors=5495  best=2 at m=870805  84 s
+HUNT_HIST  0:5415  1:79  2:1  3:0  4:0  5:0  6:0
+```
+
+The falloff is 5415 -> 79 -> 1, about 68x per term, which is what ~1000-digit
+candidates should give and matches the 60x the first run suggested.
+
+Throughput is roughly 2e6 multipliers per 84 s, or 2.1e9 per day on one core.
+Against the ~2.8e12 multipliers implied by 7.3e9 PRP tests at a 2.6e-3 survival
+rate, that is about 1,360 core-days -- consistent with the 21,326 core-hour
+projection, and a restatement of why the instance cap rather than the price is
+what decides the calendar.
+
+Stop it with `kill` on the driver; restart picks up from `results/hunt-local/next_m`.
