@@ -1,0 +1,1 @@
+HUNT_HIT m=25689089 len=3 confirmed=3 k=6

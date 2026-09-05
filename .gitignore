@@ -27,3 +27,11 @@ aco/**/register_urls.h
 # Local tool state, not project files
 .claude/
 .playwright-mcp/
+
+# Generated worker slices: a few MB each and deterministically regenerable from
+# cc_sieve for a given range and depth, so the range in RANGES.md is the real
+# artifact, not the header.
+gmp/results/workers/*/cc_slice.h
+gmp/results/workers/*/baremetal.elf
+gmp/results/hunt-local/cc_sieve
+gmp/results/hunt-local/cc_hunt
