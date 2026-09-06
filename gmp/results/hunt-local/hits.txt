@@ -26,3 +26,8 @@ HUNT_HIT m=2888344366 len=3 confirmed=3 k=6
 HUNT_HIT m=3068130793 len=3 confirmed=3 k=6
 HUNT_HIT m=3150118045 len=3 confirmed=3 k=6
 HUNT_HIT m=3153505002 len=3 confirmed=3 k=6
+HUNT_HIT m=3293022078 len=3 confirmed=3 k=6
+HUNT_HIT m=3419608406 len=3 confirmed=3 k=6
+HUNT_HIT m=3534071858 len=3 confirmed=3 k=6
+HUNT_HIT m=3620867827 len=3 confirmed=3 k=6
+HUNT_HIT m=3809806356 len=3 confirmed=3 k=6
