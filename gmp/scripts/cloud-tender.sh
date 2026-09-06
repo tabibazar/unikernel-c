@@ -69,6 +69,11 @@ if [ "${1:-}" = "--status" ]; then
 	exit 0
 fi
 
+if ! docker info >/dev/null 2>&1; then
+	echo "docker is not running -- the worker build needs it. Start Docker Desktop." >&2
+	exit 1
+fi
+
 say "tender starting; next range $(cat "$NEXT_RANGE"), budget $(cat "$DEPLOY_COUNT")/$MAX_DEPLOYS"
 
 while :; do
@@ -89,43 +94,55 @@ while :; do
 	for w in $WORKERS; do
 		# Only ever act on our own workers.
 		line=$(echo "$listing" | grep -E "[[:space:]]cc-$w[[:space:]]" | head -1)
-		[ -n "$line" ] || continue
 		id=$(echo "$line" | awk '{print $1}')
 		status=$(echo "$line" | awk '{print $3}')
-		[ "$status" = "STOPPED" ] || continue
 
-		say "cc-$w ($id) has stopped -- harvesting"
+		# Three cases, and the missing one matters. An earlier version skipped
+		# a worker that did not exist at all, so once a failed build left no
+		# instance behind the tender idled forever waiting for something to
+		# stop. Missing is now a reason to deploy, not a reason to do nothing.
+		if [ -z "$line" ]; then
+			say "cc-$w is missing entirely -- deploying it"
+			id=""
+		elif [ "$status" = "STOPPED" ]; then
+			say "cc-$w ($id) has stopped -- harvesting"
+			stamp=$(date -u +%Y%m%dT%H%M%SZ)
+			out="$LOGS/${w}-${stamp}.log"
+			"$API" instances logs "$id" > "$out" 2>&1
+			hits=$(grep -c WORKER_HIT "$out" 2>/dev/null || echo 0)
+			done_line=$(grep WORKER_DONE "$out" 2>/dev/null | tail -1)
+			say "  harvested $(wc -l < "$out" | tr -d ' ') lines, $hits hits; $done_line"
+		else
+			continue          # RUNNING -- leave it alone
+		fi
 
-		stamp=$(date -u +%Y%m%dT%H%M%SZ)
-		out="$LOGS/${w}-${stamp}.log"
-		"$API" instances logs "$id" > "$out" 2>&1
-		hits=$(grep -c WORKER_HIT "$out" 2>/dev/null || echo 0)
-		done_line=$(grep WORKER_DONE "$out" 2>/dev/null | tail -1)
-		say "  harvested $(wc -l < "$out" | tr -d ' ') lines, $hits hits; $done_line"
-
-		# Only now is it safe to destroy the instance: the console was the
-		# only copy of that work.
-		# The API refuses to delete a RUNNING instance ("must be in one of
-		# [PENDING, STOPPED, SUSPENDED, SNAPSHOTTED, ERROR]"). This path only
-		# ever sees STOPPED workers, but stopping first makes it safe to reuse.
-		"$API" instances stop "$id" >/dev/null 2>&1
-		"$API" instances rm "$id" >/dev/null 2>&1
-		# The image this instance was created from is tracked here rather than
-		# read back from `instances list`, which prints only id, name and
-		# status -- an earlier version parsed a fourth column that does not
-		# exist, silently never deleted anything, and would have accumulated
-		# an image per redeploy.
-		old_img=""
-		[ -f "$STATE/img-$w" ] && old_img=$(cat "$STATE/img-$w")
-
+		# Build the replacement FIRST, before destroying anything. The
+		# previous order was harvest, delete, build -- so a failed build left
+		# no worker running at all, which is exactly what a reboot that took
+		# Docker with it produced. The old instance is already STOPPED and
+		# costs nothing while the build runs, and the instance cap has room
+		# for it, so there is no reason to destroy it early.
 		lo=$(cat "$NEXT_RANGE")
 		hi=$((lo + SLICE_COUNT))
-		say "  rebuilding cc-$w on m=[$lo,$hi)"
+		say "  rebuilding cc-$w on m=[$lo,$hi) before retiring the old one"
 		if ! "$REPO/scripts/build-worker-docker.sh" "$w" "$lo" "$SLICE_COUNT" >>"$TENDER_LOG" 2>&1; then
-			say "  build FAILED for cc-$w -- leaving the range unclaimed and moving on"
+			say "  build FAILED for cc-$w -- old instance left in place, range unclaimed"
 			continue
 		fi
 		echo "$hi" > "$NEXT_RANGE"
+
+		# Now the replacement exists, so destroying the old one is safe.
+		# The API refuses to delete a RUNNING instance ("must be in one of
+		# [PENDING, STOPPED, SUSPENDED, SNAPSHOTTED, ERROR]"), so stop first.
+		if [ -n "$id" ]; then
+			"$API" instances stop "$id" >/dev/null 2>&1
+			"$API" instances rm "$id" >/dev/null 2>&1
+		fi
+		# Image id tracked here rather than read back from `instances list`,
+		# which prints only id, name and status -- an earlier version parsed a
+		# fourth column that does not exist and never deleted anything.
+		old_img=""
+		[ -f "$STATE/img-$w" ] && old_img=$(cat "$STATE/img-$w")
 
 		# Retire the previous image BEFORE uploading the replacement. There is
 		# an undocumented cap of 10 images per account -- /api/limits reports
