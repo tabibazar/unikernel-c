@@ -38,6 +38,7 @@ STATE="${STATE:-$REPO/results/hunt-local/cloud}"
 LOGS="$STATE/logs"
 NEXT_RANGE="$STATE/next_range"
 DEPLOY_COUNT="$STATE/deploy_count"
+PENDING="$STATE/pending_ranges"
 TENDER_LOG="$STATE/tender.log"
 
 API="$REPO/scripts/vendor/bm-api.sh"
@@ -65,6 +66,7 @@ if [ "${1:-}" = "--status" ]; then
 	echo "redeploys used  : $(cat "$DEPLOY_COUNT") of $MAX_DEPLOYS"
 	echo "harvested logs  : $(ls -1 "$LOGS" 2>/dev/null | wc -l | tr -d ' ')"
 	echo "hits so far     : $(grep -h WORKER_HIT "$LOGS"/*.log 2>/dev/null | wc -l | tr -d ' ')"
+	echo "holes queued    : $(wc -l < "$PENDING" 2>/dev/null | tr -d ' ' || echo 0)"
 	"$API" instances list 2>/dev/null
 	exit 0
 fi
@@ -122,14 +124,36 @@ while :; do
 		# Docker with it produced. The old instance is already STOPPED and
 		# costs nothing while the build runs, and the instance cap has room
 		# for it, so there is no reason to destroy it early.
-		lo=$(cat "$NEXT_RANGE")
-		hi=$((lo + SLICE_COUNT))
-		say "  rebuilding cc-$w on m=[$lo,$hi) before retiring the old one"
+		# Holes first. coverage.py derives what has actually been searched
+		# from WORKER_DONE lines rather than from this counter, because the
+		# counter advanced when a slice was deployed rather than when it
+		# finished -- which silently left 15% of the claimed span unexamined.
+		# Any range it finds missing is queued here and re-searched before the
+		# frontier moves on. A negative result over a range with a hole in it
+		# is not a negative result.
+		if [ -s "$PENDING" ]; then
+			lo=$(head -1 "$PENDING" | awk '{print $1}')
+			hi=$(head -1 "$PENDING" | awk '{print $2}')
+			from_queue=1
+			say "  rebuilding cc-$w on QUEUED HOLE m=[$lo,$hi)"
+		else
+			lo=$(cat "$NEXT_RANGE")
+			hi=$((lo + SLICE_COUNT))
+			from_queue=0
+			say "  rebuilding cc-$w on m=[$lo,$hi) before retiring the old one"
+		fi
 		if ! "$REPO/scripts/build-worker-docker.sh" "$w" "$lo" "$SLICE_COUNT" >>"$TENDER_LOG" 2>&1; then
 			say "  build FAILED for cc-$w -- old instance left in place, range unclaimed"
 			continue
 		fi
-		echo "$hi" > "$NEXT_RANGE"
+		# Consume the work unit only once its image exists. A queued hole is
+		# dropped from the queue; the frontier advances only when the frontier
+		# was the source.
+		if [ "$from_queue" = "1" ]; then
+			tail -n +2 "$PENDING" > "$PENDING.tmp" && mv "$PENDING.tmp" "$PENDING"
+		else
+			echo "$hi" > "$NEXT_RANGE"
+		fi
 
 		# Now the replacement exists, so destroying the old one is safe.
 		# The API refuses to delete a RUNNING instance ("must be in one of
