@@ -53,3 +53,11 @@ HUNT_HIT m=5083387903 len=3 confirmed=3 k=6
 HUNT_HIT m=5099188255 len=3 confirmed=3 k=6
 HUNT_HIT m=5110346704 len=3 confirmed=3 k=6
 HUNT_HIT m=5147195694 len=3 confirmed=3 k=6
+HUNT_HIT m=5572375612 len=3 confirmed=3 k=6
+HUNT_HIT m=5768342506 len=3 confirmed=3 k=6
+HUNT_HIT m=5781142021 len=3 confirmed=3 k=6
+HUNT_HIT m=5850488601 len=3 confirmed=3 k=6
+HUNT_HIT m=5974061577 len=3 confirmed=3 k=6
+HUNT_HIT m=5993020971 len=3 confirmed=3 k=6
+HUNT_HIT m=6030316890 len=3 confirmed=3 k=6
+HUNT_HIT m=6155108114 len=3 confirmed=3 k=6
