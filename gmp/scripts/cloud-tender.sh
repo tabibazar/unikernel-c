@@ -146,15 +146,6 @@ while :; do
 			say "  build FAILED for cc-$w -- old instance left in place, range unclaimed"
 			continue
 		fi
-		# Consume the work unit only once its image exists. A queued hole is
-		# dropped from the queue; the frontier advances only when the frontier
-		# was the source.
-		if [ "$from_queue" = "1" ]; then
-			tail -n +2 "$PENDING" > "$PENDING.tmp" && mv "$PENDING.tmp" "$PENDING"
-		else
-			echo "$hi" > "$NEXT_RANGE"
-		fi
-
 		# Now the replacement exists, so destroying the old one is safe.
 		# The API refuses to delete a RUNNING instance ("must be in one of
 		# [PENDING, STOPPED, SUSPENDED, SNAPSHOTTED, ERROR]"), so stop first.
@@ -190,6 +181,18 @@ while :; do
 		fi
 		instid=$("$API" instances create "cc-$w" 1 16 "$imgid" 2>/dev/null | awk -F': ' '/^id:/{print $2}')
 		if [ -z "$instid" ]; then say "  create failed for cc-$w"; continue; fi
+
+		# Consume the work unit only now, when an instance actually exists to
+		# do it. Consuming it when the image was built was the same mistake as
+		# advancing next_range at deploy time: on 2026-09-07 the build
+		# succeeded, the range was consumed, `instances create` failed, and
+		# 210 million multipliers were marked searched without being searched.
+		# Bookkeeping commits after the work is confirmed, never before.
+		if [ "$from_queue" = "1" ]; then
+			tail -n +2 "$PENDING" > "$PENDING.tmp" && mv "$PENDING.tmp" "$PENDING"
+		else
+			echo "$hi" > "$NEXT_RANGE"
+		fi
 
 		echo "$imgid" > "$STATE/img-$w"
 		# Re-read rather than using the value from the top of the pass: with

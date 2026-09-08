@@ -61,3 +61,5 @@ HUNT_HIT m=5974061577 len=3 confirmed=3 k=6
 HUNT_HIT m=5993020971 len=3 confirmed=3 k=6
 HUNT_HIT m=6030316890 len=3 confirmed=3 k=6
 HUNT_HIT m=6155108114 len=3 confirmed=3 k=6
+HUNT_HIT m=6441645386 len=3 confirmed=3 k=6
+HUNT_HIT m=6564595135 len=3 confirmed=3 k=6
