@@ -118,3 +118,57 @@ touch gmp/results/hunt-local/cloud/STOP    # stop it
 At three instances the burn is $0.015/hr, about $1.08 for three days against
 $23 of credit. `MAX_DEPLOYS` at 60 bounds the worst case to roughly 120
 instance-hours, or about $0.60 of compute, even if something loops.
+
+## Upstream: argv now works locally (not yet on BareMetal Cloud)
+
+Return Infinity added argument passing on 2026-09-05, in direct response to our
+note that workers have to compile their work list into the image because
+"BareMetal takes no argv":
+
+- `BareMetal-App` **692af98** — `baremetal.sh`/`2-run.sh` set `boot_args` to
+  ``args=`$*` `` when arguments are given.
+- `BareMetal-AppPort` **88625c2** — `crt0.c` parses that token the same way
+  `net_glue.c` finds `ip=`, and fabricates argv/argc for musl's startup instead
+  of always passing `argc=0`. `argv[0]` is hardcoded to `"main"` because
+  BareMetal apps have no filename of their own. A missing or malformed token
+  gives `argv = {"main"}` rather than an error.
+
+```sh
+./baremetal.sh start 103780000000 105000000
+./2-run.sh 103780000000 105000000
+```
+
+**Ian has confirmed this is not on BareMetal Cloud yet**, so `cc_worker` keeps
+its baked slice for now. Both are already in our build volume and have been
+since 5 September.
+
+### What it changes, and what it does not
+
+It does **not** remove the baked slice by itself. The slice is a list of
+*survivors*, not a range, and the survivors come from sieving to depth 1e9 —
+which needs far more than 16 MiB and is deliberately done host-side. Handing a
+worker `m-start m-count` only helps if the worker can turn a range into
+candidates on its own.
+
+It does open a real alternative once the cloud supports it: sieve *in-process*
+at a shallower depth. A prime sieve to 1e7 needs ~1.25 MB and a segment bitmap
+another ~250 KB, which fits comfortably. Survival at 1e7 is about 1.26% against
+0.28% at 1e9, so roughly **4.5x more PRP tests** — paid in exchange for:
+
+- no Docker rebuild per slice (currently ~90 s of sieving plus a link)
+- no dependency on Docker running at all, which caused a 1.5 h outage
+- no image churn, and no pressure against the 10-image cap
+- one image serving every worker, parameterised at boot
+
+On a shared single vCPU, 4.5x more PRP work is a bad trade today. If the
+platform scales out, it becomes a good one — the rebuild cycle is the most
+fragile part of this system and argv removes it entirely.
+
+### Finding 3 is resolved by version, not by code
+
+`baremetal.sh` still does `rm -f "$FCLOG"` and then hands that path to
+Firecracker as `--log-path`, with no `touch` in between. It works because
+Firecracker ≥ 1.15 creates the file; ours was 1.7.0 and did not. So the failure
+is real but version-dependent, and anyone on an older Firecracker will still hit
+it with a message that names neither the file nor the cause. Our `touch "$FCLOG"`
+remains as harmless insurance.
