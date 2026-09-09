@@ -64,3 +64,14 @@ HUNT_HIT m=6155108114 len=3 confirmed=3 k=6
 HUNT_HIT m=6441645386 len=3 confirmed=3 k=6
 HUNT_HIT m=6564595135 len=3 confirmed=3 k=6
 HUNT_HIT m=6662021804 len=3 confirmed=3 k=6
+HUNT_HIT m=6874252743 len=3 confirmed=3 k=6
+HUNT_HIT m=6956635327 len=3 confirmed=3 k=6
+HUNT_HIT m=6986593081 len=3 confirmed=3 k=6
+HUNT_HIT m=7021124397 len=3 confirmed=3 k=6
+HUNT_HIT m=7054292219 len=3 confirmed=3 k=6
+HUNT_HIT m=7059138496 len=3 confirmed=3 k=6
+HUNT_HIT m=7079758434 len=3 confirmed=3 k=6
+HUNT_HIT m=7090835097 len=3 confirmed=3 k=6
+HUNT_HIT m=7365649951 len=3 confirmed=3 k=6
+HUNT_HIT m=7369646244 len=3 confirmed=3 k=6
+HUNT_HIT m=7401262110 len=3 confirmed=3 k=6
