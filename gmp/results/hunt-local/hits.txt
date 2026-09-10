@@ -75,3 +75,12 @@ HUNT_HIT m=7090835097 len=3 confirmed=3 k=6
 HUNT_HIT m=7365649951 len=3 confirmed=3 k=6
 HUNT_HIT m=7369646244 len=3 confirmed=3 k=6
 HUNT_HIT m=7401262110 len=3 confirmed=3 k=6
+HUNT_HIT m=7411404622 len=3 confirmed=3 k=6
+HUNT_HIT m=7465727385 len=3 confirmed=3 k=6
+HUNT_HIT m=7470484390 len=3 confirmed=3 k=6
+HUNT_HIT m=7681241932 len=3 confirmed=3 k=6
+HUNT_HIT m=7920956853 len=3 confirmed=3 k=6
+HUNT_HIT m=7946447092 len=3 confirmed=3 k=6
+HUNT_HIT m=7975991803 len=3 confirmed=3 k=6
+HUNT_HIT m=8059951675 len=3 confirmed=3 k=6
+HUNT_HIT m=8291704438 len=3 confirmed=3 k=6
